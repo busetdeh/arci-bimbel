@@ -42,23 +42,24 @@ export function RegistrationFunnel({
   const [step, setStep] = useState<number>(1);
   const [isPending, startTransition] = useTransition();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [result, setResult] = useState<RegistrationResult | null>(null);
 
-  // Form State
+  // Form State: Semua text field dimulai dalam keadaan kosong agar wajib diisi oleh pengguna
   const [formData, setFormData] = useState({
     // Step 1: Parent
-    parentName: "Bambang Pratama, S.E.",
+    parentName: "",
     parentRelation: "Ayah Kandung",
-    parentPhone: "81298765432",
-    parentEmail: "bambang.pratama@gmail.com",
-    parentCity: "Jakarta Selatan",
+    parentPhone: "",
+    parentEmail: "",
+    parentCity: "",
 
     // Step 2: Student
-    studentName: "Farhan Pratama",
-    studentSchool: "SMP Labschool Kebayoran",
+    studentName: "",
+    studentSchool: "",
     studentGrade: "SMP Kelas 8",
     studentTarget: "Persiapan Masuk SMA Unggulan (Target SMAN 8 / Lab)",
-    studentNotes: "Perlu pendalaman ekstra di materi Matematika Aljabar dan IPA Fisika.",
+    studentNotes: "",
 
     // Step 3: Selection
     branchId: initialBranch.id,
@@ -67,7 +68,7 @@ export function RegistrationFunnel({
     scheduleTime: "Sesi Sore (16:00 - 17:30 WIB)",
 
     // Step 4: Consent
-    agreeTerms: true,
+    agreeTerms: false,
   });
 
   const selectedProgram =
@@ -81,35 +82,121 @@ export function RegistrationFunnel({
 
   const formatRupiah = (val: number) => "Rp" + val.toLocaleString("id-ID");
 
-  const handleNextStep = (nextStep: number) => {
-    setErrorMessage(null);
+  // Helper untuk update field dan membersihkan pesan error pada field tersebut
+  const updateField = (field: string, value: any) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    if (fieldErrors[field]) {
+      setFieldErrors((prev) => {
+        const updated = { ...prev };
+        delete updated[field];
+        return updated;
+      });
+    }
+    if (errorMessage) {
+      setErrorMessage(null);
+    }
+  };
 
-    // Step 1 validations
-    if (step === 1) {
+  // Validasi ketat per langkah: Jika ada field kosong, dilarang next
+  const validateStep = (currentStep: number): boolean => {
+    const errors: Record<string, string> = {};
+
+    if (currentStep === 1) {
       if (!formData.parentName.trim()) {
-        setErrorMessage("Nama lengkap orang tua/wali wajib diisi.");
-        return;
+        errors.parentName = "Nama lengkap orang tua / wali wajib diisi.";
       }
-      if (!formData.parentPhone.trim() || formData.parentPhone.length < 9) {
-        setErrorMessage("Nomor WhatsApp orang tua tidak valid (minimal 9 digit).");
-        return;
+      if (!formData.parentRelation.trim()) {
+        errors.parentRelation = "Hubungan dengan calon siswa wajib dipilih.";
+      }
+      if (!formData.parentPhone.trim()) {
+        errors.parentPhone = "Nomor WhatsApp aktif wajib diisi.";
+      } else if (formData.parentPhone.replace(/[^0-9]/g, "").length < 9) {
+        errors.parentPhone = "Nomor WhatsApp minimal 9 digit angka.";
+      }
+      if (!formData.parentEmail.trim()) {
+        errors.parentEmail = "Alamat email orang tua / wali wajib diisi.";
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.parentEmail.trim())) {
+        errors.parentEmail = "Format email tidak valid (contoh: nama@email.com).";
       }
       if (!formData.parentCity.trim()) {
-        setErrorMessage("Kota/wilayah tinggal wajib diisi.");
-        return;
+        errors.parentCity = "Kota / wilayah tinggal wajib diisi.";
+      }
+    } else if (currentStep === 2) {
+      if (!formData.studentName.trim()) {
+        errors.studentName = "Nama lengkap calon siswa wajib diisi.";
+      }
+      if (!formData.studentSchool.trim()) {
+        errors.studentSchool = "Asal sekolah calon siswa saat ini wajib diisi.";
+      }
+      if (!formData.studentGrade.trim()) {
+        errors.studentGrade = "Jenjang & kelas siswa wajib dipilih.";
+      }
+      if (!formData.studentTarget.trim()) {
+        errors.studentTarget = "Target utama bimbingan belajar wajib dipilih.";
+      }
+      if (!formData.studentNotes.trim()) {
+        errors.studentNotes = "Catatan mata pelajaran / materi yang perlu perhatian wajib diisi.";
+      }
+    } else if (currentStep === 3) {
+      if (!formData.branchId) {
+        errors.branchId = "Silakan pilih salah satu cabang / lokasi belajar.";
+      }
+      if (!formData.programId) {
+        errors.programId = "Silakan pilih salah satu paket program belajar.";
+      }
+      if (!formData.scheduleDays) {
+        errors.scheduleDays = "Silakan pilih hari belajar.";
+      }
+      if (!formData.scheduleTime) {
+        errors.scheduleTime = "Silakan pilih waktu belajar.";
       }
     }
 
-    // Step 2 validations
-    if (step === 2) {
-      if (!formData.studentName.trim()) {
-        setErrorMessage("Nama calon siswa wajib diisi.");
-        return;
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      setErrorMessage("Semua kolom bertanda bintang (*) wajib diisi lengkap sebelum melanjutkan ke tahap berikutnya.");
+      
+      // Auto-focus ke input pertama yang bermasalah
+      const firstErrorField = Object.keys(errors)[0];
+      const elementIdMap: Record<string, string> = {
+        parentName: "parent-name",
+        parentRelation: "parent-relation",
+        parentPhone: "parent-whatsapp",
+        parentEmail: "parent-email",
+        parentCity: "parent-city",
+        studentName: "student-name",
+        studentSchool: "student-school",
+        studentGrade: "student-grade",
+        studentTarget: "student-target",
+        studentNotes: "student-notes",
+      };
+      const targetId = elementIdMap[firstErrorField];
+      if (targetId) {
+        setTimeout(() => {
+          document.getElementById(targetId)?.focus();
+        }, 50);
       }
-      if (!formData.studentSchool.trim()) {
-        setErrorMessage("Asal sekolah siswa wajib diisi.");
-        return;
-      }
+      return false;
+    }
+
+    setFieldErrors({});
+    setErrorMessage(null);
+    return true;
+  };
+
+  const handleNextStep = (nextStep: number) => {
+    // Jika mundur ke step sebelumnya, izinkan tanpa blokir
+    if (nextStep < step) {
+      setErrorMessage(null);
+      setStep(nextStep);
+      window.scrollTo({ top: 80, behavior: "smooth" });
+      return;
+    }
+
+    // Jika maju ke step berikutnya, wajib validasi semua field pada step saat ini
+    const isValid = validateStep(step);
+    if (!isValid) {
+      return;
     }
 
     setStep(nextStep);
@@ -117,7 +204,17 @@ export function RegistrationFunnel({
   };
 
   const handleSubmit = () => {
+    // Validasi ulang seluruh langkah sebelum submit
+    if (!validateStep(1) || !validateStep(2) || !validateStep(3)) {
+      setErrorMessage("Mohon lengkapi seluruh field yang belum terisi di langkah sebelumnya.");
+      return;
+    }
+
     if (!formData.agreeTerms) {
+      setFieldErrors((prev) => ({
+        ...prev,
+        agreeTerms: "Anda wajib mencentang persetujuan Syarat & Ketentuan serta Kebijakan Privasi.",
+      }));
       setErrorMessage("Silakan setujui Syarat & Ketentuan serta Kebijakan Privasi terlebih dahulu.");
       return;
     }
@@ -228,9 +325,16 @@ export function RegistrationFunnel({
                   <button
                     key={s}
                     type="button"
-                    onClick={() => s < step && handleNextStep(s)}
-                    disabled={s > step}
-                    className="flex flex-col items-center gap-1 sm:gap-1.5 focus:outline-none group transition-all disabled:cursor-not-allowed"
+                    onClick={() => {
+                      if (s < step) {
+                        handleNextStep(s);
+                      } else if (s > step) {
+                        handleNextStep(s);
+                      }
+                    }}
+                    className={`flex flex-col items-center gap-1 sm:gap-1.5 focus:outline-none group transition-all ${
+                      s > step ? "cursor-pointer hover:opacity-80" : ""
+                    }`}
                   >
                     <div
                       className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-label-sm font-bold shadow-xs transition-all ${
@@ -273,11 +377,11 @@ export function RegistrationFunnel({
           </nav>
         )}
 
-        {/* Global Error Alert */}
+        {/* Global Error Banner */}
         {errorMessage && (
           <div className="mb-6 p-4 rounded-xl bg-danger/10 border border-danger/30 text-danger text-body-sm flex items-start gap-2.5 animate-in fade-in duration-200">
             <span className="material-symbols-outlined text-[20px] shrink-0 mt-0.5">error</span>
-            <div className="flex-1">{errorMessage}</div>
+            <div className="flex-1 font-medium">{errorMessage}</div>
           </div>
         )}
 
@@ -288,7 +392,7 @@ export function RegistrationFunnel({
           }`}
         >
           {/* ============================================================== */}
-          {/* STEP 1: DATA WALI / ORANG TUA                                  */}
+          {/* STEP 1: DATA WALI / ORANG TUA (SEMUA FIELD WAJIB DIISI)        */}
           {/* ============================================================== */}
           {step === 1 && (
             <section className="flex flex-col gap-6">
@@ -300,7 +404,7 @@ export function RegistrationFunnel({
                   Informasi Data Orang Tua / Wali Siswa
                 </h1>
                 <p className="text-body-md text-light-on-surface-variant mt-1">
-                  Data kontak wali diperlukan untuk konfirmasi pendaftaran, pengiriman jadwal, serta pelaporan progres belajar berkala.
+                  Seluruh kolom data kontak wali wajib diisi lengkap untuk penerbitan invoice resmi dan konfirmasi bimbingan belajar.
                 </p>
               </div>
 
@@ -315,11 +419,21 @@ export function RegistrationFunnel({
                     type="text"
                     id="parent-name"
                     value={formData.parentName}
-                    onChange={(e) => setFormData({ ...formData, parentName: e.target.value })}
+                    onChange={(e) => updateField("parentName", e.target.value)}
                     required
-                    placeholder="Contoh: Bambang Pratama"
-                    className="w-full min-h-[48px] px-4 py-2.5 rounded-lg border border-light-outline text-light-on-surface text-body-md bg-light-surface focus:border-light-primary focus:ring-1 focus:ring-light-primary"
+                    placeholder="Contoh: Bambang Pratama, S.E."
+                    className={`w-full min-h-[48px] px-4 py-2.5 rounded-lg border text-light-on-surface text-body-md bg-light-surface transition-colors focus:ring-1 ${
+                      fieldErrors.parentName
+                        ? "border-danger ring-1 ring-danger bg-danger/5 focus:border-danger focus:ring-danger"
+                        : "border-light-outline focus:border-light-primary focus:ring-light-primary"
+                    }`}
                   />
+                  {fieldErrors.parentName && (
+                    <p className="text-[11px] text-danger font-medium flex items-center gap-1 mt-0.5">
+                      <span className="material-symbols-outlined text-[14px]">error</span>
+                      {fieldErrors.parentName}
+                    </p>
+                  )}
                 </div>
 
                 {/* Hubungan dengan Siswa */}
@@ -331,13 +445,23 @@ export function RegistrationFunnel({
                   <select
                     id="parent-relation"
                     value={formData.parentRelation}
-                    onChange={(e) => setFormData({ ...formData, parentRelation: e.target.value })}
-                    className="w-full min-h-[48px] px-3.5 py-2.5 rounded-lg border border-light-outline text-light-on-surface text-body-md bg-light-surface focus:border-light-primary focus:ring-1 focus:ring-light-primary"
+                    onChange={(e) => updateField("parentRelation", e.target.value)}
+                    className={`w-full min-h-[48px] px-3.5 py-2.5 rounded-lg border text-light-on-surface text-body-md bg-light-surface transition-colors focus:ring-1 ${
+                      fieldErrors.parentRelation
+                        ? "border-danger ring-1 ring-danger bg-danger/5 focus:border-danger focus:ring-danger"
+                        : "border-light-outline focus:border-light-primary focus:ring-light-primary"
+                    }`}
                   >
                     <option value="Ayah Kandung">Ayah Kandung</option>
                     <option value="Ibu Kandung">Ibu Kandung</option>
                     <option value="Wali / Keluarga">Wali / Keluarga</option>
                   </select>
+                  {fieldErrors.parentRelation && (
+                    <p className="text-[11px] text-danger font-medium flex items-center gap-1 mt-0.5">
+                      <span className="material-symbols-outlined text-[14px]">error</span>
+                      {fieldErrors.parentRelation}
+                    </p>
+                  )}
                 </div>
 
                 {/* WhatsApp */}
@@ -354,34 +478,56 @@ export function RegistrationFunnel({
                       type="tel"
                       id="parent-whatsapp"
                       value={formData.parentPhone}
-                      onChange={(e) => setFormData({ ...formData, parentPhone: e.target.value })}
+                      onChange={(e) => updateField("parentPhone", e.target.value)}
                       required
                       placeholder="812-3456-7890"
-                      className="w-full min-h-[48px] pl-14 pr-4 py-2.5 rounded-lg border border-light-outline text-light-on-surface text-body-md bg-light-surface focus:border-light-primary focus:ring-1 focus:ring-light-primary"
+                      className={`w-full min-h-[48px] pl-14 pr-4 py-2.5 rounded-lg border text-light-on-surface text-body-md bg-light-surface transition-colors focus:ring-1 ${
+                        fieldErrors.parentPhone
+                          ? "border-danger ring-1 ring-danger bg-danger/5 focus:border-danger focus:ring-danger"
+                          : "border-light-outline focus:border-light-primary focus:ring-light-primary"
+                      }`}
                     />
                   </div>
-                  <span className="text-[11px] text-light-on-surface-variant">
-                    Digunakan untuk pengiriman invoice dan laporan rapor belajar.
-                  </span>
+                  {fieldErrors.parentPhone ? (
+                    <p className="text-[11px] text-danger font-medium flex items-center gap-1 mt-0.5">
+                      <span className="material-symbols-outlined text-[14px]">error</span>
+                      {fieldErrors.parentPhone}
+                    </p>
+                  ) : (
+                    <span className="text-[11px] text-light-on-surface-variant">
+                      Digunakan untuk konfirmasi pendaftaran dan laporan rapor belajar siswa.
+                    </span>
+                  )}
                 </div>
 
-                {/* Email */}
+                {/* Email (Wajib Diisi) */}
                 <div className="flex flex-col gap-1.5">
                   <label htmlFor="parent-email" className="font-label text-label-md text-light-on-surface font-semibold flex items-center gap-1">
-                    <span>Alamat Email</span>
-                    <span className="text-light-on-surface-variant font-normal text-[11px]">(Opsional)</span>
+                    <span>Alamat Email Orang Tua / Wali</span>
+                    <span className="text-danger">*</span>
                   </label>
                   <input
                     type="email"
                     id="parent-email"
                     value={formData.parentEmail}
-                    onChange={(e) => setFormData({ ...formData, parentEmail: e.target.value })}
-                    placeholder="bambang@contoh.com"
-                    className="w-full min-h-[48px] px-4 py-2.5 rounded-lg border border-light-outline text-light-on-surface text-body-md bg-light-surface focus:border-light-primary focus:ring-1 focus:ring-light-primary"
+                    onChange={(e) => updateField("parentEmail", e.target.value)}
+                    required
+                    placeholder="contoh: bambang.pratama@gmail.com"
+                    className={`w-full min-h-[48px] px-4 py-2.5 rounded-lg border text-light-on-surface text-body-md bg-light-surface transition-colors focus:ring-1 ${
+                      fieldErrors.parentEmail
+                        ? "border-danger ring-1 ring-danger bg-danger/5 focus:border-danger focus:ring-danger"
+                        : "border-light-outline focus:border-light-primary focus:ring-light-primary"
+                    }`}
                   />
+                  {fieldErrors.parentEmail && (
+                    <p className="text-[11px] text-danger font-medium flex items-center gap-1 mt-0.5">
+                      <span className="material-symbols-outlined text-[14px]">error</span>
+                      {fieldErrors.parentEmail}
+                    </p>
+                  )}
                 </div>
 
-                {/* Domisili */}
+                {/* Domisili (Wajib Diisi) */}
                 <div className="flex flex-col gap-1.5">
                   <label htmlFor="parent-city" className="font-label text-label-md text-light-on-surface font-semibold flex items-center gap-1">
                     <span>Kota / Wilayah Tinggal</span>
@@ -391,11 +537,21 @@ export function RegistrationFunnel({
                     type="text"
                     id="parent-city"
                     value={formData.parentCity}
-                    onChange={(e) => setFormData({ ...formData, parentCity: e.target.value })}
+                    onChange={(e) => updateField("parentCity", e.target.value)}
                     required
                     placeholder="Contoh: Jakarta Selatan, Kebayoran Baru"
-                    className="w-full min-h-[48px] px-4 py-2.5 rounded-lg border border-light-outline text-light-on-surface text-body-md bg-light-surface focus:border-light-primary focus:ring-1 focus:ring-light-primary"
+                    className={`w-full min-h-[48px] px-4 py-2.5 rounded-lg border text-light-on-surface text-body-md bg-light-surface transition-colors focus:ring-1 ${
+                      fieldErrors.parentCity
+                        ? "border-danger ring-1 ring-danger bg-danger/5 focus:border-danger focus:ring-danger"
+                        : "border-light-outline focus:border-light-primary focus:ring-light-primary"
+                    }`}
                   />
+                  {fieldErrors.parentCity && (
+                    <p className="text-[11px] text-danger font-medium flex items-center gap-1 mt-0.5">
+                      <span className="material-symbols-outlined text-[14px]">error</span>
+                      {fieldErrors.parentCity}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -410,7 +566,7 @@ export function RegistrationFunnel({
                 <button
                   type="button"
                   onClick={() => handleNextStep(2)}
-                  className="px-7 py-3 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-label-lg shadow-sm font-semibold transition-all"
+                  className="px-7 py-3 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-label-lg shadow-sm font-semibold transition-all active:scale-[0.98]"
                 >
                   Lanjut ke Data Siswa →
                 </button>
@@ -419,7 +575,7 @@ export function RegistrationFunnel({
           )}
 
           {/* ============================================================== */}
-          {/* STEP 2: DATA CALON SISWA                                       */}
+          {/* STEP 2: DATA CALON SISWA (SEMUA FIELD WAJIB DIISI)             */}
           {/* ============================================================== */}
           {step === 2 && (
             <section className="flex flex-col gap-6">
@@ -431,7 +587,7 @@ export function RegistrationFunnel({
                   Informasi Calon Siswa
                 </h1>
                 <p className="text-body-md text-light-on-surface-variant mt-1">
-                  Informasi profil pendidikan siswa agar kami dapat menyesuaikan silabus belajar dan modul awal dengan tepat.
+                  Seluruh profil pendidikan dan catatan belajar siswa wajib diisi agar silabus dan modul belajar dapat dipersiapkan secara tepat.
                 </p>
               </div>
 
@@ -446,11 +602,21 @@ export function RegistrationFunnel({
                     type="text"
                     id="student-name"
                     value={formData.studentName}
-                    onChange={(e) => setFormData({ ...formData, studentName: e.target.value })}
+                    onChange={(e) => updateField("studentName", e.target.value)}
                     required
                     placeholder="Contoh: Farhan Pratama"
-                    className="w-full min-h-[48px] px-4 py-2.5 rounded-lg border border-light-outline text-light-on-surface text-body-md bg-light-surface focus:border-light-primary focus:ring-1 focus:ring-light-primary"
+                    className={`w-full min-h-[48px] px-4 py-2.5 rounded-lg border text-light-on-surface text-body-md bg-light-surface transition-colors focus:ring-1 ${
+                      fieldErrors.studentName
+                        ? "border-danger ring-1 ring-danger bg-danger/5 focus:border-danger focus:ring-danger"
+                        : "border-light-outline focus:border-light-primary focus:ring-light-primary"
+                    }`}
                   />
+                  {fieldErrors.studentName && (
+                    <p className="text-[11px] text-danger font-medium flex items-center gap-1 mt-0.5">
+                      <span className="material-symbols-outlined text-[14px]">error</span>
+                      {fieldErrors.studentName}
+                    </p>
+                  )}
                 </div>
 
                 {/* Asal Sekolah */}
@@ -463,24 +629,38 @@ export function RegistrationFunnel({
                     type="text"
                     id="student-school"
                     value={formData.studentSchool}
-                    onChange={(e) => setFormData({ ...formData, studentSchool: e.target.value })}
+                    onChange={(e) => updateField("studentSchool", e.target.value)}
                     required
                     placeholder="Contoh: SMP Labschool Kebayoran"
-                    className="w-full min-h-[48px] px-4 py-2.5 rounded-lg border border-light-outline text-light-on-surface text-body-md bg-light-surface focus:border-light-primary focus:ring-1 focus:ring-light-primary"
+                    className={`w-full min-h-[48px] px-4 py-2.5 rounded-lg border text-light-on-surface text-body-md bg-light-surface transition-colors focus:ring-1 ${
+                      fieldErrors.studentSchool
+                        ? "border-danger ring-1 ring-danger bg-danger/5 focus:border-danger focus:ring-danger"
+                        : "border-light-outline focus:border-light-primary focus:ring-light-primary"
+                    }`}
                   />
+                  {fieldErrors.studentSchool && (
+                    <p className="text-[11px] text-danger font-medium flex items-center gap-1 mt-0.5">
+                      <span className="material-symbols-outlined text-[14px]">error</span>
+                      {fieldErrors.studentSchool}
+                    </p>
+                  )}
                 </div>
 
                 {/* Jenjang & Kelas */}
                 <div className="flex flex-col gap-1.5">
                   <label htmlFor="student-grade" className="font-label text-label-md text-light-on-surface font-semibold flex items-center gap-1">
-                    <span>Jenjang &amp; Kelas</span>
+                    <span>Jenjang &amp; Kelas Siswa</span>
                     <span className="text-danger">*</span>
                   </label>
                   <select
                     id="student-grade"
                     value={formData.studentGrade}
-                    onChange={(e) => setFormData({ ...formData, studentGrade: e.target.value })}
-                    className="w-full min-h-[48px] px-3.5 py-2.5 rounded-lg border border-light-outline text-light-on-surface text-body-md bg-light-surface focus:border-light-primary focus:ring-1 focus:ring-light-primary"
+                    onChange={(e) => updateField("studentGrade", e.target.value)}
+                    className={`w-full min-h-[48px] px-3.5 py-2.5 rounded-lg border text-light-on-surface text-body-md bg-light-surface transition-colors focus:ring-1 ${
+                      fieldErrors.studentGrade
+                        ? "border-danger ring-1 ring-danger bg-danger/5 focus:border-danger focus:ring-danger"
+                        : "border-light-outline focus:border-light-primary focus:ring-light-primary"
+                    }`}
                   >
                     <optgroup label="Sekolah Menengah Pertama (SMP)">
                       <option value="SMP Kelas 7">SMP Kelas 7</option>
@@ -499,18 +679,29 @@ export function RegistrationFunnel({
                       <option value="Alumni / Gap Year">Alumni / Gap Year (Fokus PTN)</option>
                     </optgroup>
                   </select>
+                  {fieldErrors.studentGrade && (
+                    <p className="text-[11px] text-danger font-medium flex items-center gap-1 mt-0.5">
+                      <span className="material-symbols-outlined text-[14px]">error</span>
+                      {fieldErrors.studentGrade}
+                    </p>
+                  )}
                 </div>
 
                 {/* Target Belajar */}
                 <div className="sm:col-span-2 flex flex-col gap-1.5">
-                  <label htmlFor="student-target" className="font-label text-label-md text-light-on-surface font-semibold">
-                    Target Utama Bimbingan Belajar
+                  <label htmlFor="student-target" className="font-label text-label-md text-light-on-surface font-semibold flex items-center gap-1">
+                    <span>Target Utama Bimbingan Belajar</span>
+                    <span className="text-danger">*</span>
                   </label>
                   <select
                     id="student-target"
                     value={formData.studentTarget}
-                    onChange={(e) => setFormData({ ...formData, studentTarget: e.target.value })}
-                    className="w-full min-h-[48px] px-3.5 py-2.5 rounded-lg border border-light-outline text-light-on-surface text-body-md bg-light-surface focus:border-light-primary focus:ring-1 focus:ring-light-primary"
+                    onChange={(e) => updateField("studentTarget", e.target.value)}
+                    className={`w-full min-h-[48px] px-3.5 py-2.5 rounded-lg border text-light-on-surface text-body-md bg-light-surface transition-colors focus:ring-1 ${
+                      fieldErrors.studentTarget
+                        ? "border-danger ring-1 ring-danger bg-danger/5 focus:border-danger focus:ring-danger"
+                        : "border-light-outline focus:border-light-primary focus:ring-light-primary"
+                    }`}
                   >
                     <option value="Peningkatan Nilai Rapor & Pemahaman Konsep Dasar">
                       Peningkatan Nilai Rapor &amp; Pemahaman Konsep Dasar
@@ -525,22 +716,43 @@ export function RegistrationFunnel({
                       Bimbingan Olimpiade Sains Nasional (OSN)
                     </option>
                   </select>
+                  {fieldErrors.studentTarget && (
+                    <p className="text-[11px] text-danger font-medium flex items-center gap-1 mt-0.5">
+                      <span className="material-symbols-outlined text-[14px]">error</span>
+                      {fieldErrors.studentTarget}
+                    </p>
+                  )}
                 </div>
 
-                {/* Catatan / Kebutuhan Khusus */}
+                {/* Catatan / Kebutuhan Khusus (Wajib Diisi) */}
                 <div className="sm:col-span-2 flex flex-col gap-1.5">
-                  <label htmlFor="student-notes" className="font-label text-label-md text-light-on-surface font-semibold flex items-center justify-between">
+                  <label htmlFor="student-notes" className="font-label text-label-md text-light-on-surface font-semibold flex items-center gap-1">
                     <span>Catatan / Mata Pelajaran yang Perlu Perhatian Khusus</span>
-                    <span className="text-[11px] text-light-on-surface-variant font-normal">Opsional</span>
+                    <span className="text-danger">*</span>
                   </label>
                   <textarea
                     id="student-notes"
-                    rows={2}
+                    rows={3}
                     value={formData.studentNotes}
-                    onChange={(e) => setFormData({ ...formData, studentNotes: e.target.value })}
-                    placeholder="Contoh: Butuh bantuan ekstra pada rumus Aljabar Matematika dan Fisika gerak..."
-                    className="w-full px-4 py-2.5 rounded-lg border border-light-outline text-light-on-surface text-body-md bg-light-surface focus:border-light-primary focus:ring-1 focus:ring-light-primary"
+                    onChange={(e) => updateField("studentNotes", e.target.value)}
+                    required
+                    placeholder="Contoh: Butuh perhatian khusus pada aljabar Matematika dan Fisika mekanika, target lolos seleksi SMA 8."
+                    className={`w-full px-4 py-2.5 rounded-lg border text-light-on-surface text-body-md bg-light-surface transition-colors focus:ring-1 ${
+                      fieldErrors.studentNotes
+                        ? "border-danger ring-1 ring-danger bg-danger/5 focus:border-danger focus:ring-danger"
+                        : "border-light-outline focus:border-light-primary focus:ring-light-primary"
+                    }`}
                   />
+                  {fieldErrors.studentNotes ? (
+                    <p className="text-[11px] text-danger font-medium flex items-center gap-1 mt-0.5">
+                      <span className="material-symbols-outlined text-[14px]">error</span>
+                      {fieldErrors.studentNotes}
+                    </p>
+                  ) : (
+                    <span className="text-[11px] text-light-on-surface-variant">
+                      Tuliskan materi pelajaran yang dirasa paling menantang atau target khusus siswa.
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -556,7 +768,7 @@ export function RegistrationFunnel({
                 <button
                   type="button"
                   onClick={() => handleNextStep(3)}
-                  className="px-7 py-3 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-label-lg shadow-sm font-semibold transition-all"
+                  className="px-7 py-3 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-label-lg shadow-sm font-semibold transition-all active:scale-[0.98]"
                 >
                   Lanjut ke Pilih Program →
                 </button>
@@ -577,14 +789,17 @@ export function RegistrationFunnel({
                   Pilih Program &amp; Lokasi Belajar
                 </h1>
                 <p className="text-body-md text-light-on-surface-variant mt-1">
-                  Pendaftaran untuk calon siswa: <strong className="text-light-on-surface">{formData.studentName}</strong> (Jenjang: <span className="text-brand-indigo font-medium">{formData.studentGrade}</span>).
+                  Pendaftaran untuk calon siswa: <strong className="text-light-on-surface">{formData.studentName || "Siswa Baru"}</strong> (Jenjang: <span className="text-brand-indigo font-medium">{formData.studentGrade}</span>).
                 </p>
               </div>
 
               {/* Pilihan Cabang Dinamis dari Supabase */}
               <div className="flex flex-col gap-3">
                 <label className="font-label text-label-md text-light-on-surface font-semibold flex items-center justify-between">
-                  <span>Pilih Lokasi Cabang Belajar</span>
+                  <span className="flex items-center gap-1">
+                    <span>Pilih Lokasi Cabang Belajar</span>
+                    <span className="text-danger">*</span>
+                  </span>
                   <span className="text-[11px] text-success font-medium flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-success"></span>
                     Live dari Supabase
@@ -609,7 +824,7 @@ export function RegistrationFunnel({
                             name="cabang"
                             value={b.id}
                             checked={isSelected}
-                            onChange={() => setFormData({ ...formData, branchId: b.id })}
+                            onChange={() => updateField("branchId", b.id)}
                             className="mt-1 text-light-primary focus:ring-light-primary"
                           />
                           <div>
@@ -634,12 +849,21 @@ export function RegistrationFunnel({
                     );
                   })}
                 </div>
+                {fieldErrors.branchId && (
+                  <p className="text-[11px] text-danger font-medium flex items-center gap-1">
+                    <span className="material-symbols-outlined text-[14px]">error</span>
+                    {fieldErrors.branchId}
+                  </p>
+                )}
               </div>
 
               {/* Pilihan Paket Program Dinamis dari Supabase */}
               <div className="flex flex-col gap-3">
                 <label className="font-label text-label-md text-light-on-surface font-semibold flex items-center justify-between">
-                  <span>Pilih Paket Program Belajar</span>
+                  <span className="flex items-center gap-1">
+                    <span>Pilih Paket Program Belajar</span>
+                    <span className="text-danger">*</span>
+                  </span>
                   <span className="text-[11px] text-light-muted">Kurikulum terstruktur & bergaransi</span>
                 </label>
                 <div className="grid grid-cols-1 gap-3">
@@ -660,7 +884,7 @@ export function RegistrationFunnel({
                             name="program"
                             value={prog.id}
                             checked={isSelected}
-                            onChange={() => setFormData({ ...formData, programId: prog.id })}
+                            onChange={() => updateField("programId", prog.id)}
                             className="mt-1 text-light-primary focus:ring-light-primary"
                           />
                           <div>
@@ -703,18 +927,25 @@ export function RegistrationFunnel({
                     );
                   })}
                 </div>
+                {fieldErrors.programId && (
+                  <p className="text-[11px] text-danger font-medium flex items-center gap-1">
+                    <span className="material-symbols-outlined text-[14px]">error</span>
+                    {fieldErrors.programId}
+                  </p>
+                )}
               </div>
 
               {/* Sesi Jadwal */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <label className="flex flex-col gap-1.5">
-                  <span className="font-label text-label-md text-light-on-surface font-semibold">
-                    Pilihan Hari Sesi
+                  <span className="font-label text-label-md text-light-on-surface font-semibold flex items-center gap-1">
+                    <span>Pilihan Hari Sesi</span>
+                    <span className="text-danger">*</span>
                   </span>
                   <select
                     id="schedule-days"
                     value={formData.scheduleDays}
-                    onChange={(e) => setFormData({ ...formData, scheduleDays: e.target.value })}
+                    onChange={(e) => updateField("scheduleDays", e.target.value)}
                     className="w-full min-h-[48px] px-3.5 py-2.5 rounded-lg border border-light-outline text-light-on-surface text-body-md bg-light-surface focus:border-light-primary focus:ring-1 focus:ring-light-primary"
                   >
                     <option value="Senin, Rabu, Jumat (3x Seminggu)">Senin, Rabu, Jumat (3x Seminggu)</option>
@@ -724,13 +955,14 @@ export function RegistrationFunnel({
                 </label>
 
                 <label className="flex flex-col gap-1.5">
-                  <span className="font-label text-label-md text-light-on-surface font-semibold">
-                    Pilihan Waktu Belajar
+                  <span className="font-label text-label-md text-light-on-surface font-semibold flex items-center gap-1">
+                    <span>Pilihan Waktu Belajar</span>
+                    <span className="text-danger">*</span>
                   </span>
                   <select
                     id="schedule-time"
                     value={formData.scheduleTime}
-                    onChange={(e) => setFormData({ ...formData, scheduleTime: e.target.value })}
+                    onChange={(e) => updateField("scheduleTime", e.target.value)}
                     className="w-full min-h-[48px] px-3.5 py-2.5 rounded-lg border border-light-outline text-light-on-surface text-body-md bg-light-surface focus:border-light-primary focus:ring-1 focus:ring-light-primary"
                   >
                     <option value="Sesi Siang (14:00 - 15:30 WIB)">Sesi Siang (14:00 - 15:30 WIB)</option>
@@ -770,7 +1002,7 @@ export function RegistrationFunnel({
                 <button
                   type="button"
                   onClick={() => handleNextStep(4)}
-                  className="w-full sm:w-auto min-h-[48px] px-8 py-3 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-label-lg shadow-sm text-center transition-all whitespace-nowrap font-semibold"
+                  className="w-full sm:w-auto min-h-[48px] px-8 py-3 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-label-lg shadow-sm text-center transition-all whitespace-nowrap font-semibold active:scale-[0.98]"
                 >
                   Lanjut ke Konfirmasi →
                 </button>
@@ -826,6 +1058,10 @@ export function RegistrationFunnel({
                       <span>+62 {formData.parentPhone}</span>
                     </p>
                     <p>
+                      <span className="text-light-on-surface-variant">Email:</span>{" "}
+                      <span>{formData.parentEmail}</span>
+                    </p>
+                    <p>
                       <span className="text-light-on-surface-variant">Domisili:</span>{" "}
                       <span>{formData.parentCity}</span>
                     </p>
@@ -863,6 +1099,10 @@ export function RegistrationFunnel({
                     <p>
                       <span className="text-light-on-surface-variant">Fokus Target:</span>{" "}
                       <span>{formData.studentTarget}</span>
+                    </p>
+                    <p>
+                      <span className="text-light-on-surface-variant">Catatan Belajar:</span>{" "}
+                      <span className="italic text-light-on-surface">{formData.studentNotes}</span>
                     </p>
                   </div>
                 </div>
@@ -925,13 +1165,15 @@ export function RegistrationFunnel({
               </div>
 
               {/* Consent Checkbox */}
-              <div className="p-4 rounded-xl bg-light-surface-container-low border border-light-outline-variant">
+              <div className={`p-4 rounded-xl border transition-colors ${
+                fieldErrors.agreeTerms ? "bg-danger/5 border-danger" : "bg-light-surface-container-low border-light-outline-variant"
+              }`}>
                 <label className="flex items-start gap-3 cursor-pointer">
                   <input
                     type="checkbox"
                     id="consent-check"
                     checked={formData.agreeTerms}
-                    onChange={(e) => setFormData({ ...formData, agreeTerms: e.target.checked })}
+                    onChange={(e) => updateField("agreeTerms", e.target.checked)}
                     className="mt-1 rounded text-light-primary focus:ring-light-primary"
                   />
                   <span className="text-body-sm text-light-on-surface">
@@ -943,9 +1185,15 @@ export function RegistrationFunnel({
                     <a href="#privacy" className="text-light-primary underline font-medium">
                       Kebijakan Privasi
                     </a>{" "}
-                    ARCI Bimbel.
+                    ARCI Bimbel. <span className="text-danger font-bold">*</span>
                   </span>
                 </label>
+                {fieldErrors.agreeTerms && (
+                  <p className="text-[11px] text-danger font-medium flex items-center gap-1 mt-1 pl-7">
+                    <span className="material-symbols-outlined text-[14px]">error</span>
+                    {fieldErrors.agreeTerms}
+                  </p>
+                )}
               </div>
 
               {/* Navigation Buttons Step 4 */}
@@ -962,7 +1210,7 @@ export function RegistrationFunnel({
                 <button
                   type="button"
                   onClick={handleSubmit}
-                  disabled={isPending || !formData.agreeTerms}
+                  disabled={isPending}
                   className="w-full sm:w-auto min-h-[50px] px-8 py-3 rounded-xl bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-label-lg shadow-sm text-center transition-all whitespace-nowrap font-bold flex items-center justify-center gap-2 disabled:opacity-60 active:scale-[0.98]"
                 >
                   {isPending ? (

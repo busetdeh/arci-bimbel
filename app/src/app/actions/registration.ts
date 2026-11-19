@@ -104,18 +104,45 @@ export async function submitRegistrationAction(
   payload: RegistrationPayload
 ): Promise<RegistrationResult> {
   try {
-    // 1. Basic validation
-    if (!payload.parentName?.trim() || !payload.parentPhone?.trim()) {
-      return { success: false, message: "Nama lengkap dan nomor WhatsApp orang tua/wali wajib diisi." };
+    // 1. Strict validation: All fields are required
+    if (
+      !payload.parentName?.trim() ||
+      !payload.parentPhone?.trim() ||
+      !payload.parentEmail?.trim() ||
+      !payload.parentCity?.trim() ||
+      !payload.parentRelation?.trim()
+    ) {
+      return {
+        success: false,
+        message: "Seluruh kolom Data Orang Tua / Wali wajib diisi lengkap.",
+      };
     }
-    if (!payload.studentName?.trim() || !payload.studentSchool?.trim()) {
-      return { success: false, message: "Nama calon siswa dan asal sekolah wajib diisi." };
+
+    if (
+      !payload.studentName?.trim() ||
+      !payload.studentSchool?.trim() ||
+      !payload.studentGrade?.trim() ||
+      !payload.studentTarget?.trim() ||
+      !payload.studentNotes?.trim()
+    ) {
+      return {
+        success: false,
+        message: "Seluruh kolom Data Calon Siswa dan Catatan Belajar wajib diisi lengkap.",
+      };
     }
-    if (!payload.branchId || !payload.programId) {
-      return { success: false, message: "Silakan pilih cabang dan paket program belajar." };
+
+    if (!payload.branchId || !payload.programId || !payload.scheduleDays || !payload.scheduleTime) {
+      return {
+        success: false,
+        message: "Silakan pilih lokasi cabang, paket program, dan preferensi jadwal belajar.",
+      };
     }
+
     if (!payload.agreeTerms) {
-      return { success: false, message: "Silakan setujui syarat dan ketentuan pendaftaran." };
+      return {
+        success: false,
+        message: "Silakan setujui syarat dan ketentuan pendaftaran terlebih dahulu.",
+      };
     }
 
     const supabase = createAdminClient();
