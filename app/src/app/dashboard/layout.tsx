@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { getStaffSession, logoutStaffAction } from "@/app/actions/auth";
 
 const navItems = [
   { href: "/dashboard", label: "Ringkasan", icon: "dashboard" },
@@ -29,11 +30,47 @@ export default function DashboardLayout({
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
+  const [currentStaff, setCurrentStaff] = useState<{
+    name: string;
+    roleLabel: string;
+    initials: string;
+  }>({
+    name: "Ahmad Dani, M.Pd.",
+    roleLabel: "Super Admin Operasional",
+    initials: "AD",
+  });
   const [toast, setToast] = useState<{ show: boolean; msg: string; type: "success" | "warning" | "info" }>({
     show: false,
     msg: "",
     type: "info",
   });
+
+  useEffect(() => {
+    async function loadStaff() {
+      const session = await getStaffSession();
+      if (session?.profile) {
+        const p = session.profile;
+        const roleMap: Record<string, string> = {
+          super_admin: "Super Admin Operasional",
+          admin_akademik: "Koordinator Akademik & Roster",
+          admin_keuangan: "Staf Keuangan & Pembayaran",
+          tutor: "Tutor & Pengajar",
+        };
+        const initials = p.full_name
+          .split(" ")
+          .map((w: string) => w[0])
+          .slice(0, 2)
+          .join("")
+          .toUpperCase();
+        setCurrentStaff({
+          name: p.full_name,
+          roleLabel: roleMap[p.role] || "Staf ARCI Bimbel",
+          initials: initials || "ST",
+        });
+      }
+    }
+    loadStaff();
+  }, []);
 
   const showToast = (msg: string, type: "success" | "warning" | "info" = "info") => {
     setToast({ show: true, msg, type });
@@ -148,14 +185,14 @@ export default function DashboardLayout({
           >
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-full bg-light-primary text-light-on-primary flex items-center justify-center font-bold text-label-md shadow-xs">
-                AD
+                {currentStaff.initials}
               </div>
               <div className="flex flex-col">
-                <span className="text-body-sm font-semibold text-light-on-surface leading-tight">
-                  Ahmad Dani
+                <span className="text-body-sm font-semibold text-light-on-surface leading-tight truncate max-w-[130px]">
+                  {currentStaff.name}
                 </span>
-                <span className="text-[11px] text-light-on-surface-variant font-label leading-tight">
-                  Admin Operasional
+                <span className="text-[11px] text-light-on-surface-variant font-label leading-tight truncate max-w-[130px]">
+                  {currentStaff.roleLabel}
                 </span>
               </div>
             </div>
@@ -176,13 +213,16 @@ export default function DashboardLayout({
                 </span>
                 <span>Buka Website Publik</span>
               </Link>
-              <Link
-                href="/login-admin"
-                className="flex items-center gap-2 px-3.5 py-2 hover:bg-danger/10 text-danger border-t border-light-outline-variant/50"
+              <button
+                type="button"
+                onClick={async () => {
+                  await logoutStaffAction();
+                }}
+                className="w-full flex items-center gap-2 px-3.5 py-2 hover:bg-danger/10 text-danger border-t border-light-outline-variant/50 text-left cursor-pointer"
               >
                 <span className="material-symbols-outlined text-[17px]">logout</span>
                 <span>Keluar Sesi (Logout)</span>
-              </Link>
+              </button>
             </div>
           )}
         </div>
