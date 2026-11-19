@@ -19,12 +19,19 @@
   --color-light-surface: #FFFFFF;
   --color-light-on-surface: #18212F;
   --color-light-surface-soft: #F8FAFC;
-  --color-light-surface-container: #F1F4F9;
-  --color-light-outline: #E2E8F0;
+  --color-light-surface-container-low: #F1F5F9;
+  --color-light-surface-container: #E2E8F0;
+  --color-light-on-surface-variant: #475569;
+  --color-light-outline: #94A3B8;
   --color-light-outline-variant: #CBD5E1;
   --color-light-muted: #64748B;
 
   --font-sans: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+  --font-headline: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+  --font-title: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+  --font-body: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+  --font-label: var(--font-jakarta), system-ui, -apple-system, sans-serif;
 }
 
 :root {
@@ -54,4 +61,84 @@ body {
   direction: ltr;
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Typography Utility Classes matching index.html */
+.text-display-lg {
+  font-size: 48px;
+  line-height: 56px;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+.text-display-lg-mobile {
+  font-size: 28px;
+  line-height: 36px;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+}
+.text-headline-lg {
+  font-size: 36px;
+  line-height: 44px;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+}
+.text-headline-lg-mobile {
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: 0em;
+  font-weight: 700;
+}
+.text-headline-md {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+}
+.text-headline-sm {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+}
+.text-title-lg {
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: 600;
+}
+.text-title-md {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+}
+.text-body-lg {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+}
+.text-body-md {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+}
+.text-body-sm {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+}
+.text-label-lg {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+}
+.text-label-md {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+}
+.text-label-sm {
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 500;
+}
+
+.shadow-xs {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
