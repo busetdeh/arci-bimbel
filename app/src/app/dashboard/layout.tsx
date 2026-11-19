@@ -290,6 +290,17 @@ export default function DashboardLayout({
 
               {/* General Links */}
               <Link
+                href="/dashboard/profile"
+                onClick={() => setUserMenuOpen(false)}
+                className="flex items-center gap-2 px-3.5 py-2 hover:bg-light-primary-container text-light-primary font-semibold"
+              >
+                <span className="material-symbols-outlined text-[17px]">
+                  account_circle
+                </span>
+                <span>Profil &amp; Keamanan Akun</span>
+              </Link>
+
+              <Link
                 href="/"
                 className="flex items-center gap-2 px-3.5 py-2 hover:bg-light-surface-container text-light-on-surface"
               >

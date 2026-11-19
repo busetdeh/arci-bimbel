@@ -160,8 +160,8 @@ export function getFilteredNavItems(role: StaffRole): DashboardNavItem[] {
 export function isRouteAllowed(role: StaffRole, pathname: string): boolean {
   if (role === "super_admin") return true;
 
-  // Root dashboard overview is always accessible to all staff roles
-  if (pathname === "/dashboard") return true;
+  // Root dashboard overview and personal profile are always accessible to all staff roles
+  if (pathname === "/dashboard" || pathname.startsWith("/dashboard/profile")) return true;
 
   // Check matching nav items
   const matchedItem = DASHBOARD_NAV_ITEMS.find((item) => {
