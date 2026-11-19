@@ -1,0 +1,25 @@
+import { createClient } from "@supabase/supabase-js";
+
+/**
+ * Supabase Admin Client (Service Role / Secret Key)
+ * ⚠️ Hanya boleh digunakan di server side (Server Actions, API Route Handlers).
+ * JANGAN PERNAH import atau panggil file ini di komponen Client ("use client").
+ */
+export function createAdminClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceKey =
+    process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!supabaseUrl || !serviceKey) {
+    throw new Error(
+      "NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SECRET_KEY (or SUPABASE_SERVICE_ROLE_KEY) must be defined"
+    );
+  }
+
+  return createClient(supabaseUrl, serviceKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+    },
+  });
+}
