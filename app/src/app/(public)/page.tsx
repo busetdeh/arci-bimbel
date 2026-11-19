@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
+import { submitConsultationAction } from "@/app/actions/leads";
 
 declare global {
   interface Window {
@@ -120,30 +121,67 @@ export default function HomePage() {
       });
     });
 
-    // 4. Consultation Form Handling
+    // 4. Consultation Form Handling with Supabase CRM Integration
     const consultForm = document.getElementById("consultation-form") as HTMLFormElement;
     const successBox = document.getElementById("form-success");
+    const successTitle = document.getElementById("form-success-title");
+    const successDesc = document.getElementById("form-success-desc");
+
     if (consultForm && successBox) {
-      consultForm.addEventListener("submit", (e) => {
+      consultForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         const submitBtn = document.getElementById("submit-btn") as HTMLButtonElement;
+
+        const parentName = (document.getElementById("parent-name") as HTMLInputElement)?.value;
+        const studentName = (document.getElementById("student-name") as HTMLInputElement)?.value;
+        const parentPhone = (document.getElementById("parent-phone") as HTMLInputElement)?.value;
+        const gradeLevel = (document.getElementById("grade-level") as HTMLSelectElement)?.value;
+        const learningMode = (document.getElementById("learning-mode") as HTMLSelectElement)?.value;
+        const targetSubject = (document.getElementById("target-subject") as HTMLInputElement)?.value;
+        const notes = (document.getElementById("notes") as HTMLTextAreaElement)?.value;
+
         if (submitBtn) {
           submitBtn.disabled = true;
           submitBtn.innerHTML = `
             <span class="inline-block animate-spin mr-2">⟳</span>
-            Memproses...
+            Menyimpan ke Sistem CRM...
           `;
         }
 
-        setTimeout(() => {
-          consultForm.reset();
+        try {
+          const res = await submitConsultationAction({
+            parentName,
+            studentName,
+            parentPhone,
+            gradeLevel,
+            learningMode,
+            targetSubject,
+            notes,
+          });
+
+          if (res.success) {
+            consultForm.reset();
+            if (successTitle) {
+              successTitle.textContent = `Terima Kasih! No. Referensi: ${res.leadNumber}`;
+            }
+            if (successDesc) {
+              successDesc.innerHTML = `
+                Data ananda <strong>${studentName}</strong> berhasil terhubung langsung ke Dashboard Konselor ARCI Bimbel. Kami akan segera menghubungi nomor WhatsApp <strong>${parentPhone}</strong> untuk rekomendasi kelas &amp; jadwal free trial.
+              `;
+            }
+            successBox.classList.remove("hidden");
+            successBox.scrollIntoView({ behavior: "smooth", block: "center" });
+          } else {
+            alert(res.message || "Gagal mengirim permintaan konsultasi.");
+          }
+        } catch {
+          alert("Terjadi kendala saat menghubungkan ke database. Silakan coba kembali.");
+        } finally {
           if (submitBtn) {
             submitBtn.disabled = false;
             submitBtn.innerHTML = "Kirim Permintaan Konsultasi";
           }
-          successBox.classList.remove("hidden");
-          successBox.scrollIntoView({ behavior: "smooth", block: "center" });
-        }, 800);
+        }
       });
     }
 
@@ -1360,12 +1398,14 @@ export default function HomePage() {
           </form>
 
           {/* Success Notification Card (Hidden by default) */}
-          <div id="form-success" className="hidden mt-6 p-5 sm:p-6 rounded-xl bg-light-primary-container border border-brand-indigo/30 text-center">
-            <div className="w-12 h-12 rounded-full bg-success text-white flex items-center justify-center mx-auto mb-3">
+          <div id="form-success" className="hidden mt-6 p-5 sm:p-6 rounded-xl bg-light-primary-container border border-brand-indigo/30 text-center animate-in fade-in duration-200">
+            <div className="w-12 h-12 rounded-full bg-success text-white flex items-center justify-center mx-auto mb-3 shadow-xs">
               <span className="material-symbols-outlined text-[28px]">check</span>
             </div>
-            <h4 className="font-headline font-bold text-headline-sm text-brand-indigo-dark">Terima Kasih! Permintaan Terkirim</h4>
-            <p className="text-body-sm sm:text-body-md text-light-on-surface-variant mt-1.5 max-w-md mx-auto">
+            <h4 id="form-success-title" className="font-headline font-bold text-headline-sm text-brand-indigo-dark">
+              Terima Kasih! Permintaan Terkirim
+            </h4>
+            <p id="form-success-desc" className="text-body-sm sm:text-body-md text-light-on-surface-variant mt-1.5 max-w-md mx-auto leading-relaxed">
               Konselor akademik kami akan menghubungi Anda melalui WhatsApp dalam waktu 1 hari kerja untuk mengatur jadwal trial gratis.
             </p>
           </div>
