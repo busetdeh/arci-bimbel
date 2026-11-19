@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Laporan &amp; Analitik KPI — ARCI Bimbel</title>
+  
+  <!-- Tailwind CSS with Official Plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+  /** @type {import('tailwindcss').Config} */
+  globalThis.tailwind = globalThis.tailwind || {};
+  globalThis.tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          'accent': '#F6C453',
+          'on-accent': '#18212F',
+          'brand-indigo': '#243B7A',
+          'brand-indigo-dark': '#172653',
+          'success': '#1B7330',
+          'on-success': '#FFFFFF',
+          'warning': '#925B06',
+          'on-warning': '#FFFFFF',
+          'danger': '#B91C1C',
+          'on-danger': '#FFFFFF',
+          'light-primary': '#243B7A',
+          'light-on-primary': '#FFFFFF',
+          'light-primary-container': '#EBF0FA',
+          'light-on-primary-container': '#172653',
+          'light-surface': '#FFFFFF',
+          'light-on-surface': '#18212F',
+          'light-surface-soft': '#F8FAFC',
+          'light-surface-container-low': '#F1F5F9',
+          'light-surface-container': '#E2E8F0',
+          'light-on-surface-variant': '#475569',
+          'light-outline': '#94A3B8',
+          'light-outline-variant': '#CBD5E1',
+          'dark-primary': '#9BB3F0',
+          'dark-on-primary': '#0E1A3C',
+          'dark-primary-container': '#1E3166',
+          'dark-on-primary-container': '#D7E3FF',
+          'dark-surface': '#0F172A',
+          'dark-on-surface': '#F8FAFC',
+          'dark-surface-soft': '#1E293B',
+          'dark-surface-container-low': '#152033',
+          'dark-surface-container': '#1E293B',
+          'dark-on-surface-variant': '#CBD5E1',
+          'dark-outline': '#64748B',
+          'dark-outline-variant': '#475569',
+        },
+        borderRadius: {
+          'sm': '4px',
+          'DEFAULT': '8px',
+          'md': '10px',
+          'lg': '12px',
+          'xl': '16px',
+          '2xl': '20px',
+          'full': '9999px',
+        },
+        fontFamily: {
+          'display': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'headline': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'title': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'body': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'label': ['"Plus Jakarta Sans"', 'sans-serif'],
+        },
+        fontSize: {
+          'display-lg': ['48px', { lineHeight: '56px', letterSpacing: '-0.02em', fontWeight: '700' }],
+          'display-lg-mobile': ['32px', { lineHeight: '40px', letterSpacing: '-0.01em', fontWeight: '700' }],
+          'headline-lg': ['36px', { lineHeight: '44px', letterSpacing: '-0.01em', fontWeight: '700' }],
+          'headline-lg-mobile': ['26px', { lineHeight: '34px', letterSpacing: '0em', fontWeight: '700' }],
+          'headline-md': ['24px', { lineHeight: '32px', fontWeight: '600' }],
+          'headline-sm': ['20px', { lineHeight: '28px', fontWeight: '600' }],
+          'title-lg': ['18px', { lineHeight: '26px', fontWeight: '600' }],
+          'title-md': ['16px', { lineHeight: '24px', fontWeight: '600' }],
+          'body-lg': ['16px', { lineHeight: '24px', fontWeight: '400' }],
+          'body-md': ['14px', { lineHeight: '20px', fontWeight: '400' }],
+          'body-sm': ['12px', { lineHeight: '18px', fontWeight: '400' }],
+          'label-lg': ['14px', { lineHeight: '20px', fontWeight: '600' }],
+          'label-md': ['12px', { lineHeight: '16px', fontWeight: '600' }],
+          'label-sm': ['11px', { lineHeight: '14px', fontWeight: '500' }],
+        },
+      },
+    },
+  };
+  if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+  </script>
+
+  <!-- Typography & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+
+  <style>
+    .material-symbols-outlined, .material-symbols-rounded, .material-symbols-sharp, .material-icons {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      line-height: 1 !important;
+      box-sizing: content-box;
+      overflow: hidden;
+      white-space: nowrap;
+      direction: ltr;
+      vertical-align: middle;
+      font-size: 20px;
+    }
+    .pb-safe {
+      padding-bottom: env(safe-area-inset-bottom, 16px);
+    }
+  </style>
+</head>
+<body class="bg-light-surface-soft text-light-on-surface font-body antialiased min-h-screen flex flex-col lg:flex-row pb-safe">
+
+  <!-- Mobile Backdrop Overlay for Drawer -->
+  <div id="sidebar-overlay" onclick="toggleSidebar(false)" class="hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-xs transition-opacity lg:hidden"></div>
+
+  <!-- Desktop Fixed & Mobile Slide-Out Sidebar Navigation -->
+  <aside id="sidebar-nav" class="fixed inset-y-0 left-0 z-50 w-64 bg-light-surface border-r border-light-outline-variant flex flex-col justify-between shrink-0 transform -translate-x-full transition-transform duration-200 lg:translate-x-0 lg:static lg:h-screen lg:sticky lg:top-0">
+    <div class="flex flex-col flex-1 overflow-y-auto">
+      
+      <!-- Brand Header -->
+      <div class="h-16 lg:h-20 px-5 lg:px-6 flex items-center justify-between border-b border-light-outline-variant shrink-0">
+        <a href="dashboard.html" class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-light-primary flex items-center justify-center text-light-on-primary font-headline font-bold text-headline-sm shadow-xs">
+            A
+          </div>
+          <div class="flex flex-col">
+            <span class="font-headline font-bold text-title-md tracking-tight text-brand-indigo">ARCI Bimbel</span>
+            <span class="text-[11px] text-light-on-surface-variant font-label">Dashboard Operasional</span>
+          </div>
+        </a>
+
+        <!-- Mobile Drawer Close Button -->
+        <button type="button" onclick="toggleSidebar(false)" class="lg:hidden p-1.5 rounded-lg text-light-on-surface-variant hover:bg-light-surface-container" aria-label="Tutup Menu">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="p-3.5 lg:p-4 flex flex-col gap-1">
+        <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">dashboard</span>
+          <span>Ringkasan</span>
+        </a>
+
+        <a href="leads.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">person_search</span>
+            <span>Lead &amp; Pipeline</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">8</span>
+        </a>
+
+        <a href="verifikasi-pendaftaran.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">how_to_reg</span>
+            <span>Pendaftaran</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">3</span>
+        </a>
+
+        <a href="students.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">school</span>
+            <span>Siswa &amp; Wali</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">184</span>
+        </a>
+
+        <a href="classes.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">class</span>
+          <span>Program &amp; Kelas</span>
+        </a>
+
+        <a href="schedule.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">calendar_month</span>
+          <span>Jadwal Sesi</span>
+        </a>
+
+        <a href="attendance.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">fact_check</span>
+          <span>Presensi Siswa</span>
+        </a>
+
+        <a href="finance.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">payments</span>
+            <span>Tagihan &amp; Kas</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-warning text-on-warning font-bold">Rp</span>
+        </a>
+
+        <!-- Active Menu: Laporan KPI -->
+        <a href="reports.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-light-primary text-light-on-primary font-label text-body-md shadow-xs transition-colors">
+          <span class="material-symbols-outlined text-[20px] text-accent">analytics</span>
+          <span class="font-semibold">Laporan KPI</span>
+        </a>
+        <a href="cms.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">article</span>
+          <span>Konten Website</span>
+        </a>
+
+        <a href="communications.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">campaign</span>
+          <span>Pengumuman</span>
+        </a>
+
+        <a href="settings.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">admin_panel_settings</span>
+          <span>Hak Akses</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- User Profile Footer -->
+    <div class="p-3.5 lg:p-4 border-t border-light-outline-variant shrink-0 bg-light-surface">
+      <div class="flex items-center justify-between p-2 rounded-lg hover:bg-light-surface-container transition-colors">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-light-primary text-light-on-primary flex items-center justify-center font-bold font-headline text-body-md shadow-2xs">
+            BA
+          </div>
+          <div class="flex flex-col">
+            <span class="text-body-sm font-semibold text-light-on-surface">Bambang S.</span>
+            <span class="text-[11px] text-light-on-surface-variant">Direktur Operasional</span>
+          </div>
+        </div>
+        <a href="login-admin.html" title="Keluar / Logout" class="p-1.5 rounded-md text-light-on-surface-variant hover:text-danger hover:bg-danger/10 transition-colors">
+          <span class="material-symbols-outlined text-[18px]">logout</span>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div class="flex-1 flex flex-col min-w-0">
+    
+    <!-- Top Utility Bar (App Shell) -->
+    <header class="h-16 lg:h-20 bg-light-surface border-b border-light-outline-variant px-4 sm:px-6 lg:px-8 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
+      <div class="flex items-center gap-3 sm:gap-4 flex-1 max-w-md">
+        <!-- Mobile Drawer Toggle -->
+        <button type="button" onclick="toggleSidebar(true)" class="lg:hidden w-10 h-10 rounded-lg border border-light-outline flex items-center justify-center text-light-on-surface hover:bg-light-surface-container shrink-0" aria-label="Buka Menu Navigasi">
+          <span class="material-symbols-outlined text-[22px]">menu</span>
+        </button>
+
+        <div class="relative w-full">
+          <span class="material-symbols-outlined absolute left-3 top-2.5 text-light-on-surface-variant text-[20px]">search</span>
+          <input 
+            type="search" 
+            id="report-search"
+            oninput="handleSearch(this.value)"
+            placeholder="Cari metrik, periode laporan, cabang, atau nama program..." 
+            class="w-full pl-10 pr-4 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface text-light-on-surface placeholder:text-light-on-surface-variant">
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3 ml-2">
+        <button type="button" aria-label="Notifikasi" onclick="showToast('Laporan pertumbuhan bulan berjalan telah diperbarui otomatis.', 'info')" class="relative w-10 h-10 rounded-lg border border-light-outline flex items-center justify-center text-light-on-surface hover:bg-light-surface-container transition-colors shrink-0">
+          <span class="material-symbols-outlined text-[20px]">notifications</span>
+          <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-danger ring-2 ring-light-surface"></span>
+        </button>
+        <button type="button" onclick="printExecutiveReport()" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container font-label text-body-sm sm:text-body-md font-semibold transition-colors shadow-2xs">
+          <span class="material-symbols-outlined text-[18px] text-light-on-surface-variant">print</span>
+          <span class="hidden md:inline">Cetak PDF</span>
+          <span class="md:hidden">PDF</span>
+        </button>
+        <button type="button" onclick="openExportModal()" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm sm:text-body-md font-semibold shadow-xs transition-colors whitespace-nowrap min-h-[40px]">
+          <span class="material-symbols-outlined text-[18px]">download</span>
+          <span>Ekspor XLSX / CSV</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Operational Reports Content -->
+    <main class="p-4 sm:p-6 lg:p-8 flex-1 flex flex-col gap-6">
+      
+      <!-- Top Title and Filter Header -->
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 bg-light-surface p-5 rounded-2xl border border-light-outline-variant shadow-xs">
+        <div>
+          <div class="flex items-center gap-2 text-label-sm text-light-on-surface-variant">
+            <span>Manajemen Eksekutif</span>
+            <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+            <span class="font-semibold text-light-primary">Laporan &amp; Analitik KPI (D11)</span>
+          </div>
+          <h1 class="text-headline-sm sm:text-headline-md font-headline font-bold text-light-on-surface mt-1">
+            Laporan Kinerja &amp; Analisis Pertumbuhan Bimbel
+          </h1>
+          <p class="text-body-sm text-light-on-surface-variant mt-0.5">
+            Analisis konversi pendaftaran, okupansi kelas, kehadiran siswa, dan proyeksi arus kas.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
+          <!-- Branch Selector -->
+          <div class="flex items-center gap-2 bg-light-surface-soft px-3 py-1.5 rounded-xl border border-light-outline-variant shadow-2xs">
+            <span class="material-symbols-outlined text-[18px] text-light-on-surface-variant">domain</span>
+            <select 
+              id="branch-filter"
+              onchange="handleFilterChange()"
+              class="bg-transparent border-none text-body-sm font-label font-medium text-light-on-surface focus:ring-0 cursor-pointer py-1 pl-1 pr-6">
+              <option value="all" selected>Semua Cabang (Sudirman &amp; Online)</option>
+              <option value="sudirman">Cabang Sudirman</option>
+              <option value="online">Kelas Online Nasional</option>
+            </select>
+          </div>
+
+          <!-- Date Range Selector -->
+          <div class="flex items-center gap-2 bg-light-surface-soft px-3 py-1.5 rounded-xl border border-light-outline-variant shadow-2xs">
+            <span class="material-symbols-outlined text-[18px] text-light-on-surface-variant">date_range</span>
+            <select 
+              id="period-filter"
+              onchange="handleFilterChange()"
+              class="bg-transparent border-none text-body-sm font-label font-medium text-light-on-surface focus:ring-0 cursor-pointer py-1 pl-1 pr-6">
+              <option value="m11-2026" selected>November 2026 (Bulan Berjalan)</option>
+              <option value="q4-2026">Kuartal 4 (Okt - Des 2026)</option>
+              <option value="ytd">Year to Date 2026</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Executive KPI Cards Grid -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" aria-label="Ringkasan Eksekutif KPI">
+        <!-- KPI 1 -->
+        <div class="bg-light-surface p-5 rounded-2xl border border-light-outline-variant shadow-xs flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-label-sm text-light-on-surface-variant font-medium">Total Pendaftaran Diterima</span>
+            <span class="w-8 h-8 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center shadow-2xs">
+              <span class="material-symbols-outlined text-[18px]">how_to_reg</span>
+            </span>
+          </div>
+          <div class="mt-3">
+            <div class="text-headline-md font-bold text-brand-indigo font-headline">148 Siswa</div>
+            <div class="text-body-sm text-success flex items-center gap-1 mt-1 font-semibold">
+              <span class="material-symbols-outlined text-[14px]">arrow_upward</span>
+              +18.4% vs bulan lalu
+            </div>
+          </div>
+        </div>
+
+        <!-- KPI 2 -->
+        <div class="bg-light-surface p-5 rounded-2xl border border-light-outline-variant shadow-xs flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-label-sm text-light-on-surface-variant font-medium">Rasio Konversi Lead (Funnel)</span>
+            <span class="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center shadow-2xs">
+              <span class="material-symbols-outlined text-[18px]">filter_alt</span>
+            </span>
+          </div>
+          <div class="mt-3">
+            <div class="text-headline-md font-bold text-light-on-surface font-headline">41.8%</div>
+            <div class="text-body-sm text-success flex items-center gap-1 mt-1 font-semibold">
+              <span class="material-symbols-outlined text-[14px]">trending_up</span>
+              148 siswa dari 354 inquiry
+            </div>
+          </div>
+        </div>
+
+        <!-- KPI 3 -->
+        <div class="bg-light-surface p-5 rounded-2xl border border-light-outline-variant shadow-xs flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-label-sm text-light-on-surface-variant font-medium">Tingkat Okupansi Kelas</span>
+            <span class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center shadow-2xs">
+              <span class="material-symbols-outlined text-[18px]">event_seat</span>
+            </span>
+          </div>
+          <div class="mt-3">
+            <div class="text-headline-md font-bold text-light-on-surface font-headline">88.5%</div>
+            <div class="text-body-sm text-light-on-surface-variant mt-1">177 kursi terisi dari 200 kapasitas</div>
+          </div>
+        </div>
+
+        <!-- KPI 4 -->
+        <div class="bg-light-surface p-5 rounded-2xl border border-light-outline-variant shadow-xs flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-label-sm text-light-on-surface-variant font-medium">Total Penerimaan Kas (Bulan Ini)</span>
+            <span class="w-8 h-8 rounded-lg bg-purple-50 text-purple-700 flex items-center justify-center shadow-2xs">
+              <span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
+            </span>
+          </div>
+          <div class="mt-3">
+            <div class="text-headline-md font-bold text-success font-headline">Rp128.500.000</div>
+            <div class="text-body-sm text-light-on-surface-variant mt-1">94% target penerimaan tercapai</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Analytics Section: Lead Funnel & Class Performance -->
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+        
+        <!-- Funnel Konversi Pendaftaran (7 Columns) -->
+        <div class="xl:col-span-7 bg-light-surface rounded-2xl border border-light-outline-variant shadow-xs p-5 sm:p-6 flex flex-col gap-5">
+          <div class="flex items-center justify-between border-b border-light-outline-variant pb-4">
+            <div>
+              <h2 class="font-headline font-bold text-title-lg text-light-on-surface">Funnel Konversi Lead &amp; Pendaftaran</h2>
+              <p class="text-body-sm text-light-on-surface-variant mt-0.5">Perjalanan calon siswa dari kunjungan website hingga pembayaran terverifikasi.</p>
+            </div>
+            <span class="px-2.5 py-1 rounded-full text-label-sm font-semibold bg-light-surface-container text-light-on-surface">Periode: Nov 2026</span>
+          </div>
+
+          <!-- Visual Funnel Bars -->
+          <div class="flex flex-col gap-4">
+            
+            <!-- Step 1: Website Visitors & Leads -->
+            <div class="flex flex-col gap-1.5">
+              <div class="flex items-center justify-between text-body-sm">
+                <span class="font-semibold text-light-on-surface flex items-center gap-2">
+                  <span class="w-6 h-6 rounded bg-blue-100 text-blue-800 flex items-center justify-center text-label-sm font-bold">1</span>
+                  Kunjungan Website &amp; Formulir Masuk (Total Leads)
+                </span>
+                <span class="font-bold text-light-on-surface">354 Leads (100%)</span>
+              </div>
+              <div class="w-full bg-light-surface-container rounded-full h-3 overflow-hidden">
+                <div class="bg-blue-600 h-3 rounded-full" style="width: 100%;"></div>
+              </div>
+            </div>
+
+            <!-- Step 2: Dihubungi & Konsultasi Trial -->
+            <div class="flex flex-col gap-1.5">
+              <div class="flex items-center justify-between text-body-sm">
+                <span class="font-semibold text-light-on-surface flex items-center gap-2">
+                  <span class="w-6 h-6 rounded bg-amber-100 text-amber-800 flex items-center justify-center text-label-sm font-bold">2</span>
+                  Follow-up WhatsApp &amp; Sesi Trial Gratis
+                </span>
+                <span class="font-bold text-light-on-surface">262 Siswa (74.0%)</span>
+              </div>
+              <div class="w-full bg-light-surface-container rounded-full h-3 overflow-hidden">
+                <div class="bg-amber-500 h-3 rounded-full" style="width: 74%;"></div>
+              </div>
+            </div>
+
+            <!-- Step 3: Mengisi Formulir Pendaftaran -->
+            <div class="flex flex-col gap-1.5">
+              <div class="flex items-center justify-between text-body-sm">
+                <span class="font-semibold text-light-on-surface flex items-center gap-2">
+                  <span class="w-6 h-6 rounded bg-purple-100 text-purple-800 flex items-center justify-center text-label-sm font-bold">3</span>
+                  Mengisi Form Pendaftaran Siswa Baru (Berkas Masuk)
+                </span>
+                <span class="font-bold text-light-on-surface">178 Berkas (50.2%)</span>
+              </div>
+              <div class="w-full bg-light-surface-container rounded-full h-3 overflow-hidden">
+                <div class="bg-purple-600 h-3 rounded-full" style="width: 50.2%;"></div>
+              </div>
+            </div>
+
+            <!-- Step 4: Pembayaran & Siswa Resmi Aktif -->
+            <div class="flex flex-col gap-1.5">
+              <div class="flex items-center justify-between text-body-sm">
+                <span class="font-semibold text-light-on-surface flex items-center gap-2">
+                  <span class="w-6 h-6 rounded bg-emerald-100 text-emerald-800 flex items-center justify-center text-label-sm font-bold">4</span>
+                  Pembayaran SPP Lunas &amp; Ditempatkan ke Rombel
+                </span>
+                <span class="font-bold text-success">148 Siswa (41.8%)</span>
+              </div>
+              <div class="w-full bg-light-surface-container rounded-full h-3 overflow-hidden">
+                <div class="bg-emerald-600 h-3 rounded-full" style="width: 41.8%;"></div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Channel Source Summary Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-light-outline-variant text-center">
+            <div class="p-3 bg-light-surface-soft rounded-xl border border-light-outline-variant shadow-2xs">
+              <div class="text-[11px] text-light-on-surface-variant font-label">Sumber Website Organik</div>
+              <div class="text-title-md font-bold text-brand-indigo mt-0.5">54.2%</div>
+              <div class="text-[10px] text-success font-semibold">192 leads</div>
+            </div>
+            <div class="p-3 bg-light-surface-soft rounded-xl border border-light-outline-variant shadow-2xs">
+              <div class="text-[11px] text-light-on-surface-variant font-label">WhatsApp Langsung</div>
+              <div class="text-title-md font-bold text-brand-indigo mt-0.5">28.5%</div>
+              <div class="text-[10px] text-success font-semibold">101 leads</div>
+            </div>
+            <div class="p-3 bg-light-surface-soft rounded-xl border border-light-outline-variant shadow-2xs">
+              <div class="text-[11px] text-light-on-surface-variant font-label">Referral &amp; Walk-in</div>
+              <div class="text-title-md font-bold text-brand-indigo mt-0.5">17.3%</div>
+              <div class="text-[10px] text-success font-semibold">61 leads</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Okupansi Kelas & Program Populer (5 Columns) -->
+        <div class="xl:col-span-5 bg-light-surface rounded-2xl border border-light-outline-variant shadow-xs p-5 sm:p-6 flex flex-col gap-5">
+          <div class="flex items-center justify-between border-b border-light-outline-variant pb-4">
+            <div>
+              <h2 class="font-headline font-bold text-title-md text-light-on-surface">Okupansi Program</h2>
+              <p class="text-body-sm text-light-on-surface-variant mt-0.5">Distribusi siswa aktif per program belajar.</p>
+            </div>
+            <a href="classes.html" class="text-light-primary text-body-sm font-semibold hover:underline">Kelola Kelas →</a>
+          </div>
+
+          <div class="flex flex-col gap-3.5">
+            <!-- Program 1 -->
+            <div class="p-3.5 bg-light-surface-soft rounded-xl border border-light-outline-variant flex flex-col gap-2 shadow-2xs">
+              <div class="flex items-center justify-between text-body-sm">
+                <span class="font-bold text-brand-indigo">UTBK SNBT 2026 Intensif</span>
+                <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-danger/15 text-danger">Penuh (100%)</span>
+              </div>
+              <div class="w-full bg-light-surface-container rounded-full h-2 overflow-hidden">
+                <div class="bg-danger h-2 rounded-full" style="width: 100%;"></div>
+              </div>
+              <div class="flex items-center justify-between text-[11px] text-light-on-surface-variant">
+                <span>4 Rombel • 60 / 60 Siswa Terisi</span>
+                <span class="text-warning font-semibold">5 Siswa Daftar Tunggu</span>
+              </div>
+            </div>
+
+            <!-- Program 2 -->
+            <div class="p-3.5 bg-light-surface-soft rounded-xl border border-light-outline-variant flex flex-col gap-2 shadow-2xs">
+              <div class="flex items-center justify-between text-body-sm">
+                <span class="font-bold text-brand-indigo">Reguler SMA (10-12)</span>
+                <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-success/15 text-success">86% Terisi</span>
+              </div>
+              <div class="w-full bg-light-surface-container rounded-full h-2 overflow-hidden">
+                <div class="bg-success h-2 rounded-full" style="width: 86.6%;"></div>
+              </div>
+              <div class="flex items-center justify-between text-[11px] text-light-on-surface-variant">
+                <span>5 Rombel • 65 / 75 Kursi Terisi</span>
+                <span>Sisa 10 Kursi</span>
+              </div>
+            </div>
+
+            <!-- Program 3 -->
+            <div class="p-3.5 bg-light-surface-soft rounded-xl border border-light-outline-variant flex flex-col gap-2 shadow-2xs">
+              <div class="flex items-center justify-between text-body-sm">
+                <span class="font-bold text-brand-indigo">Reguler SMP (7-9)</span>
+                <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-success/15 text-success">80% Terisi</span>
+              </div>
+              <div class="w-full bg-light-surface-container rounded-full h-2 overflow-hidden">
+                <div class="bg-success h-2 rounded-full" style="width: 80%;"></div>
+              </div>
+              <div class="flex items-center justify-between text-[11px] text-light-on-surface-variant">
+                <span>3 Rombel • 36 / 45 Kursi Terisi</span>
+                <span>Sisa 9 Kursi</span>
+              </div>
+            </div>
+
+            <!-- Program 4 -->
+            <div class="p-3.5 bg-light-surface-soft rounded-xl border border-light-outline-variant flex flex-col gap-2 shadow-2xs">
+              <div class="flex items-center justify-between text-body-sm">
+                <span class="font-bold text-brand-indigo">Privat 1-on-1 VIP</span>
+                <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-purple-100 text-purple-800">80% Tutor Terjadwal</span>
+              </div>
+              <div class="w-full bg-light-surface-container rounded-full h-2 overflow-hidden">
+                <div class="bg-purple-600 h-2 rounded-full" style="width: 80%;"></div>
+              </div>
+              <div class="flex items-center justify-between text-[11px] text-light-on-surface-variant">
+                <span>16 Siswa Aktif • 8 Tutor Ditugaskan</span>
+                <span>Sisa Slot 4 Sesi/Minggu</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Breakdown Table: Kinerja Tutor & Presensi Rombel -->
+      <div class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-xs overflow-hidden flex flex-col">
+        <div class="p-5 border-b border-light-outline-variant flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h2 class="font-headline font-bold text-title-md text-light-on-surface">Rekap Kinerja Mengajar Tutor &amp; Kehadiran Rombel</h2>
+            <p class="text-body-sm text-light-on-surface-variant mt-0.5">Monitoring total jam ajar, rasio kehadiran siswa, dan ketepatan pengisian presensi.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-body-sm font-semibold text-light-on-surface">Total: 4 Tutor Aktif Utama</span>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-body-sm">
+            <thead>
+              <tr class="bg-light-surface-container border-b border-light-outline-variant text-label-sm font-bold text-light-on-surface">
+                <th class="p-4">TUTOR PENGAJAR</th>
+                <th class="p-4">BIDANG STUDI</th>
+                <th class="p-4 text-center">TOTAL SESI DIAJAR</th>
+                <th class="p-4 text-center">PRESENSI SISWA RATA-RATA</th>
+                <th class="p-4 text-center">KETEPATAN INPUT PRESENSI</th>
+                <th class="p-4 text-right">AKSI</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-light-outline-variant">
+              <!-- Tutor 1 -->
+              <tr class="hover:bg-light-surface-soft transition-colors">
+                <td class="p-4">
+                  <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-light-primary text-light-on-primary flex items-center justify-center font-bold text-label-sm shadow-2xs">
+                      BP
+                    </div>
+                    <div>
+                      <div class="font-bold text-light-on-surface">Budi Pratama, S.Si</div>
+                      <div class="text-[11px] text-light-on-surface-variant">NIP: TUT-2023-01</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="p-4 text-light-on-surface">Fisika (UTBK &amp; Reguler SMA)</td>
+                <td class="p-4 text-center font-bold text-brand-indigo">28 Sesi</td>
+                <td class="p-4 text-center">
+                  <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-success/15 text-success">
+                    97.2% Hadir
+                  </span>
+                </td>
+                <td class="p-4 text-center text-success font-semibold">100% Tepat Waktu</td>
+                <td class="p-4 text-right">
+                  <button type="button" onclick="openTutorHoursModal('budi')" class="px-3 py-1.5 rounded-lg border border-light-outline hover:bg-light-surface-container text-light-primary font-semibold text-body-sm whitespace-nowrap shadow-2xs transition-colors">
+                    Detail Jam
+                  </button>
+                </td>
+              </tr>
+
+              <!-- Tutor 2 -->
+              <tr class="hover:bg-light-surface-soft transition-colors">
+                <td class="p-4">
+                  <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-label-sm shadow-2xs">
+                      SN
+                    </div>
+                    <div>
+                      <div class="font-bold text-light-on-surface">Siti Nurhaliza, M.Pd</div>
+                      <div class="text-[11px] text-light-on-surface-variant">NIP: TUT-2023-02</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="p-4 text-light-on-surface">Matematika &amp; TPS Penalaran</td>
+                <td class="p-4 text-center font-bold text-brand-indigo">32 Sesi</td>
+                <td class="p-4 text-center">
+                  <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-success/15 text-success">
+                    95.8% Hadir
+                  </span>
+                </td>
+                <td class="p-4 text-center text-success font-semibold">98% Tepat Waktu</td>
+                <td class="p-4 text-right">
+                  <button type="button" onclick="openTutorHoursModal('siti')" class="px-3 py-1.5 rounded-lg border border-light-outline hover:bg-light-surface-container text-light-primary font-semibold text-body-sm whitespace-nowrap shadow-2xs transition-colors">
+                    Detail Jam
+                  </button>
+                </td>
+              </tr>
+
+              <!-- Tutor 3 -->
+              <tr class="hover:bg-light-surface-soft transition-colors">
+                <td class="p-4">
+                  <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-light-primary-container text-light-primary flex items-center justify-center font-bold text-label-sm">
+                      DA
+                    </div>
+                    <div>
+                      <div class="font-bold text-light-on-surface">Dimas Anggara, S.Si</div>
+                      <div class="text-[11px] text-light-on-surface-variant">NIP: TUT-2024-05</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="p-4 text-light-on-surface">Kimia Organik &amp; Anorganik</td>
+                <td class="p-4 text-center font-bold text-brand-indigo">20 Sesi</td>
+                <td class="p-4 text-center">
+                  <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-success/15 text-success">
+                    94.1% Hadir
+                  </span>
+                </td>
+                <td class="p-4 text-center text-success font-semibold">95% Tepat Waktu</td>
+                <td class="p-4 text-right">
+                  <button type="button" onclick="openTutorHoursModal('dimas')" class="px-3 py-1.5 rounded-lg border border-light-outline hover:bg-light-surface-container text-light-primary font-semibold text-body-sm whitespace-nowrap shadow-2xs transition-colors">
+                    Detail Jam
+                  </button>
+                </td>
+              </tr>
+
+              <!-- Tutor 4 -->
+              <tr class="hover:bg-light-surface-soft transition-colors">
+                <td class="p-4">
+                  <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-light-primary-container text-light-primary flex items-center justify-center font-bold text-label-sm">
+                      RK
+                    </div>
+                    <div>
+                      <div class="font-bold text-light-on-surface">Rina Kusuma, S.E</div>
+                      <div class="text-[11px] text-light-on-surface-variant">NIP: TUT-2024-08</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="p-4 text-light-on-surface">Ekonomi &amp; Akuntansi</td>
+                <td class="p-4 text-center font-bold text-brand-indigo">18 Sesi</td>
+                <td class="p-4 text-center">
+                  <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-success/15 text-success">
+                    96.0% Hadir
+                  </span>
+                </td>
+                <td class="p-4 text-center text-warning font-semibold">1 Pending Hari Ini</td>
+                <td class="p-4 text-right">
+                  <button type="button" onclick="openTutorHoursModal('rina')" class="px-3 py-1.5 rounded-lg border border-light-outline hover:bg-light-surface-container text-light-primary font-semibold text-body-sm whitespace-nowrap shadow-2xs transition-colors">
+                    Detail Jam
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="p-4 bg-light-surface-container border-t border-light-outline-variant flex flex-col sm:flex-row items-center justify-between gap-2 text-body-sm text-light-on-surface-variant">
+          <span>Menampilkan 4 dari 4 tutor aktif pada periode berjalan</span>
+          <span class="text-[11px] text-light-on-surface-variant">Terakhir disinkronisasi: Hari ini 17:45 WIB</span>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 1: DETAIL JAM MENGAJAR TUTOR                             -->
+  <!-- ============================================================== -->
+  <div id="modal-tutor-hours" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+    <div class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-2xl max-w-lg w-full overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="px-6 py-4 border-b border-light-outline-variant flex items-center justify-between bg-light-surface-soft">
+        <div class="flex items-center gap-2 text-brand-indigo">
+          <span class="material-symbols-outlined text-[22px]">badge</span>
+          <h3 class="font-headline font-bold text-title-md text-light-on-surface">Detail Kinerja Mengajar Tutor</h3>
+        </div>
+        <button type="button" onclick="closeTutorHoursModal()" class="text-light-on-surface-variant hover:text-light-on-surface p-1 rounded-lg hover:bg-light-surface-container">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-4">
+        <!-- Tutor Card Header -->
+        <div class="p-4 rounded-xl bg-light-surface-soft border border-light-outline-variant flex items-center gap-3">
+          <div id="modal-tutor-avatar" class="w-12 h-12 rounded-full bg-light-primary text-light-on-primary flex items-center justify-center font-bold font-headline text-title-md shrink-0">
+            BP
+          </div>
+          <div class="flex-1">
+            <h4 id="modal-tutor-name" class="font-bold text-body-lg text-light-on-surface">Budi Pratama, S.Si</h4>
+            <p id="modal-tutor-nip" class="text-body-sm text-light-on-surface-variant">Fisika • NIP: TUT-2023-01</p>
+          </div>
+          <span class="px-2.5 py-1 rounded-full text-label-sm font-bold bg-success/15 text-success">Aktif Mengajar</span>
+        </div>
+
+        <!-- Metrics Grid -->
+        <div class="grid grid-cols-2 gap-3 text-body-sm">
+          <div class="p-3 bg-light-surface-container rounded-xl">
+            <span class="text-[11px] text-light-on-surface-variant font-medium">Total Jam Mengajar</span>
+            <div id="modal-tutor-hours-count" class="text-title-md font-bold text-brand-indigo mt-0.5">42 Jam (28 Sesi)</div>
+          </div>
+          <div class="p-3 bg-light-surface-container rounded-xl">
+            <span class="text-[11px] text-light-on-surface-variant font-medium">Kepuasan Siswa (CSAT)</span>
+            <div id="modal-tutor-csat" class="text-title-md font-bold text-success mt-0.5">4.92 / 5.0 ★</div>
+          </div>
+          <div class="p-3 bg-light-surface-container rounded-xl">
+            <span class="text-[11px] text-light-on-surface-variant font-medium">Ketepatan Input Presensi</span>
+            <div id="modal-tutor-punctuality" class="text-title-md font-bold text-light-on-surface mt-0.5">100% On-time</div>
+          </div>
+          <div class="p-3 bg-light-surface-container rounded-xl">
+            <span class="text-[11px] text-light-on-surface-variant font-medium">Proyeksi Honorarium</span>
+            <div id="modal-tutor-fee" class="text-title-md font-bold text-success mt-0.5">Rp6.300.000</div>
+          </div>
+        </div>
+
+        <!-- Teaching Class List -->
+        <div>
+          <span class="text-label-sm font-semibold text-light-on-surface mb-2 block">Daftar Rombel yang Diampu:</span>
+          <div class="border border-light-outline-variant rounded-xl divide-y divide-light-outline-variant overflow-hidden text-body-sm">
+            <div class="p-3 flex items-center justify-between">
+              <div>
+                <span class="font-semibold text-light-on-surface">UTBK 12-IPA — Fisika Gelombang</span>
+                <div class="text-[11px] text-light-on-surface-variant">14 Sesi • 14 Siswa Terdaftar</div>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-success/15 text-success">98% Hadir</span>
+            </div>
+            <div class="p-3 flex items-center justify-between">
+              <div>
+                <span class="font-semibold text-light-on-surface">Reguler SMA 11 — Fisika Mekanika</span>
+                <div class="text-[11px] text-light-on-surface-variant">10 Sesi • 15 Siswa Terdaftar</div>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-success/15 text-success">96% Hadir</span>
+            </div>
+            <div class="p-3 flex items-center justify-between">
+              <div>
+                <span class="font-semibold text-light-on-surface">Kelas Online Malam — Saintek UTBK</span>
+                <div class="text-[11px] text-light-on-surface-variant">4 Sesi • 25 Siswa Live</div>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-success/15 text-success">97% Hadir</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-light-outline-variant flex items-center justify-end">
+          <button type="button" onclick="closeTutorHoursModal()" class="px-5 py-2 rounded-xl bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm font-bold shadow-xs">
+            Tutup
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 2: EKSPOR LAPORAN EKSEKUTIF                             -->
+  <!-- ============================================================== -->
+  <div id="modal-export" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+    <div class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-2xl max-w-md w-full overflow-hidden flex flex-col">
+      <div class="px-6 py-4 border-b border-light-outline-variant flex items-center justify-between bg-light-surface-soft">
+        <div class="flex items-center gap-2 text-brand-indigo">
+          <span class="material-symbols-outlined text-[22px]">download</span>
+          <h3 class="font-headline font-bold text-title-md text-light-on-surface">Ekspor Laporan Kinerja KPI</h3>
+        </div>
+        <button type="button" onclick="closeExportModal()" class="text-light-on-surface-variant hover:text-light-on-surface p-1 rounded-lg hover:bg-light-surface-container">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <form id="form-export" onsubmit="submitExport(event)" class="p-6 space-y-4">
+        <div>
+          <label class="block text-body-sm font-semibold text-light-on-surface mb-1">Format Dokumen *</label>
+          <div class="grid grid-cols-3 gap-2">
+            <label class="flex flex-col items-center p-3 rounded-xl border border-light-outline-variant cursor-pointer hover:bg-light-surface-container has-[:checked]:border-light-primary has-[:checked]:bg-light-primary/5">
+              <input type="radio" name="export_format" value="xlsx" checked class="text-light-primary focus:ring-light-primary mb-1">
+              <span class="text-body-sm font-bold text-light-on-surface">Excel (XLSX)</span>
+              <span class="text-[10px] text-light-on-surface-variant">Lengkap</span>
+            </label>
+            <label class="flex flex-col items-center p-3 rounded-xl border border-light-outline-variant cursor-pointer hover:bg-light-surface-container has-[:checked]:border-light-primary has-[:checked]:bg-light-primary/5">
+              <input type="radio" name="export_format" value="csv" class="text-light-primary focus:ring-light-primary mb-1">
+              <span class="text-body-sm font-bold text-light-on-surface">CSV</span>
+              <span class="text-[10px] text-light-on-surface-variant">Tabular</span>
+            </label>
+            <label class="flex flex-col items-center p-3 rounded-xl border border-light-outline-variant cursor-pointer hover:bg-light-surface-container has-[:checked]:border-light-primary has-[:checked]:bg-light-primary/5">
+              <input type="radio" name="export_format" value="pdf" class="text-light-primary focus:ring-light-primary mb-1">
+              <span class="text-body-sm font-bold text-light-on-surface">PDF</span>
+              <span class="text-[10px] text-light-on-surface-variant">Ringkasan</span>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label for="export-modules" class="block text-body-sm font-semibold text-light-on-surface mb-1">Cakupan Data *</label>
+          <select id="export-modules" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">
+            <option value="all">Seluruh KPI (Funnel, Okupansi, Arus Kas &amp; Tutor)</option>
+            <option value="funnel">Funnel Konversi Pendaftaran Saja</option>
+            <option value="finance">Arus Kas &amp; Penerimaan SPP Saja</option>
+            <option value="tutors">Kinerja Jam Ajar Tutor Saja</option>
+          </select>
+        </div>
+
+        <div class="pt-3 border-t border-light-outline-variant flex items-center justify-end gap-3">
+          <button type="button" onclick="closeExportModal()" class="px-4 py-2 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container text-body-sm font-semibold">
+            Batal
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm font-bold shadow-xs">
+            Mulai Ekspor
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-full"></div>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    const tutorData = {
+      'budi': {
+        name: 'Budi Pratama, S.Si',
+        nip: 'Fisika • NIP: TUT-2023-01',
+        initials: 'BP',
+        hours: '42 Jam (28 Sesi)',
+        csat: '4.92 / 5.0 ★',
+        punctuality: '100% On-time',
+        fee: 'Rp6.300.000'
+      },
+      'siti': {
+        name: 'Siti Nurhaliza, M.Pd',
+        nip: 'Matematika & TPS Penalaran • NIP: TUT-2023-02',
+        initials: 'SN',
+        hours: '48 Jam (32 Sesi)',
+        csat: '4.95 / 5.0 ★',
+        punctuality: '98% On-time',
+        fee: 'Rp7.200.000'
+      },
+      'dimas': {
+        name: 'Dimas Anggara, S.Si',
+        nip: 'Kimia Organik & Anorganik • NIP: TUT-2024-05',
+        initials: 'DA',
+        hours: '30 Jam (20 Sesi)',
+        csat: '4.88 / 5.0 ★',
+        punctuality: '95% On-time',
+        fee: 'Rp4.500.000'
+      },
+      'rina': {
+        name: 'Rina Kusuma, S.E',
+        nip: 'Ekonomi & Akuntansi • NIP: TUT-2024-08',
+        initials: 'RK',
+        hours: '27 Jam (18 Sesi)',
+        csat: '4.90 / 5.0 ★',
+        punctuality: '94% On-time',
+        fee: 'Rp4.050.000'
+      }
+    };
+
+    // Mobile Drawer Toggle
+    function toggleSidebar(open) {
+      const sidebar = document.getElementById('sidebar-nav');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (open) {
+        sidebar.classList.remove('-translate-x-full');
+        sidebar.classList.add('translate-x-0');
+        overlay.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+        sidebar.classList.remove('translate-x-0');
+        overlay.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }
+    }
+
+    // Modal Handlers
+    function openTutorHoursModal(tutorKey) {
+      const t = tutorData[tutorKey];
+      if (t) {
+        document.getElementById('modal-tutor-name').textContent = t.name;
+        document.getElementById('modal-tutor-nip').textContent = t.nip;
+        document.getElementById('modal-tutor-avatar').textContent = t.initials;
+        document.getElementById('modal-tutor-hours-count').textContent = t.hours;
+        document.getElementById('modal-tutor-csat').textContent = t.csat;
+        document.getElementById('modal-tutor-punctuality').textContent = t.punctuality;
+        document.getElementById('modal-tutor-fee').textContent = t.fee;
+      }
+      document.getElementById('modal-tutor-hours').classList.remove('hidden');
+    }
+    function closeTutorHoursModal() {
+      document.getElementById('modal-tutor-hours').classList.add('hidden');
+    }
+
+    function openExportModal() {
+      document.getElementById('modal-export').classList.remove('hidden');
+    }
+    function closeExportModal() {
+      document.getElementById('modal-export').classList.add('hidden');
+    }
+    function submitExport(e) {
+      e.preventDefault();
+      const format = document.querySelector('input[name="export_format"]:checked').value.toUpperCase();
+      const module = document.getElementById('export-modules').value;
+      closeExportModal();
+      showToast(`Menyiapkan data ekspor format ${format}...`, 'info');
+      setTimeout(() => {
+        showToast(`Laporan_KPI_ARCI_Bimbel_${format}_Nov2026.${format.toLowerCase()} berhasil diunduh!`, 'success');
+      }, 1200);
+    }
+
+    function printExecutiveReport() {
+      showToast('Membuka dialog cetak laporan KPI eksekutif...', 'info');
+      setTimeout(() => {
+        window.print();
+      }, 500);
+    }
+
+    // Filter Change Handler
+    function handleFilterChange() {
+      const branch = document.getElementById('branch-filter').value;
+      const period = document.getElementById('period-filter').value;
+      showToast(`Memperbarui analitik KPI untuk ${branch.toUpperCase()} — ${period.toUpperCase()}`, 'info');
+    }
+
+    function handleSearch(query) {
+      if (query.length > 2) {
+        showToast(`Mencari data KPI: "${query}"`, 'info');
+      }
+    }
+
+    // Toast Notification System
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      
+      let bg = 'bg-light-surface text-light-on-surface border-light-outline-variant';
+      let icon = 'info';
+      let iconColor = 'text-brand-indigo';
+
+      if (type === 'success') {
+        icon = 'check_circle';
+        iconColor = 'text-success';
+      } else if (type === 'warning') {
+        icon = 'warning';
+        iconColor = 'text-warning';
+      } else if (type === 'danger') {
+        icon = 'error';
+        iconColor = 'text-danger';
+      }
+
+      toast.className = `p-4 rounded-xl border ${bg} shadow-lg flex items-center gap-3 transition-all duration-300 transform translate-y-4 opacity-0 pointer-events-auto`;
+      toast.innerHTML = `
+        <span class="material-symbols-outlined ${iconColor} text-[22px] shrink-0">${icon}</span>
+        <span class="text-body-sm font-medium flex-1">${message}</span>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-4', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+  </script>
+</body>
+</html>

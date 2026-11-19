@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Pusat Komunikasi &amp; Broadcast — ARCI Bimbel</title>
+  
+  <!-- Tailwind CSS with Official Plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+  /** @type {import('tailwindcss').Config} */
+  globalThis.tailwind = globalThis.tailwind || {};
+  globalThis.tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          'accent': '#F6C453',
+          'on-accent': '#18212F',
+          'brand-indigo': '#243B7A',
+          'brand-indigo-dark': '#172653',
+          'success': '#1B7330',
+          'on-success': '#FFFFFF',
+          'warning': '#925B06',
+          'on-warning': '#FFFFFF',
+          'danger': '#B91C1C',
+          'on-danger': '#FFFFFF',
+          'light-primary': '#243B7A',
+          'light-on-primary': '#FFFFFF',
+          'light-primary-container': '#EBF0FA',
+          'light-on-primary-container': '#172653',
+          'light-surface': '#FFFFFF',
+          'light-on-surface': '#18212F',
+          'light-surface-soft': '#F8FAFC',
+          'light-surface-container-low': '#F1F5F9',
+          'light-surface-container': '#E2E8F0',
+          'light-on-surface-variant': '#475569',
+          'light-outline': '#94A3B8',
+          'light-outline-variant': '#CBD5E1',
+          'dark-primary': '#9BB3F0',
+          'dark-on-primary': '#0E1A3C',
+          'dark-primary-container': '#1E3166',
+          'dark-on-primary-container': '#D7E3FF',
+          'dark-surface': '#0F172A',
+          'dark-on-surface': '#F8FAFC',
+          'dark-surface-soft': '#1E293B',
+          'dark-surface-container-low': '#152033',
+          'dark-surface-container': '#1E293B',
+          'dark-on-surface-variant': '#CBD5E1',
+          'dark-outline': '#64748B',
+          'dark-outline-variant': '#475569',
+        },
+        borderRadius: {
+          'sm': '4px',
+          'DEFAULT': '8px',
+          'md': '10px',
+          'lg': '12px',
+          'xl': '16px',
+          '2xl': '20px',
+          'full': '9999px',
+        },
+        fontFamily: {
+          'display': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'headline': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'title': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'body': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'label': ['"Plus Jakarta Sans"', 'sans-serif'],
+        },
+        boxShadow: {
+          '2xs': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+          'xs': '0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px -1px rgba(0, 0, 0, 0.08)',
+        }
+      },
+    },
+  };
+  if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+  </script>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+  
+  <style>
+    .material-symbols-outlined, .material-symbols-rounded, .material-symbols-sharp, .material-icons {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      line-height: 1 !important;
+      box-sizing: content-box;
+      overflow: hidden;
+      white-space: nowrap;
+      direction: ltr;
+      vertical-align: middle;
+      font-size: 20px;
+    }
+    .pb-safe {
+      padding-bottom: env(safe-area-inset-bottom, 16px);
+    }
+  </style>
+</head>
+<body class="bg-light-surface-soft text-light-on-surface font-body antialiased min-h-screen flex flex-col lg:flex-row pb-safe">
+
+  <!-- Mobile Backdrop Overlay for Drawer -->
+  <div id="sidebar-overlay" onclick="toggleSidebar(false)" class="hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-xs transition-opacity lg:hidden"></div>
+
+  <!-- Desktop Fixed & Mobile Slide-Out Sidebar Navigation -->
+  <aside id="sidebar-nav" class="fixed inset-y-0 left-0 z-50 w-64 bg-light-surface border-r border-light-outline-variant flex flex-col justify-between shrink-0 transform -translate-x-full transition-transform duration-200 lg:translate-x-0 lg:static lg:h-screen lg:sticky lg:top-0">
+    <div class="flex flex-col flex-1 overflow-y-auto">
+      <!-- Brand Header -->
+      <div class="h-16 lg:h-20 px-5 lg:px-6 flex items-center justify-between border-b border-light-outline-variant shrink-0">
+        <a href="dashboard.html" class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-light-primary flex items-center justify-center text-light-on-primary font-headline font-bold text-headline-sm shadow-xs">
+            A
+          </div>
+          <div class="flex flex-col">
+            <span class="font-headline font-bold text-title-md tracking-tight text-brand-indigo">ARCI Bimbel</span>
+            <span class="text-[11px] text-light-on-surface-variant font-label">Dashboard Operasional</span>
+          </div>
+        </a>
+
+        <!-- Mobile Drawer Close Button -->
+        <button type="button" onclick="toggleSidebar(false)" class="lg:hidden p-1.5 rounded-lg text-light-on-surface-variant hover:bg-light-surface-container" aria-label="Tutup Menu">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="p-3.5 lg:p-4 flex flex-col gap-1">
+        <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">dashboard</span>
+          <span>Ringkasan</span>
+        </a>
+
+        <a href="leads.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">person_search</span>
+            <span>Lead &amp; Pipeline</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">8</span>
+        </a>
+
+        <a href="verifikasi-pendaftaran.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">how_to_reg</span>
+            <span>Pendaftaran</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">3</span>
+        </a>
+
+        <a href="students.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">school</span>
+            <span>Siswa &amp; Wali</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">184</span>
+        </a>
+
+        <a href="classes.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">class</span>
+          <span>Program &amp; Kelas</span>
+        </a>
+
+        <a href="schedule.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">calendar_month</span>
+          <span>Jadwal Sesi</span>
+        </a>
+
+        <a href="attendance.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">fact_check</span>
+          <span>Presensi Siswa</span>
+        </a>
+
+        <a href="finance.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">payments</span>
+            <span>Tagihan &amp; Kas</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">5 Baru</span>
+        </a>
+
+        <!-- Active Menu: Komunikasi & Broadcast -->
+        <a href="communications.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-light-primary text-light-on-primary font-label text-body-md shadow-xs transition-colors">
+          <span class="material-symbols-outlined text-[20px] text-accent">campaign</span>
+          <span class="font-semibold">Komunikasi &amp; Broadcast</span>
+        </a>
+
+        <a href="settings.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">manage_accounts</span>
+          <span>Pengaturan &amp; Role</span>
+        </a>
+
+        <a href="reports.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">analytics</span>
+          <span>Laporan KPI</span>
+        </a>
+        <a href="cms.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">article</span>
+          <span>Konten Website</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- User Profile Footer -->
+    <div class="p-3.5 lg:p-4 border-t border-light-outline-variant shrink-0 bg-light-surface">
+      <div class="flex items-center justify-between p-2 rounded-lg hover:bg-light-surface-container transition-colors">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-light-primary text-light-on-primary flex items-center justify-center font-bold font-headline text-body-md shadow-2xs">
+            CS
+          </div>
+          <div class="flex flex-col">
+            <span class="text-body-sm font-semibold text-light-on-surface">Customer Care</span>
+            <span class="text-[11px] text-light-on-surface-variant">Admin Komunikasi</span>
+          </div>
+        </div>
+        <a href="login-admin.html" title="Keluar / Logout" class="p-1.5 rounded-md text-light-on-surface-variant hover:text-danger hover:bg-danger/10 transition-colors">
+          <span class="material-symbols-outlined text-[18px]">logout</span>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div class="flex-1 flex flex-col min-w-0">
+    
+    <!-- Top Utility Bar (App Shell) -->
+    <header class="h-16 lg:h-20 bg-light-surface border-b border-light-outline-variant px-4 sm:px-6 lg:px-8 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
+      
+      <!-- Mobile Hamburger Button & Search Bar -->
+      <div class="flex items-center gap-3 sm:gap-4 flex-1 max-w-lg">
+        <button type="button" onclick="toggleSidebar(true)" class="lg:hidden w-10 h-10 rounded-lg border border-light-outline flex items-center justify-center text-light-on-surface hover:bg-light-surface-container shrink-0" aria-label="Buka Menu Navigasi">
+          <span class="material-symbols-outlined text-[22px]">menu</span>
+        </button>
+
+        <!-- Search Input -->
+        <div class="relative w-full">
+          <span class="material-symbols-outlined absolute left-3 top-2.5 text-light-on-surface-variant text-[20px]">search</span>
+          <input 
+            type="search" 
+            id="broadcast-search" 
+            oninput="handleSearch(this.value)" 
+            placeholder="Cari riwayat siaran pesan, template, atau pengumuman..." 
+            class="w-full pl-10 pr-4 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface text-light-on-surface placeholder:text-light-on-surface-variant">
+        </div>
+      </div>
+
+      <!-- Header Actions -->
+      <div class="flex items-center gap-2.5 sm:gap-4 ml-2">
+        <button type="button" aria-label="Notifikasi" onclick="showToast('Koneksi gateway WhatsApp Business API aktif dan stabil.', 'info')" class="relative w-10 h-10 rounded-lg border border-light-outline flex items-center justify-center text-light-on-surface hover:bg-light-surface-container transition-colors shrink-0">
+          <span class="material-symbols-outlined text-[20px]">notifications</span>
+          <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-success ring-2 ring-light-surface"></span>
+        </button>
+
+        <button type="button" onclick="focusComposer()" class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm sm:text-body-md font-semibold shadow-xs transition-colors whitespace-nowrap min-h-[40px]">
+          <span class="material-symbols-outlined text-[18px]">add_comment</span>
+          <span class="hidden sm:inline">Buat Siaran Baru</span>
+          <span class="sm:hidden">Siaran</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Operational Viewport Content -->
+    <main class="p-4 sm:p-6 lg:p-8 flex flex-col gap-6 flex-1">
+      
+      <!-- Title & Channel Status Bar -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="flex flex-wrap items-center gap-2.5">
+            <h1 class="font-headline font-bold text-headline-sm sm:text-headline-md text-light-on-surface">
+              Pusat Komunikasi &amp; Broadcast Resmi
+            </h1>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-label-sm font-label bg-success text-on-success font-bold shadow-2xs">
+              <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+              WhatsApp Resmi Terhubung
+            </span>
+          </div>
+          <p class="text-body-sm text-light-on-surface-variant mt-1">
+            Kirim pengumuman massal, pengingat jadwal ujian, notifikasi presensi otomatis, dan tagihan SPP ke orang tua.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="bg-light-surface px-3.5 py-1.5 rounded-lg border border-light-outline-variant text-[12px] text-light-on-surface-variant flex items-center gap-2 shadow-2xs">
+            <span class="material-symbols-outlined text-success text-[18px]">check_circle</span>
+            <span>API Kuota: <strong>9.840 / 10.000</strong> pesan tersisa</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Split Layout: Message Composer (Col 5) & Broadcast History (Col 7) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+        
+        <!-- Left Section: Message Composer Form (Col 5) -->
+        <section id="composer-card" class="lg:col-span-5 bg-light-surface rounded-xl border border-light-outline-variant shadow-xs p-5 sm:p-6 flex flex-col gap-5 sticky top-24">
+          
+          <div class="flex items-center justify-between pb-3 border-b border-light-outline-variant">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-[22px] text-brand-indigo">chat</span>
+              <h2 class="font-headline text-title-lg font-bold text-light-on-surface">Kirim Pengumuman Baru</h2>
+            </div>
+            <span class="text-label-sm font-label font-bold text-light-primary bg-light-primary-container px-2.5 py-0.5 rounded-full">
+              Mode Broadcast
+            </span>
+          </div>
+
+          <!-- Target Segment Selector -->
+          <div class="flex flex-col gap-1.5">
+            <label for="target-segment" class="font-label text-label-md text-light-on-surface font-semibold flex items-center justify-between">
+              <span>Target Penerima Pesan *</span>
+              <span id="target-count-badge" class="text-[11px] font-normal text-brand-indigo">184 Kontak</span>
+            </label>
+            <select 
+              id="target-segment" 
+              onchange="updateRecipientCount(this.value)"
+              class="w-full px-3.5 py-2.5 rounded-lg border border-light-outline text-light-on-surface text-body-md bg-light-surface font-body focus:border-light-primary focus:ring-1 focus:ring-light-primary">
+              <option value="184|Semua Orang Tua Murid Aktif" selected>Semua Orang Tua Murid Aktif (184 Kontak)</option>
+              <option value="72|Khusus Siswa Reguler SMP">Khusus Siswa Reguler SMP (72 Kontak)</option>
+              <option value="64|Khusus Peserta Intensif UTBK-SNBT">Khusus Peserta Intensif UTBK-SNBT (64 Kontak)</option>
+              <option value="25|Wali dengan Tagihan Belum Lunas">Wali dengan Tagihan Belum Lunas (25 Kontak)</option>
+              <option value="48|Orang Tua Siswa Reguler SD">Orang Tua Siswa Reguler SD (48 Kontak)</option>
+            </select>
+          </div>
+
+          <!-- Preset Template Chooser -->
+          <div class="flex flex-col gap-2">
+            <label class="font-label text-label-md text-light-on-surface font-semibold">Pilih Template Standar:</label>
+            <div class="grid grid-cols-2 gap-2" id="template-buttons">
+              <button 
+                type="button" 
+                onclick="applyTemplate('tryout')" 
+                id="btn-tpl-tryout" 
+                class="p-2.5 rounded-lg border-2 border-light-primary bg-light-primary-container/20 text-left text-[12px] font-label font-semibold text-light-on-surface transition-colors flex items-center gap-1.5 shadow-2xs">
+                <span>✓ Pengingat Tryout</span>
+              </button>
+              <button 
+                type="button" 
+                onclick="applyTemplate('holiday')" 
+                id="btn-tpl-holiday" 
+                class="p-2.5 rounded-lg border border-light-outline hover:border-light-primary text-left text-[12px] font-label font-semibold text-light-on-surface transition-colors flex items-center gap-1.5">
+                <span>Libur &amp; Kalender</span>
+              </button>
+              <button 
+                type="button" 
+                onclick="applyTemplate('payment')" 
+                id="btn-tpl-payment" 
+                class="p-2.5 rounded-lg border border-light-outline hover:border-light-primary text-left text-[12px] font-label font-semibold text-light-on-surface transition-colors flex items-center gap-1.5">
+                <span>Tagihan SPP</span>
+              </button>
+              <button 
+                type="button" 
+                onclick="applyTemplate('schedule')" 
+                id="btn-tpl-schedule" 
+                class="p-2.5 rounded-lg border border-light-outline hover:border-light-primary text-left text-[12px] font-label font-semibold text-light-on-surface transition-colors flex items-center gap-1.5">
+                <span>Perubahan Sesi</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Message Text Area -->
+          <div class="flex flex-col gap-1.5">
+            <div class="flex items-center justify-between">
+              <label for="broadcast-content" class="font-label text-label-md text-light-on-surface font-semibold">Isi Pesan Siaran *</label>
+              <span id="char-counter" class="text-[11px] text-light-on-surface-variant font-mono">285 karakter</span>
+            </div>
+            <textarea 
+              id="broadcast-content" 
+              rows="5" 
+              oninput="handleContentInput(this.value)"
+              class="w-full p-3.5 rounded-lg border border-light-outline text-body-sm text-light-on-surface focus:border-light-primary focus:ring-1 focus:ring-light-primary font-body leading-relaxed bg-light-surface">Halo Ayah/Bunda [Nama Wali], kami informasikan bahwa Tryout Akbar UTBK-SNBT putaran ke-3 akan dilaksanakan serentak pada hari Sabtu, 28 November 2026 pukul 08:30 WIB. Pastikan ananda membawa perlengkapan alat tulis. Laporan skor IRT akan langsung terbit di Portal Siswa dalam 24 jam. Terima kasih, ARCI Bimbel.</textarea>
+            
+            <!-- Dynamic Tags Hint -->
+            <div class="flex flex-wrap items-center gap-1.5 mt-0.5">
+              <span class="text-[11px] text-light-on-surface-variant font-medium">Tag dinamis:</span>
+              <button type="button" onclick="insertTag('[Nama Wali]')" class="text-[11px] px-2 py-0.5 rounded bg-light-surface-container hover:bg-light-primary-container text-brand-indigo font-mono transition-colors">[Nama Wali]</button>
+              <button type="button" onclick="insertTag('[Nama Siswa]')" class="text-[11px] px-2 py-0.5 rounded bg-light-surface-container hover:bg-light-primary-container text-brand-indigo font-mono transition-colors">[Nama Siswa]</button>
+              <button type="button" onclick="insertTag('[Kelas]')" class="text-[11px] px-2 py-0.5 rounded bg-light-surface-container hover:bg-light-primary-container text-brand-indigo font-mono transition-colors">[Kelas]</button>
+            </div>
+          </div>
+
+          <!-- Dispatch Channel Checkboxes -->
+          <div class="flex flex-col gap-2.5 p-3.5 rounded-xl bg-light-surface-soft border border-light-outline-variant">
+            <span class="text-[11px] font-label text-light-on-surface uppercase font-bold tracking-wider">Kanal Pengiriman Aktif:</span>
+            <label class="flex items-center gap-2.5 text-body-sm text-light-on-surface cursor-pointer select-none">
+              <input type="checkbox" id="channel-wa" checked class="rounded text-light-primary focus:ring-light-primary">
+              <span class="font-medium">WhatsApp Business API Resmi <strong class="text-success font-semibold">(Tingkat Baca 98%)</strong></span>
+            </label>
+            <label class="flex items-center gap-2.5 text-body-sm text-light-on-surface cursor-pointer select-none">
+              <input type="checkbox" id="channel-portal" checked class="rounded text-light-primary focus:ring-light-primary">
+              <span>Notifikasi In-App Portal Orang Tua &amp; Siswa</span>
+            </label>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="pt-2 flex flex-col sm:flex-row items-center gap-3">
+            <button 
+              type="button" 
+              onclick="startBroadcastDispatch()" 
+              class="w-full sm:flex-1 py-3 px-4 rounded-xl bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-label-md font-bold shadow-xs flex items-center justify-center gap-2 transition-all min-h-[46px]">
+              <span class="material-symbols-outlined text-[20px]">send</span>
+              <span>Kirim Broadcast Sekarang</span>
+            </button>
+            <button 
+              type="button" 
+              onclick="openScheduleModal()" 
+              class="w-full sm:w-auto py-3 px-4 rounded-xl border border-light-outline text-light-on-surface hover:bg-light-surface-container font-label text-label-md font-semibold transition-colors min-h-[46px]">
+              Jadwalkan
+            </button>
+          </div>
+        </section>
+
+        <!-- Right Section: Broadcast History & Sent Logs Table (Col 7) -->
+        <section class="lg:col-span-7 bg-light-surface rounded-xl border border-light-outline-variant shadow-xs overflow-hidden flex flex-col justify-between">
+          
+          <div class="p-4 sm:p-5 border-b border-light-outline-variant flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 class="font-headline font-bold text-title-md text-light-on-surface">Riwayat Siaran &amp; Status Terkirim</h2>
+              <p class="text-[12px] text-light-on-surface-variant">Pantau delivery rate dan status keterbacaan pesan orang tua.</p>
+            </div>
+            <span class="text-body-sm text-brand-indigo font-label font-bold px-3 py-1 rounded-full bg-light-primary-container shrink-0" id="broadcast-month-counter">
+              Bulan Ini: 14 Siaran
+            </span>
+          </div>
+
+          <!-- Table Container -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-body-sm">
+              <thead class="bg-light-surface-soft border-b border-light-outline-variant text-[11px] font-label text-light-on-surface-variant uppercase tracking-wider">
+                <tr>
+                  <th class="py-3 px-4">Judul Pengumuman</th>
+                  <th class="py-3 px-4">Target Sasaran</th>
+                  <th class="py-3 px-4">Waktu Terkirim</th>
+                  <th class="py-3 px-4">Status Pengiriman</th>
+                  <th class="py-3 px-4 text-right">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="broadcast-tbody" class="divide-y divide-light-outline-variant font-body">
+                <!-- Dynamically populated rows -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Table Footer -->
+          <div class="p-4 border-t border-light-outline-variant flex flex-col sm:flex-row items-center justify-between gap-3 text-body-sm">
+            <span id="broadcast-pagination-info" class="text-light-on-surface-variant text-[13px]">
+              Menampilkan 5 siaran terbaru
+            </span>
+            <button 
+              type="button" 
+              onclick="showToast('Menampilkan seluruh riwayat arsip komunikasi 3 bulan terakhir.', 'info')" 
+              class="text-light-primary font-label text-body-sm hover:underline font-bold inline-flex items-center gap-1">
+              <span>Lihat Arsip Broadcast Lengkap</span>
+              <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </button>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 1: SIMULASI PENGIRIMAN BROADCAST                         -->
+  <!-- ============================================================== -->
+  <div id="modal-broadcast-progress" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+    <div class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-2xl max-w-md w-full overflow-hidden p-6 flex flex-col gap-5">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-success/15 text-success flex items-center justify-center shadow-xs">
+          <span class="material-symbols-outlined text-[24px]">cloud_upload</span>
+        </div>
+        <div>
+          <h3 class="font-headline font-bold text-title-md text-light-on-surface">Mengirim Siaran Pesan</h3>
+          <p class="text-[11px] text-light-on-surface-variant" id="progress-subtitle">WhatsApp API Gateway &amp; In-App Notification</p>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <div class="flex justify-between text-body-sm font-semibold">
+          <span id="progress-label" class="text-light-on-surface">Menginisialisasi kontak...</span>
+          <span id="progress-percentage" class="text-brand-indigo">0%</span>
+        </div>
+        <div class="w-full bg-light-surface-container rounded-full h-3 overflow-hidden">
+          <div id="progress-bar-fill" class="bg-light-primary h-full rounded-full transition-all duration-300" style="width: 0%;"></div>
+        </div>
+        <p class="text-[11px] text-light-on-surface-variant italic" id="progress-recipient-detail">Menghubungkan ke 184 nomor orang tua aktif...</p>
+      </div>
+
+      <div class="pt-2 border-t border-light-outline-variant flex justify-end">
+        <button type="button" id="btn-cancel-send" onclick="cancelBroadcastSending()" class="px-4 py-2 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container text-body-sm font-semibold">
+          Batal
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 2: DETAIL STATISTIK BROADCAST                            -->
+  <!-- ============================================================== -->
+  <div id="modal-broadcast-detail" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+    <div class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-2xl max-w-lg w-full overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="px-6 py-4 border-b border-light-outline-variant flex items-center justify-between bg-light-surface-soft">
+        <div class="flex items-center gap-2 text-brand-indigo">
+          <span class="material-symbols-outlined text-[22px]">analytics</span>
+          <h3 class="font-headline font-bold text-title-md text-light-on-surface" id="detail-modal-title">Statistik Siaran Pesan</h3>
+        </div>
+        <button type="button" onclick="closeBroadcastDetailModal()" class="text-light-on-surface-variant hover:text-light-on-surface p-1 rounded-lg hover:bg-light-surface-container">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-4">
+        <!-- 3 Metrics Grid -->
+        <div class="grid grid-cols-3 gap-3 text-center">
+          <div class="p-3 bg-light-surface-container-low rounded-xl border border-light-outline-variant">
+            <span class="text-[11px] text-light-on-surface-variant font-label">Total Dikirim</span>
+            <p class="font-headline font-bold text-title-lg text-brand-indigo" id="detail-total-sent">64</p>
+          </div>
+          <div class="p-3 bg-light-surface-container-low rounded-xl border border-light-outline-variant">
+            <span class="text-[11px] text-light-on-surface-variant font-label">Terkirim (100%)</span>
+            <p class="font-headline font-bold text-title-lg text-success" id="detail-total-delivered">64</p>
+          </div>
+          <div class="p-3 bg-light-surface-container-low rounded-xl border border-light-outline-variant">
+            <span class="text-[11px] text-light-on-surface-variant font-label">Tingkat Baca</span>
+            <p class="font-headline font-bold text-title-lg text-brand-indigo" id="detail-read-rate">98.4%</p>
+          </div>
+        </div>
+
+        <!-- Metadata -->
+        <div class="p-3.5 bg-light-surface-soft rounded-xl border border-light-outline-variant text-body-sm space-y-1.5">
+          <div class="flex justify-between">
+            <span class="text-light-on-surface-variant">Waktu Dispatch:</span>
+            <strong id="detail-timestamp" class="text-light-on-surface">17 Nov 2026, 14:00 WIB</strong>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-light-on-surface-variant">Segmen Penerima:</span>
+            <span id="detail-segment" class="font-medium text-brand-indigo">Kelas Intensif SMA (64 Penerima)</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-light-on-surface-variant">Kanal:</span>
+            <span id="detail-channels" class="font-medium text-light-on-surface">WhatsApp Business &amp; Portal Siswa</span>
+          </div>
+        </div>
+
+        <!-- Content Preview -->
+        <div>
+          <span class="block text-body-sm font-bold text-light-on-surface mb-1.5">Teks Pesan Siaran:</span>
+          <div class="p-3.5 rounded-xl border border-light-outline-variant bg-light-surface-container-low text-body-sm text-light-on-surface font-mono leading-relaxed" id="detail-message-body">
+            Halo Ayah/Bunda [Nama Wali], kami informasikan bahwa Tryout Akbar SNBT ke-2 telah selesai...
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-light-outline-variant flex justify-end gap-2">
+          <button type="button" onclick="closeBroadcastDetailModal()" class="px-4 py-2 rounded-lg bg-light-primary text-light-on-primary text-body-sm font-semibold">
+            Tutup
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 3: JADWALKAN PENGIRIMAN                                  -->
+  <!-- ============================================================== -->
+  <div id="modal-schedule-broadcast" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+    <div class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-2xl max-w-sm w-full overflow-hidden p-6 flex flex-col gap-4">
+      <div class="flex items-center gap-2 text-brand-indigo">
+        <span class="material-symbols-outlined text-[22px]">event</span>
+        <h3 class="font-headline font-bold text-title-md text-light-on-surface">Jadwalkan Siaran Pesan</h3>
+      </div>
+      
+      <div class="space-y-3">
+        <div>
+          <label class="block text-body-sm font-semibold text-light-on-surface mb-1">Tanggal Pengiriman *</label>
+          <input type="date" id="schedule-date" value="2026-11-25" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">
+        </div>
+        <div>
+          <label class="block text-body-sm font-semibold text-light-on-surface mb-1">Waktu Pengiriman *</label>
+          <input type="time" id="schedule-time" value="09:00" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-light-outline-variant flex justify-end gap-2">
+        <button type="button" onclick="closeScheduleModal()" class="px-4 py-2 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container text-body-sm font-semibold">
+          Batal
+        </button>
+        <button type="button" onclick="confirmScheduleBroadcast()" class="px-4 py-2 rounded-xl bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm font-bold shadow-xs">
+          Simpan Jadwal
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- TOAST NOTIFICATION CONTAINER                                   -->
+  <!-- ============================================================== -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none"></div>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    // State of Broadcast History
+    const broadcastHistory = [
+      {
+        id: 'BC-2026-014',
+        title: 'Pemberitahuan Tryout SNBT #2',
+        channels: 'Kanal: WhatsApp & Portal',
+        target: 'Kelas Intensif SMA',
+        recipients: 64,
+        time: '17 Nov 2026, 14:00 WIB',
+        status: '100% Terkirim',
+        statusClass: 'bg-success text-on-success font-bold',
+        deliveredCount: 64,
+        readRate: '98.4%',
+        content: 'Halo Ayah/Bunda [Nama Wali], kami informasikan bahwa Tryout Akbar SNBT ke-2 telah selesai diselenggarakan. Rekap skor IRT ananda [Nama Siswa] dapat dilihat melalui menu Rapor Evaluasi pada Portal Siswa. Terima kasih.'
+      },
+      {
+        id: 'BC-2026-013',
+        title: 'Pengingat Pembayaran SPP Nov',
+        channels: 'Kanal: WhatsApp Personal',
+        target: 'Tagihan Tertunda',
+        recipients: 25,
+        time: '10 Nov 2026, 09:30 WIB',
+        status: '24/25 Terbaca',
+        statusClass: 'bg-success text-on-success font-bold',
+        deliveredCount: 25,
+        readRate: '96.0%',
+        content: 'Yth. Bapak/Ibu [Nama Wali], mengingatkan kembali tagihan SPP bimbingan belajar bulan November 2026 untuk ananda [Nama Siswa] telah terbit. Pembayaran dapat dilakukan via transfer BCA Virtual Account. Terima kasih.'
+      },
+      {
+        id: 'BC-2026-012',
+        title: 'Jadwal Pengganti Libur Nasional',
+        channels: 'Kanal: WhatsApp Broadcast',
+        target: 'Seluruh Siswa',
+        recipients: 184,
+        time: '01 Nov 2026, 10:15 WIB',
+        status: 'Selesai',
+        statusClass: 'bg-success text-on-success font-bold',
+        deliveredCount: 184,
+        readRate: '99.1%',
+        content: 'Sehubungan dengan hari libur nasional, sesi tatap muka pada kelas [Kelas] dialihkan ke sesi pengganti hari Minggu pukul 10:00 WIB. Presensi tetap dihitung normal.'
+      },
+      {
+        id: 'BC-2026-011',
+        title: 'Undangan Parenting & Sinergi Belajar',
+        channels: 'Kanal: WhatsApp & Email',
+        target: 'Orang Tua Siswa Reguler SMP',
+        recipients: 72,
+        time: '25 Okt 2026, 16:00 WIB',
+        status: 'Selesai',
+        statusClass: 'bg-success text-on-success font-bold',
+        deliveredCount: 72,
+        readRate: '95.8%',
+        content: 'Bapak/Ibu wali siswa kelas [Kelas], kami mengundang kehadiran Bapak/Ibu dalam webinar Parenting: Mempersiapkan Mental Remaja Menghadapi Ujian Akhir Semester.'
+      },
+      {
+        id: 'BC-2026-010',
+        title: 'Pengumuman Hasil Tryout ASPD SD #1',
+        channels: 'Kanal: WhatsApp Personal',
+        target: 'Orang Tua Siswa Reguler SD',
+        recipients: 48,
+        time: '18 Okt 2026, 13:00 WIB',
+        status: '100% Terkirim',
+        statusClass: 'bg-success text-on-success font-bold',
+        deliveredCount: 48,
+        readRate: '100%',
+        content: 'Selamat siang Ayah/Bunda [Nama Wali]. Hasil evaluasi Tryout ASPD 1 ananda [Nama Siswa] telah siap ditinjau. Silakan akses portal belajar untuk melihat analisis butir soal.'
+      }
+    ];
+
+    const templatesData = {
+      tryout: {
+        title: 'Pengingat Tryout',
+        text: 'Halo Ayah/Bunda [Nama Wali], kami informasikan bahwa Tryout Akbar UTBK-SNBT putaran ke-3 akan dilaksanakan serentak pada hari Sabtu, 28 November 2026 pukul 08:30 WIB. Pastikan ananda membawa perlengkapan alat tulis. Laporan skor IRT akan langsung terbit di Portal Siswa dalam 24 jam. Terima kasih, ARCI Bimbel.'
+      },
+      holiday: {
+        title: 'Libur Nasional & Kalender',
+        text: 'Yth. Seluruh Orang Tua Siswa ARCI Bimbel. Mengingat libur kalender akademik nasional, kegiatan belajar mengajar tatap muka & online ditiadakan pada hari Jumat mendatang. Sesi pengganti untuk kelas [Kelas] dijadwalkan kembali pekan berikutnya.'
+      },
+      payment: {
+        title: 'Tagihan SPP & Konfirmasi',
+        text: 'Yth. Bapak/Ibu [Nama Wali], tagihan biaya program bimbingan belajar ananda [Nama Siswa] untuk periode berjalan telah terbit. Mohon melakukan konfirmasi sebelum tanggal jatuh tempo melalui tautan Virtual Account resmi ARCI Bimbel. Terima kasih.'
+      },
+      schedule: {
+        title: 'Perubahan Sesi Belajar',
+        text: 'Pemberitahuan kepada wali murid [Nama Siswa]: Terjadi penyesuaian jam belajar untuk rombel [Kelas] menjadi pukul 16:30 WIB bersama tutor pengajar. Mohon ananda hadir tepat waktu. Terima kasih.'
+      }
+    };
+
+    let currentSearch = '';
+    let dispatchTimer = null;
+
+    // Sidebar Drawer Toggle for Mobile
+    function toggleSidebar(open) {
+      const sidebar = document.getElementById('sidebar-nav');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (open) {
+        sidebar.classList.remove('-translate-x-full');
+        sidebar.classList.add('translate-x-0');
+        overlay.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+        sidebar.classList.remove('translate-x-0');
+        overlay.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }
+    }
+
+    // Scroll & Focus Composer
+    function focusComposer() {
+      const card = document.getElementById('composer-card');
+      const txt = document.getElementById('broadcast-content');
+      card.scrollIntoView({ behavior: 'smooth' });
+      txt.focus();
+    }
+
+    // Recipient Target Change
+    function updateRecipientCount(val) {
+      const count = val.split('|')[0];
+      document.getElementById('target-count-badge').textContent = `${count} Kontak`;
+    }
+
+    // Apply Preset Template
+    function applyTemplate(key) {
+      const tpl = templatesData[key];
+      if (!tpl) return;
+
+      document.getElementById('broadcast-content').value = tpl.text;
+      handleContentInput(tpl.text);
+
+      // Highlight active button
+      ['tryout', 'holiday', 'payment', 'schedule'].forEach(k => {
+        const btn = document.getElementById(`btn-tpl-${k}`);
+        if (k === key) {
+          btn.className = "p-2.5 rounded-lg border-2 border-light-primary bg-light-primary-container/20 text-left text-[12px] font-label font-semibold text-light-on-surface transition-colors flex items-center gap-1.5 shadow-2xs";
+          btn.innerHTML = `<span>✓ ${tpl.title}</span>`;
+        } else {
+          btn.className = "p-2.5 rounded-lg border border-light-outline hover:border-light-primary text-left text-[12px] font-label font-semibold text-light-on-surface transition-colors flex items-center gap-1.5";
+          btn.innerHTML = `<span>${templatesData[k].title}</span>`;
+        }
+      });
+
+      showToast(`Template "${tpl.title}" berhasil disematkan ke editor pesan.`, 'info');
+    }
+
+    // Handle Content Input
+    function handleContentInput(val) {
+      document.getElementById('char-counter').textContent = `${val.length} karakter`;
+    }
+
+    // Insert Dynamic Tag at Cursor
+    function insertTag(tag) {
+      const textarea = document.getElementById('broadcast-content');
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const text = textarea.value;
+      textarea.value = text.substring(0, start) + ' ' + tag + ' ' + text.substring(end);
+      textarea.focus();
+      textarea.selectionStart = textarea.selectionEnd = start + tag.length + 2;
+      handleContentInput(textarea.value);
+    }
+
+    // Start Sending Simulation
+    function startBroadcastDispatch() {
+      const content = document.getElementById('broadcast-content').value.trim();
+      if (!content) {
+        showToast('Isi pesan siaran tidak boleh kosong.', 'warning');
+        return;
+      }
+
+      const segmentVal = document.getElementById('target-segment').value;
+      const [count, segmentName] = segmentVal.split('|');
+
+      const modal = document.getElementById('modal-broadcast-progress');
+      const progressBar = document.getElementById('progress-bar-fill');
+      const progressLabel = document.getElementById('progress-label');
+      const progressPct = document.getElementById('progress-percentage');
+      const progressDetail = document.getElementById('progress-recipient-detail');
+
+      modal.classList.remove('hidden');
+      progressBar.style.width = '0%';
+      progressPct.textContent = '0%';
+      progressLabel.textContent = 'Menginisialisasi WhatsApp API gateway...';
+      progressDetail.textContent = `Menyiapkan ${count} pesan antrean untuk ${segmentName}...`;
+
+      let currentPct = 0;
+      dispatchTimer = setInterval(() => {
+        currentPct += 15;
+        if (currentPct > 100) currentPct = 100;
+
+        progressBar.style.width = `${currentPct}%`;
+        progressPct.textContent = `${currentPct}%`;
+
+        if (currentPct === 30) {
+          progressLabel.textContent = 'Menghubungkan batch 1 via Meta Cloud API...';
+        } else if (currentPct === 60) {
+          progressLabel.textContent = `Mengirimkan notifikasi In-App Portal dan WhatsApp...`;
+        } else if (currentPct === 90) {
+          progressLabel.textContent = 'Menyelesaikan sinkronisasi delivery status...';
+        } else if (currentPct >= 100) {
+          clearInterval(dispatchTimer);
+          
+          setTimeout(() => {
+            modal.classList.add('hidden');
+            
+            // Add new broadcast to history list
+            const newBroadcast = {
+              id: `BC-2026-0${broadcastHistory.length + 10}`,
+              title: content.slice(0, 32) + '...',
+              channels: 'Kanal: WhatsApp & Portal',
+              target: segmentName,
+              recipients: parseInt(count, 10),
+              time: 'Baru Saja • ' + new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' WIB',
+              status: '100% Terkirim',
+              statusClass: 'bg-success text-on-success font-bold',
+              deliveredCount: parseInt(count, 10),
+              readRate: '100%',
+              content: content
+            };
+
+            broadcastHistory.unshift(newBroadcast);
+            renderBroadcastTable();
+            showToast(`Siaran berhasil terkirim ke ${count} kontak penerima!`, 'success');
+          }, 400);
+        }
+      }, 250);
+    }
+
+    function cancelBroadcastSending() {
+      if (dispatchTimer) clearInterval(dispatchTimer);
+      document.getElementById('modal-broadcast-progress').classList.add('hidden');
+      showToast('Pengiriman siaran dibatalkan.', 'warning');
+    }
+
+    // Schedule Modal Logic
+    function openScheduleModal() {
+      document.getElementById('modal-schedule-broadcast').classList.remove('hidden');
+    }
+
+    function closeScheduleModal() {
+      document.getElementById('modal-schedule-broadcast').classList.add('hidden');
+    }
+
+    function confirmScheduleBroadcast() {
+      const d = document.getElementById('schedule-date').value;
+      const t = document.getElementById('schedule-time').value;
+      closeScheduleModal();
+      showToast(`Siaran pesan berhasil dijadwalkan otomatis pada ${d} pukul ${t} WIB.`, 'success');
+    }
+
+    // Detail Modal Logic
+    function openBroadcastDetail(id) {
+      const item = broadcastHistory.find(b => b.id === id);
+      if (!item) return;
+
+      document.getElementById('detail-modal-title').textContent = item.title;
+      document.getElementById('detail-total-sent').textContent = item.recipients;
+      document.getElementById('detail-total-delivered').textContent = item.deliveredCount;
+      document.getElementById('detail-read-rate').textContent = item.readRate;
+      document.getElementById('detail-timestamp').textContent = item.time;
+      document.getElementById('detail-segment').textContent = `${item.target} (${item.recipients} Penerima)`;
+      document.getElementById('detail-channels').textContent = item.channels.replace('Kanal: ', '');
+      document.getElementById('detail-message-body').textContent = item.content;
+
+      document.getElementById('modal-broadcast-detail').classList.remove('hidden');
+    }
+
+    function closeBroadcastDetailModal() {
+      document.getElementById('modal-broadcast-detail').classList.add('hidden');
+    }
+
+    // Live Search
+    function handleSearch(val) {
+      currentSearch = val.toLowerCase().trim();
+      renderBroadcastTable();
+    }
+
+    // Render Table
+    function renderBroadcastTable() {
+      const tbody = document.getElementById('broadcast-tbody');
+      tbody.innerHTML = '';
+
+      const filtered = broadcastHistory.filter(b => {
+        return !currentSearch 
+          || b.title.toLowerCase().includes(currentSearch)
+          || b.target.toLowerCase().includes(currentSearch)
+          || b.content.toLowerCase().includes(currentSearch)
+          || b.channels.toLowerCase().includes(currentSearch);
+      });
+
+      document.getElementById('broadcast-pagination-info').textContent = `Menampilkan ${filtered.length} siaran`;
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" class="py-8 text-center text-light-on-surface-variant text-body-md">
+              <span class="material-symbols-outlined text-[36px] text-light-outline block mb-1">search_off</span>
+              Tidak ada data siaran yang cocok dengan pencarian Anda.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      filtered.forEach(b => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-light-surface-container transition-colors";
+        tr.innerHTML = `
+          <td class="py-3.5 px-4">
+            <p class="font-bold text-light-on-surface">${b.title}</p>
+            <p class="text-[11px] text-light-on-surface-variant">${b.channels}</p>
+          </td>
+          <td class="py-3.5 px-4">
+            <span class="font-medium text-light-on-surface">${b.target}</span>
+            <span class="text-[11px] text-light-on-surface-variant block">${b.recipients} Penerima</span>
+          </td>
+          <td class="py-3.5 px-4 text-[12px] text-light-on-surface-variant">
+            ${b.time}
+          </td>
+          <td class="py-3.5 px-4">
+            <span class="px-2 py-0.5 rounded-full text-[11px] font-label ${b.statusClass}">
+              ${b.status}
+            </span>
+          </td>
+          <td class="py-3.5 px-4 text-right">
+            <button 
+              type="button" 
+              onclick="openBroadcastDetail('${b.id}')" 
+              class="px-2.5 py-1 rounded border border-light-outline text-light-on-surface text-[11px] font-label font-semibold hover:bg-light-surface transition-colors whitespace-nowrap">
+              Statistik
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Toast Notification System
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      
+      let bg = 'bg-light-surface text-light-on-surface border-light-outline-variant';
+      let icon = 'info';
+      let iconColor = 'text-brand-indigo';
+
+      if (type === 'success') {
+        icon = 'check_circle';
+        iconColor = 'text-success';
+      } else if (type === 'warning') {
+        icon = 'warning';
+        iconColor = 'text-warning';
+      } else if (type === 'danger') {
+        icon = 'error';
+        iconColor = 'text-danger';
+      }
+
+      toast.className = `p-4 rounded-xl border ${bg} shadow-lg flex items-center gap-3 transition-all duration-300 transform translate-y-4 opacity-0 pointer-events-auto`;
+      toast.innerHTML = `
+        <span class="material-symbols-outlined ${iconColor} text-[22px] shrink-0">${icon}</span>
+        <span class="text-body-sm font-medium flex-1">${message}</span>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-4', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    // Initialize Table on Load
+    document.addEventListener('DOMContentLoaded', () => {
+      renderBroadcastTable();
+    });
+  </script>
+</body>
+</html>

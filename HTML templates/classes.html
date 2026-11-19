@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Program, Kelas &amp; Jadwal — ARCI Bimbel</title>
+  
+  <!-- Tailwind CSS with Official Plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+  /** @type {import('tailwindcss').Config} */
+  globalThis.tailwind = globalThis.tailwind || {};
+  globalThis.tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          'accent': '#F6C453',
+          'on-accent': '#18212F',
+          'brand-indigo': '#243B7A',
+          'brand-indigo-dark': '#172653',
+          'success': '#1B7330',
+          'on-success': '#FFFFFF',
+          'warning': '#925B06',
+          'on-warning': '#FFFFFF',
+          'danger': '#B91C1C',
+          'on-danger': '#FFFFFF',
+          'light-primary': '#243B7A',
+          'light-on-primary': '#FFFFFF',
+          'light-primary-container': '#EBF0FA',
+          'light-on-primary-container': '#172653',
+          'light-surface': '#FFFFFF',
+          'light-on-surface': '#18212F',
+          'light-surface-soft': '#F8FAFC',
+          'light-surface-container-low': '#F1F5F9',
+          'light-surface-container': '#E2E8F0',
+          'light-on-surface-variant': '#475569',
+          'light-outline': '#94A3B8',
+          'light-outline-variant': '#CBD5E1',
+          'dark-primary': '#9BB3F0',
+          'dark-on-primary': '#0E1A3C',
+          'dark-primary-container': '#1E3166',
+          'dark-on-primary-container': '#D7E3FF',
+          'dark-surface': '#0F172A',
+          'dark-on-surface': '#F8FAFC',
+          'dark-surface-soft': '#1E293B',
+          'dark-surface-container-low': '#152033',
+          'dark-surface-container': '#1E293B',
+          'dark-on-surface-variant': '#CBD5E1',
+          'dark-outline': '#64748B',
+          'dark-outline-variant': '#475569',
+        },
+        borderRadius: {
+          'sm': '4px',
+          'DEFAULT': '8px',
+          'md': '10px',
+          'lg': '12px',
+          'xl': '16px',
+          '2xl': '20px',
+          'full': '9999px',
+        },
+        spacing: {
+          'gutter-xs': '4px',
+          'gutter-sm': '8px',
+          'gutter-md': '16px',
+          'gutter-lg': '24px',
+          'gutter-xl': '32px',
+          'section-sm': '40px',
+          'section': '64px',
+          'section-lg': '96px',
+          'page-margin': '24px',
+        },
+        fontFamily: {
+          'display': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'headline': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'title': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'body': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'label': ['"Plus Jakarta Sans"', 'sans-serif'],
+        },
+        fontSize: {
+          'display-lg': ['48px', { lineHeight: '56px', letterSpacing: '-0.02em', fontWeight: '700' }],
+          'display-lg-mobile': ['28px', { lineHeight: '36px', letterSpacing: '-0.01em', fontWeight: '700' }],
+          'headline-lg': ['36px', { lineHeight: '44px', letterSpacing: '-0.01em', fontWeight: '700' }],
+          'headline-lg-mobile': ['24px', { lineHeight: '32px', letterSpacing: '0em', fontWeight: '700' }],
+          'headline-md': ['24px', { lineHeight: '32px', fontWeight: '600' }],
+          'headline-sm': ['20px', { lineHeight: '28px', fontWeight: '600' }],
+          'title-lg': ['18px', { lineHeight: '26px', fontWeight: '600' }],
+          'title-md': ['16px', { lineHeight: '24px', fontWeight: '600' }],
+          'body-lg': ['16px', { lineHeight: '24px', fontWeight: '400' }],
+          'body-md': ['14px', { lineHeight: '20px', fontWeight: '400' }],
+          'body-sm': ['12px', { lineHeight: '18px', fontWeight: '400' }],
+          'label-lg': ['14px', { lineHeight: '20px', fontWeight: '600' }],
+          'label-md': ['12px', { lineHeight: '16px', fontWeight: '600' }],
+          'label-sm': ['11px', { lineHeight: '14px', fontWeight: '500' }],
+        },
+        transitionDuration: {
+          'state-change': '150ms',
+          'surface-enter': '250ms',
+          'surface-exit': '150ms',
+        },
+        transitionTimingFunction: {
+          'state-change': 'ease-out',
+          'surface-enter': 'cubic-bezier(0.16, 1, 0.3, 1)',
+          'surface-exit': 'cubic-bezier(0.7, 0, 0.84, 0)',
+        },
+      },
+    },
+  };
+  if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+  </script>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+  
+  <style>
+    .material-symbols-outlined, .material-symbols-rounded, .material-symbols-sharp, .material-icons {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      line-height: 1 !important;
+      box-sizing: content-box;
+      overflow: hidden;
+      white-space: nowrap;
+      direction: ltr;
+      vertical-align: middle;
+      font-size: 20px;
+    }
+    .pb-safe {
+      padding-bottom: env(safe-area-inset-bottom, 16px);
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-light-surface-soft text-light-on-surface font-body antialiased min-h-screen flex flex-col lg:flex-row pb-safe">
+
+  <!-- Mobile Backdrop Overlay for Drawer -->
+  <div id="sidebar-overlay" onclick="toggleSidebar(false)" class="hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-xs transition-opacity lg:hidden"></div>
+
+  <!-- Shared App Shell: Desktop Sidebar Navigation -->
+  <aside id="sidebar-nav" class="fixed inset-y-0 left-0 z-50 w-64 bg-light-surface border-r border-light-outline-variant flex flex-col justify-between shrink-0 transform -translate-x-full transition-transform duration-200 lg:translate-x-0 lg:static lg:h-screen lg:sticky lg:top-0">
+    <div class="flex flex-col flex-1 overflow-y-auto">
+      
+      <!-- Brand Identity Header -->
+      <div class="h-16 lg:h-20 px-5 sm:px-6 flex items-center justify-between border-b border-light-outline-variant shrink-0">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="w-9 h-9 rounded-xl bg-light-primary flex items-center justify-center text-light-on-primary font-headline font-bold text-headline-sm shadow-sm group-hover:bg-brand-indigo-dark transition-colors">
+            A
+          </div>
+          <div class="flex flex-col">
+            <span class="font-headline font-bold text-title-md tracking-tight text-brand-indigo">ARCI Bimbel</span>
+            <span class="text-[11px] text-light-on-surface-variant font-label">Dashboard Operasional</span>
+          </div>
+        </a>
+
+        <!-- Mobile Drawer Close Button -->
+        <button type="button" onclick="toggleSidebar(false)" class="lg:hidden p-1.5 rounded-lg text-light-on-surface-variant hover:bg-light-surface-container" aria-label="Tutup Menu">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="p-3 sm:p-4 flex flex-col gap-1">
+        <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">dashboard</span>
+          <span>Ringkasan</span>
+        </a>
+        
+        <a href="leads.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">person_search</span>
+            <span>Lead &amp; Pipeline</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label font-bold bg-accent text-on-accent shadow-2xs">8</span>
+        </a>
+
+        <a href="verifikasi-pendaftaran.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">how_to_reg</span>
+            <span>Pendaftaran</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label font-bold bg-accent text-on-accent">3</span>
+        </a>
+
+        <a href="students.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">school</span>
+          <span>Siswa &amp; Wali</span>
+        </a>
+
+        <a href="classes.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-light-primary text-light-on-primary font-label text-body-md shadow-xs font-semibold">
+          <span class="material-symbols-outlined text-[20px]">class</span>
+          <span>Program &amp; Kelas</span>
+        </a>
+
+        <a href="schedule.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">calendar_month</span>
+          <span>Jadwal Sesi</span>
+        </a>
+
+        <a href="attendance.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">fact_check</span>
+          <span>Presensi Siswa</span>
+        </a>
+
+        <a href="finance.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">payments</span>
+            <span>Tagihan &amp; Kas</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">5 Baru</span>
+        </a>
+
+        <a href="communications.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">campaign</span>
+          <span>Komunikasi &amp; Broadcast</span>
+        </a>
+
+        <a href="settings.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">manage_accounts</span>
+          <span>Pengaturan &amp; Role</span>
+        </a>
+
+        <a href="reports.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">analytics</span>
+          <span>Laporan KPI</span>
+        </a>
+        <a href="cms.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">article</span>
+          <span>Konten Website</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- User / Coordinator Profile Block with Popup -->
+    <div class="p-4 border-t border-light-outline-variant relative">
+      <div class="flex items-center justify-between p-2 rounded-xl hover:bg-light-surface-container transition-colors cursor-pointer group" onclick="toggleUserMenu()">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-light-primary text-light-on-primary flex items-center justify-center font-bold text-label-md shadow-xs">
+            DL
+          </div>
+          <div class="flex flex-col">
+            <span class="text-body-sm font-semibold text-light-on-surface leading-tight">Dewi Lestari</span>
+            <span class="text-[11px] text-light-on-surface-variant font-label leading-tight">Koordinator Akademik</span>
+          </div>
+        </div>
+        <span class="material-symbols-outlined text-[18px] text-light-outline group-hover:text-light-on-surface">more_vert</span>
+      </div>
+
+      <!-- Quick Profile Popup Menu -->
+      <div id="user-popup-menu" class="hidden absolute bottom-full left-4 right-4 mb-2 bg-light-surface rounded-xl border border-light-outline-variant shadow-lg py-1.5 z-50 text-body-sm">
+        <a href="index.html" class="flex items-center gap-2 px-3.5 py-2 hover:bg-light-surface-container text-light-on-surface">
+          <span class="material-symbols-outlined text-[17px] text-light-primary">open_in_new</span>
+          <span>Buka Website Publik</span>
+        </a>
+        <a href="login-admin.html" class="flex items-center gap-2 px-3.5 py-2 hover:bg-danger/10 text-danger border-t border-light-outline-variant/50">
+          <span class="material-symbols-outlined text-[17px]">logout</span>
+          <span>Keluar Sesi (Logout)</span>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div class="flex-1 flex flex-col min-w-0">
+    
+    <!-- Top Utility Bar (App Shell) -->
+    <header class="h-16 lg:h-20 bg-light-surface border-b border-light-outline-variant px-4 sm:px-6 lg:px-8 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
+      
+      <!-- Mobile Hamburger Button & Search Bar -->
+      <div class="flex items-center gap-3 sm:gap-4 flex-1 max-w-md">
+        <button type="button" onclick="toggleSidebar(true)" class="lg:hidden w-10 h-10 rounded-lg border border-light-outline flex items-center justify-center text-light-on-surface hover:bg-light-surface-container shrink-0" aria-label="Buka Menu Navigasi">
+          <span class="material-symbols-outlined text-[22px]">menu</span>
+        </button>
+
+        <!-- Search Input -->
+        <div class="relative w-full">
+          <span class="material-symbols-outlined absolute left-3 top-2.5 text-light-on-surface-variant text-[20px]">search</span>
+          <input type="search" id="class-search" oninput="handleClassSearch(this.value)" placeholder="Cari nama kelas, tutor, ruang, kode..."
+            class="w-full pl-10 pr-4 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface text-light-on-surface placeholder:text-light-on-surface-variant text-body-sm sm:text-body-md transition-colors">
+        </div>
+      </div>
+
+      <!-- Right Action Utilities -->
+      <div class="flex items-center gap-2 sm:gap-4 shrink-0">
+        <!-- Notification Button -->
+        <button type="button" onclick="showNotification('Semua jadwal sesi aktif berjalan lancar.', 'info')" aria-label="Notifikasi" class="relative w-10 h-10 rounded-lg border border-light-outline flex items-center justify-center text-light-on-surface hover:bg-light-surface-container transition-colors">
+          <span class="material-symbols-outlined text-[20px]">notifications</span>
+          <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-danger ring-2 ring-light-surface"></span>
+        </button>
+
+        <!-- Open New Class Button -->
+        <button type="button" onclick="openNewClassModal()" class="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm sm:text-body-md shadow-xs transition-all whitespace-nowrap active:scale-95 font-semibold">
+          <span class="material-symbols-outlined text-[18px]">add</span>
+          <span>Buka Kelas Baru</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Operational Viewport Content -->
+    <main class="p-4 sm:p-6 lg:p-8 flex flex-col gap-6 flex-1">
+      
+      <!-- Toast Alert Banner -->
+      <div id="class-toast" class="hidden p-3.5 rounded-xl border text-body-sm items-center justify-between gap-3 shadow-xs transition-all animate-in fade-in duration-150">
+        <div class="flex items-center gap-2">
+          <span id="toast-icon" class="material-symbols-outlined text-[19px]">info</span>
+          <span id="toast-text" class="font-medium">Pemberitahuan</span>
+        </div>
+        <button type="button" onclick="closeToast()" class="p-1 rounded hover:bg-black/5 text-current">
+          <span class="material-symbols-outlined text-[16px]">close</span>
+        </button>
+      </div>
+
+      <!-- Title & Academic Status Overview -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2.5">
+            <h1 class="font-headline font-bold text-headline-sm text-light-on-surface">Manajemen Program, Kelas &amp; Jadwal</h1>
+            <span class="px-2.5 py-0.5 rounded-full text-label-sm font-label bg-success text-on-success font-bold">Tahun Ajaran 2026/2027</span>
+          </div>
+          <p class="text-body-sm text-light-on-surface-variant mt-0.5 leading-relaxed">
+            Pantau kapasitas okupansi rombel (maks 8 siswa tatap muka), penetapan tutor pengampu, serta deteksi konflik ruang &amp; jadwal.
+          </p>
+        </div>
+        
+        <div class="flex items-center gap-2.5 shrink-0">
+          <button type="button" onclick="openCalendarModal()" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg border border-light-outline text-light-on-surface text-body-sm font-label font-medium hover:bg-light-surface-container transition-colors shadow-2xs">
+            <span class="material-symbols-outlined text-[18px] text-light-primary">calendar_month</span>
+            <span>Tampilan Kalender Sesi</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Academic KPI Snapshot Cards (3 Columns) -->
+      <section class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
+        
+        <!-- Total Active Classes -->
+        <div class="bg-light-surface p-5 rounded-2xl border border-light-outline-variant shadow-xs flex items-center justify-between hover:shadow-sm transition-shadow">
+          <div>
+            <span class="text-[12px] font-label font-medium text-light-on-surface-variant">Total Kelas Aktif</span>
+            <p id="kpi-total-classes" class="font-headline font-bold text-headline-sm text-brand-indigo mt-0.5">26 Rombel</p>
+            <p class="text-[11.5px] text-light-on-surface-variant mt-0.5">18 Tatap Muka • 8 Online Zoom</p>
+          </div>
+          <div class="w-11 h-11 rounded-xl bg-light-primary-container text-light-primary flex items-center justify-center shrink-0">
+            <span class="material-symbols-outlined text-[24px]">meeting_room</span>
+          </div>
+        </div>
+
+        <!-- Average Occupancy Rate -->
+        <div class="bg-light-surface p-5 rounded-2xl border border-light-outline-variant shadow-xs flex items-center justify-between hover:shadow-sm transition-shadow">
+          <div>
+            <span class="text-[12px] font-label font-medium text-light-on-surface-variant">Rata-rata Okupansi Kelas</span>
+            <p class="font-headline font-bold text-headline-sm text-success mt-0.5">86% Terisi</p>
+            <p class="text-[11.5px] text-light-on-surface-variant mt-0.5">Sisa 28 kursi kosong dari 208 kuota</p>
+          </div>
+          <div class="w-11 h-11 rounded-xl bg-success text-on-success flex items-center justify-center shrink-0 shadow-xs">
+            <span class="material-symbols-outlined text-[24px]">person_check</span>
+          </div>
+        </div>
+
+        <!-- Schedule & Room Conflict Status -->
+        <div class="bg-light-surface p-5 rounded-2xl border border-light-outline-variant shadow-xs flex items-center justify-between hover:shadow-sm transition-shadow">
+          <div>
+            <span class="text-[12px] font-label font-medium text-light-on-surface-variant">Status Jadwal &amp; Ruang</span>
+            <p class="font-headline font-bold text-headline-sm text-light-on-surface mt-0.5">0 Konflik Jadwal</p>
+            <p class="text-[11.5px] text-success font-semibold mt-0.5 flex items-center gap-1">
+              <span class="material-symbols-outlined text-[15px]">check_circle</span>
+              <span>Seluruh ruang dan tutor teralokasi valid</span>
+            </p>
+          </div>
+          <div class="w-11 h-11 rounded-xl bg-light-surface-container text-light-on-surface flex items-center justify-center shrink-0">
+            <span class="material-symbols-outlined text-[24px]">event_available</span>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Filter Tabs & Level Dropdown -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-light-outline-variant pb-px gap-3">
+        <div class="flex items-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar">
+          <button type="button" onclick="switchClassTab('active', this)" class="class-tab px-4 py-2.5 border-b-2 border-light-primary text-light-primary font-label text-body-md font-bold whitespace-nowrap">
+            Daftar Kelas Berjalan (26)
+          </button>
+          <button type="button" onclick="switchClassTab('curriculum', this)" class="class-tab px-4 py-2.5 border-b-2 border-transparent text-light-on-surface-variant hover:text-light-primary font-label text-body-md whitespace-nowrap">
+            Program &amp; Kurikulum (4)
+          </button>
+          <button type="button" onclick="switchClassTab('schedule', this)" class="class-tab px-4 py-2.5 border-b-2 border-transparent text-light-on-surface-variant hover:text-light-primary font-label text-body-md whitespace-nowrap">
+            Jadwal Tutor &amp; Ruang
+          </button>
+        </div>
+
+        <div class="flex items-center gap-2 pb-2 sm:pb-1">
+          <select id="grade-filter" onchange="filterGrade(this.value)" class="w-full sm:w-auto px-3.5 py-1.5 rounded-lg border border-light-outline text-body-sm bg-light-surface text-light-on-surface font-label focus:border-light-primary focus:ring-1 focus:ring-light-primary">
+            <option value="all">Semua Jenjang (SD, SMP, SMA, UTBK)</option>
+            <option value="sd">SD (Kelas 4–6)</option>
+            <option value="smp" selected>SMP (Kelas 7–9)</option>
+            <option value="sma">SMA / UTBK</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Class Roster & Management Table -->
+      <section class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-xs overflow-hidden flex flex-col justify-between">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-body-sm">
+            <thead class="bg-light-surface-soft border-b border-light-outline-variant text-[11px] font-label text-light-on-surface-variant uppercase tracking-wider font-semibold">
+              <tr>
+                <th class="py-3 px-4">Nama Kelas &amp; Kode</th>
+                <th class="py-3 px-4">Jenjang &amp; Cabang</th>
+                <th class="py-3 px-4">Tutor Pengampu</th>
+                <th class="py-3 px-4">Jadwal Sesi</th>
+                <th class="py-3 px-4">Kapasitas Siswa</th>
+                <th class="py-3 px-4">Status Kelas</th>
+                <th class="py-3 px-4 text-right">Kelola</th>
+              </tr>
+            </thead>
+            <tbody id="class-table-body" class="divide-y divide-light-outline-variant font-body">
+              
+              <!-- Class 1 -->
+              <tr class="class-row hover:bg-light-surface-container transition-colors" data-grade="smp" data-id="KLS-2026-SMP8A">
+                <td class="py-3.5 px-4">
+                  <p class="font-bold text-light-on-surface">SMP-8 Reguler Sudirman A</p>
+                  <p class="text-[11px] text-light-on-surface-variant font-mono">KLS-2026-SMP8A</p>
+                </td>
+                <td class="py-3.5 px-4">
+                  <span class="inline-block px-2 py-0.5 rounded text-[11px] font-label bg-light-primary-container text-light-primary font-semibold">SMP Kelas 8</span>
+                  <span class="text-[11px] text-light-on-surface-variant block mt-0.5">Sudirman • Ruang Galileo</span>
+                </td>
+                <td class="py-3.5 px-4">
+                  <p class="font-semibold text-light-on-surface">Budi Pratama, S.Si.</p>
+                  <p class="text-[11px] text-light-on-surface-variant">Matematika • Pendamping: Kak Aris</p>
+                </td>
+                <td class="py-3.5 px-4">
+                  <p class="font-medium text-light-on-surface">Sen, Rab, Jum</p>
+                  <p class="text-[11px] text-light-on-surface-variant">16:00 - 17:30 WIB</p>
+                </td>
+                <td class="py-3.5 px-4">
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold text-light-on-surface text-[12px]">7 / 8</span>
+                    <div class="w-16 bg-light-surface-container rounded-full h-2">
+                      <div class="bg-success h-2 rounded-full" style="width: 87.5%"></div>
+                    </div>
+                  </div>
+                  <span class="text-[11px] text-success font-semibold">Sisa 1 Kursi</span>
+                </td>
+                <td class="py-3.5 px-4">
+                  <span class="px-2.5 py-0.5 rounded-full text-[11px] font-label font-bold bg-success text-on-success">Berjalan</span>
+                </td>
+                <td class="py-3.5 px-4 text-right">
+                  <button type="button" onclick="showClassDetail('SMP-8 Reguler Sudirman A', 'KLS-2026-SMP8A', 'Budi Pratama, S.Si.', 'Ruang Galileo', 'Sen, Rab, Jum (16:00-17:30)', '7 / 8', 'Matematika Aljabar & Teorema Pythagoras')" class="px-3 py-1.5 rounded-lg border border-light-outline text-light-on-surface text-[12px] font-label font-medium hover:bg-light-surface-soft whitespace-nowrap transition-colors shadow-2xs">
+                    Detail Kelas
+                  </button>
+                </td>
+              </tr>
+
+              <!-- Class 2 -->
+              <tr class="class-row hover:bg-light-surface-container transition-colors" data-grade="smp" data-id="KLS-2026-SMP9B">
+                <td class="py-3.5 px-4">
+                  <p class="font-bold text-light-on-surface">SMP-9 Target UN/ASPD</p>
+                  <p class="text-[11px] text-light-on-surface-variant font-mono">KLS-2026-SMP9B</p>
+                </td>
+                <td class="py-3.5 px-4">
+                  <span class="inline-block px-2 py-0.5 rounded text-[11px] font-label bg-light-primary-container text-light-primary font-semibold">SMP Kelas 9</span>
+                  <span class="text-[11px] text-light-on-surface-variant block mt-0.5">Sudirman • Ruang Newton</span>
+                </td>
+                <td class="py-3.5 px-4">
+                  <p class="font-semibold text-light-on-surface">Siti Rahma, M.Pd.</p>
+                  <p class="text-[11px] text-light-on-surface-variant">IPA Terpadu • Mandiri</p>
+                </td>
+                <td class="py-3.5 px-4">
+                  <p class="font-medium text-light-on-surface">Sel, Kam, Sab</p>
+                  <p class="text-[11px] text-light-on-surface-variant">14:00 - 15:30 WIB</p>
+                </td>
+                <td class="py-3.5 px-4">
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold text-light-on-surface text-[12px]">8 / 8</span>
+                    <div class="w-16 bg-light-surface-container rounded-full h-2">
+                      <div class="bg-brand-indigo h-2 rounded-full" style="width: 100%"></div>
+                    </div>
+                  </div>
+                  <span class="text-[11px] text-warning font-semibold">Penuh (Antrean: 2)</span>
+                </td>
+                <td class="py-3.5 px-4">
+                  <span class="px-2.5 py-0.5 rounded-full text-[11px] font-label font-bold bg-success text-on-success">Berjalan</span>
+                </td>
+                <td class="py-3.5 px-4 text-right">
+                  <button type="button" onclick="showClassDetail('SMP-9 Target UN/ASPD', 'KLS-2026-SMP9B', 'Siti Rahma, M.Pd.', 'Ruang Newton', 'Sel, Kam, Sab (14:00-15:30)', '8 / 8', 'Fisika Listrik Dinamis & Biologi Genetika')" class="px-3 py-1.5 rounded-lg border border-light-outline text-light-on-surface text-[12px] font-label font-medium hover:bg-light-surface-soft whitespace-nowrap transition-colors shadow-2xs">
+                    Detail Kelas
+                  </button>
+                </td>
+              </tr>
+
+              <!-- Class 3 -->
+              <tr class="class-row hover:bg-light-surface-container transition-colors" data-grade="sma" data-id="KLS-2026-UTBK01">
+                <td class="py-3.5 px-4">
+                  <p class="font-bold text-light-on-surface">UTBK-TPS Penalaran Skolastik</p>
+                  <p class="text-[11px] text-light-on-surface-variant font-mono">KLS-2026-UTBK01</p>
+                </td>
+                <td class="py-3.5 px-4">
+                  <span class="inline-block px-2 py-0.5 rounded text-[11px] font-label bg-accent text-on-accent font-bold">SMA / UTBK</span>
+                  <span class="text-[11px] text-light-on-surface-variant block mt-0.5">Online Live Zoom #1</span>
+                </td>
+                <td class="py-3.5 px-4">
+                  <p class="font-semibold text-light-on-surface">Budi Pratama, S.Si.</p>
+                  <p class="text-[11px] text-light-on-surface-variant">Penalaran Umum &amp; Kuantitatif</p>
+                </td>
+                <td class="py-3.5 px-4">
+                  <p class="font-medium text-light-on-surface">Sen, Sel, Kam, Jum</p>
+                  <p class="text-[11px] text-light-on-surface-variant">19:00 - 20:30 WIB</p>
+                </td>
+                <td class="py-3.5 px-4">
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold text-light-on-surface text-[12px]">15 / 20</span>
+                    <div class="w-16 bg-light-surface-container rounded-full h-2">
+                      <div class="bg-success h-2 rounded-full" style="width: 75%"></div>
+                    </div>
+                  </div>
+                  <span class="text-[11px] text-success font-semibold">Sisa 5 Slot Online</span>
+                </td>
+                <td class="py-3.5 px-4">
+                  <span class="px-2.5 py-0.5 rounded-full text-[11px] font-label font-bold bg-success text-on-success">Berjalan</span>
+                </td>
+                <td class="py-3.5 px-4 text-right">
+                  <button type="button" onclick="showClassDetail('UTBK-TPS Penalaran Skolastik', 'KLS-2026-UTBK01', 'Budi Pratama, S.Si.', 'Online Live Zoom #1', 'Sen, Sel, Kam, Jum (19:00-20:30)', '15 / 20', 'Pola Barisan Bilangan & Logika Deduktif')" class="px-3 py-1.5 rounded-lg border border-light-outline text-light-on-surface text-[12px] font-label font-medium hover:bg-light-surface-soft whitespace-nowrap transition-colors shadow-2xs">
+                    Detail Kelas
+                  </button>
+                </td>
+              </tr>
+
+              <!-- Class 4 (SD Level for Filter Test) -->
+              <tr class="class-row hover:bg-light-surface-container transition-colors" data-grade="sd" data-id="KLS-2026-SD6A">
+                <td class="py-3.5 px-4">
+                  <p class="font-bold text-light-on-surface">SD-6 Sukses Ujian Akhir</p>
+                  <p class="text-[11px] text-light-on-surface-variant font-mono">KLS-2026-SD6A</p>
+                </td>
+                <td class="py-3.5 px-4">
+                  <span class="inline-block px-2 py-0.5 rounded text-[11px] font-label bg-warning/20 text-warning font-bold">SD Kelas 6</span>
+                  <span class="text-[11px] text-light-on-surface-variant block mt-0.5">Sudirman • Ruang Pascal</span>
+                </td>
+                <td class="py-3.5 px-4">
+                  <p class="font-semibold text-light-on-surface">Amanda Putri, S.Si.</p>
+                  <p class="text-[11px] text-light-on-surface-variant">Matematika &amp; Sains Dasar</p>
+                </td>
+                <td class="py-3.5 px-4">
+                  <p class="font-medium text-light-on-surface">Sen, Rab, Jum</p>
+                  <p class="text-[11px] text-light-on-surface-variant">14:00 - 15:30 WIB</p>
+                </td>
+                <td class="py-3.5 px-4">
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold text-light-on-surface text-[12px]">6 / 8</span>
+                    <div class="w-16 bg-light-surface-container rounded-full h-2">
+                      <div class="bg-success h-2 rounded-full" style="width: 75%"></div>
+                    </div>
+                  </div>
+                  <span class="text-[11px] text-success font-semibold">Sisa 2 Kursi</span>
+                </td>
+                <td class="py-3.5 px-4">
+                  <span class="px-2.5 py-0.5 rounded-full text-[11px] font-label font-bold bg-success text-on-success">Berjalan</span>
+                </td>
+                <td class="py-3.5 px-4 text-right">
+                  <button type="button" onclick="showClassDetail('SD-6 Sukses Ujian Akhir', 'KLS-2026-SD6A', 'Amanda Putri, S.Si.', 'Ruang Pascal', 'Sen, Rab, Jum (14:00-15:30)', '6 / 8', 'Operasi Pecahan & Bangun Ruang')" class="px-3 py-1.5 rounded-lg border border-light-outline text-light-on-surface text-[12px] font-label font-medium hover:bg-light-surface-soft whitespace-nowrap transition-colors shadow-2xs">
+                    Detail Kelas
+                  </button>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Table Pagination Footer -->
+        <div class="p-4 border-t border-light-outline-variant flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-body-sm">
+          <span class="text-light-on-surface-variant">Menampilkan <strong id="visible-class-count" class="text-light-on-surface">4</strong> dari 26 kelas aktif</span>
+          <div class="flex items-center gap-1">
+            <button type="button" class="px-2.5 py-1 rounded bg-light-primary text-light-on-primary text-body-sm font-label font-semibold shadow-2xs">1</button>
+            <button type="button" onclick="showNotification('Membuka halaman 2...', 'info')" class="px-2.5 py-1 rounded border border-light-outline text-light-on-surface text-body-sm font-label hover:bg-light-surface-container">2</button>
+            <button type="button" onclick="showNotification('Membuka halaman 3...', 'info')" class="px-2.5 py-1 rounded border border-light-outline text-light-on-surface text-body-sm font-label hover:bg-light-surface-container">3</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL: DETAIL KELAS & PROGRESS KURIKULUM                       -->
+  <!-- ============================================================== -->
+  <div id="class-detail-modal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-150">
+    <div class="bg-light-surface rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-light-outline-variant flex flex-col gap-5">
+      <div class="flex items-center justify-between pb-3 border-b border-light-outline-variant">
+        <div>
+          <h3 id="modal-class-title" class="font-headline font-bold text-title-md text-light-on-surface">SMP-8 Reguler Sudirman A</h3>
+          <span id="modal-class-code" class="text-[11px] font-mono text-light-on-surface-variant">KLS-2026-SMP8A</span>
+        </div>
+        <button type="button" onclick="closeClassDetail()" class="p-1.5 rounded-lg text-light-on-surface-variant hover:bg-light-surface-container">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <div class="space-y-3 text-body-sm">
+        <div class="p-3.5 rounded-xl bg-light-surface-container-low border border-light-outline-variant space-y-2">
+          <div class="flex justify-between"><span class="text-light-on-surface-variant">Tutor Pengampu:</span> <strong id="modal-class-tutor" class="text-light-on-surface font-semibold">Budi Pratama, S.Si.</strong></div>
+          <div class="flex justify-between"><span class="text-light-on-surface-variant">Ruang Kelas:</span> <span id="modal-class-room">Ruang Galileo (Offline)</span></div>
+          <div class="flex justify-between"><span class="text-light-on-surface-variant">Jadwal Sesi:</span> <span id="modal-class-schedule">Sen, Rab, Jum (16:00-17:30)</span></div>
+          <div class="flex justify-between"><span class="text-light-on-surface-variant">Kapasitas Kursi:</span> <strong id="modal-class-capacity" class="text-success font-semibold">7 / 8 Siswa</strong></div>
+          <div class="pt-2 border-t border-light-outline-variant flex justify-between"><span class="text-light-on-surface-variant">Materi Minggu Ini:</span> <span id="modal-class-topic" class="font-medium text-brand-indigo">Aljabar &amp; Pythagoras</span></div>
+        </div>
+
+        <div class="p-3 rounded-xl bg-light-primary-container/30 border border-light-primary/30 flex items-center justify-between text-[12px]">
+          <span class="text-light-on-surface-variant">Silabus Selesai: <strong>68% (Minggu ke-12)</strong></span>
+          <span class="font-bold text-light-primary flex items-center gap-1">
+            <span class="material-symbols-outlined text-[16px]">menu_book</span>
+            Modul Cetak 03 Aktif
+          </span>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between pt-2 border-t border-light-outline-variant">
+        <button type="button" onclick="showNotification('Membuka absensi rombel...', 'info')" class="text-body-sm font-label font-semibold text-light-primary hover:underline flex items-center gap-1">
+          <span class="material-symbols-outlined text-[16px]">fact_check</span>
+          <span>Buka Presensi Rombel</span>
+        </button>
+        <button type="button" onclick="closeClassDetail()" class="px-4 py-2 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm font-semibold shadow-xs">
+          Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL: BUKA KELAS BARU                                         -->
+  <!-- ============================================================== -->
+  <div id="new-class-modal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-150">
+    <div class="bg-light-surface rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-light-outline-variant flex flex-col gap-5">
+      <div class="flex items-center justify-between pb-3 border-b border-light-outline-variant">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-light-primary-container text-light-primary flex items-center justify-center font-bold">
+            <span class="material-symbols-outlined text-[18px]">add_home_work</span>
+          </div>
+          <h3 class="font-headline font-bold text-title-md text-light-on-surface">Buka Rombel Kelas Baru</h3>
+        </div>
+        <button type="button" onclick="closeNewClassModal()" class="p-1 rounded-lg text-light-on-surface-variant hover:bg-light-surface-container">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <form onsubmit="handleCreateClass(event)" class="flex flex-col gap-4">
+        <div>
+          <label class="font-label text-label-md text-light-on-surface font-semibold block mb-1">Nama Rombel Kelas</label>
+          <input type="text" id="new-class-name" placeholder="Contoh: SMP-8 Intensif Sudirman B" required
+            class="w-full px-3.5 py-2.5 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="font-label text-label-md text-light-on-surface font-semibold block mb-1">Jenjang</label>
+            <select id="new-class-grade" class="w-full px-3.5 py-2.5 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface">
+              <option value="sd">SD (Kelas 4–6)</option>
+              <option value="smp" selected>SMP (Kelas 7–9)</option>
+              <option value="sma">SMA / UTBK SNBT</option>
+            </select>
+          </div>
+          <div>
+            <label class="font-label text-label-md text-light-on-surface font-semibold block mb-1">Cabang &amp; Ruang</label>
+            <select id="new-class-room" class="w-full px-3.5 py-2.5 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface">
+              <option selected>Sudirman • Ruang Pascal (Max 8)</option>
+              <option>Sudirman • Ruang Galileo (Max 8)</option>
+              <option>Rawamangun • Smart Room (Max 8)</option>
+              <option>Online • Zoom Room #2 (Max 20)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="font-label text-label-md text-light-on-surface font-semibold block mb-1">Tutor Pengampu</label>
+            <select id="new-class-tutor" class="w-full px-3.5 py-2.5 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface">
+              <option selected>Budi Pratama, S.Si. (Matematika)</option>
+              <option>Siti Rahma, M.Pd. (IPA/Kimia)</option>
+              <option>Amanda Putri, S.Si. (Fisika)</option>
+              <option>Dimas Arya, S.Pd. (Literasi)</option>
+            </select>
+          </div>
+          <div>
+            <label class="font-label text-label-md text-light-on-surface font-semibold block mb-1">Jadwal Sesi</label>
+            <select id="new-class-schedule" class="w-full px-3.5 py-2.5 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface">
+              <option selected>Sen, Rab, Jum (14:00 - 15:30)</option>
+              <option>Sen, Rab, Jum (16:00 - 17:30)</option>
+              <option>Sel, Kam, Sab (14:00 - 15:30)</option>
+              <option>Sel, Kam, Sab (16:00 - 17:30)</option>
+              <option>Malam: 19:00 - 20:30 WIB</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-3 border-t border-light-outline-variant mt-2">
+          <button type="button" onclick="closeNewClassModal()" class="px-4 py-2 rounded-lg border border-light-outline text-body-sm font-label font-medium hover:bg-light-surface-container">
+            Batal
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm font-semibold shadow-xs">
+            Buka Kelas &amp; Terbitkan Jadwal
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL: KALENDER SESI MINGGUAN                                  -->
+  <!-- ============================================================== -->
+  <div id="calendar-modal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-150">
+    <div class="bg-light-surface rounded-2xl max-w-3xl w-full p-6 shadow-2xl border border-light-outline-variant flex flex-col gap-4">
+      <div class="flex items-center justify-between pb-3 border-b border-light-outline-variant">
+        <div>
+          <h3 class="font-headline font-bold text-title-md text-light-on-surface">Alokasi Ruang &amp; Kalender Sesi Mingguan</h3>
+          <span class="text-[12px] text-light-on-surface-variant">Validasi konflik jadwal ruang &amp; tutor otomatis</span>
+        </div>
+        <button type="button" onclick="closeCalendarModal()" class="p-1 rounded-lg text-light-on-surface-variant hover:bg-light-surface-container">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-body-sm">
+        <!-- Ruang 1 -->
+        <div class="p-3.5 rounded-xl bg-light-surface-soft border border-light-outline-variant space-y-2">
+          <div class="flex items-center justify-between font-bold text-light-primary">
+            <span>Ruang Galileo (Max 8)</span>
+            <span class="text-success text-[11px]">Valid</span>
+          </div>
+          <div class="p-2 rounded bg-light-surface border text-[11px] space-y-0.5">
+            <strong>14:00 - 15:30</strong>: Matematika SD 6-A
+            <span class="block text-light-on-surface-variant">Tutor: Kak Budi P.</span>
+          </div>
+          <div class="p-2 rounded bg-light-surface border text-[11px] space-y-0.5">
+            <strong>16:00 - 17:30</strong>: SMP-8 Reguler Sudirman A
+            <span class="block text-light-on-surface-variant">Tutor: Kak Budi P.</span>
+          </div>
+        </div>
+
+        <!-- Ruang 2 -->
+        <div class="p-3.5 rounded-xl bg-light-surface-soft border border-light-outline-variant space-y-2">
+          <div class="flex items-center justify-between font-bold text-light-primary">
+            <span>Ruang Newton (Max 8)</span>
+            <span class="text-success text-[11px]">Valid</span>
+          </div>
+          <div class="p-2 rounded bg-light-surface border text-[11px] space-y-0.5">
+            <strong>14:00 - 15:30</strong>: SMP-9 Target ASPD
+            <span class="block text-light-on-surface-variant">Tutor: Kak Siti R.</span>
+          </div>
+          <div class="p-2 rounded bg-light-surface border text-[11px] space-y-0.5">
+            <strong>16:00 - 17:30</strong>: Fisika SMA 10 (Fase E)
+            <span class="block text-light-on-surface-variant">Tutor: Kak Amanda P.</span>
+          </div>
+        </div>
+
+        <!-- Ruang 3 -->
+        <div class="p-3.5 rounded-xl bg-light-surface-soft border border-light-outline-variant space-y-2">
+          <div class="flex items-center justify-between font-bold text-light-primary">
+            <span>Live Zoom #1 (Online)</span>
+            <span class="text-success text-[11px]">Valid</span>
+          </div>
+          <div class="p-2 rounded bg-light-surface border text-[11px] space-y-0.5">
+            <strong>19:00 - 20:30</strong>: UTBK Penalaran Skolastik
+            <span class="block text-light-on-surface-variant">Tutor: Kak Budi P. (15 Siswa)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-end pt-2 border-t border-light-outline-variant">
+        <button type="button" onclick="closeCalendarModal()" class="px-5 py-2 rounded-lg bg-light-primary text-light-on-primary font-label text-body-sm font-semibold shadow-xs">
+          Tutup Kalender
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    // Sidebar Mobile Drawer Toggle
+    function toggleSidebar(open) {
+      const sidebar = document.getElementById('sidebar-nav');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (open) {
+        sidebar.classList.remove('-translate-x-full');
+        sidebar.classList.add('translate-x-0');
+        overlay.classList.remove('hidden');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+        sidebar.classList.remove('translate-x-0');
+        overlay.classList.add('hidden');
+      }
+    }
+
+    // User Popup Menu
+    function toggleUserMenu() {
+      const menu = document.getElementById('user-popup-menu');
+      menu.classList.toggle('hidden');
+    }
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('user-popup-menu');
+      if (!e.target.closest('#user-popup-menu') && !e.target.closest('[onclick="toggleUserMenu()"]')) {
+        menu.classList.add('hidden');
+      }
+    });
+
+    // Toast Notification System
+    function showNotification(text, type = 'success') {
+      const toast = document.getElementById('class-toast');
+      const toastText = document.getElementById('toast-text');
+      const toastIcon = document.getElementById('toast-icon');
+
+      toast.className = 'p-3.5 rounded-xl border text-body-sm flex items-center justify-between gap-3 shadow-xs transition-all animate-in fade-in duration-150';
+
+      if (type === 'success') {
+        toast.classList.add('bg-success/10', 'text-success', 'border-success/30');
+        toastIcon.textContent = 'check_circle';
+      } else if (type === 'warning') {
+        toast.classList.add('bg-warning/10', 'text-warning', 'border-warning/30');
+        toastIcon.textContent = 'warning';
+      } else {
+        toast.classList.add('bg-light-primary-container', 'text-light-primary', 'border-light-primary/30');
+        toastIcon.textContent = 'info';
+      }
+
+      toastText.textContent = text;
+      toast.classList.remove('hidden');
+
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3500);
+    }
+    function closeToast() {
+      document.getElementById('class-toast').classList.add('hidden');
+    }
+
+    // Tab Filter Switching
+    function switchClassTab(tabName, btn) {
+      document.querySelectorAll('.class-tab').forEach(t => {
+        t.className = 'class-tab px-4 py-2.5 border-b-2 border-transparent text-light-on-surface-variant hover:text-light-primary font-label text-body-md whitespace-nowrap';
+      });
+      btn.className = 'class-tab px-4 py-2.5 border-b-2 border-light-primary text-light-primary font-label text-body-md font-bold whitespace-nowrap';
+
+      if (tabName === 'curriculum') {
+        showNotification('Menampilkan 4 Kurikulum: SD Merdeka, SMP Merdeka, SMA Fase E/F, dan UTBK SNBT.', 'info');
+      } else if (tabName === 'schedule') {
+        openCalendarModal();
+      } else {
+        showNotification('Menampilkan seluruh rombel kelas berjalan.', 'info');
+      }
+    }
+
+    // Filter by Level (Jenjang)
+    function filterGrade(val) {
+      let count = 0;
+      document.querySelectorAll('.class-row').forEach(row => {
+        const rowGrade = row.getAttribute('data-grade');
+        if (val === 'all' || rowGrade === val) {
+          row.style.display = '';
+          count++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+      document.getElementById('visible-class-count').textContent = count;
+      showNotification(`Memfilter daftar rombel: ${val.toUpperCase()} (${count} kelas ditampilkan).`, 'info');
+    }
+
+    // Live Search
+    function handleClassSearch(query) {
+      const q = query.toLowerCase();
+      let count = 0;
+      document.querySelectorAll('.class-row').forEach(row => {
+        if (row.textContent.toLowerCase().includes(q)) {
+          row.style.display = '';
+          count++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+      document.getElementById('visible-class-count').textContent = count;
+    }
+
+    // Class Detail Modal Control
+    function showClassDetail(title, code, tutor, room, schedule, capacity, topic) {
+      document.getElementById('modal-class-title').textContent = title;
+      document.getElementById('modal-class-code').textContent = code;
+      document.getElementById('modal-class-tutor').textContent = tutor;
+      document.getElementById('modal-class-room').textContent = room;
+      document.getElementById('modal-class-schedule').textContent = schedule;
+      document.getElementById('modal-class-capacity').textContent = capacity;
+      document.getElementById('modal-class-topic').textContent = topic;
+      document.getElementById('class-detail-modal').classList.remove('hidden');
+    }
+    function closeClassDetail() {
+      document.getElementById('class-detail-modal').classList.add('hidden');
+    }
+
+    // New Class Modal Control
+    function openNewClassModal() {
+      document.getElementById('new-class-modal').classList.remove('hidden');
+    }
+    function closeNewClassModal() {
+      document.getElementById('new-class-modal').classList.add('hidden');
+    }
+    function handleCreateClass(e) {
+      e.preventDefault();
+      const name = document.getElementById('new-class-name').value;
+      const grade = document.getElementById('new-class-grade').value;
+      const room = document.getElementById('new-class-room').value;
+      const tutor = document.getElementById('new-class-tutor').value;
+      const schedule = document.getElementById('new-class-schedule').value;
+
+      closeNewClassModal();
+
+      const newCode = `KLS-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+      const gradeBadge = grade === 'smp' ? 'SMP Kelas 8' : (grade === 'sd' ? 'SD Kelas 6' : 'SMA / UTBK');
+
+      // Add to table
+      const tbody = document.getElementById('class-table-body');
+      const newTr = document.createElement('tr');
+      newTr.className = 'class-row hover:bg-light-surface-container transition-colors animate-in slide-in-from-top duration-200';
+      newTr.setAttribute('data-grade', grade);
+      newTr.setAttribute('data-id', newCode);
+      newTr.innerHTML = `
+        <td class="py-3.5 px-4">
+          <p class="font-bold text-light-on-surface">${name}</p>
+          <p class="text-[11px] text-light-on-surface-variant font-mono">${newCode}</p>
+        </td>
+        <td class="py-3.5 px-4">
+          <span class="inline-block px-2 py-0.5 rounded text-[11px] font-label bg-light-primary-container text-light-primary font-semibold">${gradeBadge}</span>
+          <span class="text-[11px] text-light-on-surface-variant block mt-0.5">${room.split(' (')[0]}</span>
+        </td>
+        <td class="py-3.5 px-4">
+          <p class="font-semibold text-light-on-surface">${tutor.split(' (')[0]}</p>
+          <p class="text-[11px] text-light-on-surface-variant">${tutor.match(/\((.*?)\)/)?.[1] || 'Umum'}</p>
+        </td>
+        <td class="py-3.5 px-4">
+          <p class="font-medium text-light-on-surface">${schedule.split(' (')[0]}</p>
+          <p class="text-[11px] text-light-on-surface-variant">${schedule.match(/\((.*?)\)/)?.[1] || ''}</p>
+        </td>
+        <td class="py-3.5 px-4">
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-light-on-surface text-[12px]">0 / 8</span>
+            <div class="w-16 bg-light-surface-container rounded-full h-2">
+              <div class="bg-success h-2 rounded-full" style="width: 0%"></div>
+            </div>
+          </div>
+          <span class="text-[11px] text-success font-semibold">Tersedia 8 Kursi</span>
+        </td>
+        <td class="py-3.5 px-4">
+          <span class="px-2.5 py-0.5 rounded-full text-[11px] font-label font-bold bg-accent text-on-accent">Baru Buka</span>
+        </td>
+        <td class="py-3.5 px-4 text-right">
+          <button type="button" onclick="showClassDetail('${name}', '${newCode}', '${tutor.split(' (')[0]}', '${room}', '${schedule}', '0 / 8', 'Sesi Pengenalan Kurikulum & Modul 01')" class="px-3 py-1.5 rounded-lg border border-light-outline text-light-on-surface text-[12px] font-label font-medium hover:bg-light-surface-soft whitespace-nowrap transition-colors shadow-2xs">
+            Detail Kelas
+          </button>
+        </td>
+      `;
+      tbody.insertBefore(newTr, tbody.firstChild);
+
+      // Increment Total
+      const kpiEl = document.getElementById('kpi-total-classes');
+      kpiEl.textContent = '27 Rombel';
+
+      showNotification(`Rombel kelas baru "${name}" (#${newCode}) berhasil dibuka tanpa konflik jadwal!`, 'success');
+    }
+
+    // Weekly Calendar Modal Control
+    function openCalendarModal() {
+      document.getElementById('calendar-modal').classList.remove('hidden');
+    }
+    function closeCalendarModal() {
+      document.getElementById('calendar-modal').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>

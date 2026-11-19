@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Profil Siswa 360° — Ahmad Rizky Pratama — ARCI Bimbel</title>
+  
+  <!-- Tailwind CSS with Official Plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+  /** @type {import('tailwindcss').Config} */
+  globalThis.tailwind = globalThis.tailwind || {};
+  globalThis.tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          'accent': '#F6C453',
+          'on-accent': '#18212F',
+          'brand-indigo': '#243B7A',
+          'brand-indigo-dark': '#172653',
+          'success': '#1B7330',
+          'on-success': '#FFFFFF',
+          'warning': '#925B06',
+          'on-warning': '#FFFFFF',
+          'danger': '#B91C1C',
+          'on-danger': '#FFFFFF',
+          'light-primary': '#243B7A',
+          'light-on-primary': '#FFFFFF',
+          'light-primary-container': '#EBF0FA',
+          'light-on-primary-container': '#172653',
+          'light-surface': '#FFFFFF',
+          'light-on-surface': '#18212F',
+          'light-surface-soft': '#F8FAFC',
+          'light-surface-container-low': '#F1F5F9',
+          'light-surface-container': '#E2E8F0',
+          'light-on-surface-variant': '#475569',
+          'light-outline': '#94A3B8',
+          'light-outline-variant': '#CBD5E1',
+          'dark-primary': '#9BB3F0',
+          'dark-on-primary': '#0E1A3C',
+          'dark-primary-container': '#1E3166',
+          'dark-on-primary-container': '#D7E3FF',
+          'dark-surface': '#0F172A',
+          'dark-on-surface': '#F8FAFC',
+          'dark-surface-soft': '#1E293B',
+          'dark-surface-container-low': '#152033',
+          'dark-surface-container': '#1E293B',
+          'dark-on-surface-variant': '#CBD5E1',
+          'dark-outline': '#64748B',
+          'dark-outline-variant': '#475569',
+        },
+        borderRadius: {
+          'sm': '4px',
+          'DEFAULT': '8px',
+          'md': '10px',
+          'lg': '12px',
+          'xl': '16px',
+          '2xl': '20px',
+          'full': '9999px',
+        },
+        fontFamily: {
+          'display': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'headline': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'title': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'body': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'label': ['"Plus Jakarta Sans"', 'sans-serif'],
+        },
+        fontSize: {
+          'display-lg': ['48px', { lineHeight: '56px', letterSpacing: '-0.02em', fontWeight: '700' }],
+          'display-lg-mobile': ['32px', { lineHeight: '40px', letterSpacing: '-0.01em', fontWeight: '700' }],
+          'headline-lg': ['36px', { lineHeight: '44px', letterSpacing: '-0.01em', fontWeight: '700' }],
+          'headline-lg-mobile': ['26px', { lineHeight: '34px', letterSpacing: '0em', fontWeight: '700' }],
+          'headline-md': ['24px', { lineHeight: '32px', fontWeight: '600' }],
+          'headline-sm': ['20px', { lineHeight: '28px', fontWeight: '600' }],
+          'title-lg': ['18px', { lineHeight: '26px', fontWeight: '600' }],
+          'title-md': ['16px', { lineHeight: '24px', fontWeight: '600' }],
+          'body-lg': ['16px', { lineHeight: '24px', fontWeight: '400' }],
+          'body-md': ['14px', { lineHeight: '20px', fontWeight: '400' }],
+          'body-sm': ['12px', { lineHeight: '18px', fontWeight: '400' }],
+          'label-lg': ['14px', { lineHeight: '20px', fontWeight: '600' }],
+          'label-md': ['12px', { lineHeight: '16px', fontWeight: '600' }],
+          'label-sm': ['11px', { lineHeight: '14px', fontWeight: '500' }],
+        },
+      },
+    },
+  };
+  if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+  </script>
+
+  <!-- Typography & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+
+  <style>
+    .material-symbols-outlined, .material-symbols-rounded, .material-symbols-sharp, .material-icons {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      line-height: 1 !important;
+      box-sizing: content-box;
+      overflow: hidden;
+      white-space: nowrap;
+      direction: ltr;
+      vertical-align: middle;
+      font-size: 20px;
+    }
+    .pb-safe {
+      padding-bottom: env(safe-area-inset-bottom, 16px);
+    }
+  </style>
+</head>
+<body class="bg-light-surface-soft text-light-on-surface font-body antialiased min-h-screen flex flex-col lg:flex-row pb-safe">
+
+  <!-- Mobile Backdrop Overlay for Drawer -->
+  <div id="sidebar-overlay" onclick="toggleSidebar(false)" class="hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-xs transition-opacity lg:hidden"></div>
+
+  <!-- Desktop Fixed & Mobile Slide-Out Sidebar Navigation -->
+  <aside id="sidebar-nav" class="fixed inset-y-0 left-0 z-50 w-64 bg-light-surface border-r border-light-outline-variant flex flex-col justify-between shrink-0 transform -translate-x-full transition-transform duration-200 lg:translate-x-0 lg:static lg:h-screen lg:sticky lg:top-0">
+    <div class="flex flex-col flex-1 overflow-y-auto">
+      
+      <!-- Brand Header -->
+      <div class="h-16 lg:h-20 px-5 lg:px-6 flex items-center justify-between border-b border-light-outline-variant shrink-0">
+        <a href="dashboard.html" class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-light-primary flex items-center justify-center text-light-on-primary font-headline font-bold text-headline-sm shadow-xs">
+            A
+          </div>
+          <div class="flex flex-col">
+            <span class="font-headline font-bold text-title-md tracking-tight text-brand-indigo">ARCI Bimbel</span>
+            <span class="text-[11px] text-light-on-surface-variant font-label">Dashboard Operasional</span>
+          </div>
+        </a>
+
+        <!-- Mobile Drawer Close Button -->
+        <button type="button" onclick="toggleSidebar(false)" class="lg:hidden p-1.5 rounded-lg text-light-on-surface-variant hover:bg-light-surface-container" aria-label="Tutup Menu">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="p-3.5 lg:p-4 flex flex-col gap-1">
+        <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">dashboard</span>
+          <span>Ringkasan</span>
+        </a>
+
+        <a href="leads.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">person_search</span>
+            <span>Lead &amp; Pipeline</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">8</span>
+        </a>
+
+        <a href="verifikasi-pendaftaran.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">how_to_reg</span>
+            <span>Pendaftaran</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">3</span>
+        </a>
+
+        <!-- Active Menu: Siswa & Wali -->
+        <a href="students.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg bg-light-primary text-light-on-primary font-label text-body-md shadow-xs transition-colors">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-accent">school</span>
+            <span class="font-semibold">Siswa &amp; Wali</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">184</span>
+        </a>
+
+        <a href="classes.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">class</span>
+          <span>Program &amp; Kelas</span>
+        </a>
+
+        <a href="schedule.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">calendar_month</span>
+          <span>Jadwal Sesi</span>
+        </a>
+
+        <a href="attendance.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">fact_check</span>
+          <span>Presensi Siswa</span>
+        </a>
+
+        <a href="finance.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">payments</span>
+            <span>Tagihan &amp; Kas</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-warning text-on-warning font-bold">Rp</span>
+        </a>
+
+        <a href="reports.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">analytics</span>
+          <span>Laporan KPI</span>
+        </a>
+
+        <a href="cms.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">article</span>
+          <span>Konten Website</span>
+        </a>
+
+        <a href="communications.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">campaign</span>
+          <span>Pengumuman</span>
+        </a>
+
+        <a href="settings.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">admin_panel_settings</span>
+          <span>Hak Akses</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- User Profile Footer -->
+    <div class="p-3.5 lg:p-4 border-t border-light-outline-variant shrink-0 bg-light-surface">
+      <div class="flex items-center justify-between p-2 rounded-lg hover:bg-light-surface-container transition-colors">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-light-primary text-light-on-primary flex items-center justify-center font-bold font-headline text-body-md shadow-2xs">
+            KA
+          </div>
+          <div class="flex flex-col">
+            <span class="text-body-sm font-semibold text-light-on-surface">Dewi Lestari</span>
+            <span class="text-[11px] text-light-on-surface-variant font-label">Koordinator Akademik</span>
+          </div>
+        </div>
+        <a href="login-admin.html" title="Keluar / Logout" class="p-1.5 rounded-md text-light-on-surface-variant hover:text-danger hover:bg-danger/10 transition-colors">
+          <span class="material-symbols-outlined text-[18px]">logout</span>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div class="flex-1 flex flex-col min-w-0">
+    
+    <!-- Top Utility Bar (App Shell) -->
+    <header class="h-16 lg:h-20 bg-light-surface border-b border-light-outline-variant px-4 sm:px-6 lg:px-8 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
+      <div class="flex items-center gap-3 sm:gap-4 flex-1 max-w-md">
+        <!-- Mobile Drawer Toggle -->
+        <button type="button" onclick="toggleSidebar(true)" class="lg:hidden w-10 h-10 rounded-lg border border-light-outline flex items-center justify-center text-light-on-surface hover:bg-light-surface-container shrink-0" aria-label="Buka Menu Navigasi">
+          <span class="material-symbols-outlined text-[22px]">menu</span>
+        </button>
+
+        <div class="relative w-full">
+          <span class="material-symbols-outlined absolute left-3 top-2.5 text-light-on-surface-variant text-[20px]">search</span>
+          <input 
+            type="search" 
+            id="student-search"
+            oninput="handleSearch(this.value)"
+            placeholder="Cari siswa, NISN, atau kelas..." 
+            class="w-full pl-10 pr-4 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface text-light-on-surface placeholder:text-light-on-surface-variant">
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3 ml-2">
+        <a href="students.html" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container font-label text-body-sm sm:text-body-md font-semibold transition-colors shadow-2xs">
+          <span class="material-symbols-outlined text-[18px] text-light-on-surface-variant">arrow_back</span>
+          <span class="hidden md:inline">Kembali ke Daftar</span>
+          <span class="md:hidden">Kembali</span>
+        </a>
+        <button type="button" onclick="openEditStudentModal()" class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm sm:text-body-md font-semibold shadow-xs transition-colors whitespace-nowrap min-h-[40px]">
+          <span class="material-symbols-outlined text-[18px]">edit</span>
+          <span>Edit Data Siswa</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Student Profile 360 Viewport -->
+    <main class="p-4 sm:p-6 lg:p-8 flex-1 flex flex-col gap-6">
+      
+      <!-- Top Student Header Card -->
+      <div class="bg-light-surface p-5 sm:p-6 rounded-2xl border border-light-outline-variant shadow-xs flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+        <div class="flex items-start sm:items-center gap-4 sm:gap-5">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-light-primary text-light-on-primary font-headline font-bold text-headline-sm sm:text-headline-md flex items-center justify-center shadow-xs shrink-0">
+            AR
+          </div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2 sm:gap-2.5">
+              <h1 id="student-header-name" class="text-headline-sm font-headline font-bold text-light-on-surface">Ahmad Rizky Pratama</h1>
+              <span class="px-2.5 py-0.5 rounded-full text-label-sm font-bold bg-success/15 text-success">Siswa Aktif</span>
+              <span class="px-2.5 py-0.5 rounded-full text-label-sm font-semibold bg-blue-100 text-blue-800">NISN: 0089123456</span>
+            </div>
+            <p id="student-header-school" class="text-body-sm text-light-on-surface-variant mt-1">
+              SMAN 8 Jakarta • Kelas 12 IPA 2 • Target: Kedokteran UI / STEI ITB
+            </p>
+            <div class="flex flex-wrap items-center gap-3 sm:gap-4 text-[12px] text-light-on-surface-variant mt-2">
+              <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px] text-light-primary">person</span> Wali: Hendra Pratama (Ayah)</span>
+              <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px] text-emerald-600">call</span> 0812-3456-7890</span>
+              <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px] text-light-primary">domain</span> Cabang Sudirman Utama</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions & SPP Status -->
+        <div class="flex flex-col sm:flex-row lg:flex-col items-start lg:items-end justify-between gap-3 shrink-0 border-t lg:border-t-0 pt-4 lg:pt-0 border-light-outline-variant">
+          <div class="text-left lg:text-right">
+            <span class="text-label-sm text-light-on-surface-variant font-medium">Status Tagihan SPP:</span>
+            <div class="text-title-md font-bold text-success flex items-center gap-1 lg:justify-end mt-0.5">
+              <span class="material-symbols-outlined text-[18px]">verified</span>
+              Lunas (Nov 2026)
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-light-outline hover:bg-light-surface-container font-label text-body-sm font-semibold text-light-on-surface shadow-2xs transition-colors">
+              <span class="material-symbols-outlined text-emerald-600 text-[18px]">chat</span>
+              <span>Hubungi Wali</span>
+            </a>
+            <button type="button" onclick="openReportModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm font-semibold shadow-xs transition-colors">
+              <span class="material-symbols-outlined text-[18px]">print</span>
+              <span>Rapor Belajar</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="flex border-b border-light-outline-variant bg-light-surface rounded-t-xl px-2 sm:px-4 overflow-x-auto shadow-2xs">
+        <button type="button" id="tab-academic" onclick="switchProfileTab('academic')" class="px-4 sm:px-5 py-3 border-b-2 border-light-primary text-light-primary font-semibold text-body-sm flex items-center gap-2 whitespace-nowrap transition-all">
+          <span class="material-symbols-outlined text-[18px]">analytics</span>
+          <span>Perkembangan Akademik &amp; Tryout</span>
+        </button>
+        <button type="button" id="tab-attendance" onclick="switchProfileTab('attendance')" class="px-4 sm:px-5 py-3 text-light-on-surface-variant hover:text-light-on-surface font-label text-body-sm flex items-center gap-2 whitespace-nowrap transition-all">
+          <span class="material-symbols-outlined text-[18px]">fact_check</span>
+          <span>Riwayat Presensi (96.2%)</span>
+        </button>
+        <button type="button" id="tab-billing" onclick="switchProfileTab('billing')" class="px-4 sm:px-5 py-3 text-light-on-surface-variant hover:text-light-on-surface font-label text-body-sm flex items-center gap-2 whitespace-nowrap transition-all">
+          <span class="material-symbols-outlined text-[18px]">receipt_long</span>
+          <span>Tagihan &amp; Invoice SPP</span>
+        </button>
+        <button type="button" id="tab-documents" onclick="switchProfileTab('documents')" class="px-4 sm:px-5 py-3 text-light-on-surface-variant hover:text-light-on-surface font-label text-body-sm flex items-center gap-2 whitespace-nowrap transition-all">
+          <span class="material-symbols-outlined text-[18px]">folder_shared</span>
+          <span>Berkas &amp; Dokumen Siswa</span>
+        </button>
+      </div>
+
+      <!-- Profile 360 Content Grid -->
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+        
+        <!-- Left: Academic Progress & Tryout Scores (8 cols) -->
+        <div class="xl:col-span-8 flex flex-col gap-6" id="tab-content-area">
+          
+          <!-- Tryout Performance Card -->
+          <div class="bg-light-surface rounded-2xl border border-light-outline-variant p-5 sm:p-6 shadow-xs flex flex-col gap-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-light-outline-variant pb-4">
+              <div>
+                <h2 class="font-headline font-bold text-title-lg text-light-on-surface">Riwayat Skor Tryout UTBK SNBT</h2>
+                <p class="text-body-sm text-light-on-surface-variant mt-0.5">Grafik skor rata-rata berdasarkan sistem penilaian IRT Nasional.</p>
+              </div>
+              <div class="text-left sm:text-right">
+                <span class="text-label-sm text-light-on-surface-variant font-medium">Skor Terakhir (TO #4)</span>
+                <div class="text-headline-sm font-bold text-brand-indigo mt-0.5">712.5 / 1000</div>
+              </div>
+            </div>
+
+            <!-- Tryout Scores Breakdown Table -->
+            <div class="border border-light-outline-variant rounded-xl overflow-hidden shadow-2xs">
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-body-sm">
+                  <thead>
+                    <tr class="bg-light-surface-container border-b border-light-outline-variant text-label-sm font-bold text-light-on-surface">
+                      <th class="p-3.5">SUBTES UJIAN</th>
+                      <th class="p-3.5 text-center">SKOR TO #3</th>
+                      <th class="p-3.5 text-center">SKOR TO #4</th>
+                      <th class="p-3.5 text-center">TREN</th>
+                      <th class="p-3.5">STATUS KELULUSAN PTN</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-light-outline-variant">
+                    <tr class="hover:bg-light-surface-soft transition-colors">
+                      <td class="p-3.5 font-semibold text-light-on-surface">Penalaran Umum (TPS)</td>
+                      <td class="p-3.5 text-center text-light-on-surface-variant">680</td>
+                      <td class="p-3.5 text-center font-bold text-brand-indigo">725</td>
+                      <td class="p-3.5 text-center text-success font-semibold">+45 ↑</td>
+                      <td class="p-3.5 text-success font-semibold text-[12px]">Aman (Target Kedokteran UI)</td>
+                    </tr>
+                    <tr class="hover:bg-light-surface-soft transition-colors">
+                      <td class="p-3.5 font-semibold text-light-on-surface">Pengetahuan Kuantitatif</td>
+                      <td class="p-3.5 text-center text-light-on-surface-variant">660</td>
+                      <td class="p-3.5 text-center font-bold text-brand-indigo">740</td>
+                      <td class="p-3.5 text-center text-success font-semibold">+80 ↑</td>
+                      <td class="p-3.5 text-success font-semibold text-[12px]">Sangat Aman</td>
+                    </tr>
+                    <tr class="hover:bg-light-surface-soft transition-colors">
+                      <td class="p-3.5 font-semibold text-light-on-surface">Literasi Bahasa Indonesia</td>
+                      <td class="p-3.5 text-center text-light-on-surface-variant">690</td>
+                      <td class="p-3.5 text-center font-bold text-brand-indigo">705</td>
+                      <td class="p-3.5 text-center text-success font-semibold">+15 ↑</td>
+                      <td class="p-3.5 text-success font-semibold text-[12px]">Aman</td>
+                    </tr>
+                    <tr class="hover:bg-light-surface-soft transition-colors">
+                      <td class="p-3.5 font-semibold text-light-on-surface">Literasi Bahasa Inggris</td>
+                      <td class="p-3.5 text-center text-light-on-surface-variant">650</td>
+                      <td class="p-3.5 text-center font-bold text-brand-indigo">680</td>
+                      <td class="p-3.5 text-center text-success font-semibold">+30 ↑</td>
+                      <td class="p-3.5 text-warning font-semibold text-[12px]">Perlu Latihan Kosakata</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Tutor Academic Observation Notes -->
+            <div class="p-4 bg-light-surface-soft rounded-xl border border-light-outline-variant flex flex-col gap-1.5 text-body-sm shadow-2xs">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-brand-indigo flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-[18px] text-light-primary">psychology</span>
+                  Catatan Konselor Akademik (Dewi Lestari):
+                </span>
+                <span class="text-[11px] text-light-on-surface-variant font-medium">15 Nov 2026</span>
+              </div>
+              <p class="text-light-on-surface-variant leading-relaxed text-[12px]">
+                &#34;Ahmad menunjukkan lompatan pemahaman signifikan pada materi Penalaran Matematika dan Fisika Gelombang. Daya analisis soal HOTS sangat baik. Rekomendasi: Pertahankan ritme latihan drilling soal literasi bahasa Inggris 2x seminggu untuk mengamankan ambang batas kuota FK UI.&#34;
+              </p>
+            </div>
+          </div>
+
+          <!-- Active Classes & Enrolled Programs -->
+          <div class="bg-light-surface rounded-2xl border border-light-outline-variant p-5 sm:p-6 shadow-xs flex flex-col gap-4">
+            <h2 class="font-headline font-bold text-title-md text-light-on-surface">Kelas &amp; Program Belajar Aktif</h2>
+
+            <div class="p-4 rounded-xl border border-light-outline-variant bg-light-surface flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-2xs">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="font-bold text-body-md text-brand-indigo">UTBK SNBT 2026 Intensif (Kelas 12-IPA)</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">Aktif</span>
+                </div>
+                <div class="text-body-sm text-light-on-surface-variant mt-1">
+                  Lab Newton • 4 Sesi/Minggu (Senin, Selasa, Rabu, Kamis) • Tutor Utama: Budi Pratama, S.Si
+                </div>
+              </div>
+              <div class="text-left sm:text-right shrink-0">
+                <div class="text-body-sm font-semibold text-light-on-surface">Kehadiran Sesi: 26 / 28 Sesi</div>
+                <span class="text-[11px] text-success font-semibold">Tingkat Absensi: 92.8%</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right: Student Metadata & Parent Contact (4 cols) -->
+        <div class="xl:col-span-4 flex flex-col gap-6">
+          
+          <!-- Parent & Student Details Card -->
+          <div class="bg-light-surface rounded-2xl border border-light-outline-variant p-5 sm:p-6 shadow-xs flex flex-col gap-4 text-body-sm">
+            <h3 class="font-headline font-bold text-title-md text-light-on-surface border-b border-light-outline-variant pb-3">
+              Informasi Pribadi &amp; Kontak
+            </h3>
+
+            <div class="flex flex-col gap-3">
+              <div>
+                <span class="text-[11px] text-light-on-surface-variant font-label font-medium">Nama Lengkap Siswa</span>
+                <div id="disp-student-name" class="font-semibold text-light-on-surface mt-0.5">Ahmad Rizky Pratama</div>
+              </div>
+
+              <div>
+                <span class="text-[11px] text-light-on-surface-variant font-label font-medium">Nomor Induk / NISN</span>
+                <div class="font-semibold text-light-on-surface mt-0.5 font-mono">0089123456 / ARCI-2026-089</div>
+              </div>
+
+              <div>
+                <span class="text-[11px] text-light-on-surface-variant font-label font-medium">Email &amp; No. WhatsApp Siswa</span>
+                <div class="font-semibold text-light-on-surface mt-0.5">ahmad.rizky@student.arci.id</div>
+                <div class="text-[12px] text-light-on-surface-variant font-mono">0812-9988-7766</div>
+              </div>
+
+              <div class="border-t border-light-outline-variant pt-3">
+                <span class="text-[11px] text-light-on-surface-variant font-label font-medium">Data Orang Tua / Wali</span>
+                <div id="disp-parent-name" class="font-semibold text-light-on-surface mt-0.5">Hendra Pratama, S.T</div>
+                <div class="text-[12px] text-light-on-surface-variant">Hubungan: Ayah Kandung</div>
+                <div class="text-[12px] text-emerald-700 font-semibold mt-0.5 font-mono">0812-3456-7890 (WA Aktif Notifikasi)</div>
+              </div>
+
+              <div class="border-t border-light-outline-variant pt-3">
+                <span class="text-[11px] text-light-on-surface-variant font-label font-medium">Alamat Rumah</span>
+                <p id="disp-student-address" class="text-[12px] text-light-on-surface-variant mt-0.5 leading-relaxed">
+                  Jl. Tebet Barat Dalam IX No. 14, Jakarta Selatan, DKI Jakarta 12810
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Documents Checklist Card -->
+          <div class="bg-light-surface rounded-2xl border border-light-outline-variant p-5 sm:p-6 shadow-xs flex flex-col gap-3 text-body-sm">
+            <h3 class="font-headline font-bold text-title-md text-light-on-surface flex items-center justify-between">
+              <span>Kelengkapan Berkas Pendaftaran</span>
+              <span class="text-label-sm font-bold text-success">Lengkap 100%</span>
+            </h3>
+
+            <div class="flex flex-col gap-2 pt-1">
+              <div class="flex items-center justify-between p-2.5 rounded-lg bg-light-surface-soft border border-light-outline-variant shadow-2xs">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-success text-[18px]">task_alt</span>
+                  <span class="font-medium text-light-on-surface text-[12px]">Formulir Pendaftaran Siswa</span>
+                </div>
+                <button type="button" onclick="showToast('Mengunduh Formulir_Pendaftaran_Ahmad_Rizky.pdf...', 'info')" class="text-light-primary text-[11px] font-bold hover:underline">Unduh</button>
+              </div>
+
+              <div class="flex items-center justify-between p-2.5 rounded-lg bg-light-surface-soft border border-light-outline-variant shadow-2xs">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-success text-[18px]">task_alt</span>
+                  <span class="font-medium text-light-on-surface text-[12px]">Salinan Kartu Keluarga &amp; Rapor</span>
+                </div>
+                <button type="button" onclick="showToast('Mengunduh KK_Rapor_Ahmad_Rizky.pdf...', 'info')" class="text-light-primary text-[11px] font-bold hover:underline">Unduh</button>
+              </div>
+
+              <div class="flex items-center justify-between p-2.5 rounded-lg bg-light-surface-soft border border-light-outline-variant shadow-2xs">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-success text-[18px]">task_alt</span>
+                  <span class="font-medium text-light-on-surface text-[12px]">Persetujuan Tata Tertib Belajar</span>
+                </div>
+                <button type="button" onclick="showToast('Menampilkan Dokumen Tata Tertib...', 'info')" class="text-light-primary text-[11px] font-bold hover:underline">Lihat</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 1: EDIT DATA SISWA                                       -->
+  <!-- ============================================================== -->
+  <div id="modal-edit-student" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+    <div class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-2xl max-w-lg w-full overflow-hidden flex flex-col max-h-[92vh]">
+      <div class="px-6 py-4 border-b border-light-outline-variant flex items-center justify-between bg-light-surface-soft">
+        <div class="flex items-center gap-2 text-brand-indigo">
+          <span class="material-symbols-outlined text-[22px]">person_edit</span>
+          <h3 class="font-headline font-bold text-title-md text-light-on-surface">Edit Data Profil Siswa</h3>
+        </div>
+        <button type="button" onclick="closeEditStudentModal()" class="text-light-on-surface-variant hover:text-light-on-surface p-1 rounded-lg hover:bg-light-surface-container">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <form id="form-edit-student" onsubmit="saveStudentProfile(event)" class="p-6 overflow-y-auto space-y-4">
+        <div>
+          <label for="edit-student-name" class="block text-body-sm font-semibold text-light-on-surface mb-1">Nama Lengkap Siswa *</label>
+          <input type="text" id="edit-student-name" required value="Ahmad Rizky Pratama" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="edit-student-school" class="block text-body-sm font-semibold text-light-on-surface mb-1">Asal Sekolah *</label>
+            <input type="text" id="edit-student-school" required value="SMAN 8 Jakarta" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">
+          </div>
+          <div>
+            <label for="edit-student-class" class="block text-body-sm font-semibold text-light-on-surface mb-1">Kelas Asal</label>
+            <input type="text" id="edit-student-class" value="12 IPA 2" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">
+          </div>
+        </div>
+
+        <div>
+          <label for="edit-student-target" class="block text-body-sm font-semibold text-light-on-surface mb-1">Target PTN &amp; Jurusan</label>
+          <input type="text" id="edit-student-target" value="Kedokteran UI / STEI ITB" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="edit-parent-name" class="block text-body-sm font-semibold text-light-on-surface mb-1">Nama Wali Murid *</label>
+            <input type="text" id="edit-parent-name" required value="Hendra Pratama, S.T" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">
+          </div>
+          <div>
+            <label for="edit-parent-phone" class="block text-body-sm font-semibold text-light-on-surface mb-1">No. WhatsApp Wali *</label>
+            <input type="tel" id="edit-parent-phone" required value="0812-3456-7890" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">
+          </div>
+        </div>
+
+        <div>
+          <label for="edit-student-address" class="block text-body-sm font-semibold text-light-on-surface mb-1">Alamat Domisili</label>
+          <textarea id="edit-student-address" rows="2" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">Jl. Tebet Barat Dalam IX No. 14, Jakarta Selatan, DKI Jakarta 12810</textarea>
+        </div>
+
+        <div class="pt-3 border-t border-light-outline-variant flex items-center justify-end gap-3">
+          <button type="button" onclick="closeEditStudentModal()" class="px-4 py-2 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container text-body-sm font-semibold">
+            Batal
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm font-bold shadow-xs">
+            Simpan Perubahan
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 2: CETAK RAPOR BELAJAR                                   -->
+  <!-- ============================================================== -->
+  <div id="modal-report" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+    <div class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-2xl max-w-lg w-full overflow-hidden flex flex-col max-h-[92vh]">
+      <div class="px-6 py-4 border-b border-light-outline-variant flex items-center justify-between bg-light-surface-soft">
+        <div class="flex items-center gap-2 text-brand-indigo">
+          <span class="material-symbols-outlined text-[22px]">assignment</span>
+          <h3 class="font-headline font-bold text-title-md text-light-on-surface">Rapor Evaluasi Belajar Siswa</h3>
+        </div>
+        <button type="button" onclick="closeReportModal()" class="text-light-on-surface-variant hover:text-light-on-surface p-1 rounded-lg hover:bg-light-surface-container">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-4 text-body-sm">
+        <div class="p-4 rounded-xl bg-light-surface-soft border border-light-outline-variant">
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="font-bold text-body-lg text-light-on-surface">Ahmad Rizky Pratama</span>
+              <p class="text-[12px] text-light-on-surface-variant">NISN: 0089123456 • Periode: Semester Ganjil 2026/2027</p>
+            </div>
+            <span class="px-2.5 py-1 rounded-full text-label-sm font-bold bg-success/15 text-success">Lulus Prediksi</span>
+          </div>
+        </div>
+
+        <div class="border border-light-outline-variant rounded-xl divide-y divide-light-outline-variant overflow-hidden">
+          <div class="p-3 flex items-center justify-between bg-light-surface-container font-bold text-[12px]">
+            <span>KOMPONEN PENILAIAN</span>
+            <span>CAPAIAN / SKOR</span>
+          </div>
+          <div class="p-3 flex items-center justify-between">
+            <span>Rata-rata Skor Tryout UTBK</span>
+            <span class="font-bold text-brand-indigo">712.5 (Peringkat 2 dari 60)</span>
+          </div>
+          <div class="p-3 flex items-center justify-between">
+            <span>Kehadiran Sesi Pembelajaran</span>
+            <span class="font-bold text-success">92.8% (26/28 Sesi)</span>
+          </div>
+          <div class="p-3 flex items-center justify-between">
+            <span>Penyelesaian Tugas &amp; Drill Soal</span>
+            <span class="font-bold text-light-on-surface">95.0% Tuntas</span>
+          </div>
+        </div>
+
+        <div class="p-3.5 bg-light-primary-container/30 rounded-xl border border-light-primary/20 text-[12px] text-light-on-surface">
+          <strong>Rekomendasi Dewan Penguji:</strong> Siswa memiliki probabilitas kelulusan <strong>88.4%</strong> pada pilihan 1 Kedokteran Universitas Indonesia.
+        </div>
+
+        <div class="pt-3 border-t border-light-outline-variant flex items-center justify-end gap-3">
+          <button type="button" onclick="closeReportModal()" class="px-4 py-2 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container text-body-sm font-semibold">
+            Tutup
+          </button>
+          <button type="button" onclick="printReport()" class="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm font-bold shadow-xs">
+            <span class="material-symbols-outlined text-[18px]">print</span>
+            <span>Cetak PDF Rapor</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-full"></div>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    // Tab switching logic
+    function switchProfileTab(tab) {
+      const tabs = ['academic', 'attendance', 'billing', 'documents'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tab-${t}`);
+        if (t === tab) {
+          btn.className = "px-4 sm:px-5 py-3 border-b-2 border-light-primary text-light-primary font-semibold text-body-sm flex items-center gap-2 whitespace-nowrap transition-all";
+        } else {
+          btn.className = "px-4 sm:px-5 py-3 text-light-on-surface-variant hover:text-light-on-surface font-label text-body-sm flex items-center gap-2 whitespace-nowrap transition-all";
+        }
+      });
+
+      const area = document.getElementById('tab-content-area');
+      if (tab === 'academic') {
+        area.innerHTML = `
+          <!-- Tryout Performance Card -->
+          <div class="bg-light-surface rounded-2xl border border-light-outline-variant p-5 sm:p-6 shadow-xs flex flex-col gap-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-light-outline-variant pb-4">
+              <div>
+                <h2 class="font-headline font-bold text-title-lg text-light-on-surface">Riwayat Skor Tryout UTBK SNBT</h2>
+                <p class="text-body-sm text-light-on-surface-variant mt-0.5">Grafik skor rata-rata berdasarkan sistem penilaian IRT Nasional.</p>
+              </div>
+              <div class="text-left sm:text-right">
+                <span class="text-label-sm text-light-on-surface-variant font-medium">Skor Terakhir (TO #4)</span>
+                <div class="text-headline-sm font-bold text-brand-indigo mt-0.5">712.5 / 1000</div>
+              </div>
+            </div>
+
+            <!-- Tryout Scores Breakdown Table -->
+            <div class="border border-light-outline-variant rounded-xl overflow-hidden shadow-2xs">
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-body-sm">
+                  <thead>
+                    <tr class="bg-light-surface-container border-b border-light-outline-variant text-label-sm font-bold text-light-on-surface">
+                      <th class="p-3.5">SUBTES UJIAN</th>
+                      <th class="p-3.5 text-center">SKOR TO #3</th>
+                      <th class="p-3.5 text-center">SKOR TO #4</th>
+                      <th class="p-3.5 text-center">TREN</th>
+                      <th class="p-3.5">STATUS KELULUSAN PTN</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-light-outline-variant">
+                    <tr class="hover:bg-light-surface-soft transition-colors">
+                      <td class="p-3.5 font-semibold text-light-on-surface">Penalaran Umum (TPS)</td>
+                      <td class="p-3.5 text-center text-light-on-surface-variant">680</td>
+                      <td class="p-3.5 text-center font-bold text-brand-indigo">725</td>
+                      <td class="p-3.5 text-center text-success font-semibold">+45 ↑</td>
+                      <td class="p-3.5 text-success font-semibold text-[12px]">Aman (Target Kedokteran UI)</td>
+                    </tr>
+                    <tr class="hover:bg-light-surface-soft transition-colors">
+                      <td class="p-3.5 font-semibold text-light-on-surface">Pengetahuan Kuantitatif</td>
+                      <td class="p-3.5 text-center text-light-on-surface-variant">660</td>
+                      <td class="p-3.5 text-center font-bold text-brand-indigo">740</td>
+                      <td class="p-3.5 text-center text-success font-semibold">+80 ↑</td>
+                      <td class="p-3.5 text-success font-semibold text-[12px]">Sangat Aman</td>
+                    </tr>
+                    <tr class="hover:bg-light-surface-soft transition-colors">
+                      <td class="p-3.5 font-semibold text-light-on-surface">Literasi Bahasa Indonesia</td>
+                      <td class="p-3.5 text-center text-light-on-surface-variant">690</td>
+                      <td class="p-3.5 text-center font-bold text-brand-indigo">705</td>
+                      <td class="p-3.5 text-center text-success font-semibold">+15 ↑</td>
+                      <td class="p-3.5 text-success font-semibold text-[12px]">Aman</td>
+                    </tr>
+                    <tr class="hover:bg-light-surface-soft transition-colors">
+                      <td class="p-3.5 font-semibold text-light-on-surface">Literasi Bahasa Inggris</td>
+                      <td class="p-3.5 text-center text-light-on-surface-variant">650</td>
+                      <td class="p-3.5 text-center font-bold text-brand-indigo">680</td>
+                      <td class="p-3.5 text-center text-success font-semibold">+30 ↑</td>
+                      <td class="p-3.5 text-warning font-semibold text-[12px]">Perlu Latihan Kosakata</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Tutor Academic Observation Notes -->
+            <div class="p-4 bg-light-surface-soft rounded-xl border border-light-outline-variant flex flex-col gap-1.5 text-body-sm shadow-2xs">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-brand-indigo flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-[18px] text-light-primary">psychology</span>
+                  Catatan Konselor Akademik (Dewi Lestari):
+                </span>
+                <span class="text-[11px] text-light-on-surface-variant font-medium">15 Nov 2026</span>
+              </div>
+              <p class="text-light-on-surface-variant leading-relaxed text-[12px]">
+                &#34;Ahmad menunjukkan lompatan pemahaman signifikan pada materi Penalaran Matematika dan Fisika Gelombang. Daya analisis soal HOTS sangat baik. Rekomendasi: Pertahankan ritme latihan drilling soal literasi bahasa Inggris 2x seminggu untuk mengamankan ambang batas kuota FK UI.&#34;
+              </p>
+            </div>
+          </div>
+
+          <!-- Active Classes & Enrolled Programs -->
+          <div class="bg-light-surface rounded-2xl border border-light-outline-variant p-5 sm:p-6 shadow-xs flex flex-col gap-4">
+            <h2 class="font-headline font-bold text-title-md text-light-on-surface">Kelas &amp; Program Belajar Aktif</h2>
+
+            <div class="p-4 rounded-xl border border-light-outline-variant bg-light-surface flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-2xs">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="font-bold text-body-md text-brand-indigo">UTBK SNBT 2026 Intensif (Kelas 12-IPA)</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">Aktif</span>
+                </div>
+                <div class="text-body-sm text-light-on-surface-variant mt-1">
+                  Lab Newton • 4 Sesi/Minggu (Senin, Selasa, Rabu, Kamis) • Tutor Utama: Budi Pratama, S.Si
+                </div>
+              </div>
+              <div class="text-left sm:text-right shrink-0">
+                <div class="text-body-sm font-semibold text-light-on-surface">Kehadiran Sesi: 26 / 28 Sesi</div>
+                <span class="text-[11px] text-success font-semibold">Tingkat Absensi: 92.8%</span>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (tab === 'attendance') {
+        area.innerHTML = `
+          <div class="bg-light-surface rounded-2xl border border-light-outline-variant p-5 sm:p-6 shadow-xs flex flex-col gap-4">
+            <div class="flex items-center justify-between border-b border-light-outline-variant pb-3">
+              <div>
+                <h2 class="font-headline font-bold text-title-lg text-light-on-surface">Riwayat Presensi Sesi Kelas</h2>
+                <p class="text-body-sm text-light-on-surface-variant mt-0.5">Kehadiran tercatat 26 dari 28 sesi pertemuan tatap muka.</p>
+              </div>
+              <span class="px-3 py-1 rounded-full text-label-sm font-bold bg-success/15 text-success">92.8% Kehadiran</span>
+            </div>
+            <div class="border border-light-outline-variant rounded-xl overflow-hidden divide-y divide-light-outline-variant text-body-sm">
+              <div class="p-3 flex items-center justify-between hover:bg-light-surface-soft">
+                <div>
+                  <span class="font-bold text-brand-indigo">Fisika: Gelombang & Optik</span>
+                  <div class="text-[11px] text-light-on-surface-variant">Selasa, 18 Nov 2026 • 14:00 WIB • Lab Newton</div>
+                </div>
+                <span class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-success/15 text-success">Hadir (14:02)</span>
+              </div>
+              <div class="p-3 flex items-center justify-between hover:bg-light-surface-soft">
+                <div>
+                  <span class="font-bold text-brand-indigo">Matematika Wajib: Trigonometri</span>
+                  <div class="text-[11px] text-light-on-surface-variant">Senin, 17 Nov 2026 • 14:00 WIB • R. Einstein</div>
+                </div>
+                <span class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-success/15 text-success">Hadir (13:58)</span>
+              </div>
+              <div class="p-3 flex items-center justify-between hover:bg-light-surface-soft">
+                <div>
+                  <span class="font-bold text-brand-indigo">TPS Penalaran Umum</span>
+                  <div class="text-[11px] text-light-on-surface-variant">Kamis, 13 Nov 2026 • 16:00 WIB • Lab Newton</div>
+                </div>
+                <span class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-warning/20 text-warning">Izin (Lomba)</span>
+              </div>
+              <div class="p-3 flex items-center justify-between hover:bg-light-surface-soft">
+                <div>
+                  <span class="font-bold text-brand-indigo">Literasi Bahasa Inggris</span>
+                  <div class="text-[11px] text-light-on-surface-variant">Rabu, 12 Nov 2026 • 14:00 WIB • Lab Newton</div>
+                </div>
+                <span class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-success/15 text-success">Hadir (14:00)</span>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (tab === 'billing') {
+        area.innerHTML = `
+          <div class="bg-light-surface rounded-2xl border border-light-outline-variant p-5 sm:p-6 shadow-xs flex flex-col gap-4">
+            <div class="flex items-center justify-between border-b border-light-outline-variant pb-3">
+              <div>
+                <h2 class="font-headline font-bold text-title-lg text-light-on-surface">Histori Pembayaran SPP & Formulir</h2>
+                <p class="text-body-sm text-light-on-surface-variant mt-0.5">Seluruh tagihan aktif terverifikasi lunas oleh staf keuangan.</p>
+              </div>
+              <span class="px-3 py-1 rounded-full text-label-sm font-bold bg-success/15 text-success">Bebas Tunggakan</span>
+            </div>
+            <div class="border border-light-outline-variant rounded-xl overflow-hidden divide-y divide-light-outline-variant text-body-sm">
+              <div class="p-4 flex items-center justify-between hover:bg-light-surface-soft">
+                <div>
+                  <div class="font-bold text-light-on-surface">SPP Paket UTBK SNBT — Periode November 2026</div>
+                  <div class="text-[11px] text-light-on-surface-variant font-mono">INV-2026-11-0089 • Transfer Bank BCA</div>
+                </div>
+                <div class="text-right">
+                  <span class="font-bold text-brand-indigo">Rp1.850.000</span>
+                  <div class="text-[11px] text-success font-semibold">Lunas • 02 Nov 2026</div>
+                </div>
+              </div>
+              <div class="p-4 flex items-center justify-between hover:bg-light-surface-soft">
+                <div>
+                  <div class="font-bold text-light-on-surface">Biaya Pendaftaran & Modul UTBK Intensif</div>
+                  <div class="text-[11px] text-light-on-surface-variant font-mono">INV-2026-10-0042 • QRIS Otomatis</div>
+                </div>
+                <div class="text-right">
+                  <span class="font-bold text-brand-indigo">Rp500.000</span>
+                  <div class="text-[11px] text-success font-semibold">Lunas • 15 Okt 2026</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (tab === 'documents') {
+        area.innerHTML = `
+          <div class="bg-light-surface rounded-2xl border border-light-outline-variant p-5 sm:p-6 shadow-xs flex flex-col gap-4">
+            <div class="flex items-center justify-between border-b border-light-outline-variant pb-3">
+              <div>
+                <h2 class="font-headline font-bold text-title-lg text-light-on-surface">Arsip Berkas &amp; Dokumen Siswa</h2>
+                <p class="text-body-sm text-light-on-surface-variant mt-0.5">Dokumen digital pendaftaran dan perjanjian belajar.</p>
+              </div>
+              <button type="button" onclick="showToast('Pilih file dokumen baru untuk diunggah...', 'info')" class="px-3 py-1.5 rounded-lg border border-light-outline hover:bg-light-surface-container font-semibold text-body-sm text-light-primary shadow-2xs">
+                + Unggah Berkas Baru
+              </button>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-body-sm">
+              <div class="p-3.5 rounded-xl border border-light-outline-variant bg-light-surface-soft flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <span class="material-symbols-outlined text-danger text-[24px]">picture_as_pdf</span>
+                  <div>
+                    <div class="font-semibold text-light-on-surface">Formulir_Pendaftaran.pdf</div>
+                    <div class="text-[11px] text-light-on-surface-variant">320 KB • 15 Okt 2026</div>
+                  </div>
+                </div>
+                <button type="button" onclick="showToast('Mengunduh Formulir_Pendaftaran.pdf...', 'info')" class="text-light-primary text-body-sm font-bold hover:underline">Unduh</button>
+              </div>
+              <div class="p-3.5 rounded-xl border border-light-outline-variant bg-light-surface-soft flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <span class="material-symbols-outlined text-blue-600 text-[24px]">description</span>
+                  <div>
+                    <div class="font-semibold text-light-on-surface">Salinan_Rapor_Sem1-4.pdf</div>
+                    <div class="text-[11px] text-light-on-surface-variant">1.4 MB • 15 Okt 2026</div>
+                  </div>
+                </div>
+                <button type="button" onclick="showToast('Mengunduh Salinan_Rapor_Sem1-4.pdf...', 'info')" class="text-light-primary text-body-sm font-bold hover:underline">Unduh</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+      showToast(`Tab dialihkan ke: ${tab.toUpperCase()}`, 'info');
+    }
+
+    // Modal Handlers
+    function openEditStudentModal() {
+      document.getElementById('modal-edit-student').classList.remove('hidden');
+    }
+    function closeEditStudentModal() {
+      document.getElementById('modal-edit-student').classList.add('hidden');
+    }
+    function saveStudentProfile(e) {
+      e.preventDefault();
+      const name = document.getElementById('edit-student-name').value;
+      const school = document.getElementById('edit-student-school').value;
+      const parent = document.getElementById('edit-parent-name').value;
+      const addr = document.getElementById('edit-student-address').value;
+
+      document.getElementById('student-header-name').textContent = name;
+      document.getElementById('disp-student-name').textContent = name;
+      document.getElementById('disp-parent-name').textContent = parent;
+      document.getElementById('disp-student-address').textContent = addr;
+
+      closeEditStudentModal();
+      showToast('Data profil siswa berhasil diperbarui!', 'success');
+    }
+
+    function openReportModal() {
+      document.getElementById('modal-report').classList.remove('hidden');
+    }
+    function closeReportModal() {
+      document.getElementById('modal-report').classList.add('hidden');
+    }
+    function printReport() {
+      closeReportModal();
+      showToast('Membuka dialog cetak rapor belajar siswa...', 'info');
+      setTimeout(() => {
+        window.print();
+      }, 500);
+    }
+
+    function handleSearch(query) {
+      if (query.length > 2) {
+        showToast(`Mencari data: "${query}"`, 'info');
+      }
+    }
+
+    // Mobile Drawer Toggle
+    function toggleSidebar(open) {
+      const sidebar = document.getElementById('sidebar-nav');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (open) {
+        sidebar.classList.remove('-translate-x-full');
+        sidebar.classList.add('translate-x-0');
+        overlay.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+        sidebar.classList.remove('translate-x-0');
+        overlay.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }
+    }
+
+    // Toast Notification System
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      
+      let bg = 'bg-light-surface text-light-on-surface border-light-outline-variant';
+      let icon = 'info';
+      let iconColor = 'text-brand-indigo';
+
+      if (type === 'success') {
+        icon = 'check_circle';
+        iconColor = 'text-success';
+      } else if (type === 'warning') {
+        icon = 'warning';
+        iconColor = 'text-warning';
+      } else if (type === 'danger') {
+        icon = 'error';
+        iconColor = 'text-danger';
+      }
+
+      toast.className = `p-4 rounded-xl border ${bg} shadow-lg flex items-center gap-3 transition-all duration-300 transform translate-y-4 opacity-0 pointer-events-auto`;
+      toast.innerHTML = `
+        <span class="material-symbols-outlined ${iconColor} text-[22px] shrink-0">${icon}</span>
+        <span class="text-body-sm font-medium flex-1">${message}</span>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-4', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+  </script>
+</body>
+</html>

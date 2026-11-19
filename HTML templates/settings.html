@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Pengaturan Pengguna &amp; Hak Akses — ARCI Bimbel</title>
+  
+  <!-- Tailwind CSS with Official Plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+  /** @type {import('tailwindcss').Config} */
+  globalThis.tailwind = globalThis.tailwind || {};
+  globalThis.tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          'accent': '#F6C453',
+          'on-accent': '#18212F',
+          'brand-indigo': '#243B7A',
+          'brand-indigo-dark': '#172653',
+          'success': '#1B7330',
+          'on-success': '#FFFFFF',
+          'warning': '#925B06',
+          'on-warning': '#FFFFFF',
+          'danger': '#B91C1C',
+          'on-danger': '#FFFFFF',
+          'light-primary': '#243B7A',
+          'light-on-primary': '#FFFFFF',
+          'light-primary-container': '#EBF0FA',
+          'light-on-primary-container': '#172653',
+          'light-surface': '#FFFFFF',
+          'light-on-surface': '#18212F',
+          'light-surface-soft': '#F8FAFC',
+          'light-surface-container-low': '#F1F5F9',
+          'light-surface-container': '#E2E8F0',
+          'light-on-surface-variant': '#475569',
+          'light-outline': '#94A3B8',
+          'light-outline-variant': '#CBD5E1',
+          'dark-primary': '#9BB3F0',
+          'dark-on-primary': '#0E1A3C',
+          'dark-primary-container': '#1E3166',
+          'dark-on-primary-container': '#D7E3FF',
+          'dark-surface': '#0F172A',
+          'dark-on-surface': '#F8FAFC',
+          'dark-surface-soft': '#1E293B',
+          'dark-surface-container-low': '#152033',
+          'dark-surface-container': '#1E293B',
+          'dark-on-surface-variant': '#CBD5E1',
+          'dark-outline': '#64748B',
+          'dark-outline-variant': '#475569',
+        },
+        borderRadius: {
+          'sm': '4px',
+          'DEFAULT': '8px',
+          'md': '10px',
+          'lg': '12px',
+          'xl': '16px',
+          '2xl': '20px',
+          'full': '9999px',
+        },
+        fontFamily: {
+          'display': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'headline': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'title': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'body': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'label': ['"Plus Jakarta Sans"', 'sans-serif'],
+        },
+        boxShadow: {
+          '2xs': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+          'xs': '0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px -1px rgba(0, 0, 0, 0.08)',
+        }
+      },
+    },
+  };
+  if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+  </script>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+  
+  <style>
+    .material-symbols-outlined, .material-symbols-rounded, .material-symbols-sharp, .material-icons {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      line-height: 1 !important;
+      box-sizing: content-box;
+      overflow: hidden;
+      white-space: nowrap;
+      direction: ltr;
+      vertical-align: middle;
+      font-size: 20px;
+    }
+    .pb-safe {
+      padding-bottom: env(safe-area-inset-bottom, 16px);
+    }
+  </style>
+</head>
+<body class="bg-light-surface-soft text-light-on-surface font-body antialiased min-h-screen flex flex-col lg:flex-row pb-safe">
+
+  <!-- Mobile Backdrop Overlay for Drawer -->
+  <div id="sidebar-overlay" onclick="toggleSidebar(false)" class="hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-xs transition-opacity lg:hidden"></div>
+
+  <!-- Desktop Fixed & Mobile Slide-Out Sidebar Navigation -->
+  <aside id="sidebar-nav" class="fixed inset-y-0 left-0 z-50 w-64 bg-light-surface border-r border-light-outline-variant flex flex-col justify-between shrink-0 transform -translate-x-full transition-transform duration-200 lg:translate-x-0 lg:static lg:h-screen lg:sticky lg:top-0">
+    <div class="flex flex-col flex-1 overflow-y-auto">
+      <!-- Brand Header -->
+      <div class="h-16 lg:h-20 px-5 lg:px-6 flex items-center justify-between border-b border-light-outline-variant shrink-0">
+        <a href="dashboard.html" class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-light-primary flex items-center justify-center text-light-on-primary font-headline font-bold text-headline-sm shadow-xs">
+            A
+          </div>
+          <div class="flex flex-col">
+            <span class="font-headline font-bold text-title-md tracking-tight text-brand-indigo">ARCI Bimbel</span>
+            <span class="text-[11px] text-light-on-surface-variant font-label">Dashboard Operasional</span>
+          </div>
+        </a>
+
+        <!-- Mobile Drawer Close Button -->
+        <button type="button" onclick="toggleSidebar(false)" class="lg:hidden p-1.5 rounded-lg text-light-on-surface-variant hover:bg-light-surface-container" aria-label="Tutup Menu">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="p-3.5 lg:p-4 flex flex-col gap-1">
+        <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">dashboard</span>
+          <span>Ringkasan</span>
+        </a>
+
+        <a href="leads.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">person_search</span>
+            <span>Lead &amp; Pipeline</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">8</span>
+        </a>
+
+        <a href="verifikasi-pendaftaran.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">how_to_reg</span>
+            <span>Pendaftaran</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">3</span>
+        </a>
+
+        <a href="students.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">school</span>
+            <span>Siswa &amp; Wali</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">184</span>
+        </a>
+
+        <a href="classes.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">class</span>
+          <span>Program &amp; Kelas</span>
+        </a>
+
+        <a href="schedule.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">calendar_month</span>
+          <span>Jadwal Sesi</span>
+        </a>
+
+        <a href="attendance.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">fact_check</span>
+          <span>Presensi Siswa</span>
+        </a>
+
+        <a href="finance.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">payments</span>
+            <span>Tagihan &amp; Kas</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">5 Baru</span>
+        </a>
+
+        <a href="communications.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">campaign</span>
+          <span>Komunikasi &amp; Broadcast</span>
+        </a>
+
+        <!-- Active Menu: Pengaturan & Role -->
+        <a href="settings.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-light-primary text-light-on-primary font-label text-body-md shadow-xs transition-colors">
+          <span class="material-symbols-outlined text-[20px] text-accent">manage_accounts</span>
+          <span class="font-semibold">Pengaturan &amp; Role</span>
+        </a>
+
+        <a href="reports.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">analytics</span>
+          <span>Laporan KPI</span>
+        </a>
+        <a href="cms.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">article</span>
+          <span>Konten Website</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- User Profile Footer -->
+    <div class="p-3.5 lg:p-4 border-t border-light-outline-variant shrink-0 bg-light-surface">
+      <div class="flex items-center justify-between p-2 rounded-lg hover:bg-light-surface-container transition-colors">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-light-primary text-light-on-primary flex items-center justify-center font-bold font-headline text-body-md shadow-2xs">
+            SA
+          </div>
+          <div class="flex flex-col">
+            <span class="text-body-sm font-semibold text-light-on-surface">Direktur Utama</span>
+            <span class="text-[11px] text-light-on-surface-variant">Super Admin</span>
+          </div>
+        </div>
+        <a href="login-admin.html" title="Keluar / Logout" class="p-1.5 rounded-md text-light-on-surface-variant hover:text-danger hover:bg-danger/10 transition-colors">
+          <span class="material-symbols-outlined text-[18px]">logout</span>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div class="flex-1 flex flex-col min-w-0">
+    
+    <!-- Top Utility Bar (App Shell) -->
+    <header class="h-16 lg:h-20 bg-light-surface border-b border-light-outline-variant px-4 sm:px-6 lg:px-8 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
+      
+      <!-- Mobile Hamburger Button & Search Bar -->
+      <div class="flex items-center gap-3 sm:gap-4 flex-1 max-w-lg">
+        <button type="button" onclick="toggleSidebar(true)" class="lg:hidden w-10 h-10 rounded-lg border border-light-outline flex items-center justify-center text-light-on-surface hover:bg-light-surface-container shrink-0" aria-label="Buka Menu Navigasi">
+          <span class="material-symbols-outlined text-[22px]">menu</span>
+        </button>
+
+        <!-- Search Input -->
+        <div class="relative w-full">
+          <span class="material-symbols-outlined absolute left-3 top-2.5 text-light-on-surface-variant text-[20px]">search</span>
+          <input 
+            type="search" 
+            id="settings-search" 
+            oninput="handleSearch(this.value)" 
+            placeholder="Cari akun pengguna internal atau audit log..." 
+            class="w-full pl-10 pr-4 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface text-light-on-surface placeholder:text-light-on-surface-variant">
+        </div>
+      </div>
+
+      <!-- Header Actions -->
+      <div class="flex items-center gap-2.5 sm:gap-4 ml-2">
+        <button type="button" aria-label="Notifikasi" onclick="showToast('Log audit keamanan telah terenkripsi dan dicatat.', 'info')" class="relative w-10 h-10 rounded-lg border border-light-outline flex items-center justify-center text-light-on-surface hover:bg-light-surface-container transition-colors shrink-0">
+          <span class="material-symbols-outlined text-[20px]">notifications</span>
+          <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-danger ring-2 ring-light-surface"></span>
+        </button>
+
+        <button type="button" onclick="openInviteStaffModal()" class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm sm:text-body-md font-semibold shadow-xs transition-colors whitespace-nowrap min-h-[40px]">
+          <span class="material-symbols-outlined text-[18px]">person_add</span>
+          <span class="hidden sm:inline">Undang Staf Baru</span>
+          <span class="sm:hidden">Undang</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Operational Viewport Content -->
+    <main class="p-4 sm:p-6 lg:p-8 flex flex-col gap-6 flex-1">
+      
+      <!-- Title & Action Bar -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="flex flex-wrap items-center gap-2.5">
+            <h1 class="font-headline font-bold text-headline-sm sm:text-headline-md text-light-on-surface">
+              Manajemen Pengguna, Peran &amp; Audit Keamanan
+            </h1>
+            <span class="px-2.5 py-0.5 rounded-full text-label-sm font-label bg-light-primary-container text-light-primary font-bold shadow-2xs">
+              12 Akun Staf Aktif
+            </span>
+          </div>
+          <p class="text-body-sm text-light-on-surface-variant mt-1">
+            Konfigurasi hak akses berbasis peran (RBAC) untuk menjaga kerahasiaan data siswa, keuangan, dan rekam audit log perubahan.
+          </p>
+        </div>
+      </div>
+
+      <!-- Settings Nav Tabs -->
+      <div class="flex items-center gap-2 border-b border-light-outline-variant overflow-x-auto pb-px" id="settings-tab-group">
+        <button 
+          type="button" 
+          onclick="switchTab('users')" 
+          id="tab-btn-users" 
+          class="px-4 py-2.5 border-b-2 border-light-primary text-light-primary font-label text-body-md font-bold whitespace-nowrap transition-colors">
+          Pengguna Internal &amp; Tutor (12)
+        </button>
+        <button 
+          type="button" 
+          onclick="switchTab('rbac')" 
+          id="tab-btn-rbac" 
+          class="px-4 py-2.5 border-b-2 border-transparent text-light-on-surface hover:text-light-primary font-label text-body-md font-medium whitespace-nowrap transition-colors">
+          Matriks Izin Role (RBAC)
+        </button>
+        <button 
+          type="button" 
+          onclick="switchTab('audit')" 
+          id="tab-btn-audit" 
+          class="px-4 py-2.5 border-b-2 border-transparent text-light-on-surface hover:text-light-primary font-label text-body-md font-medium whitespace-nowrap transition-colors">
+          Audit Log Aktivitas Keamanan
+        </button>
+      </div>
+
+      <!-- ============================================================== -->
+      <!-- TAB 1: PENGGUNA INTERNAL & PERMISSION INSPECTOR (SPLIT LAYOUT) -->
+      <!-- ============================================================== -->
+      <div id="tab-content-users" class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+        
+        <!-- Staff List Table (Col 7) -->
+        <section class="lg:col-span-7 bg-light-surface rounded-xl border border-light-outline-variant shadow-xs overflow-hidden flex flex-col justify-between">
+          
+          <div class="p-4 sm:p-5 border-b border-light-outline-variant flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 class="font-headline font-bold text-title-md text-light-on-surface">Daftar Akun Pengguna Internal</h2>
+              <p class="text-[12px] text-light-on-surface-variant">Klik baris staf untuk mengubah matriks izin pada panel inspektur.</p>
+            </div>
+            
+            <div class="flex items-center gap-1.5 shrink-0" id="filter-staff-group">
+              <button 
+                type="button" 
+                onclick="setStaffFilter('all')" 
+                id="btn-filter-all" 
+                class="px-2.5 py-1 rounded-lg bg-light-primary text-light-on-primary text-[12px] font-label font-semibold shadow-2xs">
+                Semua (12)
+              </button>
+              <button 
+                type="button" 
+                onclick="setStaffFilter('tutor')" 
+                id="btn-filter-tutor" 
+                class="px-2.5 py-1 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container text-[12px] font-label font-semibold">
+                Tutor (8)
+              </button>
+              <button 
+                type="button" 
+                onclick="setStaffFilter('admin')" 
+                id="btn-filter-admin" 
+                class="px-2.5 py-1 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container text-[12px] font-label font-semibold">
+                Admin (4)
+              </button>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-body-sm">
+              <thead class="bg-light-surface-soft border-b border-light-outline-variant text-[11px] font-label text-light-on-surface-variant uppercase tracking-wider">
+                <tr>
+                  <th class="py-3 px-4">Nama Staf &amp; Email</th>
+                  <th class="py-3 px-4">Peran (Role)</th>
+                  <th class="py-3 px-4">Status Akun</th>
+                  <th class="py-3 px-4 text-right">Kelola</th>
+                </tr>
+              </thead>
+              <tbody id="staff-tbody" class="divide-y divide-light-outline-variant font-body">
+                <!-- Dynamically rendered rows -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination Footer -->
+          <div class="p-4 border-t border-light-outline-variant flex flex-col sm:flex-row items-center justify-between gap-3 text-body-sm">
+            <span id="staff-pagination-info" class="text-light-on-surface-variant text-[13px]">
+              Menampilkan 6 dari 12 staf internal
+            </span>
+            <div class="flex items-center gap-1">
+              <button type="button" class="px-2.5 py-1 rounded bg-light-primary text-light-on-primary text-body-sm font-label font-bold shadow-2xs">1</button>
+              <button type="button" onclick="showToast('Halaman 2 memuat daftar staf internal berikutnya.', 'info')" class="px-2.5 py-1 rounded border border-light-outline text-light-on-surface hover:bg-light-surface-container text-body-sm font-label transition-colors">2</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Role Permissions Matrix Inspector (Col 5) -->
+        <section id="permissions-inspector" class="lg:col-span-5 bg-light-surface rounded-xl border border-light-outline-variant shadow-xs p-5 sm:p-6 flex flex-col gap-5 sticky top-24">
+          
+          <div class="flex items-center justify-between pb-3 border-b border-light-outline-variant">
+            <div>
+              <h2 id="inspector-role-title" class="font-headline text-title-lg font-bold text-light-on-surface">Hak Akses: Admin Operasional</h2>
+              <p id="inspector-role-desc" class="text-[11px] text-light-on-surface-variant">Ditetapkan untuk staf front-office &amp; penanganan lead</p>
+            </div>
+            <span id="inspector-tier-badge" class="px-2 py-0.5 rounded-full text-[11px] font-label bg-light-primary-container text-light-primary font-bold">
+              Tingkat 2
+            </span>
+          </div>
+
+          <!-- Permission Checkbox Matrix -->
+          <div class="flex flex-col gap-3">
+            <span class="font-label text-label-sm text-light-on-surface font-bold uppercase tracking-wider">Modul Yang Diizinkan:</span>
+
+            <!-- Modul 1: Lead & Registrasi -->
+            <label class="p-3 rounded-lg border border-light-outline-variant bg-light-surface flex items-start gap-3 cursor-pointer hover:bg-light-surface-soft transition-colors">
+              <input type="checkbox" id="perm-lead" checked class="mt-1 rounded text-light-primary focus:ring-light-primary">
+              <div>
+                <p class="text-body-sm font-semibold text-light-on-surface">Manajemen Lead &amp; Registrasi</p>
+                <p class="text-[11px] text-light-on-surface-variant">Melihat lead baru, mengubah status tahapan follow-up, dan menyetujui formulir pendaftaran.</p>
+              </div>
+            </label>
+
+            <!-- Modul 2: Data Siswa & Kontak Wali -->
+            <label class="p-3 rounded-lg border border-light-outline-variant bg-light-surface flex items-start gap-3 cursor-pointer hover:bg-light-surface-soft transition-colors">
+              <input type="checkbox" id="perm-student" checked class="mt-1 rounded text-light-primary focus:ring-light-primary">
+              <div>
+                <p class="text-body-sm font-semibold text-light-on-surface">Data Siswa &amp; Kontak Wali</p>
+                <p class="text-[11px] text-light-on-surface-variant">Mengelola biodata anak, nomor WhatsApp wali, dan riwayat mutasi kelas.</p>
+              </div>
+            </label>
+
+            <!-- Modul 3: Program & Kelas -->
+            <label class="p-3 rounded-lg border border-light-outline-variant bg-light-surface flex items-start gap-3 cursor-pointer hover:bg-light-surface-soft transition-colors">
+              <input type="checkbox" id="perm-classes" checked class="mt-1 rounded text-light-primary focus:ring-light-primary">
+              <div>
+                <p class="text-body-sm font-semibold text-light-on-surface">Program Belajar &amp; Jadwal Sesi</p>
+                <p class="text-[11px] text-light-on-surface-variant">Menambah rombel, plotting tutor ruang kelas, dan mencatat absensi.</p>
+              </div>
+            </label>
+
+            <!-- Modul 4: Akses Keuangan & Kas (Dibatasi) -->
+            <div id="perm-finance-box" class="p-3 rounded-lg border border-light-outline-variant bg-light-surface-container opacity-80 flex items-start gap-3">
+              <input type="checkbox" id="perm-finance" disabled class="mt-1 rounded text-light-primary">
+              <div>
+                <p class="text-body-sm font-semibold text-light-on-surface flex items-center gap-1.5">
+                  <span>Akses Keuangan &amp; Verifikasi Kas</span>
+                  <span class="text-[10px] px-1.5 py-0.2 rounded bg-danger/10 text-danger font-bold">Dibatasi</span>
+                </p>
+                <p class="text-[11px] text-light-on-surface-variant">Hanya Admin Keuangan dan Super Admin yang berhak menyetujui bukti bayar dan refund kas.</p>
+              </div>
+            </div>
+
+            <!-- Modul 5: Komunikasi & Broadcast -->
+            <label class="p-3 rounded-lg border border-light-outline-variant bg-light-surface flex items-start gap-3 cursor-pointer hover:bg-light-surface-soft transition-colors">
+              <input type="checkbox" id="perm-comms" checked class="mt-1 rounded text-light-primary focus:ring-light-primary">
+              <div>
+                <p class="text-body-sm font-semibold text-light-on-surface">Kirim Broadcast &amp; Pengumuman</p>
+                <p class="text-[11px] text-light-on-surface-variant">Memicu pesan siaran WhatsApp massal dan notifikasi in-app kepada orang tua.</p>
+              </div>
+            </label>
+          </div>
+
+          <!-- Audit Log Security Snippet -->
+          <div class="p-3.5 rounded-lg bg-light-surface-soft border border-light-outline-variant">
+            <span class="text-[11px] font-label text-light-on-surface font-bold flex items-center gap-1 mb-1">
+              <span class="material-symbols-outlined text-[16px] text-light-primary">shield</span>
+              Audit Log Terakhir untuk Akun Ini:
+            </span>
+            <p id="inspector-last-audit" class="text-[12px] text-light-on-surface font-mono">
+              18 Nov 2026 19:45 • Konversi Lead #LD-1189 menjadi Pendaftaran Disetujui.
+            </p>
+          </div>
+
+          <!-- Save Button -->
+          <div class="pt-2 flex justify-end">
+            <button 
+              type="button" 
+              onclick="savePermissionChanges()" 
+              class="px-5 py-2.5 rounded-xl bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-label-md font-bold shadow-xs transition-colors flex items-center gap-2">
+              <span class="material-symbols-outlined text-[18px]">save</span>
+              <span>Simpan Perubahan Hak Akses</span>
+            </button>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- ============================================================== -->
+      <!-- TAB 2: MATRIKS IZIN ROLE (RBAC MATRIX VIEW)                    -->
+      <!-- ============================================================== -->
+      <div id="tab-content-rbac" class="hidden bg-light-surface rounded-xl border border-light-outline-variant shadow-xs overflow-hidden">
+        <div class="p-5 border-b border-light-outline-variant">
+          <h2 class="font-headline font-bold text-title-md text-light-on-surface">Matriks Hak Akses Berbasis Peran (RBAC)</h2>
+          <p class="text-[12px] text-light-on-surface-variant mt-0.5">Perbandingan kapabilitas dan wewenang untuk masing-masing tier akun pengguna sistem ARCI Bimbel.</p>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-body-sm">
+            <thead class="bg-light-surface-soft border-b border-light-outline-variant text-[11px] font-label text-light-on-surface-variant uppercase tracking-wider">
+              <tr>
+                <th class="py-3.5 px-4 font-bold">Kapabilitas / Fitur Modul</th>
+                <th class="py-3.5 px-3 text-center">Super Admin</th>
+                <th class="py-3.5 px-3 text-center">Admin Operasional</th>
+                <th class="py-3.5 px-3 text-center">Admin Keuangan</th>
+                <th class="py-3.5 px-3 text-center">Tutor Senior</th>
+                <th class="py-3.5 px-3 text-center">Tutor Reguler</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-light-outline-variant font-body">
+              <tr>
+                <td class="py-3 px-4 font-medium">Lihat &amp; Kelola Lead / Pipeline Calon Siswa</td>
+                <td class="py-3 px-3 text-center text-success font-bold">✓ Penuh</td>
+                <td class="py-3 px-3 text-center text-success font-bold">✓ Penuh</td>
+                <td class="py-3 px-3 text-center text-light-on-surface-variant">Hanya Lihat</td>
+                <td class="py-3 px-3 text-center text-danger font-bold">✕</td>
+                <td class="py-3 px-3 text-center text-danger font-bold">✕</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-medium">Setujui Pendaftaran Siswa Baru</td>
+                <td class="py-3 px-3 text-center text-success font-bold">✓ Penuh</td>
+                <td class="py-3 px-3 text-center text-success font-bold">✓ Penuh</td>
+                <td class="py-3 px-3 text-center text-danger font-bold">✕</td>
+                <td class="py-3 px-3 text-center text-danger font-bold">✕</td>
+                <td class="py-3 px-3 text-center text-danger font-bold">✕</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-medium">Verifikasi Pembayaran Kas &amp; Terbitkan Kuitansi</td>
+                <td class="py-3 px-3 text-center text-success font-bold">✓ Penuh</td>
+                <td class="py-3 px-3 text-center text-danger font-bold">✕ (Dibatasi)</td>
+                <td class="py-3 px-3 text-center text-success font-bold">✓ Penuh</td>
+                <td class="py-3 px-3 text-center text-danger font-bold">✕</td>
+                <td class="py-3 px-3 text-center text-danger font-bold">✕</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-medium">Kelola Rombel Kelas, Ruang &amp; Jadwal Sesi</td>
+                <td class="py-3 px-3 text-center text-success font-bold">✓ Penuh</td>
+                <td class="py-3 px-3 text-center text-success font-bold">✓ Penuh</td>
+                <td class="py-3 px-3 text-center text-light-on-surface-variant">Hanya Lihat</td>
+                <td class="py-3 px-3 text-center text-success font-bold">✓ Kelas Sendiri</td>
+                <td class="py-3 px-3 text-center text-success font-bold">✓ Kelas Sendiri</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-medium">Input Nilai Latihan, Tryout &amp; Catatan Guru</td>
+                <td class="py-3 px-3 text-center text-success font-bold">✓ Penuh</td>
+                <td class="py-3 px-3 text-center text-light-on-surface-variant">Hanya Lihat</td>
+                <td class="py-3 px-3 text-center text-danger font-bold">✕</td>
+                <td class="py-3 px-3 text-center text-success font-bold">✓ Penuh</td>
+                <td class="py-3 px-3 text-center text-success font-bold">✓ Kelas Sendiri</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-medium">Kirim Broadcast Massal WhatsApp</td>
+                <td class="py-3 px-3 text-center text-success font-bold">✓ Penuh</td>
+                <td class="py-3 px-3 text-center text-success font-bold">✓ Penuh</td>
+                <td class="py-3 px-3 text-center text-light-on-surface-variant">Pesan Tagihan</td>
+                <td class="py-3 px-3 text-center text-danger font-bold">✕</td>
+                <td class="py-3 px-3 text-center text-danger font-bold">✕</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-medium">Konfigurasi Pengaturan Sistem &amp; RBAC</td>
+                <td class="py-3 px-3 text-center text-success font-bold">✓ Penuh</td>
+                <td class="py-3 px-3 text-center text-danger font-bold">✕</td>
+                <td class="py-3 px-3 text-center text-danger font-bold">✕</td>
+                <td class="py-3 px-3 text-center text-danger font-bold">✕</td>
+                <td class="py-3 px-3 text-center text-danger font-bold">✕</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ============================================================== -->
+      <!-- TAB 3: AUDIT LOG AKTIVITAS KEAMANAN (LOG VIEW)                 -->
+      <!-- ============================================================== -->
+      <div id="tab-content-audit" class="hidden bg-light-surface rounded-xl border border-light-outline-variant shadow-xs overflow-hidden">
+        <div class="p-5 border-b border-light-outline-variant flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h2 class="font-headline font-bold text-title-md text-light-on-surface">Rekam Jejak Audit Keamanan Sistem</h2>
+            <p class="text-[12px] text-light-on-surface-variant">Seluruh aktivitas perubahan data, autentikasi login, dan ekspor data tercatat secara permanen.</p>
+          </div>
+          <button type="button" onclick="showToast('Mengunduh seluruh berkas audit log keamanan terenkripsi...', 'success')" class="px-3 py-1.5 rounded-lg border border-light-outline text-light-on-surface text-body-sm font-label font-semibold hover:bg-light-surface-container flex items-center gap-1.5 self-start sm:self-auto shadow-2xs">
+            <span class="material-symbols-outlined text-[16px]">download</span>
+            <span>Ekspor Audit CSV</span>
+          </button>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-body-sm">
+            <thead class="bg-light-surface-soft border-b border-light-outline-variant text-[11px] font-label text-light-on-surface-variant uppercase tracking-wider">
+              <tr>
+                <th class="py-3 px-4">Waktu (WIB)</th>
+                <th class="py-3 px-4">Pengguna &amp; IP</th>
+                <th class="py-3 px-4">Jenis Aksi</th>
+                <th class="py-3 px-4">Detail Perubahan</th>
+                <th class="py-3 px-4 text-center">Tingkat Risiko</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-light-outline-variant font-mono text-[12px]">
+              <tr>
+                <td class="py-3 px-4 text-light-on-surface-variant font-sans">19 Nov 2026, 17:05</td>
+                <td class="py-3 px-4">
+                  <p class="font-bold text-light-on-surface font-sans">Rina Kusuma (Admin Keuangan)</p>
+                  <p class="text-[11px] text-light-on-surface-variant">182.253.110.42</p>
+                </td>
+                <td class="py-3 px-4 font-semibold text-brand-indigo font-sans">Persetujuan Pembayaran</td>
+                <td class="py-3 px-4 text-light-on-surface">Memverifikasi bukti transfer INV-2026-1189 (Rp1.100.000) a.n Farhan Pratama.</td>
+                <td class="py-3 px-4 text-center font-sans">
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-success/15 text-success">Rendah</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 text-light-on-surface-variant font-sans">19 Nov 2026, 16:20</td>
+                <td class="py-3 px-4">
+                  <p class="font-bold text-light-on-surface font-sans">Ahmad Dani (Admin Operasional)</p>
+                  <p class="text-[11px] text-light-on-surface-variant">114.124.201.19</p>
+                </td>
+                <td class="py-3 px-4 font-semibold text-brand-indigo font-sans">Mutasi Rombel</td>
+                <td class="py-3 px-4 text-light-on-surface">Memindahkan siswa Farhan Pratama ke kelas SMP-8 Sudirman A.</td>
+                <td class="py-3 px-4 text-center font-sans">
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-success/15 text-success">Rendah</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 text-light-on-surface-variant font-sans">18 Nov 2026, 19:45</td>
+                <td class="py-3 px-4">
+                  <p class="font-bold text-light-on-surface font-sans">Ahmad Dani (Admin Operasional)</p>
+                  <p class="text-[11px] text-light-on-surface-variant">114.124.201.19</p>
+                </td>
+                <td class="py-3 px-4 font-semibold text-brand-indigo font-sans">Konversi Lead</td>
+                <td class="py-3 px-4 text-light-on-surface">Mengubah Lead #LD-1189 menjadi Pendaftaran Disetujui.</td>
+                <td class="py-3 px-4 text-center font-sans">
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-success/15 text-success">Rendah</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 text-light-on-surface-variant font-sans">18 Nov 2026, 08:30</td>
+                <td class="py-3 px-4">
+                  <p class="font-bold text-light-on-surface font-sans">dr. Hendra Wijaya (Super Admin)</p>
+                  <p class="text-[11px] text-light-on-surface-variant">36.72.10.88</p>
+                </td>
+                <td class="py-3 px-4 font-semibold text-warning font-sans">Perubahan Izin Role</td>
+                <td class="py-3 px-4 text-light-on-surface">Memperbarui hak akses broadcast WhatsApp untuk role Admin Operasional.</td>
+                <td class="py-3 px-4 text-center font-sans">
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-warning/20 text-warning">Sedang</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 text-light-on-surface-variant font-sans">17 Nov 2026, 17:10</td>
+                <td class="py-3 px-4">
+                  <p class="font-bold text-light-on-surface font-sans">Rina Kusuma (Admin Keuangan)</p>
+                  <p class="text-[11px] text-light-on-surface-variant">182.253.110.42</p>
+                </td>
+                <td class="py-3 px-4 font-semibold text-brand-indigo font-sans">Ekspor Data Keuangan</td>
+                <td class="py-3 px-4 text-light-on-surface">Mengunduh rekap mutasi kas bulan November 2026 format CSV.</td>
+                <td class="py-3 px-4 text-center font-sans">
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-warning/20 text-warning">Sedang</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL: UNDANG STAF BARU                                        -->
+  <!-- ============================================================== -->
+  <div id="modal-invite-staff" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+    <div class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-2xl max-w-lg w-full overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="px-6 py-4 border-b border-light-outline-variant flex items-center justify-between bg-light-surface-soft">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-light-primary text-light-on-primary flex items-center justify-center font-bold">
+            <span class="material-symbols-outlined text-[18px]">person_add</span>
+          </div>
+          <div>
+            <h3 class="font-headline font-bold text-title-lg text-light-on-surface">Undang Akun Staf Baru</h3>
+            <p class="text-[11px] text-light-on-surface-variant">Kirim kredensial akses internal untuk staf pengajar atau operasional</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeInviteStaffModal()" class="text-light-on-surface-variant hover:text-light-on-surface p-1 rounded-lg hover:bg-light-surface-container">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <form id="form-invite-staff" onsubmit="submitInviteStaff(event)" class="p-6 overflow-y-auto space-y-4">
+        <div>
+          <label for="staff-name" class="block text-body-sm font-semibold text-light-on-surface mb-1">Nama Lengkap &amp; Gelar *</label>
+          <input type="text" id="staff-name" required placeholder="Contoh: Dimas Arya, M.Pd." class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface text-light-on-surface">
+        </div>
+
+        <div>
+          <label for="staff-email" class="block text-body-sm font-semibold text-light-on-surface mb-1">Email Internal (@arcibimbel.id) *</label>
+          <input type="email" id="staff-email" required placeholder="dimas.arya@arcibimbel.id" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface text-light-on-surface">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="staff-role" class="block text-body-sm font-semibold text-light-on-surface mb-1">Peran Akses (Role) *</label>
+            <select id="staff-role" required class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface text-light-on-surface">
+              <option value="Admin Operasional">Admin Operasional</option>
+              <option value="Tutor Senior" selected>Tutor Senior</option>
+              <option value="Tutor Reguler">Tutor Reguler</option>
+              <option value="Admin Keuangan">Admin Keuangan</option>
+              <option value="Customer Care">Customer Care</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="staff-phone" class="block text-body-sm font-semibold text-light-on-surface mb-1">No. WhatsApp Aktif *</label>
+            <input type="tel" id="staff-phone" required placeholder="0812-xxxx-xxxx" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface text-light-on-surface">
+          </div>
+        </div>
+
+        <div>
+          <label for="staff-branch" class="block text-body-sm font-semibold text-light-on-surface mb-1">Penempatan Cabang</label>
+          <select id="staff-branch" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface text-light-on-surface">
+            <option value="Cabang Sudirman (Pusat)">Cabang Sudirman (Pusat)</option>
+            <option value="Cabang Kebayoran">Cabang Kebayoran</option>
+            <option value="Cabang Rawamangun">Cabang Rawamangun</option>
+            <option value="Online Virtual Center">Online Virtual Center</option>
+          </select>
+        </div>
+
+        <div class="p-3 bg-light-surface-container-low rounded-lg text-[12px] text-light-on-surface-variant leading-relaxed">
+          Tautan aktivasi akun dan password sementara akan dikirimkan otomatis melalui email internal dan pesan WhatsApp staf bersangkutan.
+        </div>
+
+        <div class="pt-4 border-t border-light-outline-variant flex items-center justify-end gap-3">
+          <button type="button" onclick="closeInviteStaffModal()" class="px-4 py-2.5 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container text-body-md font-semibold">
+            Batal
+          </button>
+          <button type="submit" class="px-5 py-2.5 rounded-xl bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-md font-bold shadow-xs flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">send</span>
+            <span>Kirim Undangan Staf</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- TOAST NOTIFICATION CONTAINER                                   -->
+  <!-- ============================================================== -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none"></div>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    // State of Staff Members
+    const staffMembers = [
+      {
+        id: 'USR-001',
+        name: 'Ahmad Dani, S.Kom.',
+        email: 'ahmad.dani@arcibimbel.id',
+        role: 'Admin Operasional',
+        roleType: 'admin',
+        roleBadgeClass: 'bg-light-primary text-light-on-primary font-bold',
+        tier: 'Tingkat 2',
+        tierDesc: 'Ditetapkan untuk staf front-office & penanganan lead',
+        status: 'Aktif',
+        permissions: { lead: true, student: true, classes: true, finance: false, comms: true },
+        lastAudit: '18 Nov 2026 19:45 • Konversi Lead #LD-1189 menjadi Pendaftaran Disetujui.'
+      },
+      {
+        id: 'USR-002',
+        name: 'Budi Pratama, S.Si.',
+        email: 'budi.pratama@arcibimbel.id',
+        role: 'Tutor Senior',
+        roleType: 'tutor',
+        roleBadgeClass: 'bg-light-surface-container text-light-on-surface font-semibold',
+        tier: 'Tingkat 3',
+        tierDesc: 'Akses pengajar kelas, rekap absensi & input nilai rapor',
+        status: 'Aktif',
+        permissions: { lead: false, student: true, classes: true, finance: false, comms: false },
+        lastAudit: '19 Nov 2026 15:30 • Mengisi catatan evaluasi Matematika rombel SMP-8.'
+      },
+      {
+        id: 'USR-003',
+        name: 'Rina Kusuma, S.E.',
+        email: 'keuangan@arcibimbel.id',
+        role: 'Admin Keuangan',
+        roleType: 'admin',
+        roleBadgeClass: 'bg-warning text-on-warning font-bold',
+        tier: 'Tingkat 2',
+        tierDesc: 'Otoritas verifikasi pembayaran kas, invoice SPP & refund',
+        status: 'Aktif',
+        permissions: { lead: false, student: true, classes: false, finance: true, comms: true },
+        lastAudit: '19 Nov 2026 17:05 • Memverifikasi bukti bayar transfer INV-2026-1189.'
+      },
+      {
+        id: 'USR-004',
+        name: 'dr. Hendra Wijaya',
+        email: 'direktur@arcibimbel.id',
+        role: 'Super Admin',
+        roleType: 'admin',
+        roleBadgeClass: 'bg-brand-indigo text-light-on-primary font-bold',
+        tier: 'Tingkat 1',
+        tierDesc: 'Hak akses tertinggi seluruh modul dan audit log',
+        status: 'Aktif',
+        permissions: { lead: true, student: true, classes: true, finance: true, comms: true },
+        lastAudit: '18 Nov 2026 08:30 • Memperbarui matriks hak akses broadcast WhatsApp.'
+      },
+      {
+        id: 'USR-005',
+        name: 'Amanda Putri, S.Pd.',
+        email: 'amanda.putri@arcibimbel.id',
+        role: 'Tutor SD & SMP',
+        roleType: 'tutor',
+        roleBadgeClass: 'bg-light-surface-container text-light-on-surface font-semibold',
+        tier: 'Tingkat 3',
+        tierDesc: 'Akses pengajar kelas SD & SMP',
+        status: 'Aktif',
+        permissions: { lead: false, student: true, classes: true, finance: false, comms: false },
+        lastAudit: '19 Nov 2026 11:20 • Mengunggah materi pengayaan Calistung SD.'
+      },
+      {
+        id: 'USR-006',
+        name: 'Siti Rahmawati, M.Sc.',
+        email: 'siti.rahmawati@arcibimbel.id',
+        role: 'Tutor UTBK Saintek',
+        roleType: 'tutor',
+        roleBadgeClass: 'bg-light-surface-container text-light-on-surface font-semibold',
+        tier: 'Tingkat 3',
+        tierDesc: 'Akses kelas intensif pejuang SNBT / kedokteran',
+        status: 'Aktif',
+        permissions: { lead: false, student: true, classes: true, finance: false, comms: false },
+        lastAudit: '17 Nov 2026 16:45 • Mengisi nilai evaluasi Tryout TPS Online #1.'
+      }
+    ];
+
+    let currentSelectedUserId = 'USR-001';
+    let currentStaffFilter = 'all'; // 'all', 'tutor', 'admin'
+    let currentSearch = '';
+
+    // Sidebar Mobile Drawer Toggle
+    function toggleSidebar(open) {
+      const sidebar = document.getElementById('sidebar-nav');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (open) {
+        sidebar.classList.remove('-translate-x-full');
+        sidebar.classList.add('translate-x-0');
+        overlay.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+        sidebar.classList.remove('translate-x-0');
+        overlay.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }
+    }
+
+    // Switch Settings Nav Tabs
+    function switchTab(tab) {
+      const tabUsers = document.getElementById('tab-content-users');
+      const tabRbac = document.getElementById('tab-content-rbac');
+      const tabAudit = document.getElementById('tab-content-audit');
+
+      const btnUsers = document.getElementById('tab-btn-users');
+      const btnRbac = document.getElementById('tab-btn-rbac');
+      const btnAudit = document.getElementById('tab-btn-audit');
+
+      [tabUsers, tabRbac, tabAudit].forEach(el => el.classList.add('hidden'));
+      [btnUsers, btnRbac, btnAudit].forEach(btn => {
+        btn.className = "px-4 py-2.5 border-b-2 border-transparent text-light-on-surface hover:text-light-primary font-label text-body-md font-medium whitespace-nowrap transition-colors";
+      });
+
+      if (tab === 'users') {
+        tabUsers.classList.remove('hidden');
+        btnUsers.className = "px-4 py-2.5 border-b-2 border-light-primary text-light-primary font-label text-body-md font-bold whitespace-nowrap transition-colors";
+      } else if (tab === 'rbac') {
+        tabRbac.classList.remove('hidden');
+        btnRbac.className = "px-4 py-2.5 border-b-2 border-light-primary text-light-primary font-label text-body-md font-bold whitespace-nowrap transition-colors";
+      } else if (tab === 'audit') {
+        tabAudit.classList.remove('hidden');
+        btnAudit.className = "px-4 py-2.5 border-b-2 border-light-primary text-light-primary font-label text-body-md font-bold whitespace-nowrap transition-colors";
+      }
+    }
+
+    // Staff Filter Tabs
+    function setStaffFilter(f) {
+      currentStaffFilter = f;
+      const btnAll = document.getElementById('btn-filter-all');
+      const btnTutor = document.getElementById('btn-filter-tutor');
+      const btnAdmin = document.getElementById('btn-filter-admin');
+
+      [btnAll, btnTutor, btnAdmin].forEach(b => {
+        b.className = "px-2.5 py-1 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container text-[12px] font-label font-semibold";
+      });
+
+      if (f === 'all') {
+        btnAll.className = "px-2.5 py-1 rounded-lg bg-light-primary text-light-on-primary text-[12px] font-label font-semibold shadow-2xs";
+      } else if (f === 'tutor') {
+        btnTutor.className = "px-2.5 py-1 rounded-lg bg-light-primary text-light-on-primary text-[12px] font-label font-semibold shadow-2xs";
+      } else if (f === 'admin') {
+        btnAdmin.className = "px-2.5 py-1 rounded-lg bg-light-primary text-light-on-primary text-[12px] font-label font-semibold shadow-2xs";
+      }
+
+      renderStaffTable();
+    }
+
+    // Live Search
+    function handleSearch(val) {
+      currentSearch = val.toLowerCase().trim();
+      renderStaffTable();
+    }
+
+    // Render Staff Table
+    function renderStaffTable() {
+      const tbody = document.getElementById('staff-tbody');
+      tbody.innerHTML = '';
+
+      const filtered = staffMembers.filter(s => {
+        const matchFilter = (currentStaffFilter === 'all') || (s.roleType === currentStaffFilter);
+        const matchQuery = !currentSearch 
+          || s.name.toLowerCase().includes(currentSearch)
+          || s.email.toLowerCase().includes(currentSearch)
+          || s.role.toLowerCase().includes(currentSearch);
+
+        return matchFilter && matchQuery;
+      });
+
+      document.getElementById('staff-pagination-info').textContent = `Menampilkan ${filtered.length} dari ${staffMembers.length} staf internal`;
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="4" class="py-8 text-center text-light-on-surface-variant text-body-md">
+              <span class="material-symbols-outlined text-[36px] text-light-outline block mb-1">search_off</span>
+              Tidak ada data staf internal yang cocok dengan kriteria pencarian.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      filtered.forEach(s => {
+        const isSelected = (s.id === currentSelectedUserId);
+        const tr = document.createElement('tr');
+        
+        if (isSelected) {
+          tr.className = "bg-light-primary-container/20 border-l-4 border-light-primary cursor-pointer transition-colors";
+        } else {
+          tr.className = "hover:bg-light-surface-container cursor-pointer transition-colors";
+        }
+
+        tr.onclick = () => selectStaff(s.id);
+
+        tr.innerHTML = `
+          <td class="py-3.5 px-4">
+            <p class="font-bold text-light-on-surface">${s.name}</p>
+            <p class="text-[11px] text-light-on-surface-variant">${s.email}</p>
+          </td>
+          <td class="py-3.5 px-4">
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-label ${s.roleBadgeClass}">
+              ${s.role}
+            </span>
+          </td>
+          <td class="py-3.5 px-4">
+            <span class="text-[11px] font-label text-success flex items-center gap-1 font-semibold">
+              <span class="w-1.5 h-1.5 rounded-full bg-success"></span> ${s.status}
+            </span>
+          </td>
+          <td class="py-3.5 px-4 text-right">
+            <button 
+              type="button" 
+              class="px-2.5 py-1 rounded ${isSelected ? 'bg-light-primary text-light-on-primary' : 'border border-light-outline text-light-on-surface hover:bg-light-surface'} text-[11px] font-label font-semibold transition-colors whitespace-nowrap">
+              ${isSelected ? 'Ubah Izin' : 'Izin'}
+            </button>
+          </td>
+        `;
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Select Staff Member & Populate Permissions Inspector
+    function selectStaff(id) {
+      currentSelectedUserId = id;
+      const s = staffMembers.find(item => item.id === id);
+      if (!s) return;
+
+      document.getElementById('inspector-role-title').textContent = `Hak Akses: ${s.role}`;
+      document.getElementById('inspector-role-desc').textContent = `${s.name} • ${s.tierDesc}`;
+      document.getElementById('inspector-tier-badge').textContent = s.tier;
+
+      // Checkboxes
+      document.getElementById('perm-lead').checked = !!s.permissions.lead;
+      document.getElementById('perm-student').checked = !!s.permissions.student;
+      document.getElementById('perm-classes').checked = !!s.permissions.classes;
+      document.getElementById('perm-comms').checked = !!s.permissions.comms;
+
+      const permFinance = document.getElementById('perm-finance');
+      if (s.role === 'Admin Keuangan' || s.role === 'Super Admin') {
+        permFinance.disabled = false;
+        permFinance.checked = true;
+        document.getElementById('perm-finance-box').className = "p-3 rounded-lg border border-light-outline-variant bg-light-surface flex items-start gap-3";
+      } else {
+        permFinance.disabled = true;
+        permFinance.checked = false;
+        document.getElementById('perm-finance-box').className = "p-3 rounded-lg border border-light-outline-variant bg-light-surface-container opacity-80 flex items-start gap-3";
+      }
+
+      document.getElementById('inspector-last-audit').textContent = s.lastAudit;
+
+      renderStaffTable();
+    }
+
+    // Save Permissions
+    function savePermissionChanges() {
+      const s = staffMembers.find(item => item.id === currentSelectedUserId);
+      if (s) {
+        s.permissions.lead = document.getElementById('perm-lead').checked;
+        s.permissions.student = document.getElementById('perm-student').checked;
+        s.permissions.classes = document.getElementById('perm-classes').checked;
+        s.permissions.comms = document.getElementById('perm-comms').checked;
+        s.lastAudit = `${new Date().toLocaleDateString('id-ID', {day:'2-digit', month:'short', year:'numeric'})} ${new Date().toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'})} • Konfigurasi hak akses diperbarui oleh Super Admin.`;
+        document.getElementById('inspector-last-audit').textContent = s.lastAudit;
+        showToast(`Hak akses untuk ${s.name} (${s.role}) berhasil disimpan.`, 'success');
+      }
+    }
+
+    // Invite Modal Logic
+    function openInviteStaffModal() {
+      document.getElementById('modal-invite-staff').classList.remove('hidden');
+      document.getElementById('staff-name').focus();
+    }
+
+    function closeInviteStaffModal() {
+      document.getElementById('modal-invite-staff').classList.add('hidden');
+    }
+
+    function submitInviteStaff(e) {
+      e.preventDefault();
+      const name = document.getElementById('staff-name').value.trim();
+      const email = document.getElementById('staff-email').value.trim();
+      const role = document.getElementById('staff-role').value;
+      const isTutor = role.toLowerCase().includes('tutor');
+
+      const newStaff = {
+        id: `USR-0${staffMembers.length + 1}`,
+        name: name,
+        email: email,
+        role: role,
+        roleType: isTutor ? 'tutor' : 'admin',
+        roleBadgeClass: isTutor ? 'bg-light-surface-container text-light-on-surface font-semibold' : 'bg-light-primary text-light-on-primary font-bold',
+        tier: isTutor ? 'Tingkat 3' : 'Tingkat 2',
+        tierDesc: `Staf baru ${role}`,
+        status: 'Aktif',
+        permissions: { lead: !isTutor, student: true, classes: true, finance: role === 'Admin Keuangan', comms: !isTutor },
+        lastAudit: `${new Date().toLocaleDateString('id-ID', {day:'2-digit', month:'short', year:'numeric'})} • Akun dibuat & diundang ke sistem.`
+      };
+
+      staffMembers.push(newStaff);
+      closeInviteStaffModal();
+      document.getElementById('form-invite-staff').reset();
+
+      currentSelectedUserId = newStaff.id;
+      selectStaff(newStaff.id);
+      renderStaffTable();
+
+      showToast(`Undangan akun staf untuk ${name} berhasil dikirimkan ke ${email}!`, 'success');
+    }
+
+    // Toast Notification System
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      
+      let bg = 'bg-light-surface text-light-on-surface border-light-outline-variant';
+      let icon = 'info';
+      let iconColor = 'text-brand-indigo';
+
+      if (type === 'success') {
+        icon = 'check_circle';
+        iconColor = 'text-success';
+      } else if (type === 'warning') {
+        icon = 'warning';
+        iconColor = 'text-warning';
+      } else if (type === 'danger') {
+        icon = 'error';
+        iconColor = 'text-danger';
+      }
+
+      toast.className = `p-4 rounded-xl border ${bg} shadow-lg flex items-center gap-3 transition-all duration-300 transform translate-y-4 opacity-0 pointer-events-auto`;
+      toast.innerHTML = `
+        <span class="material-symbols-outlined ${iconColor} text-[22px] shrink-0">${icon}</span>
+        <span class="text-body-sm font-medium flex-1">${message}</span>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-4', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    // Initialize on Load
+    document.addEventListener('DOMContentLoaded', () => {
+      renderStaffTable();
+      selectStaff(currentSelectedUserId);
+    });
+  </script>
+</body>
+</html>

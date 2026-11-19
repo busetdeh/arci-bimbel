@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Tagihan &amp; Verifikasi Kas — ARCI Bimbel</title>
+  
+  <!-- Tailwind CSS with Official Plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+  /** @type {import('tailwindcss').Config} */
+  globalThis.tailwind = globalThis.tailwind || {};
+  globalThis.tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          'accent': '#F6C453',
+          'on-accent': '#18212F',
+          'brand-indigo': '#243B7A',
+          'brand-indigo-dark': '#172653',
+          'success': '#1B7330',
+          'on-success': '#FFFFFF',
+          'warning': '#925B06',
+          'on-warning': '#FFFFFF',
+          'danger': '#B91C1C',
+          'on-danger': '#FFFFFF',
+          'light-primary': '#243B7A',
+          'light-on-primary': '#FFFFFF',
+          'light-primary-container': '#EBF0FA',
+          'light-on-primary-container': '#172653',
+          'light-surface': '#FFFFFF',
+          'light-on-surface': '#18212F',
+          'light-surface-soft': '#F8FAFC',
+          'light-surface-container-low': '#F1F5F9',
+          'light-surface-container': '#E2E8F0',
+          'light-on-surface-variant': '#475569',
+          'light-outline': '#94A3B8',
+          'light-outline-variant': '#CBD5E1',
+          'dark-primary': '#9BB3F0',
+          'dark-on-primary': '#0E1A3C',
+          'dark-primary-container': '#1E3166',
+          'dark-on-primary-container': '#D7E3FF',
+          'dark-surface': '#0F172A',
+          'dark-on-surface': '#F8FAFC',
+          'dark-surface-soft': '#1E293B',
+          'dark-surface-container-low': '#152033',
+          'dark-surface-container': '#1E293B',
+          'dark-on-surface-variant': '#CBD5E1',
+          'dark-outline': '#64748B',
+          'dark-outline-variant': '#475569',
+        },
+        borderRadius: {
+          'sm': '4px',
+          'DEFAULT': '8px',
+          'md': '10px',
+          'lg': '12px',
+          'xl': '16px',
+          '2xl': '20px',
+          'full': '9999px',
+        },
+        fontFamily: {
+          'display': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'headline': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'title': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'body': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'label': ['"Plus Jakarta Sans"', 'sans-serif'],
+        },
+        boxShadow: {
+          '2xs': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+          'xs': '0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px -1px rgba(0, 0, 0, 0.08)',
+        }
+      },
+    },
+  };
+  if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+  </script>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+  
+  <style>
+    .material-symbols-outlined, .material-symbols-rounded, .material-symbols-sharp, .material-icons {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      line-height: 1 !important;
+      box-sizing: content-box;
+      overflow: hidden;
+      white-space: nowrap;
+      direction: ltr;
+      vertical-align: middle;
+      font-size: 20px;
+    }
+    .pb-safe {
+      padding-bottom: env(safe-area-inset-bottom, 16px);
+    }
+  </style>
+</head>
+<body class="bg-light-surface-soft text-light-on-surface font-body antialiased min-h-screen flex flex-col lg:flex-row pb-safe">
+
+  <!-- Mobile Backdrop Overlay for Drawer -->
+  <div id="sidebar-overlay" onclick="toggleSidebar(false)" class="hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-xs transition-opacity lg:hidden"></div>
+
+  <!-- Desktop Fixed & Mobile Slide-Out Sidebar Navigation -->
+  <aside id="sidebar-nav" class="fixed inset-y-0 left-0 z-50 w-64 bg-light-surface border-r border-light-outline-variant flex flex-col justify-between shrink-0 transform -translate-x-full transition-transform duration-200 lg:translate-x-0 lg:static lg:h-screen lg:sticky lg:top-0">
+    <div class="flex flex-col flex-1 overflow-y-auto">
+      <!-- Brand Header -->
+      <div class="h-16 lg:h-20 px-5 lg:px-6 flex items-center justify-between border-b border-light-outline-variant shrink-0">
+        <a href="dashboard.html" class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-light-primary flex items-center justify-center text-light-on-primary font-headline font-bold text-headline-sm shadow-xs">
+            A
+          </div>
+          <div class="flex flex-col">
+            <span class="font-headline font-bold text-title-md tracking-tight text-brand-indigo">ARCI Bimbel</span>
+            <span class="text-[11px] text-light-on-surface-variant font-label">Dashboard Operasional</span>
+          </div>
+        </a>
+
+        <!-- Mobile Drawer Close Button -->
+        <button type="button" onclick="toggleSidebar(false)" class="lg:hidden p-1.5 rounded-lg text-light-on-surface-variant hover:bg-light-surface-container" aria-label="Tutup Menu">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="p-3.5 lg:p-4 flex flex-col gap-1">
+        <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">dashboard</span>
+          <span>Ringkasan</span>
+        </a>
+
+        <a href="leads.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">person_search</span>
+            <span>Lead &amp; Pipeline</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">8</span>
+        </a>
+
+        <a href="verifikasi-pendaftaran.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">how_to_reg</span>
+            <span>Pendaftaran</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">3</span>
+        </a>
+
+        <a href="students.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">school</span>
+          <span>Siswa &amp; Wali</span>
+        </a>
+
+        <a href="classes.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">class</span>
+          <span>Program &amp; Kelas</span>
+        </a>
+
+        <a href="schedule.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">calendar_month</span>
+          <span>Jadwal Sesi</span>
+        </a>
+
+        <a href="attendance.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">fact_check</span>
+          <span>Presensi Siswa</span>
+        </a>
+
+        <!-- Active Menu: Tagihan & Kas -->
+        <a href="finance.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg bg-light-primary text-light-on-primary font-label text-body-md shadow-xs transition-colors">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-accent">payments</span>
+            <span class="font-semibold">Tagihan &amp; Kas</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold" id="badge-nav-verify">5</span>
+        </a>
+
+        <a href="communications.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">campaign</span>
+          <span>Komunikasi &amp; Broadcast</span>
+        </a>
+
+        <a href="settings.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">manage_accounts</span>
+          <span>Pengaturan &amp; Role</span>
+        </a>
+
+        <a href="reports.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">analytics</span>
+          <span>Laporan KPI</span>
+        </a>
+        <a href="cms.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">article</span>
+          <span>Konten Website</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- User Profile Footer -->
+    <div class="p-3.5 lg:p-4 border-t border-light-outline-variant shrink-0 bg-light-surface">
+      <div class="flex items-center justify-between p-2 rounded-lg hover:bg-light-surface-container transition-colors">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-light-primary text-light-on-primary flex items-center justify-center font-bold font-headline text-body-md shadow-2xs">
+            RK
+          </div>
+          <div class="flex flex-col">
+            <span class="text-body-sm font-semibold text-light-on-surface">Rina Kusuma</span>
+            <span class="text-[11px] text-light-on-surface-variant">Admin Keuangan</span>
+          </div>
+        </div>
+        <a href="login-admin.html" title="Keluar / Logout" class="p-1.5 rounded-md text-light-on-surface-variant hover:text-danger hover:bg-danger/10 transition-colors">
+          <span class="material-symbols-outlined text-[18px]">logout</span>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div class="flex-1 flex flex-col min-w-0">
+    
+    <!-- Top Utility Bar (App Shell) -->
+    <header class="h-16 lg:h-20 bg-light-surface border-b border-light-outline-variant px-4 sm:px-6 lg:px-8 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
+      
+      <!-- Mobile Hamburger Button & Search Bar -->
+      <div class="flex items-center gap-3 sm:gap-4 flex-1 max-w-lg">
+        <button type="button" onclick="toggleSidebar(true)" class="lg:hidden w-10 h-10 rounded-lg border border-light-outline flex items-center justify-center text-light-on-surface hover:bg-light-surface-container shrink-0" aria-label="Buka Menu Navigasi">
+          <span class="material-symbols-outlined text-[22px]">menu</span>
+        </button>
+
+        <!-- Search Input -->
+        <div class="relative w-full">
+          <span class="material-symbols-outlined absolute left-3 top-2.5 text-light-on-surface-variant text-[20px]">search</span>
+          <input 
+            type="search" 
+            id="finance-search" 
+            oninput="handleSearch(this.value)" 
+            placeholder="Cari nomor invoice, nama siswa, atau bukti bayar..." 
+            class="w-full pl-10 pr-4 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface text-light-on-surface placeholder:text-light-on-surface-variant">
+        </div>
+      </div>
+
+      <!-- Header Actions -->
+      <div class="flex items-center gap-2.5 sm:gap-4 ml-2">
+        <button type="button" aria-label="Notifikasi" onclick="showToast('Semua notifikasi bukti transfer telah diperbarui real-time.', 'info')" class="relative w-10 h-10 rounded-lg border border-light-outline flex items-center justify-center text-light-on-surface hover:bg-light-surface-container transition-colors shrink-0">
+          <span class="material-symbols-outlined text-[20px]">notifications</span>
+          <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-danger ring-2 ring-light-surface"></span>
+        </button>
+
+        <button type="button" onclick="openNewInvoiceModal()" class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm sm:text-body-md font-semibold shadow-xs transition-colors whitespace-nowrap min-h-[40px]">
+          <span class="material-symbols-outlined text-[18px]">add</span>
+          <span class="hidden sm:inline">Terbitkan Invoice Baru</span>
+          <span class="sm:hidden">Invoice</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Operational Viewport Content -->
+    <main class="p-4 sm:p-6 lg:p-8 flex flex-col gap-6 flex-1">
+      
+      <!-- Title & Action Bar -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="flex flex-wrap items-center gap-2.5">
+            <h1 class="font-headline font-bold text-headline-sm sm:text-headline-md text-light-on-surface">
+              Manajemen Tagihan &amp; Verifikasi Pembayaran
+            </h1>
+            <span id="badge-need-review" class="px-2.5 py-0.5 rounded-full text-label-sm font-label bg-accent text-on-accent font-bold shadow-2xs">
+              5 Perlu Ditinjau
+            </span>
+          </div>
+          <p class="text-body-sm text-light-on-surface-variant mt-1">
+            Kelola paket biaya, invoice berkala siswa, dan verifikasi bukti transfer bank masuk.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button type="button" onclick="exportFinanceCSV()" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg border border-light-outline text-light-on-surface text-body-sm font-label font-semibold hover:bg-light-surface-container transition-colors shadow-2xs">
+            <span class="material-symbols-outlined text-[18px] text-light-on-surface-variant">download</span>
+            <span>Rekap Keuangan CSV</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Financial Metrics Cards (4 Grid) -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5" aria-label="Metrik Keuangan">
+        <!-- Metric 1: Kas Masuk -->
+        <div class="bg-light-surface p-4 sm:p-5 rounded-xl border border-light-outline-variant shadow-xs flex items-center justify-between">
+          <div>
+            <span class="text-[12px] font-label text-light-on-surface-variant font-medium">Total Kas Masuk (Bulan Ini)</span>
+            <p id="kpi-kas-masuk" class="font-headline font-bold text-headline-sm text-success mt-1">Rp148.500.000</p>
+            <p class="text-[11px] text-light-on-surface-variant mt-0.5">142 Siswa terbayar lunas</p>
+          </div>
+          <div class="w-11 h-11 rounded-xl bg-success text-on-success flex items-center justify-center shadow-xs shrink-0">
+            <span class="material-symbols-outlined text-[24px]">account_balance_wallet</span>
+          </div>
+        </div>
+
+        <!-- Metric 2: Menunggu Verifikasi -->
+        <div class="bg-light-surface p-4 sm:p-5 rounded-xl border border-light-outline-variant shadow-xs flex items-center justify-between">
+          <div>
+            <span class="text-[12px] font-label text-light-on-surface-variant font-medium">Menunggu Verifikasi Admin</span>
+            <p id="kpi-verifikasi-count" class="font-headline font-bold text-headline-sm text-brand-indigo mt-1">5 Bukti Masuk</p>
+            <p class="text-[11px] text-light-on-surface-variant mt-0.5">Total nominal: <strong class="text-brand-indigo">Rp5.850.000</strong></p>
+          </div>
+          <div class="w-11 h-11 rounded-xl bg-light-primary-container text-light-primary flex items-center justify-center shadow-xs shrink-0">
+            <span class="material-symbols-outlined text-[24px]">receipt_long</span>
+          </div>
+        </div>
+
+        <!-- Metric 3: Belum Dibayar -->
+        <div class="bg-light-surface p-4 sm:p-5 rounded-xl border border-light-outline-variant shadow-xs flex items-center justify-between">
+          <div>
+            <span class="text-[12px] font-label text-light-on-surface-variant font-medium">Invoice Belum Dibayar</span>
+            <p class="font-headline font-bold text-headline-sm text-warning mt-1">Rp18.200.000</p>
+            <p class="text-[11px] text-light-on-surface-variant mt-0.5">16 invoice dalam masa tenggang</p>
+          </div>
+          <div class="w-11 h-11 rounded-xl bg-warning text-on-warning flex items-center justify-center shadow-xs shrink-0">
+            <span class="material-symbols-outlined text-[24px]">schedule</span>
+          </div>
+        </div>
+
+        <!-- Metric 4: Tunggakan Jatuh Tempo -->
+        <div class="bg-light-surface p-4 sm:p-5 rounded-xl border border-light-outline-variant shadow-xs flex items-center justify-between">
+          <div>
+            <span class="text-[12px] font-label text-light-on-surface-variant font-medium">Tunggakan Jatuh Tempo</span>
+            <p class="font-headline font-bold text-headline-sm text-danger mt-1">Rp12.450.000</p>
+            <p class="text-[11px] text-danger font-semibold mt-0.5">9 invoice lewat jatuh tempo</p>
+          </div>
+          <div class="w-11 h-11 rounded-xl bg-danger text-on-danger flex items-center justify-center shadow-xs shrink-0">
+            <span class="material-symbols-outlined text-[24px]">priority_high</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Split Layout: Invoice Queue Table (Col 7) & Verification Review Inspector (Col 5) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+        
+        <!-- Left Section: Invoice List Table (Col 7) -->
+        <section class="lg:col-span-7 bg-light-surface rounded-xl border border-light-outline-variant shadow-xs overflow-hidden flex flex-col justify-between">
+          
+          <!-- Card Header & Filter Tabs -->
+          <div class="p-4 sm:p-5 border-b border-light-outline-variant flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 class="font-headline font-bold text-title-md text-light-on-surface">Antrean Pembayaran Masuk</h2>
+              <p class="text-[12px] text-light-on-surface-variant">Klik baris untuk meninjau bukti transfer dan kuitansi.</p>
+            </div>
+            
+            <!-- Filter Tabs -->
+            <div class="flex items-center gap-1.5 shrink-0 overflow-x-auto pb-1 sm:pb-0" id="filter-tab-group">
+              <button 
+                type="button" 
+                onclick="setFilterTab('all')" 
+                id="tab-filter-all" 
+                class="px-2.5 py-1.5 rounded-lg bg-light-primary text-light-on-primary text-[12px] font-label font-semibold whitespace-nowrap transition-colors shadow-2xs">
+                Semua (21)
+              </button>
+              <button 
+                type="button" 
+                onclick="setFilterTab('verify')" 
+                id="tab-filter-verify" 
+                class="px-2.5 py-1.5 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container text-[12px] font-label font-semibold whitespace-nowrap transition-colors">
+                Perlu Verifikasi (5)
+              </button>
+              <button 
+                type="button" 
+                onclick="setFilterTab('overdue')" 
+                id="tab-filter-overdue" 
+                class="px-2.5 py-1.5 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container text-[12px] font-label font-semibold whitespace-nowrap transition-colors">
+                Jatuh Tempo (9)
+              </button>
+            </div>
+          </div>
+
+          <!-- Table Container -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-body-sm">
+              <thead class="bg-light-surface-soft border-b border-light-outline-variant text-[11px] font-label text-light-on-surface-variant uppercase tracking-wider">
+                <tr>
+                  <th class="py-3 px-4">Invoice &amp; Siswa</th>
+                  <th class="py-3 px-4">Program / Paket</th>
+                  <th class="py-3 px-4">Nominal</th>
+                  <th class="py-3 px-4">Status Tagihan</th>
+                  <th class="py-3 px-4 text-right">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="invoice-tbody" class="divide-y divide-light-outline-variant font-body">
+                <!-- Dynamically populated or rendered rows -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Table Pagination & Count Footer -->
+          <div class="p-4 border-t border-light-outline-variant flex flex-col sm:flex-row items-center justify-between gap-3 text-body-sm">
+            <span id="pagination-info" class="text-light-on-surface-variant text-[13px]">
+              Menampilkan 4 dari 21 transaksi
+            </span>
+            <div class="flex items-center gap-1.5">
+              <button type="button" class="w-8 h-8 rounded-lg bg-light-primary text-light-on-primary text-body-sm font-label font-bold flex items-center justify-center shadow-2xs">
+                1
+              </button>
+              <button type="button" onclick="showToast('Halaman 2 memuat arsip transaksi lampau.', 'info')" class="w-8 h-8 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container text-body-sm font-label flex items-center justify-center transition-colors">
+                2
+              </button>
+              <button type="button" onclick="showToast('Halaman selanjutnya...', 'info')" class="w-8 h-8 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container text-body-sm font-label flex items-center justify-center transition-colors">
+                <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Right Section: Payment Verification Inspector Panel (Col 5) -->
+        <section id="inspector-panel" class="lg:col-span-5 bg-light-surface rounded-xl border border-light-outline-variant shadow-xs p-5 sm:p-6 flex flex-col gap-6 sticky top-24">
+          
+          <!-- Inspector Header -->
+          <div class="flex items-start justify-between pb-4 border-b border-light-outline-variant">
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="font-headline text-title-lg font-bold text-light-on-surface">Verifikasi Bukti Bayar</h2>
+                <span id="inspector-badge" class="px-2 py-0.5 rounded-full text-label-sm font-label bg-accent text-on-accent font-bold">
+                  Menunggu Review
+                </span>
+              </div>
+              <p id="inspector-subtitle" class="text-body-sm text-light-on-surface-variant mt-1">
+                Invoice #INV-2026-1189 • Pendaftar Baru
+              </p>
+            </div>
+          </div>
+
+          <!-- Invoice Snapshot Details Card -->
+          <div class="p-4 rounded-xl bg-light-surface-soft border border-light-outline-variant flex flex-col gap-2.5 text-body-sm">
+            <div class="flex items-center justify-between">
+              <span class="text-[12px] text-light-on-surface-variant">Nama Siswa / Wali</span>
+              <span id="inspector-student-parent" class="font-semibold text-light-on-surface text-right">Farhan Pratama / Dra. Nurhayati</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-[12px] text-light-on-surface-variant">Program Dipilih</span>
+              <span id="inspector-program" class="font-semibold text-light-on-surface text-right">Reguler SMP Kelas 8 (Sudirman)</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-[12px] text-light-on-surface-variant">Metode Pembayaran</span>
+              <span id="inspector-method" class="font-semibold text-light-on-surface text-right">Transfer Bank BCA Virtual Account</span>
+            </div>
+            <div class="pt-2.5 border-t border-light-outline-variant flex items-center justify-between font-bold text-title-md">
+              <span class="text-light-on-surface text-body-md">Total Nominal Tagihan</span>
+              <span id="inspector-amount" class="text-brand-indigo font-headline text-headline-sm">Rp1.100.000</span>
+            </div>
+          </div>
+
+          <!-- Transfer Receipt Preview Box -->
+          <div class="flex flex-col gap-2.5" id="receipt-preview-container">
+            <div class="flex items-center justify-between">
+              <span class="font-label text-label-md text-light-on-surface font-semibold">Lampiran Bukti Transfer:</span>
+              <button type="button" onclick="openReceiptZoom()" class="text-[12px] text-brand-indigo hover:underline font-label font-medium inline-flex items-center gap-1">
+                <span class="material-symbols-outlined text-[15px]">zoom_in</span>
+                <span>Perbesar Gambar</span>
+              </button>
+            </div>
+
+            <div class="p-4 rounded-xl border border-light-outline-variant bg-light-surface-container-low flex flex-col items-center justify-center gap-2.5 text-center transition-all hover:border-brand-indigo/40">
+              <div class="w-12 h-12 rounded-xl bg-success/10 text-success flex items-center justify-center shadow-xs">
+                <span class="material-symbols-outlined text-[28px]" id="receipt-icon">receipt</span>
+              </div>
+              <div>
+                <p id="receipt-filename" class="font-bold text-body-sm text-light-on-surface">BCA-Transfer_20261118_1942.jpg</p>
+                <p id="receipt-meta" class="text-[11px] text-light-on-surface-variant mt-0.5">Ukuran: 1.2 MB • Waktu Transfer: 18 Nov 2026, 19:42 WIB</p>
+                <p id="receipt-validation" class="text-[11px] text-success font-semibold mt-1">✓ Nominal di bukti sesuai: Rp1.100.000,- (BCA a.n. Nurhayati)</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Approval Buttons -->
+          <div class="pt-4 border-t border-light-outline-variant flex flex-col gap-3" id="inspector-actions">
+            <div class="flex flex-col sm:flex-row items-center gap-3">
+              <button 
+                type="button" 
+                id="btn-approve" 
+                onclick="approveCurrentInvoice()" 
+                class="w-full sm:flex-1 py-3 rounded-xl bg-success text-on-success hover:bg-success/90 font-label text-label-md font-bold shadow-xs flex items-center justify-center gap-2 transition-colors min-h-[44px]">
+                <span class="material-symbols-outlined text-[18px]">check_circle</span>
+                <span>Setujui &amp; Terbitkan Kuitansi</span>
+              </button>
+
+              <button 
+                type="button" 
+                id="btn-reject" 
+                onclick="openRejectModal()" 
+                class="w-full sm:w-auto px-5 py-3 rounded-xl border border-danger text-danger hover:bg-danger/10 font-label text-label-md font-semibold transition-colors min-h-[44px]">
+                Tolak Bukti
+              </button>
+            </div>
+            
+            <p id="inspector-action-note" class="text-[11px] text-light-on-surface-variant text-center leading-relaxed">
+              Setelah disetujui, status siswa resmi aktif di kelas SMP-8 Sudirman A dan kuitansi otomatis dikirimkan ke nomor WhatsApp wali siswa.
+            </p>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 1: TERBITKAN INVOICE BARU                                -->
+  <!-- ============================================================== -->
+  <div id="modal-new-invoice" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
+    <div class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]">
+      
+      <!-- Modal Header -->
+      <div class="px-6 py-4 border-b border-light-outline-variant flex items-center justify-between bg-light-surface-soft">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-light-primary text-light-on-primary flex items-center justify-center font-bold">
+            <span class="material-symbols-outlined text-[18px]">add_card</span>
+          </div>
+          <div>
+            <h3 class="font-headline font-bold text-title-lg text-light-on-surface">Terbitkan Invoice Baru</h3>
+            <p class="text-[11px] text-light-on-surface-variant">Buat tagihan biaya program, modul, atau cicilan SPP</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeNewInvoiceModal()" class="text-light-on-surface-variant hover:text-light-on-surface p-1 rounded-lg hover:bg-light-surface-container">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Modal Body Form -->
+      <form id="form-new-invoice" onsubmit="submitNewInvoice(event)" class="p-6 overflow-y-auto space-y-4">
+        <div>
+          <label for="inv-student-name" class="block text-body-sm font-semibold text-light-on-surface mb-1">Nama Siswa / Pendaftar *</label>
+          <input type="text" id="inv-student-name" required placeholder="Contoh: Farhan Pratama" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface text-light-on-surface">
+        </div>
+
+        <div>
+          <label for="inv-parent-name" class="block text-body-sm font-semibold text-light-on-surface mb-1">Nama Orang Tua / Wali *</label>
+          <input type="text" id="inv-parent-name" required placeholder="Contoh: Dra. Nurhayati" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface text-light-on-surface">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="inv-program" class="block text-body-sm font-semibold text-light-on-surface mb-1">Program Belajar *</label>
+            <select id="inv-program" required class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface text-light-on-surface">
+              <option value="Reguler SD Kls 5">Reguler SD Kls 5</option>
+              <option value="Reguler SMP Kls 8" selected>Reguler SMP Kls 8</option>
+              <option value="Reguler SMP Kls 9">Reguler SMP Kls 9</option>
+              <option value="Intensif UTBK 2027">Intensif UTBK 2027</option>
+              <option value="Privat 1-on-1 SMA">Privat 1-on-1 SMA</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="inv-category" class="block text-body-sm font-semibold text-light-on-surface mb-1">Jenis Tagihan *</label>
+            <select id="inv-category" required class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface text-light-on-surface">
+              <option value="SPP Bulanan + Modul" selected>SPP Bulanan + Modul</option>
+              <option value="Pendaftaran Baru">Pendaftaran Baru</option>
+              <option value="Uang Pangkal Tahunan">Uang Pangkal Tahunan</option>
+              <option value="Tryout Akbar / Evaluasi">Tryout Akbar / Evaluasi</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="inv-nominal" class="block text-body-sm font-semibold text-light-on-surface mb-1">Nominal Tagihan (Rp) *</label>
+            <input type="number" id="inv-nominal" required min="50000" step="10000" value="1100000" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface text-light-on-surface">
+          </div>
+
+          <div>
+            <label for="inv-due-date" class="block text-body-sm font-semibold text-light-on-surface mb-1">Jatuh Tempo *</label>
+            <input type="date" id="inv-due-date" required value="2026-11-28" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface text-light-on-surface">
+          </div>
+        </div>
+
+        <div>
+          <label for="inv-notes" class="block text-body-sm font-semibold text-light-on-surface mb-1">Catatan Tambahan untuk Wali</label>
+          <textarea id="inv-notes" rows="2" placeholder="Catatan opsional yang akan tertera pada pesan WhatsApp atau kuitansi..." class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface text-light-on-surface"></textarea>
+        </div>
+
+        <!-- Footer Buttons -->
+        <div class="pt-4 border-t border-light-outline-variant flex items-center justify-end gap-3">
+          <button type="button" onclick="closeNewInvoiceModal()" class="px-4 py-2.5 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container font-label text-body-md font-semibold">
+            Batal
+          </button>
+          <button type="submit" class="px-5 py-2.5 rounded-xl bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-md font-bold shadow-xs flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">send</span>
+            <span>Terbitkan &amp; Kirim Tagihan</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 2: TOLAK BUKTI BAYAR                                     -->
+  <!-- ============================================================== -->
+  <div id="modal-reject-proof" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
+    <div class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-xl w-full max-w-md overflow-hidden flex flex-col">
+      <div class="px-6 py-4 border-b border-light-outline-variant flex items-center justify-between bg-danger/5">
+        <div class="flex items-center gap-2 text-danger">
+          <span class="material-symbols-outlined text-[22px]">cancel</span>
+          <h3 class="font-headline font-bold text-title-md">Tolak Bukti Pembayaran</h3>
+        </div>
+        <button type="button" onclick="closeRejectModal()" class="text-light-on-surface-variant hover:text-light-on-surface p-1 rounded-lg hover:bg-light-surface-container">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-4">
+        <p class="text-body-sm text-light-on-surface">
+          Pilih alasan penolakan bukti bayar untuk <strong id="reject-student-name">Farhan Pratama</strong>:
+        </p>
+
+        <div class="space-y-2">
+          <label class="flex items-center gap-2.5 text-body-sm cursor-pointer p-2.5 rounded-lg hover:bg-light-surface-container border border-light-outline-variant">
+            <input type="radio" name="reject-reason" value="Nominal transfer tidak sesuai dengan tagihan invoice." checked class="text-danger focus:ring-danger">
+            <span>Nominal tidak sesuai dengan total tagihan</span>
+          </label>
+          <label class="flex items-center gap-2.5 text-body-sm cursor-pointer p-2.5 rounded-lg hover:bg-light-surface-container border border-light-outline-variant">
+            <input type="radio" name="reject-reason" value="Bukti transfer buram / teks struk tidak terbaca jelas." class="text-danger focus:ring-danger">
+            <span>Foto / struk bukti transfer buram atau terpotong</span>
+          </label>
+          <label class="flex items-center gap-2.5 text-body-sm cursor-pointer p-2.5 rounded-lg hover:bg-light-surface-container border border-light-outline-variant">
+            <input type="radio" name="reject-reason" value="Rekening tujuan transfer tidak sesuai dengan rekening resmi ARCI." class="text-danger focus:ring-danger">
+            <span>Rekening tujuan bukan rekening resmi Bimbel</span>
+          </label>
+          <label class="flex items-center gap-2.5 text-body-sm cursor-pointer p-2.5 rounded-lg hover:bg-light-surface-container border border-light-outline-variant">
+            <input type="radio" name="reject-reason" value="Terindikasi duplikasi bukti bayar yang pernah digunakan." class="text-danger focus:ring-danger">
+            <span>Terindikasi duplikasi / struk transfer lama</span>
+          </label>
+        </div>
+
+        <div class="p-3 bg-light-surface-container-low rounded-lg text-[12px] text-light-on-surface-variant">
+          Pesan penolakan sopan beserta instruksi upload ulang akan otomatis disiapkan untuk dikirimkan melalui WhatsApp ke wali murid.
+        </div>
+
+        <div class="pt-3 border-t border-light-outline-variant flex items-center justify-end gap-3">
+          <button type="button" onclick="closeRejectModal()" class="px-4 py-2 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container text-body-sm font-semibold">
+            Batal
+          </button>
+          <button type="button" onclick="confirmRejectInvoice()" class="px-5 py-2 rounded-xl bg-danger text-on-danger hover:bg-danger/90 font-label text-body-sm font-bold shadow-xs">
+            Konfirmasi Tolak Bukti
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 3: ZOOM BUKTI BAYAR                                      -->
+  <!-- ============================================================== -->
+  <div id="modal-receipt-zoom" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm" onclick="closeReceiptZoom()">
+    <div class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-2xl max-w-lg w-full overflow-hidden p-6 flex flex-col gap-4" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between pb-3 border-b border-light-outline-variant">
+        <div>
+          <h4 class="font-headline font-bold text-title-md text-light-on-surface" id="zoom-title">Struk Transfer Bank</h4>
+          <p class="text-[11px] text-light-on-surface-variant" id="zoom-subtitle">BCA Virtual Account • 18 Nov 2026, 19:42 WIB</p>
+        </div>
+        <button type="button" onclick="closeReceiptZoom()" class="p-1.5 rounded-lg text-light-on-surface-variant hover:bg-light-surface-container">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Simulated Receipt Graphic -->
+      <div class="bg-light-surface-container-low border border-light-outline-variant rounded-xl p-5 font-mono text-body-sm space-y-2.5 shadow-inner">
+        <div class="text-center pb-2 border-b border-dashed border-light-outline">
+          <p class="font-bold text-title-md text-brand-indigo font-headline">BANK CENTRAL ASIA</p>
+          <p class="text-[11px] text-light-on-surface-variant">STRUK TRANSAKSI PEMBAYARAN KURSUS</p>
+        </div>
+        <div class="flex justify-between text-[12px]">
+          <span class="text-light-on-surface-variant">No. Referensi:</span>
+          <span class="font-bold">2026111819428812</span>
+        </div>
+        <div class="flex justify-between text-[12px]">
+          <span class="text-light-on-surface-variant">Ke Rekening:</span>
+          <span class="font-bold">BCA VA - 8920108492</span>
+        </div>
+        <div class="flex justify-between text-[12px]">
+          <span class="text-light-on-surface-variant">Nama Institusi:</span>
+          <span class="font-bold">ARCI BIMBEL JAKARTA</span>
+        </div>
+        <div class="flex justify-between text-[12px]">
+          <span class="text-light-on-surface-variant">Nama Siswa / Pengirim:</span>
+          <span class="font-bold" id="zoom-payer">Farhan Pratama / Dra. Nurhayati</span>
+        </div>
+        <div class="flex justify-between text-[12px] pt-2 border-t border-dashed border-light-outline">
+          <span class="text-light-on-surface-variant">Jumlah Pembayaran:</span>
+          <span class="font-bold text-title-md text-success" id="zoom-amount">Rp1.100.000,-</span>
+        </div>
+        <div class="text-center pt-2 text-[11px] text-success font-semibold">
+          STATUS: TRANSAKSI BERHASIL / DITERIMA
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-2 pt-2">
+        <button type="button" onclick="closeReceiptZoom()" class="px-4 py-2 rounded-lg bg-light-primary text-light-on-primary font-label text-body-sm font-semibold">
+          Tutup Pratinjau
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- TOAST NOTIFICATION CONTAINER                                   -->
+  <!-- ============================================================== -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none"></div>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    // State of Invoices
+    const invoicesData = [
+      {
+        id: 'INV-2026-1189',
+        student: 'Farhan Pratama',
+        parent: 'Dra. Nurhayati',
+        program: 'Reguler SMP Kls 8',
+        detail: '+ Biaya Modul Pendaftaran',
+        amount: 1100000,
+        status: 'Bukti Diunggah',
+        category: 'verify', // verify, overdue, paid
+        method: 'Transfer Bank BCA Virtual Account',
+        receiptFile: 'BCA-Transfer_20261118_1942.jpg',
+        receiptSize: '1.2 MB',
+        receiptDate: '18 Nov 2026, 19:42 WIB',
+        receiptValidText: '✓ Nominal di bukti sesuai: Rp1.100.000,- (BCA a.n. Nurhayati)',
+        isApproved: false
+      },
+      {
+        id: 'INV-2026-1142',
+        student: 'Nadia Amanda',
+        parent: 'Pak Hermawan',
+        program: 'Intensif UTBK 2027',
+        detail: 'Bulan November 2026',
+        amount: 1450000,
+        status: 'Bukti Diunggah',
+        category: 'verify',
+        method: 'Transfer Mandiri Livin',
+        receiptFile: 'Mandiri_Livin_20261119_0815.png',
+        receiptSize: '850 KB',
+        receiptDate: '19 Nov 2026, 08:15 WIB',
+        receiptValidText: '✓ Nominal di bukti sesuai: Rp1.450.000,- (Mandiri a.n. Hermawan)',
+        isApproved: false
+      },
+      {
+        id: 'INV-2026-1090',
+        student: 'Raihan Syahputra',
+        parent: 'Bunda Hesty',
+        program: 'Reguler SMP Kls 9',
+        detail: 'Bulan November 2026',
+        amount: 950000,
+        status: 'Jatuh Tempo (15 Nov)',
+        category: 'overdue',
+        method: 'Menunggu Pembayaran (VA BNI)',
+        receiptFile: 'Belum Ada Bukti Diunggah',
+        receiptSize: '-',
+        receiptDate: 'Lewat Jatuh Tempo sejak 15 Nov 2026',
+        receiptValidText: '⚠️ Belum ada mutasi masuk. Disarankan kirim pengingat WhatsApp.',
+        isApproved: false
+      },
+      {
+        id: 'INV-2026-1077',
+        student: 'Aqila Zahra',
+        parent: 'Ibu Sarah',
+        program: 'Reguler SD Kls 5',
+        detail: 'Bulan November 2026',
+        amount: 750000,
+        status: 'Lunas Diverifikasi',
+        category: 'paid',
+        method: 'QRIS BCA Settlement',
+        receiptFile: 'QRIS-BCA_AutoSettled_20261117.pdf',
+        receiptSize: '420 KB',
+        receiptDate: '17 Nov 2026, 14:10 WIB',
+        receiptValidText: '✓ Terverifikasi Lunas oleh Rina Kusuma (Kuitansi Terbit).',
+        isApproved: true
+      },
+      {
+        id: 'INV-2026-1192',
+        student: 'Siti Rahma',
+        parent: 'H. Sudirman',
+        program: 'Privat 1-on-1 SMA',
+        detail: 'Paket 12 Sesi Fisika',
+        amount: 2200000,
+        status: 'Bukti Diunggah',
+        category: 'verify',
+        method: 'Transfer Bank BRI',
+        receiptFile: 'BRImo_Transfer_20261119_1030.jpg',
+        receiptSize: '950 KB',
+        receiptDate: '19 Nov 2026, 10:30 WIB',
+        receiptValidText: '✓ Nominal di bukti sesuai: Rp2.200.000,- (BRI a.n. Sudirman)',
+        isApproved: false
+      }
+    ];
+
+    let currentFilter = 'all'; // 'all', 'verify', 'overdue'
+    let currentSearch = '';
+    let selectedInvoiceId = 'INV-2026-1189';
+
+    // Format Indonesian Rupiah
+    function formatRupiah(amount) {
+      return 'Rp' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    // Sidebar Mobile Toggle
+    function toggleSidebar(open) {
+      const sidebar = document.getElementById('sidebar-nav');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (open) {
+        sidebar.classList.remove('-translate-x-full');
+        sidebar.classList.add('translate-x-0');
+        overlay.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+        sidebar.classList.remove('translate-x-0');
+        overlay.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }
+    }
+
+    // Filter Invoices
+    function setFilterTab(category) {
+      currentFilter = category;
+      
+      const tabAll = document.getElementById('tab-filter-all');
+      const tabVerify = document.getElementById('tab-filter-verify');
+      const tabOverdue = document.getElementById('tab-filter-overdue');
+
+      [tabAll, tabVerify, tabOverdue].forEach(tab => {
+        tab.className = "px-2.5 py-1.5 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container text-[12px] font-label font-semibold whitespace-nowrap transition-colors";
+      });
+
+      if (category === 'all') {
+        tabAll.className = "px-2.5 py-1.5 rounded-lg bg-light-primary text-light-on-primary text-[12px] font-label font-semibold whitespace-nowrap transition-colors shadow-2xs";
+      } else if (category === 'verify') {
+        tabVerify.className = "px-2.5 py-1.5 rounded-lg bg-light-primary text-light-on-primary text-[12px] font-label font-semibold whitespace-nowrap transition-colors shadow-2xs";
+      } else if (category === 'overdue') {
+        tabOverdue.className = "px-2.5 py-1.5 rounded-lg bg-light-primary text-light-on-primary text-[12px] font-label font-semibold whitespace-nowrap transition-colors shadow-2xs";
+      }
+
+      renderTable();
+    }
+
+    // Search Input Filter
+    function handleSearch(val) {
+      currentSearch = val.toLowerCase().trim();
+      renderTable();
+    }
+
+    // Render Table Rows
+    function renderTable() {
+      const tbody = document.getElementById('invoice-tbody');
+      tbody.innerHTML = '';
+
+      const filtered = invoicesData.filter(inv => {
+        const matchFilter = (currentFilter === 'all') 
+          || (currentFilter === 'verify' && inv.category === 'verify')
+          || (currentFilter === 'overdue' && inv.category === 'overdue');
+
+        const matchSearch = !currentSearch 
+          || inv.id.toLowerCase().includes(currentSearch)
+          || inv.student.toLowerCase().includes(currentSearch)
+          || inv.parent.toLowerCase().includes(currentSearch)
+          || inv.program.toLowerCase().includes(currentSearch);
+
+        return matchFilter && matchSearch;
+      });
+
+      document.getElementById('pagination-info').textContent = `Menampilkan ${filtered.length} dari ${invoicesData.length} transaksi`;
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" class="py-8 text-center text-light-on-surface-variant text-body-md">
+              <span class="material-symbols-outlined text-[36px] text-light-outline block mb-1">search_off</span>
+              Tidak ada data transaksi yang cocok dengan kriteria pencarian.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      filtered.forEach(inv => {
+        const isSelected = (inv.id === selectedInvoiceId);
+        const tr = document.createElement('tr');
+        
+        // Highlight active selected row
+        if (isSelected) {
+          tr.className = "bg-light-primary-container/20 border-l-4 border-light-primary cursor-pointer transition-colors";
+        } else {
+          tr.className = "hover:bg-light-surface-container cursor-pointer transition-colors";
+        }
+
+        tr.onclick = () => selectInvoice(inv.id);
+
+        // Status badge formatting
+        let statusBadge = '';
+        if (inv.category === 'verify') {
+          statusBadge = `<span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">${inv.status}</span>`;
+        } else if (inv.category === 'overdue') {
+          statusBadge = `<span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-warning text-on-warning font-semibold">${inv.status}</span>`;
+        } else {
+          statusBadge = `<span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-success text-on-success font-bold">${inv.status}</span>`;
+        }
+
+        // Action button
+        let actionBtn = '';
+        if (inv.category === 'verify') {
+          actionBtn = `<button type="button" class="px-2.5 py-1 rounded bg-light-primary text-light-on-primary text-[11px] font-label font-semibold hover:bg-brand-indigo-dark transition-colors">Periksa</button>`;
+        } else if (inv.category === 'overdue') {
+          actionBtn = `<button type="button" onclick="remindWhatsApp('${inv.student}', '${inv.parent}', '${formatRupiah(inv.amount)}'); event.stopPropagation();" class="px-2.5 py-1 rounded border border-light-outline text-light-on-surface text-[11px] font-label hover:bg-light-surface font-semibold transition-colors">Ingatkan</button>`;
+        } else {
+          actionBtn = `<button type="button" onclick="showToast('Mengunduh Kuitansi PDF resmi untuk ${inv.student}...', 'success'); event.stopPropagation();" class="px-2.5 py-1 rounded border border-light-outline text-light-on-surface text-[11px] font-label hover:bg-light-surface font-semibold transition-colors">Kuitansi</button>`;
+        }
+
+        tr.innerHTML = `
+          <td class="py-3.5 px-4">
+            <p class="font-bold text-light-on-surface">${inv.id}</p>
+            <p class="text-[12px] text-light-on-surface-variant">${inv.student} (Wali: ${inv.parent})</p>
+          </td>
+          <td class="py-3.5 px-4">
+            <span class="font-medium text-light-on-surface">${inv.program}</span>
+            <span class="text-[11px] text-light-on-surface-variant block">${inv.detail}</span>
+          </td>
+          <td class="py-3.5 px-4 font-bold text-brand-indigo">
+            ${formatRupiah(inv.amount)}
+          </td>
+          <td class="py-3.5 px-4">
+            ${statusBadge}
+          </td>
+          <td class="py-3.5 px-4 text-right">
+            ${actionBtn}
+          </td>
+        `;
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Select Invoice & Update Inspector Panel
+    function selectInvoice(id) {
+      selectedInvoiceId = id;
+      const inv = invoicesData.find(item => item.id === id);
+      if (!inv) return;
+
+      // Update Inspector Fields
+      document.getElementById('inspector-subtitle').textContent = `Invoice #${inv.id} • ${inv.program}`;
+      document.getElementById('inspector-student-parent').textContent = `${inv.student} / ${inv.parent}`;
+      document.getElementById('inspector-program').textContent = `${inv.program} (${inv.detail})`;
+      document.getElementById('inspector-method').textContent = inv.method;
+      document.getElementById('inspector-amount').textContent = formatRupiah(inv.amount);
+
+      // Receipt details
+      document.getElementById('receipt-filename').textContent = inv.receiptFile;
+      document.getElementById('receipt-meta').textContent = `Ukuran: ${inv.receiptSize} • Waktu: ${inv.receiptDate}`;
+      document.getElementById('receipt-validation').textContent = inv.receiptValidText;
+
+      const badge = document.getElementById('inspector-badge');
+      const actionContainer = document.getElementById('inspector-actions');
+      const btnApprove = document.getElementById('btn-approve');
+      const btnReject = document.getElementById('btn-reject');
+      const actionNote = document.getElementById('inspector-action-note');
+
+      if (inv.category === 'verify') {
+        badge.textContent = 'Menunggu Review';
+        badge.className = 'px-2 py-0.5 rounded-full text-label-sm font-label bg-accent text-on-accent font-bold';
+        btnApprove.classList.remove('hidden');
+        btnReject.classList.remove('hidden');
+        btnApprove.innerHTML = `<span class="material-symbols-outlined text-[18px]">check_circle</span><span>Setujui &amp; Terbitkan Kuitansi</span>`;
+        actionNote.textContent = 'Setelah disetujui, status siswa resmi aktif di kelas dan kuitansi otomatis dikirimkan ke nomor WhatsApp wali.';
+      } else if (inv.category === 'overdue') {
+        badge.textContent = 'Jatuh Tempo';
+        badge.className = 'px-2 py-0.5 rounded-full text-label-sm font-label bg-warning text-on-warning font-bold';
+        btnApprove.classList.remove('hidden');
+        btnReject.classList.add('hidden');
+        btnApprove.innerHTML = `<span class="material-symbols-outlined text-[18px]">chat</span><span>Kirim Pengingat WhatsApp</span>`;
+        btnApprove.onclick = () => remindWhatsApp(inv.student, inv.parent, formatRupiah(inv.amount));
+        actionNote.textContent = 'Kirim pesan tagihan resmi dengan tautan Virtual Account ke nomor WhatsApp orang tua.';
+      } else {
+        badge.textContent = 'Lunas Diverifikasi';
+        badge.className = 'px-2 py-0.5 rounded-full text-label-sm font-label bg-success text-on-success font-bold';
+        btnApprove.classList.remove('hidden');
+        btnReject.classList.add('hidden');
+        btnApprove.innerHTML = `<span class="material-symbols-outlined text-[18px]">print</span><span>Cetak / Unduh Kuitansi PDF</span>`;
+        btnApprove.onclick = () => showToast(`Mengunduh kuitansi resmi ARCI Bimbel untuk ${inv.student}`, 'success');
+        actionNote.textContent = 'Transaksi ini telah lunas dan tercatat dalam buku kas operasional.';
+      }
+
+      // Re-render table to reflect selected highlight
+      renderTable();
+    }
+
+    // Approve Current Invoice
+    function approveCurrentInvoice() {
+      const inv = invoicesData.find(item => item.id === selectedInvoiceId);
+      if (!inv) return;
+
+      inv.status = 'Lunas Diverifikasi';
+      inv.category = 'paid';
+      inv.isApproved = true;
+      inv.receiptValidText = `✓ Telah disetujui oleh Rina Kusuma pada ${new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'})} WIB.`;
+
+      // Update review badges
+      const remainingVerify = invoicesData.filter(i => i.category === 'verify').length;
+      document.getElementById('badge-need-review').textContent = `${remainingVerify} Perlu Ditinjau`;
+      document.getElementById('badge-nav-verify').textContent = remainingVerify;
+      document.getElementById('tab-filter-verify').textContent = `Perlu Verifikasi (${remainingVerify})`;
+      document.getElementById('kpi-verifikasi-count').textContent = `${remainingVerify} Bukti Masuk`;
+
+      // Refresh Inspector & Table
+      selectInvoice(selectedInvoiceId);
+      renderTable();
+
+      showToast(`Pembayaran #${inv.id} (${inv.student}) berhasil diverifikasi! Kuitansi terkirim.`, 'success');
+    }
+
+    // Rejection Modal Logic
+    function openRejectModal() {
+      const inv = invoicesData.find(item => item.id === selectedInvoiceId);
+      if (inv) {
+        document.getElementById('reject-student-name').textContent = `${inv.student} (${inv.id})`;
+      }
+      document.getElementById('modal-reject-proof').classList.remove('hidden');
+    }
+
+    function closeRejectModal() {
+      document.getElementById('modal-reject-proof').classList.add('hidden');
+    }
+
+    function confirmRejectInvoice() {
+      const selectedReason = document.querySelector('input[name="reject-reason"]:checked')?.value || 'Bukti bayar tidak valid.';
+      const inv = invoicesData.find(item => item.id === selectedInvoiceId);
+      if (inv) {
+        inv.status = 'Bukti Ditolak';
+        inv.category = 'overdue';
+        inv.receiptValidText = `❌ Ditolak: ${selectedReason}`;
+      }
+      closeRejectModal();
+      selectInvoice(selectedInvoiceId);
+      renderTable();
+      showToast(`Bukti bayar ditolak. Notifikasi WhatsApp telah dikirimkan ke wali murid.`, 'warning');
+    }
+
+    // Zoom Receipt Modal Logic
+    function openReceiptZoom() {
+      const inv = invoicesData.find(item => item.id === selectedInvoiceId);
+      if (inv) {
+        document.getElementById('zoom-title').textContent = `Pratinjau Bukti: ${inv.id}`;
+        document.getElementById('zoom-subtitle').textContent = `${inv.method} • ${inv.receiptDate}`;
+        document.getElementById('zoom-payer').textContent = `${inv.student} / ${inv.parent}`;
+        document.getElementById('zoom-amount').textContent = formatRupiah(inv.amount);
+      }
+      document.getElementById('modal-receipt-zoom').classList.remove('hidden');
+    }
+
+    function closeReceiptZoom() {
+      document.getElementById('modal-receipt-zoom').classList.add('hidden');
+    }
+
+    // New Invoice Modal Logic
+    function openNewInvoiceModal() {
+      document.getElementById('modal-new-invoice').classList.remove('hidden');
+      document.getElementById('inv-student-name').focus();
+    }
+
+    function closeNewInvoiceModal() {
+      document.getElementById('modal-new-invoice').classList.add('hidden');
+    }
+
+    function submitNewInvoice(e) {
+      e.preventDefault();
+      const sName = document.getElementById('inv-student-name').value.trim();
+      const pName = document.getElementById('inv-parent-name').value.trim();
+      const prog = document.getElementById('inv-program').value;
+      const cat = document.getElementById('inv-category').value;
+      const nominal = parseInt(document.getElementById('inv-nominal').value, 10) || 1000000;
+      const dueDate = document.getElementById('inv-due-date').value;
+
+      const newId = `INV-2026-${Math.floor(1200 + Math.random() * 800)}`;
+      
+      const newInvoice = {
+        id: newId,
+        student: sName,
+        parent: pName,
+        program: prog,
+        detail: cat,
+        amount: nominal,
+        status: 'Menunggu Pembayaran',
+        category: 'overdue',
+        method: 'Virtual Account BCA / Mandiri',
+        receiptFile: 'Menunggu Transfer',
+        receiptSize: '-',
+        receiptDate: `Jatuh tempo: ${dueDate}`,
+        receiptValidText: 'Tagihan baru diterbitkan. Menunggu bukti transfer dari wali.',
+        isApproved: false
+      };
+
+      invoicesData.unshift(newInvoice);
+      closeNewInvoiceModal();
+      document.getElementById('form-new-invoice').reset();
+      
+      selectedInvoiceId = newId;
+      selectInvoice(newId);
+      renderTable();
+
+      showToast(`Invoice #${newId} berhasil diterbitkan untuk ${sName}! Link tagihan dikirim ke WhatsApp.`, 'success');
+    }
+
+    // Remind Parent via WhatsApp
+    function remindWhatsApp(student, parent, amount) {
+      const msg = encodeURIComponent(`Halo Ibu/Bapak ${parent}, kami dari ARCI Bimbel ingin mengonfirmasikan tagihan belajar ananda ${student} sebesar ${amount} yang telah jatuh tempo. Mohon kesediaannya untuk melakukan pembayaran. Terima kasih.`);
+      window.open(`https://wa.me/6281234567890?text=${msg}`, '_blank');
+      showToast(`Membuka WhatsApp untuk mengirimkan pengingat ke wali ${student}...`, 'info');
+    }
+
+    // Export Finance CSV
+    function exportFinanceCSV() {
+      let csv = 'ID Invoice,Nama Siswa,Nama Wali,Program Belajar,Komponen,Nominal,Status,Metode Pembayaran\n';
+      invoicesData.forEach(i => {
+        csv += `"${i.id}","${i.student}","${i.parent}","${i.program}","${i.detail}",${i.amount},"${i.status}","${i.method}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Rekap_Tagihan_ARCI_Bimbel_${new Date().toISOString().slice(0,10)}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      showToast('File CSV Rekap Keuangan berhasil diunduh.', 'success');
+    }
+
+    // Toast Notification System
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      
+      let bg = 'bg-light-surface text-light-on-surface border-light-outline-variant';
+      let icon = 'info';
+      let iconColor = 'text-brand-indigo';
+
+      if (type === 'success') {
+        icon = 'check_circle';
+        iconColor = 'text-success';
+      } else if (type === 'warning') {
+        icon = 'warning';
+        iconColor = 'text-warning';
+      } else if (type === 'danger') {
+        icon = 'error';
+        iconColor = 'text-danger';
+      }
+
+      toast.className = `p-4 rounded-xl border ${bg} shadow-lg flex items-center gap-3 transition-all duration-300 transform translate-y-4 opacity-0 pointer-events-auto`;
+      toast.innerHTML = `
+        <span class="material-symbols-outlined ${iconColor} text-[22px] shrink-0">${icon}</span>
+        <span class="text-body-sm font-medium flex-1">${message}</span>
+      `;
+
+      container.appendChild(toast);
+
+      // Animate in
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-4', 'opacity-0');
+      });
+
+      // Animate out
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    // Initialize Table on Load
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTable();
+      selectInvoice(selectedInvoiceId);
+    });
+  </script>
+</body>
+</html>

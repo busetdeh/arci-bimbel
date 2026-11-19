@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Dashboard Pengajar &amp; Tutor — ARCI Bimbel Mobile</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+  /** @type {import('tailwindcss').Config} */
+  globalThis.tailwind = globalThis.tailwind || {};
+  globalThis.tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          'accent': '#F6C453',
+          'on-accent': '#18212F',
+          'brand-indigo': '#243B7A',
+          'brand-indigo-dark': '#172653',
+          'success': '#1B7330',
+          'on-success': '#FFFFFF',
+          'warning': '#925B06',
+          'on-warning': '#FFFFFF',
+          'danger': '#B91C1C',
+          'on-danger': '#FFFFFF',
+          'light-primary': '#243B7A',
+          'light-on-primary': '#FFFFFF',
+          'light-primary-container': '#EBF0FA',
+          'light-on-primary-container': '#172653',
+          'light-surface': '#FFFFFF',
+          'light-on-surface': '#18212F',
+          'light-surface-soft': '#F8FAFC',
+          'light-surface-container-low': '#F1F5F9',
+          'light-surface-container': '#E2E8F0',
+          'light-on-surface-variant': '#475569',
+          'light-outline': '#94A3B8',
+          'light-outline-variant': '#CBD5E1',
+          'dark-primary': '#9BB3F0',
+          'dark-on-primary': '#0E1A3C',
+          'dark-primary-container': '#1E3166',
+          'dark-on-primary-container': '#D7E3FF',
+          'dark-surface': '#0F172A',
+          'dark-on-surface': '#F8FAFC',
+          'dark-surface-soft': '#1E293B',
+          'dark-surface-container-low': '#152033',
+          'dark-surface-container': '#1E293B',
+          'dark-on-surface-variant': '#CBD5E1',
+          'dark-outline': '#64748B',
+          'dark-outline-variant': '#475569',
+        },
+        borderRadius: {
+          'sm': '4px',
+          'DEFAULT': '8px',
+          'md': '10px',
+          'lg': '12px',
+          'xl': '16px',
+          '2xl': '20px',
+          'full': '9999px',
+        },
+        fontFamily: {
+          'display': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'headline': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'title': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'body': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'label': ['"Plus Jakarta Sans"', 'sans-serif'],
+        },
+        fontSize: {
+          'display-lg': ['48px', { lineHeight: '56px', letterSpacing: '-0.02em', fontWeight: '700' }],
+          'display-lg-mobile': ['32px', { lineHeight: '40px', letterSpacing: '-0.01em', fontWeight: '700' }],
+          'headline-lg': ['36px', { lineHeight: '44px', letterSpacing: '-0.01em', fontWeight: '700' }],
+          'headline-lg-mobile': ['26px', { lineHeight: '34px', letterSpacing: '0em', fontWeight: '700' }],
+          'headline-md': ['24px', { lineHeight: '32px', fontWeight: '600' }],
+          'headline-sm': ['20px', { lineHeight: '28px', fontWeight: '600' }],
+          'title-lg': ['18px', { lineHeight: '26px', fontWeight: '600' }],
+          'title-md': ['16px', { lineHeight: '24px', fontWeight: '600' }],
+          'body-lg': ['16px', { lineHeight: '24px', fontWeight: '400' }],
+          'body-md': ['14px', { lineHeight: '20px', fontWeight: '400' }],
+          'body-sm': ['12px', { lineHeight: '18px', fontWeight: '400' }],
+          'label-lg': ['14px', { lineHeight: '20px', fontWeight: '600' }],
+          'label-md': ['12px', { lineHeight: '16px', fontWeight: '600' }],
+          'label-sm': ['11px', { lineHeight: '14px', fontWeight: '500' }],
+        },
+      },
+    },
+  };
+  if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+  <style>
+    .material-symbols-outlined {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      line-height: 1 !important;
+      box-sizing: content-box;
+      overflow: hidden;
+      white-space: nowrap;
+      direction: ltr;
+      vertical-align: middle;
+    }
+    button, a {
+      touch-action: manipulation;
+    }
+    .pb-safe {
+      padding-bottom: env(safe-area-inset-bottom, 24px);
+    }
+  </style>
+</head>
+<body class="bg-light-surface-container-low text-light-on-surface font-body antialiased min-h-screen flex flex-col justify-between selection:bg-brand-indigo selection:text-white">
+
+  <!-- Desktop Wrapper Container (Centered Mobile Viewport Frame) -->
+  <div class="w-full max-w-xl mx-auto bg-light-surface-soft min-h-screen shadow-md flex flex-col border-x border-light-outline-variant/60 pb-24">
+
+    <!-- ============================================================== -->
+    <!-- MOBILE TOP BAR WITH TUTOR PROFILE                              -->
+    <!-- ============================================================== -->
+    <header class="bg-light-surface border-b border-light-outline-variant px-4 py-3 sticky top-0 z-40 flex items-center justify-between shadow-2xs">
+      <div class="flex items-center gap-3">
+        <img 
+          src="assets/images/tutor-budi.jpg" 
+          onerror="window.reworkMissingImageAI(this, { title: 'Budi Pratama', subtitle: 'Tutor Fisika', width: 120, height: 120 })"
+          alt="Kak Budi Pratama" 
+          class="w-10 h-10 rounded-full object-cover border-2 border-light-primary shrink-0 shadow-2xs">
+        <div>
+          <h1 class="font-headline font-bold text-title-md text-brand-indigo leading-tight">Kak Budi Pratama</h1>
+          <p class="text-[11px] text-light-on-surface-variant font-medium">Tutor Fisika &amp; TPS UTBK &bull; NIP: 2026-T01</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-label font-bold bg-success/15 text-success border border-success/30 shadow-2xs flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-success animate-pulse"></span>
+          Aktif Mengajar
+        </span>
+        <a 
+          href="dashboard.html" 
+          class="w-8 h-8 rounded-lg border border-light-outline-variant flex items-center justify-center text-light-on-surface-variant hover:text-brand-indigo hover:bg-light-surface-container transition-colors" 
+          title="Buka Dashboard Web Lengkap">
+          <span class="material-symbols-outlined text-[18px]">desktop_windows</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- ============================================================== -->
+    <!-- MAIN TUTOR DASHBOARD CONTENT                                   -->
+    <!-- ============================================================== -->
+    <main class="p-4 flex flex-col gap-4 flex-1">
+      
+      <!-- Next Teaching Session Banner (Actionable Presensi CTA) -->
+      <section class="bg-gradient-to-br from-brand-indigo via-brand-indigo-dark to-brand-indigo text-light-on-primary rounded-2xl p-5 shadow-sm flex flex-col gap-3 relative overflow-hidden">
+        
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-0.5 rounded-full text-label-sm font-label font-bold bg-accent text-on-accent shadow-2xs">
+            SESI BERIKUTNYA HARI INI
+          </span>
+          <span class="text-[11px] text-white/90 font-mono font-bold bg-white/10 px-2 py-0.5 rounded-md border border-white/20">
+            14:00 - 15:30 WIB
+          </span>
+        </div>
+
+        <div>
+          <h2 class="font-headline font-bold text-title-lg text-white">
+            UTBK 12-IPA: Fisika Gelombang
+          </h2>
+          <p class="text-[12px] text-white/80 mt-0.5 leading-relaxed">
+            Topik: Gelombang Elektromagnetik, Polarisasi &amp; Efek Doppler
+          </p>
+        </div>
+
+        <div class="flex items-center justify-between text-[11px] pt-2 border-t border-white/15 text-slate-200">
+          <span class="flex items-center gap-1">
+            <span class="material-symbols-outlined text-[15px] text-accent">location_on</span>
+            Lab Newton (Sudirman)
+          </span>
+          <span class="flex items-center gap-1 font-mono">
+            <span class="material-symbols-outlined text-[15px] text-accent">groups</span>
+            14 Siswa Terdaftar
+          </span>
+        </div>
+
+        <!-- Action Button to Open Mobile Attendance -->
+        <a 
+          href="attendance-mobile.html" 
+          class="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-accent text-on-accent hover:bg-yellow-400 font-label text-label-md font-bold shadow-sm hover:shadow transition-all mt-1 min-h-[44px]">
+          <span class="material-symbols-outlined text-[20px]">fact_check</span>
+          <span>Buka Presensi Sesi Ini</span>
+        </a>
+      </section>
+
+      <!-- Monthly Stats & Honorarium Snapshot (2 Cols Grid) -->
+      <section class="grid grid-cols-2 gap-3">
+        
+        <!-- Metric 1: Jam Mengajar -->
+        <div class="p-3.5 bg-light-surface rounded-xl border border-light-outline-variant shadow-2xs flex flex-col justify-between">
+          <span class="text-[11px] text-light-on-surface-variant font-label font-bold uppercase tracking-wider">Jam Mengajar Bulan Ini</span>
+          <div class="mt-2">
+            <div class="font-headline font-bold text-title-lg text-brand-indigo">42 Jam</div>
+            <span class="text-[10px] text-success font-semibold mt-0.5 flex items-center gap-0.5">
+              <span class="material-symbols-outlined text-[12px]">check_circle</span>
+              28 dari 30 sesi selesai
+            </span>
+            <div class="w-full bg-light-surface-container h-1.5 rounded-full mt-2 overflow-hidden">
+              <div class="bg-brand-indigo h-full rounded-full" style="width: 93%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metric 2: Estimasi Honorarium -->
+        <div class="p-3.5 bg-light-surface rounded-xl border border-light-outline-variant shadow-2xs flex flex-col justify-between">
+          <span class="text-[11px] text-light-on-surface-variant font-label font-bold uppercase tracking-wider">Estimasi Honorarium</span>
+          <div class="mt-2">
+            <div class="font-headline font-bold text-title-lg text-success">Rp6.300.000</div>
+            <span class="text-[10px] text-light-on-surface-variant mt-0.5 block font-mono">
+              Cair tgl 28 Nov 2026
+            </span>
+            <div class="w-full bg-light-surface-container h-1.5 rounded-full mt-2 overflow-hidden">
+              <div class="bg-success h-full rounded-full" style="width: 85%;"></div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Today's Teaching Schedule List -->
+      <section class="bg-light-surface rounded-2xl border border-light-outline-variant p-4 shadow-sm flex flex-col gap-3">
+        <div class="flex items-center justify-between">
+          <h2 class="font-headline font-bold text-title-md text-light-on-surface flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-light-primary text-[20px]">calendar_today</span>
+            <span>Jadwal Sesi Hari Ini</span>
+          </h2>
+          <span class="text-[11px] text-light-primary font-bold bg-light-primary-container px-2 py-0.5 rounded-md">
+            2 Sesi Mengajar
+          </span>
+        </div>
+
+        <div class="flex flex-col gap-2.5">
+          
+          <!-- Session 1 (Afternoon) -->
+          <div class="p-3.5 bg-light-surface-soft rounded-xl border-l-4 border-light-primary border border-light-outline-variant flex items-center justify-between text-body-sm gap-2">
+            <div>
+              <div class="font-bold text-brand-indigo">UTBK 12-IPA &bull; Fisika</div>
+              <div class="text-[11px] text-light-on-surface-variant mt-0.5 font-mono">
+                14:00 - 15:30 WIB &bull; Lab Newton
+              </div>
+            </div>
+            <a 
+              href="attendance-mobile.html" 
+              class="px-3 py-1.5 rounded-lg bg-light-primary text-light-on-primary text-[11px] font-label font-bold hover:bg-brand-indigo-dark transition-colors shadow-2xs whitespace-nowrap min-h-[36px] flex items-center gap-1">
+              <span class="material-symbols-outlined text-[14px]">checklist</span>
+              <span>Isi Presensi</span>
+            </a>
+          </div>
+
+          <!-- Session 2 (Night Hybrid) -->
+          <div class="p-3.5 bg-light-surface-soft rounded-xl border border-light-outline-variant flex items-center justify-between text-body-sm gap-2">
+            <div>
+              <div class="font-bold text-light-on-surface">ONLINE: Fisika Modern UTBK</div>
+              <div class="text-[11px] text-light-on-surface-variant mt-0.5 font-mono">
+                19:00 - 20:30 WIB &bull; Zoom Pro 1
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-light-surface-container text-light-on-surface">
+                Nanti Malam
+              </span>
+              <a 
+                href="https://zoom.us" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="px-2.5 py-1.5 rounded-lg border border-light-outline hover:border-light-primary text-[11px] font-semibold text-light-primary flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px]">videocam</span>
+                <span>Zoom</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Upload Teaching Materials / Homework (D8) -->
+      <section class="bg-light-surface rounded-2xl border border-light-outline-variant p-4 shadow-sm flex flex-col gap-3">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="font-headline font-bold text-title-md text-light-on-surface flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-light-primary text-[20px]">folder</span>
+              <span>Materi &amp; Tugas Siswa (D8)</span>
+            </h2>
+            <p class="text-[11px] text-light-on-surface-variant">Modul dibagikan langsung ke portal siswa &amp; wali</p>
+          </div>
+          <button 
+            type="button" 
+            onclick="openUploadModal()" 
+            class="text-[11px] text-light-primary font-bold hover:underline bg-light-primary-container/40 px-2.5 py-1 rounded-lg">
+            + Unggah File
+          </button>
+        </div>
+
+        <div class="flex flex-col gap-2 text-body-sm">
+          
+          <!-- File Item 1 -->
+          <div class="p-3 rounded-xl bg-light-surface-soft border border-light-outline-variant flex items-center justify-between gap-2 shadow-2xs">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-red-100 text-red-700 flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
+              </div>
+              <div>
+                <div class="font-bold text-light-on-surface text-[12px]">Modul_Gelombang_Latihan.pdf</div>
+                <div class="text-[10px] text-light-on-surface-variant">UTBK 12-IPA &bull; 4.2 MB &bull; Diunggah Kemarin</div>
+              </div>
+            </div>
+            <span class="text-[10px] text-success font-bold bg-success/15 px-2 py-0.5 rounded-md shrink-0">
+              Sudah Dibagikan
+            </span>
+          </div>
+
+          <!-- File Item 2 -->
+          <div class="p-3 rounded-xl bg-light-surface-soft border border-light-outline-variant flex items-center justify-between gap-2 shadow-2xs">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-[18px]">assignment</span>
+              </div>
+              <div>
+                <div class="font-bold text-light-on-surface text-[12px]">Tugas Mandiri Fisika #4</div>
+                <div class="text-[10px] text-light-on-surface-variant">Tenggat: 22 Nov 2026 &bull; Soal HOTS No. 1–10</div>
+              </div>
+            </div>
+            <a 
+              href="portal-jadwal-materi.html#view-materi" 
+              class="text-[10px] text-light-primary font-bold bg-light-primary-container px-2 py-0.5 rounded-md shrink-0 hover:underline">
+              12/14 Mengumpulkan
+            </a>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Student Attendance Feedback & Quick Note -->
+      <section class="bg-light-surface rounded-2xl border border-light-outline-variant p-4 shadow-sm flex flex-col gap-2.5">
+        <div class="flex items-center justify-between">
+          <h3 class="font-headline font-bold text-title-md text-light-on-surface flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-light-primary text-[20px]">edit_note</span>
+            <span>Catatan Konsultasi &amp; Wali Murid</span>
+          </h3>
+          <span class="text-[11px] text-light-on-surface-variant font-mono">Auto-sync WA</span>
+        </div>
+        <p class="text-[12px] text-light-on-surface-variant leading-relaxed">
+          Beri catatan perkembangan siswa setelah sesi selesai. Catatan ini otomatis tampil di <a href="student-portal.html" class="text-light-primary font-semibold hover:underline">portal orang tua murid</a> dan rekapan admin.
+        </p>
+        <button 
+          type="button" 
+          onclick="openNoteModal()" 
+          class="w-full py-2.5 rounded-xl border border-light-outline text-light-on-surface hover:bg-light-surface-container font-label text-body-sm font-semibold transition-colors flex items-center justify-center gap-1.5 min-h-[44px]">
+          <span class="material-symbols-outlined text-[18px]">add_comment</span>
+          <span>Tulis Catatan Konsultasi Baru</span>
+        </button>
+      </section>
+
+    </main>
+
+    <!-- ============================================================== -->
+    <!-- STICKY BOTTOM NAVIGATION FOR TUTOR PORTAL MOBILE               -->
+    <!-- ============================================================== -->
+    <nav class="fixed bottom-0 left-0 right-0 z-50 bg-light-surface/95 backdrop-blur-md border-t border-light-outline-variant px-6 py-2 shadow-lg pb-safe">
+      <div class="w-full max-w-xl mx-auto flex items-center justify-between">
+        
+        <!-- Tab 1: Beranda (Active) -->
+        <a 
+          href="tutor-dashboard.html" 
+          class="flex flex-col items-center gap-0.5 text-light-primary font-label text-[11px] font-bold transition-colors min-h-[44px] min-w-[56px] justify-center">
+          <span class="material-symbols-outlined text-[20px]">home</span>
+          <span>Beranda</span>
+        </a>
+
+        <!-- Tab 2: Jadwal -->
+        <a 
+          href="schedule.html" 
+          class="flex flex-col items-center gap-0.5 text-light-on-surface-variant hover:text-light-primary font-label text-[11px] font-medium transition-colors min-h-[44px] min-w-[56px] justify-center">
+          <span class="material-symbols-outlined text-[20px]">calendar_month</span>
+          <span>Jadwal</span>
+        </a>
+
+        <!-- Tab 3: Presensi Sesi -->
+        <a 
+          href="attendance-mobile.html" 
+          class="flex flex-col items-center gap-0.5 text-light-on-surface-variant hover:text-light-primary font-label text-[11px] font-medium transition-colors min-h-[44px] min-w-[56px] justify-center">
+          <span class="material-symbols-outlined text-[20px]">fact_check</span>
+          <span>Presensi</span>
+        </a>
+
+        <!-- Tab 4: Materi -->
+        <a 
+          href="portal-jadwal-materi.html#view-materi" 
+          class="flex flex-col items-center gap-0.5 text-light-on-surface-variant hover:text-light-primary font-label text-[11px] font-medium transition-colors min-h-[44px] min-w-[56px] justify-center">
+          <span class="material-symbols-outlined text-[20px]">menu_book</span>
+          <span>Materi</span>
+        </a>
+
+        <!-- Tab 5: Akun & Log Out -->
+        <a 
+          href="login-admin.html" 
+          class="flex flex-col items-center gap-0.5 text-light-on-surface-variant hover:text-light-primary font-label text-[11px] font-medium transition-colors min-h-[44px] min-w-[56px] justify-center">
+          <span class="material-symbols-outlined text-[20px]">badge</span>
+          <span>Akun</span>
+        </a>
+
+      </div>
+    </nav>
+
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL: UNGGAH MATERI / MODUL AJAR (D8)                         -->
+  <!-- ============================================================== -->
+  <div id="modal-upload-material" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+    <div class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-xl w-full max-w-sm overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-150">
+      
+      <div class="px-5 py-4 border-b border-light-outline-variant flex items-center justify-between bg-light-surface-soft">
+        <div class="flex items-center gap-2 text-brand-indigo">
+          <span class="material-symbols-outlined text-[20px]">upload_file</span>
+          <h3 class="font-headline font-bold text-title-md text-light-on-surface">Unggah Materi / Modul (D8)</h3>
+        </div>
+        <button type="button" onclick="closeUploadModal()" class="text-light-on-surface-variant hover:text-light-on-surface p-1 rounded-lg">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <form id="form-upload-material" onsubmit="handleMaterialUpload(event)" class="p-5 space-y-3.5 text-body-sm">
+        <div>
+          <label class="block text-label-sm font-semibold text-light-on-surface mb-1">Rombel / Kelas Sasaran</label>
+          <select class="w-full px-3 py-2 rounded-lg border border-light-outline text-body-sm bg-light-surface text-light-on-surface min-h-[40px]">
+            <option selected>UTBK 12-IPA — Fisika Gelombang</option>
+            <option>Matematika SMP Kelas 8-A</option>
+            <option>ONLINE: Fisika Modern UTBK</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-label-sm font-semibold text-light-on-surface mb-1">Judul Dokumen / Modul</label>
+          <input 
+            type="text" 
+            required 
+            placeholder="Contoh: Modul_Interferensi_Cahaya.pdf" 
+            class="w-full px-3 py-2 rounded-lg border border-light-outline text-body-sm bg-light-surface text-light-on-surface min-h-[40px]">
+        </div>
+
+        <div>
+          <label class="block text-label-sm font-semibold text-light-on-surface mb-1">Pilih Berkas (PDF / PPT / Video)</label>
+          <div class="border-2 border-dashed border-light-outline rounded-xl p-4 text-center hover:border-light-primary transition-colors cursor-pointer bg-light-surface-soft">
+            <input type="file" id="material-file-input" class="hidden" onchange="previewMaterialFile(this)">
+            <label for="material-file-input" class="cursor-pointer flex flex-col items-center gap-1.5">
+              <span class="material-symbols-outlined text-[28px] text-light-primary">cloud_upload</span>
+              <span id="material-file-name" class="font-semibold text-body-sm text-brand-indigo">Pilih File dari Perangkat</span>
+              <span class="text-[11px] text-light-on-surface-variant">Maksimal 25 MB</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 pt-2">
+          <button type="button" onclick="closeUploadModal()" class="flex-1 py-2.5 rounded-lg border border-light-outline text-light-on-surface font-semibold text-body-sm min-h-[44px]">
+            Batal
+          </button>
+          <button type="submit" class="flex-1 py-2.5 rounded-lg bg-light-primary text-light-on-primary font-bold text-body-sm hover:bg-brand-indigo-dark min-h-[44px]">
+            Bagikan Materi
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL: TULIS CATATAN KONSULTASI SISWA                          -->
+  <!-- ============================================================== -->
+  <div id="modal-note" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+    <div class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-xl w-full max-w-sm overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-150">
+      
+      <div class="px-5 py-4 border-b border-light-outline-variant flex items-center justify-between bg-light-surface-soft">
+        <div class="flex items-center gap-2 text-brand-indigo">
+          <span class="material-symbols-outlined text-[20px]">edit_note</span>
+          <h3 class="font-headline font-bold text-title-md text-light-on-surface">Catatan Perkembangan Siswa</h3>
+        </div>
+        <button type="button" onclick="closeNoteModal()" class="text-light-on-surface-variant hover:text-light-on-surface p-1 rounded-lg">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <form id="form-consultation-note" onsubmit="handleNoteSubmit(event)" class="p-5 space-y-3.5 text-body-sm">
+        <div>
+          <label class="block text-label-sm font-semibold text-light-on-surface mb-1">Pilih Siswa</label>
+          <select class="w-full px-3 py-2 rounded-lg border border-light-outline text-body-sm bg-light-surface text-light-on-surface min-h-[40px]">
+            <option selected>Farhan Pratama (SMP 8-A)</option>
+            <option>Ahmad Rizky Pratama (UTBK 12-IPA)</option>
+            <option>Nadia Amanda (UTBK 12-IPA)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-label-sm font-semibold text-light-on-surface mb-1">Ulasan Evaluasi &amp; Catatan</label>
+          <textarea rows="3" required placeholder="Tuliskan ulasan pemahaman materi, rekomendasi latihan, atau catatan kebiasaan belajar..." class="w-full px-3 py-2 rounded-lg border border-light-outline text-body-sm bg-light-surface text-light-on-surface"></textarea>
+        </div>
+
+        <div class="flex items-center gap-2 pt-2">
+          <button type="button" onclick="closeNoteModal()" class="flex-1 py-2.5 rounded-lg border border-light-outline text-light-on-surface font-semibold text-body-sm min-h-[44px]">
+            Batal
+          </button>
+          <button type="submit" class="flex-1 py-2.5 rounded-lg bg-light-primary text-light-on-primary font-bold text-body-sm hover:bg-brand-indigo-dark min-h-[44px]">
+            Simpan &amp; Broadcast
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- TOAST NOTIFICATION CONTAINER                                   -->
+  <!-- ============================================================== -->
+  <div id="toast-container" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 max-w-sm w-[90%] pointer-events-none"></div>
+
+  <!-- ============================================================== -->
+  <!-- JAVASCRIPT STATE ENGINE                                        -->
+  <!-- ============================================================== -->
+  <script>
+    // Fallback Image AI Re-generator
+    window.reworkMissingImageAI = function(img, opts) {
+      opts = opts || {};
+      const width = opts.width || 120;
+      const height = opts.height || 120;
+      const title = encodeURIComponent(opts.title || 'Tutor ARCI');
+      img.onerror = null;
+      img.src = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><rect width="100%" height="100%" fill="%23243B7A"/><circle cx="${width/2}" cy="${height/2}" r="${width/2.5}" fill="%23172653"/><text x="50%" y="55%" font-family="sans-serif" font-weight="bold" font-size="28" fill="%23F6C453" text-anchor="middle">BP</text></svg>`;
+    };
+
+    // Modal Upload Material Handlers
+    function openUploadModal() {
+      document.getElementById('modal-upload-material').classList.remove('hidden');
+    }
+
+    function closeUploadModal() {
+      document.getElementById('modal-upload-material').classList.add('hidden');
+    }
+
+    function previewMaterialFile(input) {
+      if (input.files && input.files[0]) {
+        document.getElementById('material-file-name').textContent = input.files[0].name;
+      }
+    }
+
+    function handleMaterialUpload(e) {
+      e.preventDefault();
+      closeUploadModal();
+      showToast('Berkas modul ajar berhasil diunggah dan dibagikan ke portal siswa!', 'success');
+    }
+
+    // Modal Note Handlers
+    function openNoteModal() {
+      document.getElementById('modal-note').classList.remove('hidden');
+    }
+
+    function closeNoteModal() {
+      document.getElementById('modal-note').classList.add('hidden');
+    }
+
+    function handleNoteSubmit(e) {
+      e.preventDefault();
+      closeNoteModal();
+      showToast('Catatan perkembangan siswa tersimpan dan dikirim via WhatsApp ke wali murid!', 'success');
+    }
+
+    // Toast Notification System
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      toast.className = `p-3.5 rounded-xl shadow-xl border text-body-sm font-medium flex items-center gap-2.5 pointer-events-auto transform transition-all duration-200 translate-y-[-10px] opacity-0 ${
+        type === 'success' 
+          ? 'bg-light-surface text-light-on-surface border-success border-l-4 border-l-success' 
+          : 'bg-light-surface text-light-on-surface border-brand-indigo border-l-4 border-l-brand-indigo'
+      }`;
+
+      const iconName = type === 'success' ? 'check_circle' : 'info';
+      const iconColor = type === 'success' ? 'text-success' : 'text-brand-indigo';
+
+      toast.innerHTML = `
+        <span class="material-symbols-outlined ${iconColor} text-[20px] shrink-0">${iconName}</span>
+        <span class="text-body-sm text-light-on-surface flex-1">${message}</span>
+        <button type="button" onclick="this.parentElement.remove()" class="text-light-on-surface-variant hover:text-light-on-surface p-1">
+          <span class="material-symbols-outlined text-[16px]">close</span>
+        </button>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-[-10px]', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-[-10px]');
+        setTimeout(() => toast.remove(), 250);
+      }, 4000);
+    }
+  </script>
+</body>
+</html>

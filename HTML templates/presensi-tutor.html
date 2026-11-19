@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Presensi Sesi Kelas — ARCI Bimbel Mobile</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+  /** @type {import('tailwindcss').Config} */
+  globalThis.tailwind = globalThis.tailwind || {};
+  globalThis.tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          'accent': '#F6C453',
+          'on-accent': '#18212F',
+          'brand-indigo': '#243B7A',
+          'brand-indigo-dark': '#172653',
+          'success': '#1B7330',
+          'on-success': '#FFFFFF',
+          'warning': '#925B06',
+          'on-warning': '#FFFFFF',
+          'danger': '#B91C1C',
+          'on-danger': '#FFFFFF',
+          'light-primary': '#243B7A',
+          'light-on-primary': '#FFFFFF',
+          'light-primary-container': '#EBF0FA',
+          'light-on-primary-container': '#172653',
+          'light-surface': '#FFFFFF',
+          'light-on-surface': '#18212F',
+          'light-surface-soft': '#F8FAFC',
+          'light-surface-container-low': '#F1F5F9',
+          'light-surface-container': '#E2E8F0',
+          'light-on-surface-variant': '#475569',
+          'light-outline': '#94A3B8',
+          'light-outline-variant': '#CBD5E1',
+          'dark-primary': '#9BB3F0',
+          'dark-on-primary': '#0E1A3C',
+          'dark-primary-container': '#1E3166',
+          'dark-on-primary-container': '#D7E3FF',
+          'dark-surface': '#0F172A',
+          'dark-on-surface': '#F8FAFC',
+          'dark-surface-soft': '#1E293B',
+          'dark-surface-container-low': '#152033',
+          'dark-surface-container': '#1E293B',
+          'dark-on-surface-variant': '#CBD5E1',
+          'dark-outline': '#64748B',
+          'dark-outline-variant': '#475569',
+        },
+        borderRadius: {
+          'sm': '4px',
+          'DEFAULT': '8px',
+          'md': '10px',
+          'lg': '12px',
+          'xl': '16px',
+          '2xl': '20px',
+          'full': '9999px',
+        },
+        fontFamily: {
+          'display': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'headline': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'title': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'body': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'label': ['"Plus Jakarta Sans"', 'sans-serif'],
+        },
+        fontSize: {
+          'display-lg': ['48px', { lineHeight: '56px', letterSpacing: '-0.02em', fontWeight: '700' }],
+          'display-lg-mobile': ['32px', { lineHeight: '40px', letterSpacing: '-0.01em', fontWeight: '700' }],
+          'headline-lg': ['36px', { lineHeight: '44px', letterSpacing: '-0.01em', fontWeight: '700' }],
+          'headline-lg-mobile': ['26px', { lineHeight: '34px', letterSpacing: '0em', fontWeight: '700' }],
+          'headline-md': ['24px', { lineHeight: '32px', fontWeight: '600' }],
+          'headline-sm': ['20px', { lineHeight: '28px', fontWeight: '600' }],
+          'title-lg': ['18px', { lineHeight: '26px', fontWeight: '600' }],
+          'title-md': ['16px', { lineHeight: '24px', fontWeight: '600' }],
+          'body-lg': ['16px', { lineHeight: '24px', fontWeight: '400' }],
+          'body-md': ['14px', { lineHeight: '20px', fontWeight: '400' }],
+          'body-sm': ['12px', { lineHeight: '18px', fontWeight: '400' }],
+          'label-lg': ['14px', { lineHeight: '20px', fontWeight: '600' }],
+          'label-md': ['12px', { lineHeight: '16px', fontWeight: '600' }],
+          'label-sm': ['11px', { lineHeight: '14px', fontWeight: '500' }],
+        },
+      },
+    },
+  };
+  if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+  <style>
+    .material-symbols-outlined {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      line-height: 1 !important;
+      box-sizing: content-box;
+      overflow: hidden;
+      white-space: nowrap;
+      direction: ltr;
+      vertical-align: middle;
+    }
+    /* Touch optimizations */
+    button, a {
+      touch-action: manipulation;
+    }
+    .pb-safe {
+      padding-bottom: env(safe-area-inset-bottom, 24px);
+    }
+  </style>
+</head>
+<body class="bg-light-surface-container-low text-light-on-surface font-body antialiased min-h-screen flex flex-col justify-between selection:bg-brand-indigo selection:text-white">
+
+  <!-- Desktop Wrapper Container (Centered Mobile Viewport Frame) -->
+  <div class="w-full max-w-xl mx-auto bg-light-surface-soft min-h-screen shadow-md flex flex-col border-x border-light-outline-variant/60 pb-28">
+
+    <!-- ============================================================== -->
+    <!-- MOBILE TOP APP BAR                                             -->
+    <!-- ============================================================== -->
+    <header class="bg-light-surface border-b border-light-outline-variant px-4 h-14 flex items-center justify-between sticky top-0 z-40 shadow-2xs">
+      <div class="flex items-center gap-2.5">
+        <a 
+          href="tutor-dashboard.html" 
+          class="w-9 h-9 rounded-lg flex items-center justify-center text-light-on-surface hover:bg-light-surface-container transition-colors"
+          title="Kembali ke Dashboard Tutor">
+          <span class="material-symbols-outlined text-[22px]">arrow_back</span>
+        </a>
+        <div>
+          <h1 class="font-headline font-bold text-title-md text-light-on-surface leading-tight">Presensi Sesi Kelas</h1>
+          <p class="text-[11px] text-light-on-surface-variant font-medium">Portal Tutor &bull; Mode Mobile Presensi</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-label bg-success text-on-success font-bold shadow-2xs">
+          <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+          Live Sesi
+        </span>
+        <button 
+          type="button" 
+          onclick="toggleSessionSelector()" 
+          class="w-9 h-9 rounded-lg border border-light-outline flex items-center justify-center text-light-on-surface hover:bg-light-surface-container transition-colors" 
+          title="Pilih Sesi Lain">
+          <span class="material-symbols-outlined text-[20px]">swap_horiz</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Session Quick Switcher Drawer (Expandable) -->
+    <div id="session-switcher" class="hidden bg-light-surface px-4 py-3 border-b border-light-outline-variant space-y-2 text-body-sm animate-in slide-in-from-top duration-150">
+      <label class="block text-[11px] font-label font-bold text-light-on-surface-variant uppercase">Pilih Rombel / Jadwal Aktif Hari Ini:</label>
+      <div class="grid grid-cols-1 gap-2">
+        <button type="button" onclick="switchSession('SMP-8A')" class="p-2.5 rounded-lg border-2 border-light-primary bg-light-primary-container/30 text-left flex items-center justify-between">
+          <div>
+            <p class="font-bold text-brand-indigo">Matematika SMP 8-A (Ruang Galileo)</p>
+            <p class="text-[11px] text-light-on-surface-variant">16:00 - 17:30 WIB &bull; 8 Siswa</p>
+          </div>
+          <span class="material-symbols-outlined text-light-primary text-[20px]">check_circle</span>
+        </button>
+        <button type="button" onclick="switchSession('SMA-12B')" class="p-2.5 rounded-lg border border-light-outline hover:bg-light-surface-container text-left flex items-center justify-between">
+          <div>
+            <p class="font-semibold text-light-on-surface">Fisika UTBK 12-B (Ruang Newton)</p>
+            <p class="text-[11px] text-light-on-surface-variant">18:00 - 19:30 WIB &bull; 14 Siswa</p>
+          </div>
+          <span class="text-xs text-light-on-surface-variant">Mulai 18:00</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- SESSION CONTEXT HEADER                                         -->
+    <!-- ============================================================== -->
+    <div class="p-4 bg-light-surface border-b border-light-outline-variant shadow-2xs">
+      
+      <!-- Session Badge Card -->
+      <div class="bg-gradient-to-br from-light-primary-container/60 via-light-surface-soft to-light-surface p-4 rounded-xl border border-light-primary/30 flex flex-col gap-2 relative">
+        <div class="flex items-center justify-between">
+          <span id="session-class-name" class="text-label-sm font-label text-brand-indigo font-bold flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[18px]">menu_book</span>
+            Matematika SMP Kelas 8-A
+          </span>
+          <span id="session-room" class="px-2 py-0.5 rounded-md text-[11px] font-mono bg-light-surface border border-light-outline-variant text-light-on-surface font-semibold">
+            Ruang Galileo
+          </span>
+        </div>
+
+        <p id="session-topic" class="text-body-sm font-bold text-light-on-surface leading-snug">
+          Materi: Sistem Persamaan Linear Dua Variabel (SPLDV) — Metode Eliminasi
+        </p>
+
+        <div class="flex items-center justify-between pt-2 border-t border-light-outline-variant/60 text-[12px] text-light-on-surface">
+          <span class="flex items-center gap-1 text-light-on-surface-variant">
+            <span class="material-symbols-outlined text-[16px] text-light-primary">person</span>
+            Tutor: <strong class="text-light-on-surface font-semibold">Kak Budi Pratama</strong>
+          </span>
+          <span class="flex items-center gap-1 text-light-on-surface-variant font-mono">
+            <span class="material-symbols-outlined text-[16px] text-light-primary">schedule</span>
+            Kamis, 16:00 - 17:30 WIB
+          </span>
+        </div>
+      </div>
+
+      <!-- Quick Attendance Summary Counters Bar (Real-Time Dynamic Sync) -->
+      <div class="grid grid-cols-5 gap-1.5 mt-3 text-center text-body-sm">
+        
+        <!-- Counter 1: Hadir -->
+        <div class="p-2 rounded-xl bg-success text-on-success flex flex-col justify-center shadow-2xs transition-transform active:scale-95">
+          <span id="count-present" class="font-bold font-headline text-title-lg leading-tight">6</span>
+          <span class="text-[10px] font-label font-semibold uppercase tracking-wider">Hadir</span>
+        </div>
+
+        <!-- Counter 2: Telat -->
+        <div class="p-2 rounded-xl bg-amber-500 text-white flex flex-col justify-center shadow-2xs transition-transform active:scale-95">
+          <span id="count-late" class="font-bold font-headline text-title-lg leading-tight">0</span>
+          <span class="text-[10px] font-label font-semibold uppercase tracking-wider">Telat</span>
+        </div>
+
+        <!-- Counter 3: Izin -->
+        <div class="p-2 rounded-xl bg-warning text-on-warning flex flex-col justify-center shadow-2xs transition-transform active:scale-95">
+          <span id="count-permission" class="font-bold font-headline text-title-lg leading-tight">1</span>
+          <span class="text-[10px] font-label font-semibold uppercase tracking-wider">Izin</span>
+        </div>
+
+        <!-- Counter 4: Sakit -->
+        <div class="p-2 rounded-xl bg-blue-600 text-white flex flex-col justify-center shadow-2xs transition-transform active:scale-95">
+          <span id="count-sick" class="font-bold font-headline text-title-lg leading-tight">1</span>
+          <span class="text-[10px] font-label font-semibold uppercase tracking-wider">Sakit</span>
+        </div>
+
+        <!-- Counter 5: Alpa -->
+        <div class="p-2 rounded-xl bg-danger text-on-danger flex flex-col justify-center shadow-2xs transition-transform active:scale-95">
+          <span id="count-absent" class="font-bold font-headline text-title-lg leading-tight">0</span>
+          <span class="text-[10px] font-label font-semibold uppercase tracking-wider">Alpa</span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- STUDENT ATTENDANCE ROSTER (MOBILE TOUCH TARGETS)                -->
+    <!-- ============================================================== -->
+    <main class="p-4 flex flex-col gap-3 flex-1">
+      
+      <!-- List Header Actions -->
+      <div class="flex items-center justify-between px-1">
+        <div>
+          <span id="roster-count-label" class="text-label-sm font-label text-light-on-surface font-bold uppercase tracking-wider">
+            Daftar Siswa (8 Rombel)
+          </span>
+          <span class="text-[11px] text-light-on-surface-variant block font-normal">Ketuk status untuk mengubah kehadiran</span>
+        </div>
+        <button 
+          type="button" 
+          onclick="markAllPresent()" 
+          class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark text-label-sm font-label font-bold shadow-2xs transition-colors min-h-[36px]">
+          <span class="material-symbols-outlined text-[16px]">done_all</span>
+          <span>Semua Hadir</span>
+        </button>
+      </div>
+
+      <!-- Roster Container -->
+      <div id="roster-container" class="space-y-3">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- TUTOR PEDAGOGIC & HOMEWORK NOTES                             -->
+      <!-- ============================================================ -->
+      <section class="p-4 rounded-2xl bg-light-surface border border-light-outline-variant shadow-2xs flex flex-col gap-3 mt-2">
+        <div class="flex items-center justify-between">
+          <label for="session-notes" class="text-label-sm font-label text-brand-indigo font-bold flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[18px]">edit_note</span>
+            Catatan Perkembangan Kelas &amp; PR
+          </label>
+          <span class="text-[11px] text-light-on-surface-variant font-medium">Auto-sync ke Wali Murid</span>
+        </div>
+
+        <textarea 
+          id="session-notes" 
+          rows="3" 
+          placeholder="Tuliskan materi bahasan, pemahaman siswa, kendala umum, dan tugas PR rumah..." 
+          class="w-full px-3.5 py-2.5 rounded-xl border border-light-outline text-body-sm text-light-on-surface bg-light-surface-soft focus:bg-light-surface focus:border-light-primary focus:ring-1 focus:ring-light-primary leading-relaxed transition-colors">Siswa antusias mengerjakan soal SPLDV metode eliminasi. Latihan hal 42 nomor 1-5 dijadikan PR mandiri.</textarea>
+        
+        <div class="flex items-center justify-between text-[11px] text-light-on-surface-variant pt-1">
+          <span class="flex items-center gap-1 text-success font-medium">
+            <span class="material-symbols-outlined text-[14px]">send</span>
+            Notifikasi WA akan dikirim otomatis ke orang tua
+          </span>
+          <span id="char-counter" class="font-mono text-light-outline">87/250</span>
+        </div>
+      </section>
+
+      <!-- Quick Guidance Box for Tutor -->
+      <div class="p-3.5 rounded-xl bg-light-primary-container/40 border border-light-primary/20 flex items-start gap-2.5 text-body-sm">
+        <span class="material-symbols-outlined text-light-primary text-[20px] shrink-0 mt-0.5">info</span>
+        <p class="text-[12px] text-light-on-primary-container leading-relaxed">
+          Tutor wajib mengonfirmasi presensi maksimal <strong>15 menit setelah sesi berakhir</strong> agar rekap honorarium dan pesan WhatsApp ke wali murid terbit tepat waktu.
+        </p>
+      </div>
+
+    </main>
+
+    <!-- ============================================================== -->
+    <!-- STICKY BOTTOM SAVE & SUBMIT BAR (MOBILE TOUCH OPTIMIZED)        -->
+    <!-- ============================================================== -->
+    <aside class="fixed bottom-0 left-0 right-0 z-50 bg-light-surface/95 backdrop-blur-md border-t border-light-outline-variant p-3 sm:p-4 shadow-xl pb-safe">
+      <div class="w-full max-w-xl mx-auto flex items-center gap-3">
+        
+        <!-- Cancel / Secondary -->
+        <a 
+          href="tutor-dashboard.html" 
+          class="px-4 py-3 rounded-xl border border-light-outline text-light-on-surface hover:bg-light-surface-container font-label text-body-md font-semibold transition-colors flex items-center justify-center min-h-[48px] shrink-0" 
+          title="Tutup Presensi">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </a>
+
+        <!-- Main Submit Button -->
+        <button 
+          type="button" 
+          id="btn-save-attendance" 
+          onclick="submitAttendance()" 
+          class="flex-1 py-3 px-4 rounded-xl bg-light-primary text-light-on-primary font-label text-label-lg font-bold shadow-sm hover:bg-brand-indigo-dark active:bg-brand-indigo-dark flex items-center justify-center gap-2 transition-all min-h-[48px]">
+          <span class="material-symbols-outlined text-[22px]">save</span>
+          <span>Simpan &amp; Kirim Presensi Sesi</span>
+        </button>
+
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL: KETERANGAN IZIN / SAKIT SISWA                           -->
+  <!-- ============================================================== -->
+  <div id="modal-reason" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+    <div class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-xl w-full max-w-sm overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-150">
+      
+      <div class="px-5 py-4 border-b border-light-outline-variant flex items-center justify-between bg-light-surface-soft">
+        <h3 id="modal-reason-title" class="font-headline font-bold text-title-md text-light-on-surface">Keterangan Izin / Sakit</h3>
+        <button type="button" onclick="closeReasonModal()" class="text-light-on-surface-variant hover:text-light-on-surface p-1 rounded-lg">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <div class="p-5 space-y-4">
+        <div>
+          <p id="modal-reason-student" class="font-bold text-body-md text-light-on-surface">Farhan Pratama</p>
+          <p class="text-[12px] text-light-on-surface-variant">Pilih alasan tidak hadir sesi tatap muka:</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <button type="button" onclick="applyQuickReason('Izin (Lomba Sekolah)')" class="p-2.5 text-left rounded-lg border border-light-outline hover:border-light-primary text-xs font-medium">Lomba Sekolah</button>
+          <button type="button" onclick="applyQuickReason('Izin (Acara Keluarga)')" class="p-2.5 text-left rounded-lg border border-light-outline hover:border-light-primary text-xs font-medium">Acara Keluarga</button>
+          <button type="button" onclick="applyQuickReason('Sakit (Demam / Flu)')" class="p-2.5 text-left rounded-lg border border-light-outline hover:border-light-primary text-xs font-medium">Demam / Flu</button>
+          <button type="button" onclick="applyQuickReason('Sakit (Surat Dokter)')" class="p-2.5 text-left rounded-lg border border-light-outline hover:border-light-primary text-xs font-medium">Surat Dokter</button>
+        </div>
+
+        <div>
+          <label for="custom-reason-input" class="block text-label-sm font-semibold text-light-on-surface mb-1">Catatan Tambahan</label>
+          <input 
+            type="text" 
+            id="custom-reason-input" 
+            placeholder="Contoh: Mengikuti seleksi OSN Matematika" 
+            class="w-full px-3 py-2 rounded-lg border border-light-outline text-body-sm bg-light-surface text-light-on-surface focus:border-light-primary min-h-[44px]">
+        </div>
+
+        <div class="flex items-center gap-2 pt-2">
+          <button 
+            type="button" 
+            onclick="closeReasonModal()" 
+            class="flex-1 py-2.5 rounded-lg border border-light-outline text-light-on-surface font-semibold text-body-sm min-h-[44px]">
+            Batal
+          </button>
+          <button 
+            type="button" 
+            onclick="saveReasonModal()" 
+            class="flex-1 py-2.5 rounded-lg bg-light-primary text-light-on-primary font-bold text-body-sm hover:bg-brand-indigo-dark min-h-[44px]">
+            Simpan Alasan
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- TOAST NOTIFICATION CONTAINER                                   -->
+  <!-- ============================================================== -->
+  <div id="toast-container" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 max-w-sm w-[90%] pointer-events-none"></div>
+
+  <!-- ============================================================== -->
+  <!-- JAVASCRIPT LOGIC & STATE ENGINE                                -->
+  <!-- ============================================================== -->
+  <script>
+    // Initial Student Dataset
+    const studentsData = [
+      {
+        id: 'STD-01',
+        name: 'Farhan Pratama',
+        school: 'SMPN 115 Jakarta',
+        program: 'Reguler',
+        initials: 'FP',
+        status: 'Hadir',
+        note: ''
+      },
+      {
+        id: 'STD-02',
+        name: 'Raihan Syahputra',
+        school: 'SMP Labschool Kebayoran',
+        program: 'Reguler',
+        initials: 'RS',
+        status: 'Hadir',
+        note: ''
+      },
+      {
+        id: 'STD-03',
+        name: 'Aqila Zahra',
+        school: 'SMP Tarakanita 1',
+        program: 'Reguler',
+        initials: 'AZ',
+        status: 'Izin',
+        note: 'Izin (Lomba Sekolah)'
+      },
+      {
+        id: 'STD-04',
+        name: 'Bima Aditya',
+        school: 'SMP Al-Azhar 1',
+        program: 'Reguler',
+        initials: 'BA',
+        status: 'Sakit',
+        note: 'Sakit (Demam / Flu)'
+      },
+      {
+        id: 'STD-05',
+        name: 'Clara Amanda',
+        school: 'SMPN 19 Jakarta',
+        program: 'Reguler',
+        initials: 'CA',
+        status: 'Hadir',
+        note: ''
+      },
+      {
+        id: 'STD-06',
+        name: 'Dimas Fakhri',
+        school: 'SMP Labschool Rawamangun',
+        program: 'Reguler',
+        initials: 'DF',
+        status: 'Hadir',
+        note: ''
+      },
+      {
+        id: 'STD-07',
+        name: 'Gita Safitri',
+        school: 'SMPN 115 Jakarta',
+        program: 'Reguler',
+        initials: 'GS',
+        status: 'Hadir',
+        note: ''
+      },
+      {
+        id: 'STD-08',
+        name: 'Haryo Wicaksono',
+        school: 'SMP Kanisius',
+        program: 'Reguler',
+        initials: 'HW',
+        status: 'Hadir',
+        note: ''
+      }
+    ];
+
+    let currentStudentForReason = null;
+    let pendingStatusForReason = null;
+
+    // Render Student Roster
+    function renderRoster() {
+      const container = document.getElementById('roster-container');
+      container.innerHTML = '';
+
+      studentsData.forEach(student => {
+        const card = document.createElement('div');
+        
+        let statusBadgeColor = 'bg-success text-on-success';
+        let borderColor = 'border-light-outline-variant';
+        
+        if (student.status === 'Telat') {
+          statusBadgeColor = 'bg-amber-500 text-white';
+          borderColor = 'border-amber-300';
+        } else if (student.status === 'Izin') {
+          statusBadgeColor = 'bg-warning text-on-warning';
+          borderColor = 'border-warning/60';
+        } else if (student.status === 'Sakit') {
+          statusBadgeColor = 'bg-blue-600 text-white';
+          borderColor = 'border-blue-400';
+        } else if (student.status === 'Alpa') {
+          statusBadgeColor = 'bg-danger text-on-danger';
+          borderColor = 'border-danger/60';
+        }
+
+        card.className = `p-3.5 rounded-2xl bg-light-surface border ${borderColor} shadow-2xs flex flex-col gap-2.5 transition-all`;
+
+        const statusLabel = student.note ? `${student.status} (${student.note.replace(/.*?\((.*?)\).*/, '$1')})` : student.status;
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-full ${student.status === 'Izin' || student.status === 'Sakit' ? 'bg-amber-100 text-brand-indigo' : 'bg-light-primary text-light-on-primary'} flex items-center justify-center text-label-sm font-bold shadow-2xs">
+                ${student.initials}
+              </div>
+              <div>
+                <p class="font-bold text-body-md text-light-on-surface leading-snug">${student.name}</p>
+                <p class="text-[11px] text-light-on-surface-variant">${student.school} &bull; ${student.program}</p>
+              </div>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-label font-bold ${statusBadgeColor} shadow-2xs">
+              ${statusLabel}
+            </span>
+          </div>
+
+          <!-- Segmented Status Switcher (5 Big Touch Targets >= 44px) -->
+          <div class="grid grid-cols-5 gap-1 pt-1">
+            <button 
+              type="button" 
+              onclick="setStatus('${student.id}', 'Hadir')" 
+              class="py-2.5 rounded-xl font-label text-[11px] font-bold min-h-[40px] flex items-center justify-center transition-all ${student.status === 'Hadir' ? 'bg-success text-on-success shadow-xs' : 'border border-light-outline text-light-on-surface hover:bg-light-surface-container'}">
+              Hadir
+            </button>
+            <button 
+              type="button" 
+              onclick="setStatus('${student.id}', 'Telat')" 
+              class="py-2.5 rounded-xl font-label text-[11px] font-bold min-h-[40px] flex items-center justify-center transition-all ${student.status === 'Telat' ? 'bg-amber-500 text-white shadow-xs' : 'border border-light-outline text-light-on-surface hover:bg-light-surface-container'}">
+              Telat
+            </button>
+            <button 
+              type="button" 
+              onclick="setStatus('${student.id}', 'Izin')" 
+              class="py-2.5 rounded-xl font-label text-[11px] font-bold min-h-[40px] flex items-center justify-center transition-all ${student.status === 'Izin' ? 'bg-warning text-on-warning shadow-xs' : 'border border-light-outline text-light-on-surface hover:bg-light-surface-container'}">
+              Izin
+            </button>
+            <button 
+              type="button" 
+              onclick="setStatus('${student.id}', 'Sakit')" 
+              class="py-2.5 rounded-xl font-label text-[11px] font-bold min-h-[40px] flex items-center justify-center transition-all ${student.status === 'Sakit' ? 'bg-blue-600 text-white shadow-xs' : 'border border-light-outline text-light-on-surface hover:bg-light-surface-container'}">
+              Sakit
+            </button>
+            <button 
+              type="button" 
+              onclick="setStatus('${student.id}', 'Alpa')" 
+              class="py-2.5 rounded-xl font-label text-[11px] font-bold min-h-[40px] flex items-center justify-center transition-all ${student.status === 'Alpa' ? 'bg-danger text-on-danger shadow-xs' : 'border border-light-outline text-light-on-surface hover:bg-light-surface-container'}">
+              Alpa
+            </button>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+
+      updateSummaryCounters();
+    }
+
+    // Update Attendance Counters
+    function updateSummaryCounters() {
+      let present = 0;
+      let late = 0;
+      let permission = 0;
+      let sick = 0;
+      let absent = 0;
+
+      studentsData.forEach(s => {
+        if (s.status === 'Hadir') present++;
+        else if (s.status === 'Telat') late++;
+        else if (s.status === 'Izin') permission++;
+        else if (s.status === 'Sakit') sick++;
+        else if (s.status === 'Alpa') absent++;
+      });
+
+      document.getElementById('count-present').textContent = present;
+      document.getElementById('count-late').textContent = late;
+      document.getElementById('count-permission').textContent = permission;
+      document.getElementById('count-sick').textContent = sick;
+      document.getElementById('count-absent').textContent = absent;
+
+      const total = studentsData.length;
+      document.getElementById('roster-count-label').textContent = `Daftar Siswa (${present}/${total} Hadir)`;
+    }
+
+    // Set Status Handler
+    function setStatus(id, newStatus) {
+      const student = studentsData.find(s => s.id === id);
+      if (!student) return;
+
+      if (newStatus === 'Izin' || newStatus === 'Sakit') {
+        currentStudentForReason = student;
+        pendingStatusForReason = newStatus;
+        openReasonModal(student, newStatus);
+      } else {
+        student.status = newStatus;
+        student.note = '';
+        renderRoster();
+      }
+    }
+
+    // Mark All Present Action
+    function markAllPresent() {
+      studentsData.forEach(s => {
+        s.status = 'Hadir';
+        s.note = '';
+      });
+      renderRoster();
+      showToast('Seluruh siswa berhasil ditandai HADIR!', 'success');
+    }
+
+    // Reason Modal Handling
+    function openReasonModal(student, status) {
+      document.getElementById('modal-reason-title').textContent = `Keterangan ${status}`;
+      document.getElementById('modal-reason-student').textContent = `${student.name} (${student.school})`;
+      document.getElementById('custom-reason-input').value = student.note || '';
+      document.getElementById('modal-reason').classList.remove('hidden');
+    }
+
+    function closeReasonModal() {
+      document.getElementById('modal-reason').classList.add('hidden');
+      currentStudentForReason = null;
+      pendingStatusForReason = null;
+    }
+
+    function applyQuickReason(reason) {
+      document.getElementById('custom-reason-input').value = reason;
+    }
+
+    function saveReasonModal() {
+      if (currentStudentForReason && pendingStatusForReason) {
+        currentStudentForReason.status = pendingStatusForReason;
+        currentStudentForReason.note = document.getElementById('custom-reason-input').value.trim() || pendingStatusForReason;
+        closeReasonModal();
+        renderRoster();
+      }
+    }
+
+    // Switch Session Drawer
+    function toggleSessionSelector() {
+      document.getElementById('session-switcher').classList.toggle('hidden');
+    }
+
+    function switchSession(code) {
+      if (code === 'SMA-12B') {
+        document.getElementById('session-class-name').innerHTML = '<span class="material-symbols-outlined text-[18px]">menu_book</span> Fisika UTBK 12-B';
+        document.getElementById('session-room').textContent = 'Ruang Newton';
+        document.getElementById('session-topic').textContent = 'Materi: Gelombang Bunyi & Efek Doppler — Persiapan UTBK 2026';
+        showToast('Beralih ke Sesi Fisika UTBK 12-B', 'info');
+      } else {
+        document.getElementById('session-class-name').innerHTML = '<span class="material-symbols-outlined text-[18px]">menu_book</span> Matematika SMP Kelas 8-A';
+        document.getElementById('session-room').textContent = 'Ruang Galileo';
+        document.getElementById('session-topic').textContent = 'Materi: Sistem Persamaan Linear Dua Variabel (SPLDV) — Metode Eliminasi';
+        showToast('Beralih ke Sesi Matematika SMP 8-A', 'info');
+      }
+      toggleSessionSelector();
+    }
+
+    // Submit Attendance Action
+    function submitAttendance() {
+      const btn = document.getElementById('btn-save-attendance');
+      const originalText = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<span class="material-symbols-outlined text-[20px] animate-spin">progress_activity</span><span>Menyimpan Presensi...</span>';
+
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+        showToast('Presensi sesi kelas berhasil disimpan! Laporan terkirim ke sistem & WhatsApp wali murid.', 'success');
+      }, 1000);
+    }
+
+    // Character Counter for Notes
+    const notesTextarea = document.getElementById('session-notes');
+    if (notesTextarea) {
+      notesTextarea.addEventListener('input', function() {
+        document.getElementById('char-counter').textContent = `${this.value.length}/250`;
+      });
+    }
+
+    // Toast Notification System
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      toast.className = `p-3.5 rounded-xl shadow-xl border text-body-sm font-medium flex items-center gap-2.5 pointer-events-auto transform transition-all duration-200 translate-y-[-10px] opacity-0 ${
+        type === 'success' 
+          ? 'bg-light-surface text-light-on-surface border-success border-l-4 border-l-success' 
+          : 'bg-light-surface text-light-on-surface border-brand-indigo border-l-4 border-l-brand-indigo'
+      }`;
+
+      const iconName = type === 'success' ? 'check_circle' : 'info';
+      const iconColor = type === 'success' ? 'text-success' : 'text-brand-indigo';
+
+      toast.innerHTML = `
+        <span class="material-symbols-outlined ${iconColor} text-[20px] shrink-0">${iconName}</span>
+        <span class="text-body-sm text-light-on-surface flex-1">${message}</span>
+        <button type="button" onclick="this.parentElement.remove()" class="text-light-on-surface-variant hover:text-light-on-surface p-1">
+          <span class="material-symbols-outlined text-[16px]">close</span>
+        </button>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-[-10px]', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-[-10px]');
+        setTimeout(() => toast.remove(), 250);
+      }, 4000);
+    }
+
+    // Initial render
+    document.addEventListener('DOMContentLoaded', () => {
+      renderRoster();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Manajemen Konten Website &amp; CMS — ARCI Bimbel</title>
+  
+  <!-- Tailwind CSS with Official Plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+  /** @type {import('tailwindcss').Config} */
+  globalThis.tailwind = globalThis.tailwind || {};
+  globalThis.tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          'accent': '#F6C453',
+          'on-accent': '#18212F',
+          'brand-indigo': '#243B7A',
+          'brand-indigo-dark': '#172653',
+          'success': '#1B7330',
+          'on-success': '#FFFFFF',
+          'warning': '#925B06',
+          'on-warning': '#FFFFFF',
+          'danger': '#B91C1C',
+          'on-danger': '#FFFFFF',
+          'light-primary': '#243B7A',
+          'light-on-primary': '#FFFFFF',
+          'light-primary-container': '#EBF0FA',
+          'light-on-primary-container': '#172653',
+          'light-surface': '#FFFFFF',
+          'light-on-surface': '#18212F',
+          'light-surface-soft': '#F8FAFC',
+          'light-surface-container-low': '#F1F5F9',
+          'light-surface-container': '#E2E8F0',
+          'light-on-surface-variant': '#475569',
+          'light-outline': '#94A3B8',
+          'light-outline-variant': '#CBD5E1',
+          'dark-primary': '#9BB3F0',
+          'dark-on-primary': '#0E1A3C',
+          'dark-primary-container': '#1E3166',
+          'dark-on-primary-container': '#D7E3FF',
+          'dark-surface': '#0F172A',
+          'dark-on-surface': '#F8FAFC',
+          'dark-surface-soft': '#1E293B',
+          'dark-surface-container-low': '#152033',
+          'dark-surface-container': '#1E293B',
+          'dark-on-surface-variant': '#CBD5E1',
+          'dark-outline': '#64748B',
+          'dark-outline-variant': '#475569',
+        },
+        borderRadius: {
+          'sm': '4px',
+          'DEFAULT': '8px',
+          'md': '10px',
+          'lg': '12px',
+          'xl': '16px',
+          '2xl': '20px',
+          'full': '9999px',
+        },
+        fontFamily: {
+          'display': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'headline': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'title': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'body': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'label': ['"Plus Jakarta Sans"', 'sans-serif'],
+        },
+        fontSize: {
+          'display-lg': ['48px', { lineHeight: '56px', letterSpacing: '-0.02em', fontWeight: '700' }],
+          'display-lg-mobile': ['32px', { lineHeight: '40px', letterSpacing: '-0.01em', fontWeight: '700' }],
+          'headline-lg': ['36px', { lineHeight: '44px', letterSpacing: '-0.01em', fontWeight: '700' }],
+          'headline-lg-mobile': ['26px', { lineHeight: '34px', letterSpacing: '0em', fontWeight: '700' }],
+          'headline-md': ['24px', { lineHeight: '32px', fontWeight: '600' }],
+          'headline-sm': ['20px', { lineHeight: '28px', fontWeight: '600' }],
+          'title-lg': ['18px', { lineHeight: '26px', fontWeight: '600' }],
+          'title-md': ['16px', { lineHeight: '24px', fontWeight: '600' }],
+          'body-lg': ['16px', { lineHeight: '24px', fontWeight: '400' }],
+          'body-md': ['14px', { lineHeight: '20px', fontWeight: '400' }],
+          'body-sm': ['12px', { lineHeight: '18px', fontWeight: '400' }],
+          'label-lg': ['14px', { lineHeight: '20px', fontWeight: '600' }],
+          'label-md': ['12px', { lineHeight: '16px', fontWeight: '600' }],
+          'label-sm': ['11px', { lineHeight: '14px', fontWeight: '500' }],
+        },
+      },
+    },
+  };
+  if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+  </script>
+
+  <!-- Typography & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+
+  <style>
+    .material-symbols-outlined, .material-symbols-rounded, .material-symbols-sharp, .material-icons {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      line-height: 1 !important;
+      box-sizing: content-box;
+      overflow: hidden;
+      white-space: nowrap;
+      direction: ltr;
+      vertical-align: middle;
+      font-size: 20px;
+    }
+    .pb-safe {
+      padding-bottom: env(safe-area-inset-bottom, 16px);
+    }
+  </style>
+</head>
+<body class="bg-light-surface-soft text-light-on-surface font-body antialiased min-h-screen flex flex-col lg:flex-row pb-safe">
+
+  <!-- Mobile Backdrop Overlay for Drawer -->
+  <div id="sidebar-overlay" onclick="toggleSidebar(false)" class="hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-xs transition-opacity lg:hidden"></div>
+
+  <!-- Desktop Fixed & Mobile Slide-Out Sidebar Navigation -->
+  <aside id="sidebar-nav" class="fixed inset-y-0 left-0 z-50 w-64 bg-light-surface border-r border-light-outline-variant flex flex-col justify-between shrink-0 transform -translate-x-full transition-transform duration-200 lg:translate-x-0 lg:static lg:h-screen lg:sticky lg:top-0">
+    <div class="flex flex-col flex-1 overflow-y-auto">
+      
+      <!-- Brand Header -->
+      <div class="h-16 lg:h-20 px-5 lg:px-6 flex items-center justify-between border-b border-light-outline-variant shrink-0">
+        <a href="dashboard.html" class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-light-primary flex items-center justify-center text-light-on-primary font-headline font-bold text-headline-sm shadow-xs">
+            A
+          </div>
+          <div class="flex flex-col">
+            <span class="font-headline font-bold text-title-md tracking-tight text-brand-indigo">ARCI Bimbel</span>
+            <span class="text-[11px] text-light-on-surface-variant font-label">Dashboard Operasional</span>
+          </div>
+        </a>
+
+        <!-- Mobile Drawer Close Button -->
+        <button type="button" onclick="toggleSidebar(false)" class="lg:hidden p-1.5 rounded-lg text-light-on-surface-variant hover:bg-light-surface-container" aria-label="Tutup Menu">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="p-3.5 lg:p-4 flex flex-col gap-1">
+        <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">dashboard</span>
+          <span>Ringkasan</span>
+        </a>
+
+        <a href="leads.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">person_search</span>
+            <span>Lead &amp; Pipeline</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">8</span>
+        </a>
+
+        <a href="verifikasi-pendaftaran.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">how_to_reg</span>
+            <span>Pendaftaran</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">3</span>
+        </a>
+
+        <a href="students.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">school</span>
+            <span>Siswa &amp; Wali</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">184</span>
+        </a>
+
+        <a href="classes.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">class</span>
+          <span>Program &amp; Kelas</span>
+        </a>
+
+        <a href="schedule.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">calendar_month</span>
+          <span>Jadwal Sesi</span>
+        </a>
+
+        <a href="attendance.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">fact_check</span>
+          <span>Presensi Siswa</span>
+        </a>
+
+        <a href="finance.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">payments</span>
+            <span>Tagihan &amp; Kas</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-warning text-on-warning font-bold">Rp</span>
+        </a>
+
+        <a href="reports.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">analytics</span>
+          <span>Laporan KPI</span>
+        </a>
+
+        <!-- Active Menu: Konten Website (CMS) -->
+        <a href="cms.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-light-primary text-light-on-primary font-label text-body-md shadow-xs transition-colors">
+          <span class="material-symbols-outlined text-[20px] text-accent">article</span>
+          <span class="font-semibold">Konten Website</span>
+        </a>
+
+        <a href="communications.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">campaign</span>
+          <span>Pengumuman</span>
+        </a>
+
+        <a href="settings.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">admin_panel_settings</span>
+          <span>Hak Akses</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- User Profile Footer -->
+    <div class="p-3.5 lg:p-4 border-t border-light-outline-variant shrink-0 bg-light-surface">
+      <div class="flex items-center justify-between p-2 rounded-lg hover:bg-light-surface-container transition-colors">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-light-primary text-light-on-primary flex items-center justify-center font-bold font-headline text-body-md shadow-2xs">
+            RM
+          </div>
+          <div class="flex flex-col">
+            <span class="text-body-sm font-semibold text-light-on-surface">Rian Maulana</span>
+            <span class="text-[11px] text-light-on-surface-variant">Admin Konten &amp; Web</span>
+          </div>
+        </div>
+        <a href="login-admin.html" title="Keluar / Logout" class="p-1.5 rounded-md text-light-on-surface-variant hover:text-danger hover:bg-danger/10 transition-colors">
+          <span class="material-symbols-outlined text-[18px]">logout</span>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div class="flex-1 flex flex-col min-w-0">
+    
+    <!-- Top Utility Bar (App Shell) -->
+    <header class="h-16 lg:h-20 bg-light-surface border-b border-light-outline-variant px-4 sm:px-6 lg:px-8 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
+      <div class="flex items-center gap-3 sm:gap-4 flex-1 max-w-md">
+        <!-- Mobile Drawer Toggle -->
+        <button type="button" onclick="toggleSidebar(true)" class="lg:hidden w-10 h-10 rounded-lg border border-light-outline flex items-center justify-center text-light-on-surface hover:bg-light-surface-container shrink-0" aria-label="Buka Menu Navigasi">
+          <span class="material-symbols-outlined text-[22px]">menu</span>
+        </button>
+
+        <div class="relative w-full">
+          <span class="material-symbols-outlined absolute left-3 top-2.5 text-light-on-surface-variant text-[20px]">search</span>
+          <input 
+            type="search" 
+            id="cms-search"
+            oninput="handleSearch(this.value)"
+            placeholder="Cari judul artikel, testimoni, banner hero, atau FAQ..." 
+            class="w-full pl-10 pr-4 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface text-light-on-surface placeholder:text-light-on-surface-variant">
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3 ml-2">
+        <a href="index.html" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container font-label text-body-sm sm:text-body-md font-semibold transition-colors shadow-2xs">
+          <span class="material-symbols-outlined text-[18px] text-light-on-surface-variant">open_in_new</span>
+          <span class="hidden md:inline">Lihat Web Publik</span>
+          <span class="md:hidden">Web</span>
+        </a>
+        <button type="button" onclick="openNewContentModal()" class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm sm:text-body-md font-semibold shadow-xs transition-colors whitespace-nowrap min-h-[40px]">
+          <span class="material-symbols-outlined text-[18px]">add</span>
+          <span>Buat Konten Baru</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- CMS Content Viewport -->
+    <main class="p-4 sm:p-6 lg:p-8 flex-1 flex flex-col gap-6">
+      
+      <!-- Top Title and Section Navigation -->
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 bg-light-surface p-5 rounded-2xl border border-light-outline-variant shadow-xs">
+        <div>
+          <div class="flex items-center gap-2 text-label-sm text-light-on-surface-variant">
+            <span>Website Profil</span>
+            <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+            <span class="font-semibold text-light-primary">CMS Konten Publik (W1)</span>
+          </div>
+          <h1 class="text-headline-sm sm:text-headline-md font-headline font-bold text-light-on-surface mt-1">
+            Manajemen Konten &amp; Publikasi Website
+          </h1>
+          <p class="text-body-sm text-light-on-surface-variant mt-0.5">
+            Kelola banner promo, artikel tips belajar, testimoni siswa, profil pengajar, dan FAQ tanpa ubah kode.
+          </p>
+        </div>
+
+        <!-- CMS Tab Navigation -->
+        <div class="inline-flex p-1 bg-light-surface-container rounded-xl shrink-0 overflow-x-auto shadow-2xs">
+          <button type="button" id="tab-articles" onclick="switchCmsTab('articles')" class="px-3.5 py-1.5 rounded-lg text-body-sm font-semibold bg-light-surface text-light-primary shadow-xs whitespace-nowrap transition-all">Artikel &amp; Berita</button>
+          <button type="button" id="tab-testimonials" onclick="switchCmsTab('testimonials')" class="px-3.5 py-1.5 rounded-lg text-body-sm font-label text-light-on-surface-variant hover:text-light-on-surface whitespace-nowrap transition-all">Testimoni</button>
+          <button type="button" id="tab-banners" onclick="switchCmsTab('banners')" class="px-3.5 py-1.5 rounded-lg text-body-sm font-label text-light-on-surface-variant hover:text-light-on-surface whitespace-nowrap transition-all">Banner Promo</button>
+          <button type="button" id="tab-faqs" onclick="switchCmsTab('faqs')" class="px-3.5 py-1.5 rounded-lg text-body-sm font-label text-light-on-surface-variant hover:text-light-on-surface whitespace-nowrap transition-all">FAQ</button>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Bar (4 Cards) -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" aria-label="Metrik Konten Website">
+        <div class="bg-light-surface p-4 rounded-xl border border-light-outline-variant shadow-xs flex items-center justify-between">
+          <div>
+            <div class="text-label-sm text-light-on-surface-variant font-medium">Total Konten Terbit</div>
+            <div class="text-headline-sm font-bold text-brand-indigo mt-0.5">24 Artikel</div>
+          </div>
+          <span class="material-symbols-outlined text-success text-[28px]">published_with_changes</span>
+        </div>
+
+        <div class="bg-light-surface p-4 rounded-xl border border-light-outline-variant shadow-xs flex items-center justify-between">
+          <div>
+            <div class="text-label-sm text-light-on-surface-variant font-medium">Draft Menunggu Review</div>
+            <div class="text-headline-sm font-bold text-warning mt-0.5">3 Draft</div>
+          </div>
+          <span class="material-symbols-outlined text-warning text-[28px]">edit_document</span>
+        </div>
+
+        <div class="bg-light-surface p-4 rounded-xl border border-light-outline-variant shadow-xs flex items-center justify-between">
+          <div>
+            <div class="text-label-sm text-light-on-surface-variant font-medium">Testimoni Terverifikasi</div>
+            <div class="text-headline-sm font-bold text-light-on-surface mt-0.5">18 Siswa/Wali</div>
+          </div>
+          <span class="material-symbols-outlined text-light-primary text-[28px]">format_quote</span>
+        </div>
+
+        <div class="bg-light-surface p-4 rounded-xl border border-light-outline-variant shadow-xs flex items-center justify-between">
+          <div>
+            <div class="text-label-sm text-light-on-surface-variant font-medium">Status SEO Sitemap</div>
+            <div class="text-headline-sm font-bold text-success mt-0.5">100% Valid</div>
+          </div>
+          <span class="material-symbols-outlined text-success text-[28px]">task_alt</span>
+        </div>
+      </section>
+
+      <!-- Main Layout: Content Table & Editor/Inspector Sidebar -->
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+        
+        <!-- Left: Content Articles Table (8 Columns) -->
+        <div class="xl:col-span-8 bg-light-surface rounded-2xl border border-light-outline-variant shadow-xs overflow-hidden flex flex-col">
+          <div class="p-4 sm:p-5 border-b border-light-outline-variant flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 id="table-title" class="font-headline font-bold text-title-md text-light-on-surface">Daftar Artikel &amp; Panduan Belajar</h2>
+              <p id="table-subtitle" class="text-body-sm text-light-on-surface-variant mt-0.5">Dipublikasikan di landing page publik untuk edukasi calon siswa dan optimasi SEO.</p>
+            </div>
+            
+            <div class="flex items-center gap-2">
+              <select onchange="filterStatus(this.value)" class="text-body-sm border border-light-outline rounded-lg px-2.5 py-1.5 bg-light-surface text-light-on-surface font-medium">
+                <option value="all">Semua Status</option>
+                <option value="published">Terbit (Live)</option>
+                <option value="draft">Draft</option>
+                <option value="archived">Arsip</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-body-sm">
+              <thead>
+                <tr class="bg-light-surface-container border-b border-light-outline-variant text-label-sm font-bold text-light-on-surface">
+                  <th class="p-4">JUDUL &amp; SLUG ARTIKEL</th>
+                  <th class="p-4">KATEGORI</th>
+                  <th class="p-4 text-center">STATUS</th>
+                  <th class="p-4 text-center">PEMBACA</th>
+                  <th class="p-4 text-right">AKSI</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-light-outline-variant" id="articles-tbody">
+                
+                <!-- Article 1 (Selected/Live) -->
+                <tr id="row-art-1" onclick="selectArticle('art-1')" class="bg-light-primary-container/20 border-l-4 border-light-primary hover:bg-light-primary-container/30 cursor-pointer transition-colors">
+                  <td class="p-4">
+                    <div class="flex items-start gap-3">
+                      <div class="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center shrink-0 border border-blue-200">
+                        <span class="material-symbols-outlined text-blue-700 text-[22px]">newspaper</span>
+                      </div>
+                      <div>
+                        <div class="font-bold text-brand-indigo">Strategi Lolos SNBT UTBK 2026: Bedah Subtes TPS &amp; Penalaran</div>
+                        <div class="text-[11px] text-light-on-surface-variant mt-0.5 font-mono">/artikel/strategi-lolos-snbt-utbk-2026</div>
+                        <div class="text-[11px] text-light-on-surface-variant mt-1">Ditulis: Budi Pratama, S.Si • 14 Nov 2026</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="p-4">
+                    <span class="px-2.5 py-0.5 rounded-full text-label-sm font-semibold bg-blue-100 text-blue-800">Tips Ujian</span>
+                  </td>
+                  <td class="p-4 text-center">
+                    <span class="px-2.5 py-1 rounded-full text-label-sm font-bold bg-success/15 text-success">Terbit</span>
+                  </td>
+                  <td class="p-4 text-center font-bold text-light-on-surface">1,420 View</td>
+                  <td class="p-4 text-right">
+                    <button type="button" onclick="event.stopPropagation(); editArticle('art-1')" class="px-3 py-1 rounded-lg border border-light-outline hover:bg-light-surface-container text-light-primary font-semibold text-body-sm whitespace-nowrap shadow-2xs transition-colors">
+                      Edit
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Article 2 -->
+                <tr id="row-art-2" onclick="selectArticle('art-2')" class="hover:bg-light-surface-soft cursor-pointer transition-colors">
+                  <td class="p-4">
+                    <div class="flex items-start gap-3">
+                      <div class="w-12 h-12 rounded-lg bg-emerald-100 flex items-center justify-center shrink-0 border border-emerald-200">
+                        <span class="material-symbols-outlined text-emerald-700 text-[22px]">school</span>
+                      </div>
+                      <div>
+                        <div class="font-bold text-light-on-surface">Cara Menghitung Nilai Rapor untuk Jalur SNBP PTN Impian</div>
+                        <div class="text-[11px] text-light-on-surface-variant mt-0.5 font-mono">/artikel/cara-hitung-nilai-rapor-snbp</div>
+                        <div class="text-[11px] text-light-on-surface-variant mt-1">Ditulis: Tim Akademik • 10 Nov 2026</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="p-4">
+                    <span class="px-2.5 py-0.5 rounded-full text-label-sm font-semibold bg-emerald-100 text-emerald-800">SNBP &amp; PTN</span>
+                  </td>
+                  <td class="p-4 text-center">
+                    <span class="px-2.5 py-1 rounded-full text-label-sm font-bold bg-success/15 text-success">Terbit</span>
+                  </td>
+                  <td class="p-4 text-center font-bold text-light-on-surface">980 View</td>
+                  <td class="p-4 text-right">
+                    <button type="button" onclick="event.stopPropagation(); editArticle('art-2')" class="px-3 py-1 rounded-lg border border-light-outline hover:bg-light-surface-container text-light-primary font-semibold text-body-sm whitespace-nowrap shadow-2xs transition-colors">
+                      Edit
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Article 3 (Draft) -->
+                <tr id="row-art-3" onclick="selectArticle('art-3')" class="hover:bg-light-surface-soft cursor-pointer transition-colors">
+                  <td class="p-4">
+                    <div class="flex items-start gap-3">
+                      <div class="w-12 h-12 rounded-lg bg-amber-100 flex items-center justify-center shrink-0 border border-amber-200">
+                        <span class="material-symbols-outlined text-amber-700 text-[22px]">edit_note</span>
+                      </div>
+                      <div>
+                        <div class="font-bold text-light-on-surface">Jadwal Tryout Akbar Nasional ARCI Bimbel Periode Desember 2026</div>
+                        <div class="text-[11px] text-light-on-surface-variant mt-0.5 font-mono">/artikel/tryout-akbar-desember-2026</div>
+                        <div class="text-[11px] text-light-on-surface-variant mt-1">Ditulis: Rian Maulana • Draft disimpan 2 jam lalu</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="p-4">
+                    <span class="px-2.5 py-0.5 rounded-full text-label-sm font-semibold bg-amber-100 text-amber-800">Pengumuman</span>
+                  </td>
+                  <td class="p-4 text-center">
+                    <span class="px-2.5 py-1 rounded-full text-label-sm font-bold bg-warning/20 text-warning">Draft</span>
+                  </td>
+                  <td class="p-4 text-center text-light-on-surface-variant">-</td>
+                  <td class="p-4 text-right">
+                    <button type="button" onclick="event.stopPropagation(); editArticle('art-3')" class="px-3 py-1 rounded-lg border border-light-outline hover:bg-light-surface-container text-light-primary font-semibold text-body-sm whitespace-nowrap shadow-2xs transition-colors">
+                      Edit
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Article 4 -->
+                <tr id="row-art-4" onclick="selectArticle('art-4')" class="hover:bg-light-surface-soft cursor-pointer transition-colors">
+                  <td class="p-4">
+                    <div class="flex items-start gap-3">
+                      <div class="w-12 h-12 rounded-lg bg-purple-100 flex items-center justify-center shrink-0 border border-purple-200">
+                        <span class="material-symbols-outlined text-purple-700 text-[22px]">psychology</span>
+                      </div>
+                      <div>
+                        <div class="font-bold text-light-on-surface">5 Kebiasaan Belajar Efektif Siswa Juara Olimpiade Sains</div>
+                        <div class="text-[11px] text-light-on-surface-variant mt-0.5 font-mono">/artikel/5-kebiasaan-belajar-efektif</div>
+                        <div class="text-[11px] text-light-on-surface-variant mt-1">Ditulis: Siti Nurhaliza, M.Pd • 28 Okt 2026</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="p-4">
+                    <span class="px-2.5 py-0.5 rounded-full text-label-sm font-semibold bg-purple-100 text-purple-800">Motivasi</span>
+                  </td>
+                  <td class="p-4 text-center">
+                    <span class="px-2.5 py-1 rounded-full text-label-sm font-bold bg-success/15 text-success">Terbit</span>
+                  </td>
+                  <td class="p-4 text-center font-bold text-light-on-surface">2,340 View</td>
+                  <td class="p-4 text-right">
+                    <button type="button" onclick="event.stopPropagation(); editArticle('art-4')" class="px-3 py-1 rounded-lg border border-light-outline hover:bg-light-surface-container text-light-primary font-semibold text-body-sm whitespace-nowrap shadow-2xs transition-colors">
+                      Edit
+                    </button>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <div class="p-4 bg-light-surface-container border-t border-light-outline-variant flex items-center justify-between text-body-sm text-light-on-surface-variant">
+            <span>Menampilkan 4 dari 27 total konten artikel</span>
+            <div class="flex items-center gap-2">
+              <button type="button" class="px-3 py-1 rounded border border-light-outline text-body-sm bg-light-surface font-semibold text-light-on-surface shadow-2xs">1</button>
+              <button type="button" class="px-3 py-1 rounded border border-light-outline text-body-sm hover:bg-light-surface text-light-on-surface transition-colors">2</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Inspector & SEO Metadata Preview (4 Columns) -->
+        <div class="xl:col-span-4 flex flex-col gap-5">
+          
+          <!-- Article Inspector Panel -->
+          <div class="bg-light-surface rounded-2xl border border-light-outline-variant p-5 sm:p-6 shadow-xs flex flex-col gap-4 sticky top-24">
+            <div class="flex items-center justify-between border-b border-light-outline-variant pb-3">
+              <h3 class="font-headline font-bold text-title-md text-light-on-surface whitespace-nowrap">Inspektor Konten</h3>
+              <span id="inspector-status-badge" class="px-2.5 py-0.5 rounded-full text-label-sm font-bold bg-success/15 text-success">Live</span>
+            </div>
+
+            <!-- SEO Preview Card -->
+            <div class="p-4 bg-light-surface-soft rounded-xl border border-light-outline-variant flex flex-col gap-1.5 shadow-2xs">
+              <span class="text-label-sm font-bold text-light-primary uppercase tracking-wider">Pratinjau Hasil Pencarian Google:</span>
+              <div id="seo-preview-title" class="text-body-sm font-semibold text-blue-700 hover:underline cursor-pointer">
+                Strategi Lolos SNBT UTBK 2026: Bedah Subtes TPS &amp; Penalaran | ARCI Bimbel
+              </div>
+              <div id="seo-preview-url" class="text-[11px] text-emerald-700 font-mono">https://arcibimbel.id/artikel/strategi-lolos-snbt-utbk-2026</div>
+              <p id="seo-preview-desc" class="text-[12px] text-light-on-surface-variant line-clamp-2 mt-0.5">
+                Simak tips belajar intensif menghadapi UTBK SNBT 2026 bersama mentor berpengalaman ARCI Bimbel. Pembahasan lengkap kisi-kisi TPS dan kuantitatif.
+              </p>
+            </div>
+
+            <!-- Quick Form Metadata -->
+            <div class="flex flex-col gap-3 text-body-sm">
+              <div>
+                <label for="inp-article-title" class="block text-label-sm font-semibold text-light-on-surface mb-1">Judul Artikel Halaman</label>
+                <input type="text" id="inp-article-title" value="Strategi Lolos SNBT UTBK 2026: Bedah Subtes TPS &amp; Penalaran" class="w-full px-3 py-2 rounded-lg border border-light-outline text-body-sm bg-light-surface text-light-on-surface focus:border-light-primary focus:ring-1 focus:ring-light-primary">
+              </div>
+
+              <div>
+                <label for="sel-article-cat" class="block text-label-sm font-semibold text-light-on-surface mb-1">Kategori Konten</label>
+                <select id="sel-article-cat" class="w-full px-3 py-2 rounded-lg border border-light-outline text-body-sm bg-light-surface text-light-on-surface">
+                  <option value="tips" selected>Tips Ujian &amp; Belajar</option>
+                  <option value="snbp">Informasi SNBP / SNBT</option>
+                  <option value="berita">Berita Lembaga</option>
+                  <option value="motivasi">Motivasi Belajar</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-label-sm font-semibold text-light-on-surface mb-1">Gambar Utama (Featured Image)</label>
+                <div class="flex items-center gap-3 p-2 bg-light-surface-container rounded-lg">
+                  <div class="w-12 h-10 rounded bg-light-primary/20 flex items-center justify-center shrink-0 border border-light-outline text-light-primary">
+                    <span class="material-symbols-outlined text-[20px]">image</span>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div id="img-filename" class="text-body-sm font-semibold truncate text-light-on-surface">hero_tutoring.jpg</div>
+                    <div class="text-[11px] text-light-on-surface-variant">1920x1080 • 240 KB</div>
+                  </div>
+                  <button type="button" onclick="showToast('Pilih file gambar baru dari perangkat...', 'info')" class="text-light-primary text-body-sm font-semibold hover:underline">Ganti</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="flex flex-col gap-2 pt-2 border-t border-light-outline-variant">
+              <button type="button" onclick="saveContentUpdate()" class="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-md font-semibold shadow-xs transition-colors">
+                <span class="material-symbols-outlined text-[18px]">save</span>
+                <span>Simpan &amp; Perbarui Konten</span>
+              </button>
+              <div class="grid grid-cols-2 gap-2">
+                <a href="index.html" target="_blank" class="inline-flex items-center justify-center gap-1.5 py-2 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container font-label text-body-sm font-semibold transition-colors shadow-2xs">
+                  <span class="material-symbols-outlined text-[16px]">visibility</span>
+                  <span>Pratinjau</span>
+                </a>
+                <button type="button" onclick="archiveCurrentContent()" class="inline-flex items-center justify-center gap-1.5 py-2 rounded-lg border border-danger/40 text-danger hover:bg-danger/10 font-label text-body-sm font-semibold transition-colors shadow-2xs">
+                  <span class="material-symbols-outlined text-[16px]">archive</span>
+                  <span>Arsipkan</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Announcement & Banner Widget -->
+          <div class="bg-light-surface rounded-2xl border border-light-outline-variant p-5 shadow-xs flex flex-col gap-3">
+            <h4 class="font-headline font-bold text-title-md text-light-on-surface flex items-center justify-between">
+              <span>Banner Promo Beranda Aktif</span>
+              <span id="banner-status-badge" class="text-label-sm font-bold text-success">Aktif</span>
+            </h4>
+            <div id="promo-banner-card" class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-body-sm shadow-2xs">
+              <div id="promo-banner-title" class="font-bold text-amber-900">Promo Early Bird SNBT 2026</div>
+              <p id="promo-banner-desc" class="text-amber-800 text-[12px] mt-0.5">Diskon 25% + Gratis 5x Sesi Tryout Simulasi. Berakhir 30 Nov 2026.</p>
+              <div class="mt-2 flex items-center gap-2">
+                <button type="button" onclick="openPromoModal()" class="text-[11px] font-bold text-amber-900 underline">Ubah Promo</button>
+                <span class="text-amber-800">•</span>
+                <button type="button" onclick="togglePromoBanner()" class="text-[11px] font-bold text-amber-900 underline">Nonaktifkan</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 1: BUAT KONTEN BARU (CMS W1)                            -->
+  <!-- ============================================================== -->
+  <div id="modal-new-content" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+    <div class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-2xl max-w-xl w-full overflow-hidden flex flex-col max-h-[92vh]">
+      <div class="px-6 py-4 border-b border-light-outline-variant flex items-center justify-between bg-light-surface-soft">
+        <div class="flex items-center gap-2 text-brand-indigo">
+          <span class="material-symbols-outlined text-[22px]">add_box</span>
+          <h3 class="font-headline font-bold text-title-md text-light-on-surface">Buat Konten Baru</h3>
+        </div>
+        <button type="button" onclick="closeNewContentModal()" class="text-light-on-surface-variant hover:text-light-on-surface p-1 rounded-lg hover:bg-light-surface-container">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <form id="form-new-content" onsubmit="submitNewContent(event)" class="p-6 overflow-y-auto space-y-4">
+        <div>
+          <label for="new-content-title" class="block text-body-sm font-semibold text-light-on-surface mb-1">Judul Artikel / Halaman *</label>
+          <input type="text" id="new-content-title" required placeholder="Contoh: Kiat Sukses Tembus Kedokteran UI Lewat Jalur SNBT" oninput="autoGenerateSlug(this.value)" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="new-content-category" class="block text-body-sm font-semibold text-light-on-surface mb-1">Kategori *</label>
+            <select id="new-content-category" required class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">
+              <option value="Tips Ujian">Tips Ujian &amp; Belajar</option>
+              <option value="SNBP & PTN">Info SNBP &amp; PTN</option>
+              <option value="Pengumuman">Pengumuman &amp; Event</option>
+              <option value="Motivasi">Motivasi &amp; Prestasi</option>
+            </select>
+          </div>
+          <div>
+            <label for="new-content-author" class="block text-body-sm font-semibold text-light-on-surface mb-1">Penulis *</label>
+            <input type="text" id="new-content-author" required value="Rian Maulana" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">
+          </div>
+        </div>
+
+        <div>
+          <label for="new-content-slug" class="block text-body-sm font-semibold text-light-on-surface mb-1">Slug URL (SEO Friendly) *</label>
+          <div class="flex items-center rounded-lg border border-light-outline overflow-hidden bg-light-surface">
+            <span class="px-3 py-2 bg-light-surface-container text-body-sm text-light-on-surface-variant font-mono">/artikel/</span>
+            <input type="text" id="new-content-slug" required placeholder="kiat-sukses-tembus-kedokteran-ui" class="w-full px-3 py-2 border-none text-body-sm font-mono text-light-on-surface focus:ring-0">
+          </div>
+        </div>
+
+        <div>
+          <label for="new-content-excerpt" class="block text-body-sm font-semibold text-light-on-surface mb-1">Ringkasan Meta Deskripsi (Google Snippet) *</label>
+          <textarea id="new-content-excerpt" required rows="2" placeholder="Tuliskan 1-2 kalimat ringkasan yang menarik untuk ditampilkan di Google SERP..." class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface"></textarea>
+        </div>
+
+        <div>
+          <label for="new-content-body" class="block text-body-sm font-semibold text-light-on-surface mb-1">Isi Konten Artikel *</label>
+          <textarea id="new-content-body" required rows="5" placeholder="Tuliskan isi artikel lengkap di sini. Mendukung pemformatan markdown..." class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface"></textarea>
+        </div>
+
+        <div class="pt-3 border-t border-light-outline-variant flex items-center justify-end gap-3">
+          <button type="button" onclick="closeNewContentModal()" class="px-4 py-2 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container text-body-sm font-semibold">
+            Batal
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm font-bold shadow-xs">
+            Publikasikan Konten
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 2: UBAH BANNER PROMO                                     -->
+  <!-- ============================================================== -->
+  <div id="modal-promo" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+    <div class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-2xl max-w-md w-full overflow-hidden flex flex-col">
+      <div class="px-6 py-4 border-b border-light-outline-variant flex items-center justify-between bg-light-surface-soft">
+        <div class="flex items-center gap-2 text-brand-indigo">
+          <span class="material-symbols-outlined text-[22px]">campaign</span>
+          <h3 class="font-headline font-bold text-title-md text-light-on-surface">Ubah Banner Promo Beranda</h3>
+        </div>
+        <button type="button" onclick="closePromoModal()" class="text-light-on-surface-variant hover:text-light-on-surface p-1 rounded-lg hover:bg-light-surface-container">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <form id="form-promo" onsubmit="submitPromo(event)" class="p-6 space-y-4">
+        <div>
+          <label for="inp-promo-title" class="block text-body-sm font-semibold text-light-on-surface mb-1">Judul Promo *</label>
+          <input type="text" id="inp-promo-title" required value="Promo Early Bird SNBT 2026" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">
+        </div>
+
+        <div>
+          <label for="inp-promo-desc" class="block text-body-sm font-semibold text-light-on-surface mb-1">Teks Penjelasan *</label>
+          <textarea id="inp-promo-desc" required rows="2" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">Diskon 25% + Gratis 5x Sesi Tryout Simulasi. Berakhir 30 Nov 2026.</textarea>
+        </div>
+
+        <div>
+          <label for="inp-promo-deadline" class="block text-body-sm font-semibold text-light-on-surface mb-1">Batas Waktu Promo *</label>
+          <input type="date" id="inp-promo-deadline" value="2026-11-30" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">
+        </div>
+
+        <div class="pt-3 border-t border-light-outline-variant flex items-center justify-end gap-3">
+          <button type="button" onclick="closePromoModal()" class="px-4 py-2 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container text-body-sm font-semibold">
+            Batal
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm font-bold shadow-xs">
+            Perbarui Banner
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-full"></div>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    const articlesData = {
+      'art-1': {
+        title: 'Strategi Lolos SNBT UTBK 2026: Bedah Subtes TPS & Penalaran',
+        slug: '/artikel/strategi-lolos-snbt-utbk-2026',
+        cat: 'tips',
+        status: 'Live',
+        desc: 'Simak tips belajar intensif menghadapi UTBK SNBT 2026 bersama mentor berpengalaman ARCI Bimbel. Pembahasan lengkap kisi-kisi TPS dan kuantitatif.',
+        author: 'Budi Pratama, S.Si',
+        img: 'hero_tutoring.jpg'
+      },
+      'art-2': {
+        title: 'Cara Menghitung Nilai Rapor untuk Jalur SNBP PTN Impian',
+        slug: '/artikel/cara-hitung-nilai-rapor-snbp',
+        cat: 'snbp',
+        status: 'Live',
+        desc: 'Panduan lengkap eligible SNBP: kalibrasi nilai rapor semester 1-5, indeks sekolah, dan portofolio prestasi pendukung kelulusan.',
+        author: 'Tim Akademik',
+        img: 'snbp_guide.jpg'
+      },
+      'art-3': {
+        title: 'Jadwal Tryout Akbar Nasional ARCI Bimbel Periode Desember 2026',
+        slug: '/artikel/tryout-akbar-desember-2026',
+        cat: 'berita',
+        status: 'Draft',
+        desc: 'Daftarkan diri Anda pada simulasi UTBK online dan offline dengan sistem penilaian IRT resmi panitia SNPMB.',
+        author: 'Rian Maulana',
+        img: 'tryout_banner.jpg'
+      },
+      'art-4': {
+        title: '5 Kebiasaan Belajar Efektif Siswa Juara Olimpiade Sains',
+        slug: '/artikel/5-kebiasaan-belajar-efektif',
+        cat: 'motivasi',
+        status: 'Live',
+        desc: 'Kupas tuntas manajemen waktu teknik Pomodoro, active recall, dan Feynman technique yang dipraktikkan alumni peraih medali OSN.',
+        author: 'Siti Nurhaliza, M.Pd',
+        img: 'study_tips.jpg'
+      }
+    };
+
+    let selectedArtId = 'art-1';
+
+    function selectArticle(id) {
+      const art = articlesData[id];
+      if (!art) return;
+
+      selectedArtId = id;
+
+      // Update highlighted rows
+      document.querySelectorAll('#articles-tbody tr').forEach(r => {
+        r.className = "hover:bg-light-surface-soft cursor-pointer transition-colors";
+      });
+      const activeRow = document.getElementById(`row-${id}`);
+      if (activeRow) {
+        activeRow.className = "bg-light-primary-container/20 border-l-4 border-light-primary hover:bg-light-primary-container/30 cursor-pointer transition-colors";
+      }
+
+      // Populate Inspector
+      document.getElementById('inp-article-title').value = art.title;
+      document.getElementById('sel-article-cat').value = art.cat;
+      document.getElementById('seo-preview-title').textContent = `${art.title} | ARCI Bimbel`;
+      document.getElementById('seo-preview-url').textContent = `https://arcibimbel.id${art.slug}`;
+      document.getElementById('seo-preview-desc').textContent = art.desc;
+      document.getElementById('img-filename').textContent = art.img;
+
+      const badge = document.getElementById('inspector-status-badge');
+      if (art.status === 'Live') {
+        badge.className = "px-2.5 py-0.5 rounded-full text-label-sm font-bold bg-success/15 text-success";
+        badge.textContent = "Live";
+      } else {
+        badge.className = "px-2.5 py-0.5 rounded-full text-label-sm font-bold bg-warning/20 text-warning";
+        badge.textContent = "Draft";
+      }
+
+      showToast(`Inspektor memuat: ${art.title}`, 'info');
+    }
+
+    function editArticle(id) {
+      selectArticle(id);
+      document.getElementById('inp-article-title').focus();
+      showToast('Form inspektor aktif siap diedit.', 'info');
+    }
+
+    function saveContentUpdate() {
+      const newTitle = document.getElementById('inp-article-title').value;
+      document.getElementById('seo-preview-title').textContent = `${newTitle} | ARCI Bimbel`;
+      showToast('Konten & metadata SEO berhasil disimpan dan dipublikasikan!', 'success');
+    }
+
+    function archiveCurrentContent() {
+      showToast('Artikel telah diarsipkan dan ditarik dari halaman publik.', 'warning');
+    }
+
+    // Modal Handlers
+    function openNewContentModal() {
+      document.getElementById('modal-new-content').classList.remove('hidden');
+    }
+    function closeNewContentModal() {
+      document.getElementById('modal-new-content').classList.add('hidden');
+    }
+    function autoGenerateSlug(title) {
+      const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      document.getElementById('new-content-slug').value = slug;
+    }
+    function submitNewContent(e) {
+      e.preventDefault();
+      const title = document.getElementById('new-content-title').value;
+      closeNewContentModal();
+      showToast(`Konten baru "${title}" berhasil diterbitkan di website!`, 'success');
+    }
+
+    function openPromoModal() {
+      document.getElementById('modal-promo').classList.remove('hidden');
+    }
+    function closePromoModal() {
+      document.getElementById('modal-promo').classList.add('hidden');
+    }
+    function submitPromo(e) {
+      e.preventDefault();
+      const title = document.getElementById('inp-promo-title').value;
+      const desc = document.getElementById('inp-promo-desc').value;
+      document.getElementById('promo-banner-title').textContent = title;
+      document.getElementById('promo-banner-desc').textContent = desc;
+      closePromoModal();
+      showToast('Banner promo beranda berhasil diperbarui!', 'success');
+    }
+
+    let promoActive = true;
+    function togglePromoBanner() {
+      promoActive = !promoActive;
+      const card = document.getElementById('promo-banner-card');
+      const badge = document.getElementById('banner-status-badge');
+      if (promoActive) {
+        card.classList.remove('opacity-50');
+        badge.textContent = "Aktif";
+        badge.className = "text-label-sm font-bold text-success";
+        showToast('Banner promo diaktifkan kembali di beranda publik.', 'success');
+      } else {
+        card.classList.add('opacity-50');
+        badge.textContent = "Nonaktif";
+        badge.className = "text-label-sm font-bold text-danger";
+        showToast('Banner promo dinonaktifkan dari beranda publik.', 'warning');
+      }
+    }
+
+    // CMS Tab Switcher
+    function switchCmsTab(tab) {
+      const tabs = ['articles', 'testimonials', 'banners', 'faqs'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tab-${t}`);
+        if (t === tab) {
+          btn.className = "px-3.5 py-1.5 rounded-lg text-body-sm font-semibold bg-light-surface text-light-primary shadow-xs whitespace-nowrap transition-all";
+        } else {
+          btn.className = "px-3.5 py-1.5 rounded-lg text-body-sm font-label text-light-on-surface-variant hover:text-light-on-surface whitespace-nowrap transition-all";
+        }
+      });
+
+      const titleMap = {
+        'articles': 'Daftar Artikel & Panduan Belajar',
+        'testimonials': 'Daftar Testimoni Siswa & Wali Murid',
+        'banners': 'Daftar Banner Promo & Hero Landing Page',
+        'faqs': 'Pertanyaan Umum (FAQ) Calon Siswa'
+      };
+      document.getElementById('table-title').textContent = titleMap[tab];
+      showToast(`Menampilkan modul CMS: ${titleMap[tab]}`, 'info');
+    }
+
+    function filterStatus(status) {
+      showToast(`Memfilter konten status: ${status.toUpperCase()}`, 'info');
+    }
+
+    function handleSearch(query) {
+      if (query.length > 2) {
+        showToast(`Mencari konten: "${query}"`, 'info');
+      }
+    }
+
+    // Mobile Drawer Toggle
+    function toggleSidebar(open) {
+      const sidebar = document.getElementById('sidebar-nav');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (open) {
+        sidebar.classList.remove('-translate-x-full');
+        sidebar.classList.add('translate-x-0');
+        overlay.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+        sidebar.classList.remove('translate-x-0');
+        overlay.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }
+    }
+
+    // Toast Notification System
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      
+      let bg = 'bg-light-surface text-light-on-surface border-light-outline-variant';
+      let icon = 'info';
+      let iconColor = 'text-brand-indigo';
+
+      if (type === 'success') {
+        icon = 'check_circle';
+        iconColor = 'text-success';
+      } else if (type === 'warning') {
+        icon = 'warning';
+        iconColor = 'text-warning';
+      } else if (type === 'danger') {
+        icon = 'error';
+        iconColor = 'text-danger';
+      }
+
+      toast.className = `p-4 rounded-xl border ${bg} shadow-lg flex items-center gap-3 transition-all duration-300 transform translate-y-4 opacity-0 pointer-events-auto`;
+      toast.innerHTML = `
+        <span class="material-symbols-outlined ${iconColor} text-[22px] shrink-0">${icon}</span>
+        <span class="text-body-sm font-medium flex-1">${message}</span>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-4', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+  </script>
+</body>
+</html>

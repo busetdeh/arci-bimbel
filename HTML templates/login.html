@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Masuk Portal Orang Tua &amp; Siswa — ARCI Bimbel</title>
+  
+  <!-- Tailwind CSS with Official Plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+  /** @type {import('tailwindcss').Config} */
+  globalThis.tailwind = globalThis.tailwind || {};
+  globalThis.tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          'accent': '#F6C453',
+          'on-accent': '#18212F',
+          'brand-indigo': '#243B7A',
+          'brand-indigo-dark': '#172653',
+          'success': '#1B7330',
+          'on-success': '#FFFFFF',
+          'warning': '#925B06',
+          'on-warning': '#FFFFFF',
+          'danger': '#B91C1C',
+          'on-danger': '#FFFFFF',
+          'light-primary': '#243B7A',
+          'light-on-primary': '#FFFFFF',
+          'light-primary-container': '#EBF0FA',
+          'light-on-primary-container': '#172653',
+          'light-surface': '#FFFFFF',
+          'light-on-surface': '#18212F',
+          'light-surface-soft': '#F8FAFC',
+          'light-surface-container-low': '#F1F5F9',
+          'light-surface-container': '#E2E8F0',
+          'light-on-surface-variant': '#475569',
+          'light-outline': '#94A3B8',
+          'light-outline-variant': '#CBD5E1',
+          'dark-primary': '#9BB3F0',
+          'dark-on-primary': '#0E1A3C',
+          'dark-primary-container': '#1E3166',
+          'dark-on-primary-container': '#D7E3FF',
+          'dark-surface': '#0F172A',
+          'dark-on-surface': '#F8FAFC',
+          'dark-surface-soft': '#1E293B',
+          'dark-surface-container-low': '#152033',
+          'dark-surface-container': '#1E293B',
+          'dark-on-surface-variant': '#CBD5E1',
+          'dark-outline': '#64748B',
+          'dark-outline-variant': '#475569',
+        },
+        borderRadius: {
+          'sm': '4px',
+          'DEFAULT': '8px',
+          'md': '10px',
+          'lg': '12px',
+          'xl': '16px',
+          '2xl': '20px',
+          'full': '9999px',
+        },
+        spacing: {
+          'gutter-xs': '4px',
+          'gutter-sm': '8px',
+          'gutter-md': '16px',
+          'gutter-lg': '24px',
+          'gutter-xl': '32px',
+          'section-sm': '40px',
+          'section': '64px',
+          'section-lg': '96px',
+          'page-margin': '24px',
+        },
+        fontFamily: {
+          'display': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'headline': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'title': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'body': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'label': ['"Plus Jakarta Sans"', 'sans-serif'],
+        },
+        fontSize: {
+          'display-lg': ['48px', { lineHeight: '56px', letterSpacing: '-0.02em', fontWeight: '700' }],
+          'display-lg-mobile': ['28px', { lineHeight: '36px', letterSpacing: '-0.01em', fontWeight: '700' }],
+          'headline-lg': ['36px', { lineHeight: '44px', letterSpacing: '-0.01em', fontWeight: '700' }],
+          'headline-lg-mobile': ['24px', { lineHeight: '32px', letterSpacing: '0em', fontWeight: '700' }],
+          'headline-md': ['24px', { lineHeight: '32px', fontWeight: '600' }],
+          'headline-sm': ['20px', { lineHeight: '28px', fontWeight: '600' }],
+          'title-lg': ['18px', { lineHeight: '26px', fontWeight: '600' }],
+          'title-md': ['16px', { lineHeight: '24px', fontWeight: '600' }],
+          'body-lg': ['16px', { lineHeight: '24px', fontWeight: '400' }],
+          'body-md': ['14px', { lineHeight: '20px', fontWeight: '400' }],
+          'body-sm': ['12px', { lineHeight: '18px', fontWeight: '400' }],
+          'label-lg': ['14px', { lineHeight: '20px', fontWeight: '600' }],
+          'label-md': ['12px', { lineHeight: '16px', fontWeight: '600' }],
+          'label-sm': ['11px', { lineHeight: '14px', fontWeight: '500' }],
+        },
+        transitionDuration: {
+          'state-change': '150ms',
+          'surface-enter': '250ms',
+          'surface-exit': '150ms',
+        },
+        transitionTimingFunction: {
+          'state-change': 'ease-out',
+          'surface-enter': 'cubic-bezier(0.16, 1, 0.3, 1)',
+          'surface-exit': 'cubic-bezier(0.7, 0, 0.84, 0)',
+        },
+      },
+    },
+  };
+  if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+  </script>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+  
+  <style>
+    .material-symbols-outlined, .material-symbols-rounded, .material-symbols-sharp, .material-icons {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      line-height: 1 !important;
+      box-sizing: content-box;
+      overflow: hidden;
+      white-space: nowrap;
+      direction: ltr;
+      vertical-align: middle;
+      font-size: 20px;
+    }
+    .pb-safe {
+      padding-bottom: env(safe-area-inset-bottom, 16px);
+    }
+  </style>
+</head>
+<body class="bg-light-surface-soft text-light-on-surface font-body antialiased min-h-screen flex flex-col justify-between p-3 sm:p-5 pb-safe">
+
+  <!-- Top Simple Navigation (Centered Header Bar) -->
+  <header class="w-full max-w-md mx-auto py-2.5 flex items-center justify-between border-b border-light-outline-variant/70">
+    <a href="index.html" class="flex items-center gap-1.5 text-light-on-surface text-body-sm font-label hover:text-light-primary transition-colors py-1 px-1.5 rounded-lg hover:bg-light-surface-container-low group">
+      <span class="material-symbols-outlined text-[18px] group-hover:-translate-x-0.5 transition-transform">arrow_back</span>
+      <span class="font-semibold">Beranda</span>
+    </a>
+    
+    <a href="index.html" class="flex items-center gap-2 group">
+      <div class="w-7 h-7 rounded-lg bg-light-primary flex items-center justify-center text-light-on-primary font-headline font-bold text-label-md group-hover:bg-brand-indigo-dark transition-colors shadow-xs">
+        A
+      </div>
+      <span class="font-headline font-bold text-title-md text-brand-indigo">ARCI Bimbel</span>
+    </a>
+
+    <div class="w-16 flex justify-end">
+      <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-light-primary-container text-light-primary">
+        Portal
+      </span>
+    </div>
+  </header>
+
+  <!-- Login Card Centered Container (Vertical & Horizontal Centering) -->
+  <main class="my-auto py-6 sm:py-8 w-full flex flex-col items-center justify-center">
+    <div class="w-full max-w-md bg-light-surface rounded-2xl border border-light-outline-variant p-6 sm:p-8 shadow-sm flex flex-col gap-6 mx-auto">
+      
+      <!-- Card Title & Description (Centered) -->
+      <div class="text-center flex flex-col items-center">
+        <div class="w-12 h-12 rounded-xl bg-light-primary-container text-light-primary flex items-center justify-center mb-3 shadow-xs">
+          <span class="material-symbols-outlined text-[26px]">school</span>
+        </div>
+        <h1 class="font-headline text-headline-sm font-bold text-light-on-surface">Masuk ke Portal Belajar</h1>
+        <p class="text-body-sm text-light-on-surface-variant mt-1.5 leading-relaxed">
+          Pantau jadwal kelas, presensi harian, nilai tryout, dan tagihan SPP ananda secara terpadu.
+        </p>
+      </div>
+
+      <!-- Segmented Persona Tabs (Wali vs Siswa) -->
+      <div class="grid grid-cols-2 p-1 rounded-xl bg-light-surface-container gap-1" role="tablist">
+        <button type="button" id="tab-parent" onclick="switchPersona('parent')" class="py-2.5 rounded-lg bg-light-surface text-light-primary font-label text-body-sm font-bold shadow-xs transition-all flex items-center justify-center gap-1.5" role="tab" aria-selected="true">
+          <span class="material-symbols-outlined text-[17px]">family_restroom</span>
+          <span>Orang Tua / Wali</span>
+        </button>
+        <button type="button" id="tab-student" onclick="switchPersona('student')" class="py-2.5 rounded-lg text-light-on-surface-variant hover:text-light-on-surface font-label text-body-sm font-medium transition-all flex items-center justify-center gap-1.5" role="tab" aria-selected="false">
+          <span class="material-symbols-outlined text-[17px]">person</span>
+          <span>Siswa Murid</span>
+        </button>
+      </div>
+
+      <!-- Login Notification / Toast (Hidden by default) -->
+      <div id="login-alert" class="hidden p-3.5 rounded-xl text-body-sm border items-start gap-2.5 transition-all">
+        <span id="login-alert-icon" class="material-symbols-outlined text-[18px] shrink-0 mt-0.5">info</span>
+        <span id="login-alert-text">Pesan notifikasi</span>
+      </div>
+
+      <!-- Form Inputs -->
+      <form id="login-form" onsubmit="handleLoginSubmit(event)" class="flex flex-col gap-4">
+        
+        <!-- Input WhatsApp / Identifier -->
+        <label class="flex flex-col gap-1.5">
+          <span id="identifier-label" class="font-label text-label-md text-light-on-surface font-semibold">Nomor WhatsApp Terdaftar</span>
+          <div class="relative flex items-center">
+            <span id="identifier-icon" class="absolute left-3.5 text-light-on-surface-variant material-symbols-outlined text-[20px]" aria-hidden="true">phone_android</span>
+            <input type="text" id="identifier-input" inputmode="tel" placeholder="0812-3456-7890" value="0812-3456-7890" required
+              class="w-full min-h-[48px] pl-11 pr-3.5 py-2.5 rounded-lg border border-light-outline text-light-on-surface placeholder:text-light-on-surface-variant focus:border-light-primary focus:ring-1 focus:ring-light-primary text-body-md transition-colors">
+          </div>
+          <span id="identifier-hint" class="text-[11.5px] text-light-on-surface-variant">Gunakan nomor yang dicantumkan saat formulir pendaftaran.</span>
+        </label>
+
+        <!-- Input Password / PIN -->
+        <label class="flex flex-col gap-1.5">
+          <div class="flex items-center justify-between">
+            <span class="font-label text-label-md text-light-on-surface font-semibold">Kata Sandi / PIN Portal</span>
+            <button type="button" onclick="showForgotPinModal()" class="text-[11.5px] text-light-primary font-label font-semibold hover:underline">
+              Lupa PIN?
+            </button>
+          </div>
+          <div class="relative flex items-center">
+            <span class="absolute left-3.5 text-light-on-surface-variant material-symbols-outlined text-[20px]" aria-hidden="true">lock</span>
+            <input type="password" id="password-input" placeholder="Masukkan 6 digit PIN akun" value="123456" required
+              class="w-full min-h-[48px] pl-11 pr-11 py-2.5 rounded-lg border border-light-outline text-light-on-surface placeholder:text-light-on-surface-variant focus:border-light-primary focus:ring-1 focus:ring-light-primary text-body-md transition-colors">
+            <button type="button" id="toggle-password-btn" onclick="togglePasswordVisibility()" aria-label="Lihat kata sandi" class="absolute right-3.5 text-light-on-surface-variant hover:text-light-on-surface focus:outline-none p-1">
+              <span id="toggle-password-icon" class="material-symbols-outlined text-[20px]">visibility</span>
+            </button>
+          </div>
+        </label>
+
+        <!-- Remember Me Checkbox -->
+        <div class="flex items-center justify-between text-body-sm pt-1">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" id="remember-me" checked class="rounded text-light-primary focus:ring-light-primary">
+            <span class="text-light-on-surface-variant text-[13px]">Ingat saya di perangkat ini</span>
+          </label>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="btn-login-submit" class="w-full min-h-[48px] py-3 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-label-lg shadow-sm transition-all mt-2 font-semibold active:scale-[0.99] flex items-center justify-center gap-2">
+          <span>Masuk ke Portal Belajar</span>
+          <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+        </button>
+      </form>
+
+      <!-- OTP / WhatsApp Alternative -->
+      <div class="pt-4 border-t border-light-outline-variant text-center flex flex-col gap-3">
+        <span class="text-[11px] text-light-on-surface-variant font-label tracking-wider font-semibold">ATAU MASUK LEBIH CEPAT</span>
+        <button type="button" onclick="sendWhatsappOtp()" class="w-full min-h-[46px] py-2.5 px-4 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container font-label text-body-sm font-medium flex items-center justify-center gap-2 transition-colors active:scale-[0.99]">
+          <span class="material-symbols-outlined text-[19px] text-success">chat</span>
+          <span>Kirim Kode OTP Masuk via WhatsApp</span>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Mobile & Desktop Footer Helper (Centered) -->
+  <footer class="w-full max-w-md mx-auto py-3 text-center text-body-sm text-light-on-surface-variant flex flex-col gap-2">
+    <p>Belum punya akun? <a href="pendaftaran.html" class="text-light-primary font-bold hover:underline">Daftar Bimbingan Belajar</a></p>
+    <p class="text-[11.5px] text-light-on-surface-variant/80">© 2026 ARCI Bimbel • Butuh bantuan? WhatsApp: +62 812-3456-7890</p>
+    <div class="pt-2 border-t border-light-outline-variant/50 flex justify-center">
+      <a href="login-admin.html" class="text-[12px] text-light-on-surface-variant hover:text-brand-indigo font-label flex items-center gap-1 font-medium transition-colors">
+        <span class="material-symbols-outlined text-[15px]">badge</span>
+        <span>Akses Staf &amp; Tutor Internal →</span>
+      </a>
+    </div>
+  </footer>
+
+  <!-- Modal Dialog: Lupa PIN / Bantuan Masuk -->
+  <div id="forgot-pin-modal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-200">
+    <div class="bg-light-surface rounded-2xl max-w-md w-full p-6 shadow-xl border border-light-outline-variant flex flex-col gap-4 text-center">
+      <div class="w-12 h-12 rounded-full bg-light-primary-container text-light-primary flex items-center justify-center mx-auto">
+        <span class="material-symbols-outlined text-[24px]">key</span>
+      </div>
+      <div>
+        <h3 class="font-headline font-bold text-title-lg text-light-on-surface">Bantuan Reset PIN Portal</h3>
+        <p class="text-body-sm text-light-on-surface-variant mt-1.5">
+          PIN akun baru secara otomatis dikirimkan ke nomor WhatsApp orang tua saat pendaftaran disetujui. Hubungi nomor admin atau klik tombol di bawah untuk verifikasi ulang.
+        </p>
+      </div>
+      <div class="flex flex-col gap-2 pt-2">
+        <a href="https://wa.me/6281234567890?text=Halo%20Admin%20ARCI%20Bimbel,%20saya%20butuh%20bantuan%20reset%20PIN%20portal%20belajar" target="_blank" rel="noopener noreferrer" class="min-h-[46px] inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-success text-on-success font-label text-body-sm font-semibold hover:bg-success/90 transition-colors shadow-xs">
+          <span class="material-symbols-outlined text-[18px]">chat</span>
+          <span>Hubungi Admin via WhatsApp</span>
+        </a>
+        <button type="button" onclick="closeForgotPinModal()" class="min-h-[44px] py-2 px-4 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container font-label text-body-sm font-medium transition-colors">
+          Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    let currentPersona = 'parent';
+
+    // Persona Tab Switching
+    function switchPersona(persona) {
+      currentPersona = persona;
+      const tabParent = document.getElementById('tab-parent');
+      const tabStudent = document.getElementById('tab-student');
+      const label = document.getElementById('identifier-label');
+      const input = document.getElementById('identifier-input');
+      const hint = document.getElementById('identifier-hint');
+      const icon = document.getElementById('identifier-icon');
+
+      if (persona === 'parent') {
+        tabParent.className = 'py-2.5 rounded-lg bg-light-surface text-light-primary font-label text-body-sm font-bold shadow-xs transition-all flex items-center justify-center gap-1.5';
+        tabParent.setAttribute('aria-selected', 'true');
+
+        tabStudent.className = 'py-2.5 rounded-lg text-light-on-surface-variant hover:text-light-on-surface font-label text-body-sm font-medium transition-all flex items-center justify-center gap-1.5';
+        tabStudent.setAttribute('aria-selected', 'false');
+
+        label.textContent = 'Nomor WhatsApp Terdaftar';
+        input.placeholder = '0812-3456-7890';
+        input.value = '0812-3456-7890';
+        hint.textContent = 'Gunakan nomor yang dicantumkan saat formulir pendaftaran.';
+        icon.textContent = 'phone_android';
+      } else {
+        tabStudent.className = 'py-2.5 rounded-lg bg-light-surface text-light-primary font-label text-body-sm font-bold shadow-xs transition-all flex items-center justify-center gap-1.5';
+        tabStudent.setAttribute('aria-selected', 'true');
+
+        tabParent.className = 'py-2.5 rounded-lg text-light-on-surface-variant hover:text-light-on-surface font-label text-body-sm font-medium transition-all flex items-center justify-center gap-1.5';
+        tabParent.setAttribute('aria-selected', 'false');
+
+        label.textContent = 'Nomor Induk Siswa (NIS) atau WhatsApp';
+        input.placeholder = 'Contoh: ARC-2026-0849 atau 0812...';
+        input.value = 'ARC-2026-0849';
+        hint.textContent = 'Gunakan NIS siswa yang tertera di kartu bimbingan atau nomor WhatsApp.';
+        icon.textContent = 'badge';
+      }
+    }
+
+    // Toggle Password/PIN Visibility
+    function togglePasswordVisibility() {
+      const pwdInput = document.getElementById('password-input');
+      const icon = document.getElementById('toggle-password-icon');
+      if (pwdInput.type === 'password') {
+        pwdInput.type = 'text';
+        icon.textContent = 'visibility_off';
+      } else {
+        pwdInput.type = 'password';
+        icon.textContent = 'visibility';
+      }
+    }
+
+    // Show Notification Toast / Alert
+    function showAlert(text, type = 'success') {
+      const alertBox = document.getElementById('login-alert');
+      const alertText = document.getElementById('login-alert-text');
+      const alertIcon = document.getElementById('login-alert-icon');
+
+      alertBox.classList.remove('hidden', 'flex', 'bg-success/10', 'text-success', 'border-success/30', 'bg-danger/10', 'text-danger', 'border-danger/30', 'bg-warning/10', 'text-warning', 'border-warning/30');
+      alertBox.classList.add('flex');
+
+      if (type === 'success') {
+        alertBox.classList.add('bg-success/10', 'text-success', 'border-success/30');
+        alertIcon.textContent = 'check_circle';
+      } else if (type === 'error') {
+        alertBox.classList.add('bg-danger/10', 'text-danger', 'border-danger/30');
+        alertIcon.textContent = 'error';
+      } else {
+        alertBox.classList.add('bg-warning/10', 'text-warning', 'border-warning/30');
+        alertIcon.textContent = 'info';
+      }
+      alertText.textContent = text;
+    }
+
+    // Handle Form Submit
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btn-login-submit');
+      const idVal = document.getElementById('identifier-input').value.trim();
+      const pwdVal = document.getElementById('password-input').value.trim();
+
+      if (!idVal || !pwdVal) {
+        showAlert('Silakan lengkapi nomor identitas dan PIN akun Anda.', 'error');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `
+        <span class="inline-block animate-spin mr-1">⟳</span>
+        Memverifikasi Kredensial...
+      `;
+
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = `
+          <span>Masuk ke Portal Belajar</span>
+          <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+        `;
+        showAlert(`Berhasil masuk sebagai ${currentPersona === 'parent' ? 'Orang Tua / Wali' : 'Siswa'}. Mengalihkan ke dasbor akademik...`, 'success');
+        
+        // Redirect simulation to student/parent portal after 1.2s
+        setTimeout(() => {
+          window.location.href = 'student-portal.html';
+        }, 1200);
+      }, 1000);
+    }
+
+    // WhatsApp OTP Request
+    function sendWhatsappOtp() {
+      const idVal = document.getElementById('identifier-input').value.trim();
+      if (!idVal) {
+        showAlert('Masukkan nomor WhatsApp terlebih dahulu untuk menerima kode OTP.', 'warning');
+        document.getElementById('identifier-input').focus();
+        return;
+      }
+      showAlert(`Kode verifikasi OTP 6-digit berhasil dikirimkan ke WhatsApp ${idVal}. Silakan periksa pesan masuk Anda.`, 'success');
+    }
+
+    // Modal Handlers
+    function showForgotPinModal() {
+      document.getElementById('forgot-pin-modal').classList.remove('hidden');
+    }
+    function closeForgotPinModal() {
+      document.getElementById('forgot-pin-modal').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>

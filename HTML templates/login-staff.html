@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Masuk Dashboard Staf Internal &amp; Admin — ARCI Bimbel</title>
+  
+  <!-- Tailwind CSS with Official Plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+  /** @type {import('tailwindcss').Config} */
+  globalThis.tailwind = globalThis.tailwind || {};
+  globalThis.tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          'accent': '#F6C453',
+          'on-accent': '#18212F',
+          'brand-indigo': '#243B7A',
+          'brand-indigo-dark': '#172653',
+          'success': '#1B7330',
+          'on-success': '#FFFFFF',
+          'warning': '#925B06',
+          'on-warning': '#FFFFFF',
+          'danger': '#B91C1C',
+          'on-danger': '#FFFFFF',
+          'light-primary': '#243B7A',
+          'light-on-primary': '#FFFFFF',
+          'light-primary-container': '#EBF0FA',
+          'light-on-primary-container': '#172653',
+          'light-surface': '#FFFFFF',
+          'light-on-surface': '#18212F',
+          'light-surface-soft': '#F8FAFC',
+          'light-surface-container-low': '#F1F5F9',
+          'light-surface-container': '#E2E8F0',
+          'light-on-surface-variant': '#475569',
+          'light-outline': '#94A3B8',
+          'light-outline-variant': '#CBD5E1',
+          'dark-primary': '#9BB3F0',
+          'dark-on-primary': '#0E1A3C',
+          'dark-primary-container': '#1E3166',
+          'dark-on-primary-container': '#D7E3FF',
+          'dark-surface': '#0F172A',
+          'dark-on-surface': '#F8FAFC',
+          'dark-surface-soft': '#1E293B',
+          'dark-surface-container-low': '#152033',
+          'dark-surface-container': '#1E293B',
+          'dark-on-surface-variant': '#CBD5E1',
+          'dark-outline': '#64748B',
+          'dark-outline-variant': '#475569',
+        },
+        borderRadius: {
+          'sm': '4px',
+          'DEFAULT': '8px',
+          'md': '10px',
+          'lg': '12px',
+          'xl': '16px',
+          '2xl': '20px',
+          'full': '9999px',
+        },
+        spacing: {
+          'gutter-xs': '4px',
+          'gutter-sm': '8px',
+          'gutter-md': '16px',
+          'gutter-lg': '24px',
+          'gutter-xl': '32px',
+          'section-sm': '40px',
+          'section': '64px',
+          'section-lg': '96px',
+          'page-margin': '24px',
+        },
+        fontFamily: {
+          'display': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'headline': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'title': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'body': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'label': ['"Plus Jakarta Sans"', 'sans-serif'],
+        },
+        fontSize: {
+          'display-lg': ['48px', { lineHeight: '56px', letterSpacing: '-0.02em', fontWeight: '700' }],
+          'display-lg-mobile': ['28px', { lineHeight: '36px', letterSpacing: '-0.01em', fontWeight: '700' }],
+          'headline-lg': ['36px', { lineHeight: '44px', letterSpacing: '-0.01em', fontWeight: '700' }],
+          'headline-lg-mobile': ['24px', { lineHeight: '32px', letterSpacing: '0em', fontWeight: '700' }],
+          'headline-md': ['24px', { lineHeight: '32px', fontWeight: '600' }],
+          'headline-sm': ['20px', { lineHeight: '28px', fontWeight: '600' }],
+          'title-lg': ['18px', { lineHeight: '26px', fontWeight: '600' }],
+          'title-md': ['16px', { lineHeight: '24px', fontWeight: '600' }],
+          'body-lg': ['16px', { lineHeight: '24px', fontWeight: '400' }],
+          'body-md': ['14px', { lineHeight: '20px', fontWeight: '400' }],
+          'body-sm': ['12px', { lineHeight: '18px', fontWeight: '400' }],
+          'label-lg': ['14px', { lineHeight: '20px', fontWeight: '600' }],
+          'label-md': ['12px', { lineHeight: '16px', fontWeight: '600' }],
+          'label-sm': ['11px', { lineHeight: '14px', fontWeight: '500' }],
+        },
+        transitionDuration: {
+          'state-change': '150ms',
+          'surface-enter': '250ms',
+          'surface-exit': '150ms',
+        },
+        transitionTimingFunction: {
+          'state-change': 'ease-out',
+          'surface-enter': 'cubic-bezier(0.16, 1, 0.3, 1)',
+          'surface-exit': 'cubic-bezier(0.7, 0, 0.84, 0)',
+        },
+      },
+    },
+  };
+  if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+  </script>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+  
+  <style>
+    .material-symbols-outlined, .material-symbols-rounded, .material-symbols-sharp, .material-icons {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      line-height: 1 !important;
+      box-sizing: content-box;
+      overflow: hidden;
+      white-space: nowrap;
+      direction: ltr;
+      vertical-align: middle;
+      font-size: 20px;
+    }
+    .pb-safe {
+      padding-bottom: env(safe-area-inset-bottom, 16px);
+    }
+  </style>
+</head>
+<body class="bg-light-surface-soft text-light-on-surface font-body antialiased min-h-screen flex items-center justify-center p-3 sm:p-6 pb-safe">
+
+  <!-- Desktop Login Split Card (100% Centerized & Responsive Grid) -->
+  <main class="max-w-4xl w-full bg-light-surface rounded-2xl sm:rounded-3xl border border-light-outline-variant shadow-xl overflow-hidden grid grid-cols-1 md:grid-cols-12 my-auto mx-auto transition-all">
+    
+    <!-- Left Hero Brand Column (Col 5) -->
+    <div class="md:col-span-5 bg-brand-indigo text-light-on-primary p-6 sm:p-8 md:p-10 flex flex-col justify-between relative overflow-hidden">
+      <!-- Decorative Backdrop Accent Glow -->
+      <div class="absolute -bottom-10 -right-10 w-48 h-48 rounded-full bg-accent/20 blur-2xl pointer-events-none"></div>
+      <div class="absolute -top-12 -left-12 w-40 h-40 rounded-full bg-light-primary-container/10 blur-xl pointer-events-none"></div>
+
+      <div class="relative z-10">
+        <!-- Logo & Header Brand -->
+        <a href="index.html" class="flex items-center gap-3 mb-6 sm:mb-8 group w-fit">
+          <div class="w-10 h-10 rounded-xl bg-accent text-on-accent flex items-center justify-center font-headline font-bold text-headline-sm shadow-sm group-hover:bg-yellow-400 transition-colors">
+            A
+          </div>
+          <div>
+            <span class="font-headline font-bold text-title-lg tracking-tight block text-light-on-primary">ARCI Bimbel</span>
+            <span class="text-[11px] text-light-primary-container font-label">Sistem Operasional Terpadu</span>
+          </div>
+        </a>
+
+        <h1 class="font-headline text-headline-sm sm:text-headline-md font-bold text-light-on-primary leading-snug">
+          Pusat Kendali Akademik, Lead &amp; Keuangan Lembaga
+        </h1>
+        <p class="text-body-sm text-light-primary-container mt-3 leading-relaxed">
+          Akses aman khusus staf internal, koordinator kurikulum, tutor pengampu, dan tim administrasi keuangan ARCI Bimbel.
+        </p>
+
+        <!-- Role Indicator Chips -->
+        <div class="mt-6 flex flex-wrap gap-1.5">
+          <span class="px-2.5 py-1 rounded-md text-[11px] font-label font-medium bg-light-primary-container/15 text-light-primary-container border border-light-primary-container/20">
+            Operations Admin
+          </span>
+          <span class="px-2.5 py-1 rounded-md text-[11px] font-label font-medium bg-light-primary-container/15 text-light-primary-container border border-light-primary-container/20">
+            Akademik &amp; Tutor
+          </span>
+          <span class="px-2.5 py-1 rounded-md text-[11px] font-label font-medium bg-light-primary-container/15 text-light-primary-container border border-light-primary-container/20">
+            Finance &amp; SPP
+          </span>
+        </div>
+      </div>
+
+      <!-- Left Bottom Security Badges -->
+      <div class="pt-6 border-t border-light-primary-container/20 mt-6 sm:mt-8 text-body-sm text-light-primary-container flex flex-col gap-2 relative z-10">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-[18px] text-accent">verified_user</span>
+          <span class="text-[13px]">Autentikasi Aman &amp; Terenkripsi</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-[18px] text-accent">history</span>
+          <span class="text-[13px]">Audit Log Aktivitas Terpantau Real-time</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Login Form Column (Col 7) -->
+    <div class="md:col-span-7 p-6 sm:p-8 md:p-12 flex flex-col justify-between bg-light-surface">
+      <div>
+        <!-- Top Action Bar -->
+        <div class="flex items-center justify-between mb-6 pb-2 border-b border-light-outline-variant/50">
+          <div>
+            <span class="text-label-sm font-label text-light-primary uppercase tracking-wider font-semibold">Portal Internal</span>
+            <h2 class="font-headline text-headline-sm font-bold text-light-on-surface mt-0.5">Masuk ke Dashboard</h2>
+          </div>
+          <a href="index.html" class="text-body-sm font-label text-light-on-surface-variant hover:text-light-primary flex items-center gap-1 py-1 px-2 rounded-lg hover:bg-light-surface-container-low transition-colors group">
+            <span class="font-medium">Website</span>
+            <span class="material-symbols-outlined text-[16px] group-hover:translate-x-0.5 transition-transform">open_in_new</span>
+          </a>
+        </div>
+
+        <!-- Role Quick Autofill Presets -->
+        <div class="mb-5 p-3 rounded-xl bg-light-surface-container-low border border-light-outline-variant/60 flex flex-col gap-2">
+          <span class="text-[11px] font-label uppercase font-bold text-light-on-surface-variant tracking-wider flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px] text-light-primary">bolt</span>
+            Pilih Akun Demo / Presets:
+          </span>
+          <div class="grid grid-cols-3 gap-1.5 text-center">
+            <button type="button" onclick="autofillRole('admin')" class="role-btn px-2 py-1.5 rounded-lg border border-light-outline-variant text-[11.5px] font-label font-semibold bg-light-surface hover:bg-light-primary hover:text-light-on-primary transition-colors text-light-on-surface active:scale-95 shadow-xs">
+              Super Admin
+            </button>
+            <button type="button" onclick="autofillRole('academic')" class="role-btn px-2 py-1.5 rounded-lg border border-light-outline-variant text-[11.5px] font-label font-semibold bg-light-surface hover:bg-light-primary hover:text-light-on-primary transition-colors text-light-on-surface active:scale-95 shadow-xs">
+              Akademik
+            </button>
+            <button type="button" onclick="autofillRole('finance')" class="role-btn px-2 py-1.5 rounded-lg border border-light-outline-variant text-[11.5px] font-label font-semibold bg-light-surface hover:bg-light-primary hover:text-light-on-primary transition-colors text-light-on-surface active:scale-95 shadow-xs">
+              Keuangan
+            </button>
+          </div>
+        </div>
+
+        <!-- Alert Toast Box -->
+        <div id="login-alert" class="hidden mb-4 p-3.5 rounded-xl text-body-sm border items-start gap-2.5 transition-all">
+          <span id="login-alert-icon" class="material-symbols-outlined text-[18px] shrink-0 mt-0.5">info</span>
+          <span id="login-alert-text">Pesan notifikasi</span>
+        </div>
+
+        <!-- Form Body -->
+        <form id="staff-login-form" onsubmit="handleStaffLogin(event)" class="flex flex-col gap-4">
+          <!-- Email Field -->
+          <label class="flex flex-col gap-1.5">
+            <span class="font-label text-label-md text-light-on-surface font-semibold flex items-center justify-between">
+              <span>Email Dinas / Akun Staf</span>
+              <span id="role-badge" class="text-[11px] font-label text-light-primary font-bold bg-light-primary-container px-2 py-0.5 rounded-full">Admin Operasional</span>
+            </span>
+            <div class="relative flex items-center">
+              <span class="absolute left-3.5 text-light-on-surface-variant material-symbols-outlined text-[20px]" aria-hidden="true">mail</span>
+              <input type="email" id="staff-email" placeholder="nama.staf@arcibimbel.id" value="ahmad.dani@arcibimbel.id" required
+                class="w-full min-h-[48px] pl-11 pr-3.5 py-2.5 rounded-lg border border-light-outline text-light-on-surface placeholder:text-light-on-surface-variant focus:border-light-primary focus:ring-1 focus:ring-light-primary text-body-md transition-colors">
+            </div>
+          </label>
+
+          <!-- Password Field -->
+          <label class="flex flex-col gap-1.5">
+            <div class="flex items-center justify-between">
+              <span class="font-label text-label-md text-light-on-surface font-semibold">Kata Sandi Akun</span>
+              <button type="button" onclick="showItSupportModal()" class="text-body-sm text-light-primary font-label font-semibold hover:underline">
+                Lupa Password?
+              </button>
+            </div>
+            <div class="relative flex items-center">
+              <span class="absolute left-3.5 text-light-on-surface-variant material-symbols-outlined text-[20px]" aria-hidden="true">lock</span>
+              <input type="password" id="staff-password" placeholder="Masukkan kata sandi staf" value="Password123#" required
+                class="w-full min-h-[48px] pl-11 pr-11 py-2.5 rounded-lg border border-light-outline text-light-on-surface placeholder:text-light-on-surface-variant focus:border-light-primary focus:ring-1 focus:ring-light-primary text-body-md transition-colors">
+              <button type="button" id="toggle-pwd-btn" onclick="toggleStaffPassword()" aria-label="Tampilkan kata sandi" class="absolute right-3.5 text-light-on-surface-variant hover:text-light-on-surface focus:outline-none p-1">
+                <span id="toggle-pwd-icon" class="material-symbols-outlined text-[20px]">visibility</span>
+              </button>
+            </div>
+          </label>
+
+          <!-- Remember Me Checkbox -->
+          <div class="flex items-center justify-between text-body-sm pt-1">
+            <label class="flex items-center gap-2 cursor-pointer text-light-on-surface">
+              <input type="checkbox" checked class="rounded text-light-primary focus:ring-light-primary">
+              <span class="text-[13px] text-light-on-surface-variant">Ingat saya di perangkat dinas ini</span>
+            </label>
+            <span class="text-[11px] text-light-on-surface-variant/70 hidden sm:inline">2FA Aktif</span>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" id="btn-submit-staff" class="w-full min-h-[48px] py-3 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-label-lg shadow-sm transition-all flex items-center justify-center gap-2 mt-2 font-bold active:scale-[0.99]">
+            <span class="material-symbols-outlined text-[20px]">login</span>
+            <span>Masuk ke Dashboard Operasional</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Footer Help Desk & Portal Switcher -->
+      <div class="pt-5 mt-6 border-t border-light-outline-variant/70 flex flex-col sm:flex-row sm:items-center justify-between text-body-sm gap-2">
+        <div class="text-[12px] text-light-on-surface-variant flex items-center gap-3">
+          <button type="button" onclick="showItSupportModal()" class="text-light-primary font-semibold hover:underline">
+            Bantuan IT Support
+          </button>
+          <span>&bull;</span>
+          <a href="tutor-dashboard.html" class="text-brand-indigo font-bold hover:underline">Mode Tutor Mobile</a>
+        </div>
+        <a href="login.html" class="text-[12px] text-light-primary font-semibold hover:underline flex items-center gap-1">
+          <span>Portal Orang Tua &amp; Siswa</span>
+          <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal Dialog: Bantuan IT Support -->
+  <div id="it-modal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-200">
+    <div class="bg-light-surface rounded-2xl max-w-md w-full p-6 shadow-xl border border-light-outline-variant flex flex-col gap-4 text-center">
+      <div class="w-12 h-12 rounded-full bg-light-primary-container text-light-primary flex items-center justify-center mx-auto shadow-xs">
+        <span class="material-symbols-outlined text-[24px]">support_agent</span>
+      </div>
+      <div>
+        <h3 class="font-headline font-bold text-title-lg text-light-on-surface">Pusat Bantuan IT &amp; Reset Sandi</h3>
+        <p class="text-body-sm text-light-on-surface-variant mt-1.5 leading-relaxed">
+          Akun internal ARCI Bimbel terikat dengan email institusi resmi (@arcibimbel.id). Jika lupa kata sandi atau terkunci 2FA, silakan hubungi tim Helpdesk IT melalui saluran darurat berikut:
+        </p>
+      </div>
+      <div class="bg-light-surface-container-low p-3.5 rounded-xl border border-light-outline-variant text-left text-body-sm space-y-1">
+        <p><span class="text-light-on-surface-variant">Helpdesk IT:</span> <strong>it-helpdesk@arcibimbel.id</strong></p>
+        <p><span class="text-light-on-surface-variant">Hotline Internal:</span> <strong>Ext. 104 / WhatsApp: +62 811-2233-4455</strong></p>
+        <p><span class="text-light-on-surface-variant">Jam Operasional:</span> <strong>07:30 - 21:00 WIB</strong></p>
+      </div>
+      <div class="flex flex-col gap-2 pt-2">
+        <a href="https://wa.me/6281122334455?text=Halo%20IT%20Support%20ARCI%20Bimbel,%20saya%20butuh%20bantuan%20reset%20kata%20sandi%20akun%20staf" target="_blank" rel="noopener noreferrer" class="min-h-[46px] inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-success text-on-success font-label text-body-sm font-semibold hover:bg-success/90 transition-colors shadow-xs">
+          <span class="material-symbols-outlined text-[18px]">chat</span>
+          <span>Hubungi IT Support WhatsApp</span>
+        </a>
+        <button type="button" onclick="closeItSupportModal()" class="min-h-[44px] py-2 px-4 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container font-label text-body-sm font-medium transition-colors">
+          Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    // Autofill Presets
+    const roles = {
+      admin: {
+        email: 'ahmad.dani@arcibimbel.id',
+        badge: 'Super Admin',
+        title: 'Operasional & Lead Management'
+      },
+      academic: {
+        email: 'siti.rahma@arcibimbel.id',
+        badge: 'Koordinator Akademik',
+        title: 'Kurikulum, Tutor & Kelas'
+      },
+      finance: {
+        email: 'keuangan@arcibimbel.id',
+        badge: 'Finance & Invoice',
+        title: 'Tagihan, SPP & Rekonsiliasi'
+      }
+    };
+
+    function autofillRole(roleKey) {
+      const data = roles[roleKey];
+      if (!data) return;
+
+      document.getElementById('staff-email').value = data.email;
+      document.getElementById('staff-password').value = 'Password123#';
+      document.getElementById('role-badge').textContent = data.badge;
+
+      showAlert(`Preset akun ${data.badge} dimuat (${data.title}).`, 'info');
+    }
+
+    // Toggle Password Visibility
+    function toggleStaffPassword() {
+      const pwdInput = document.getElementById('staff-password');
+      const icon = document.getElementById('toggle-pwd-icon');
+      if (pwdInput.type === 'password') {
+        pwdInput.type = 'text';
+        icon.textContent = 'visibility_off';
+      } else {
+        pwdInput.type = 'password';
+        icon.textContent = 'visibility';
+      }
+    }
+
+    // Notification Alert Handler
+    function showAlert(text, type = 'success') {
+      const alertBox = document.getElementById('login-alert');
+      const alertText = document.getElementById('login-alert-text');
+      const alertIcon = document.getElementById('login-alert-icon');
+
+      alertBox.classList.remove('hidden', 'flex', 'bg-success/10', 'text-success', 'border-success/30', 'bg-danger/10', 'text-danger', 'border-danger/30', 'bg-light-primary-container', 'text-light-primary', 'border-light-primary/30');
+      alertBox.classList.add('flex');
+
+      if (type === 'success') {
+        alertBox.classList.add('bg-success/10', 'text-success', 'border-success/30');
+        alertIcon.textContent = 'check_circle';
+      } else if (type === 'error') {
+        alertBox.classList.add('bg-danger/10', 'text-danger', 'border-danger/30');
+        alertIcon.textContent = 'error';
+      } else {
+        alertBox.classList.add('bg-light-primary-container', 'text-light-primary', 'border-light-primary/30');
+        alertIcon.textContent = 'info';
+      }
+      alertText.textContent = text;
+    }
+
+    // Handle Form Submit
+    function handleStaffLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('staff-email').value.trim();
+      const password = document.getElementById('staff-password').value.trim();
+      const btn = document.getElementById('btn-submit-staff');
+
+      if (!email || !password) {
+        showAlert('Silakan masukkan email dinas dan kata sandi staf.', 'error');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `
+        <span class="inline-block animate-spin mr-1">⟳</span>
+        Memverifikasi Otorisasi Kredensial...
+      `;
+
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = `
+          <span class="material-symbols-outlined text-[20px]">login</span>
+          <span>Masuk ke Dashboard Operasional</span>
+        `;
+        showAlert('Otorisasi berhasil diverifikasi. Membuka sesi kerja dashboard internal...', 'success');
+
+        // Redirect to dashboard after 1.2s
+        setTimeout(() => {
+          window.location.href = 'dashboard.html';
+        }, 1200);
+      }, 1000);
+    }
+
+    // Modal Control
+    function showItSupportModal() {
+      document.getElementById('it-modal').classList.remove('hidden');
+    }
+    function closeItSupportModal() {
+      document.getElementById('it-modal').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>

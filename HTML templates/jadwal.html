@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Jadwal Sesi &amp; Kalender Kelas — ARCI Bimbel</title>
+  
+  <!-- Tailwind CSS with Official Plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+  /** @type {import('tailwindcss').Config} */
+  globalThis.tailwind = globalThis.tailwind || {};
+  globalThis.tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          'accent': '#F6C453',
+          'on-accent': '#18212F',
+          'brand-indigo': '#243B7A',
+          'brand-indigo-dark': '#172653',
+          'success': '#1B7330',
+          'on-success': '#FFFFFF',
+          'warning': '#925B06',
+          'on-warning': '#FFFFFF',
+          'danger': '#B91C1C',
+          'on-danger': '#FFFFFF',
+          'light-primary': '#243B7A',
+          'light-on-primary': '#FFFFFF',
+          'light-primary-container': '#EBF0FA',
+          'light-on-primary-container': '#172653',
+          'light-surface': '#FFFFFF',
+          'light-on-surface': '#18212F',
+          'light-surface-soft': '#F8FAFC',
+          'light-surface-container-low': '#F1F5F9',
+          'light-surface-container': '#E2E8F0',
+          'light-on-surface-variant': '#475569',
+          'light-outline': '#94A3B8',
+          'light-outline-variant': '#CBD5E1',
+          'dark-primary': '#9BB3F0',
+          'dark-on-primary': '#0E1A3C',
+          'dark-primary-container': '#1E3166',
+          'dark-on-primary-container': '#D7E3FF',
+          'dark-surface': '#0F172A',
+          'dark-on-surface': '#F8FAFC',
+          'dark-surface-soft': '#1E293B',
+          'dark-surface-container-low': '#152033',
+          'dark-surface-container': '#1E293B',
+          'dark-on-surface-variant': '#CBD5E1',
+          'dark-outline': '#64748B',
+          'dark-outline-variant': '#475569',
+        },
+        borderRadius: {
+          'sm': '4px',
+          'DEFAULT': '8px',
+          'md': '10px',
+          'lg': '12px',
+          'xl': '16px',
+          '2xl': '20px',
+          'full': '9999px',
+        },
+        fontFamily: {
+          'display': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'headline': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'title': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'body': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'label': ['"Plus Jakarta Sans"', 'sans-serif'],
+        },
+        fontSize: {
+          'display-lg': ['48px', { lineHeight: '56px', letterSpacing: '-0.02em', fontWeight: '700' }],
+          'display-lg-mobile': ['32px', { lineHeight: '40px', letterSpacing: '-0.01em', fontWeight: '700' }],
+          'headline-lg': ['36px', { lineHeight: '44px', letterSpacing: '-0.01em', fontWeight: '700' }],
+          'headline-lg-mobile': ['26px', { lineHeight: '34px', letterSpacing: '0em', fontWeight: '700' }],
+          'headline-md': ['24px', { lineHeight: '32px', fontWeight: '600' }],
+          'headline-sm': ['20px', { lineHeight: '28px', fontWeight: '600' }],
+          'title-lg': ['18px', { lineHeight: '26px', fontWeight: '600' }],
+          'title-md': ['16px', { lineHeight: '24px', fontWeight: '600' }],
+          'body-lg': ['16px', { lineHeight: '24px', fontWeight: '400' }],
+          'body-md': ['14px', { lineHeight: '20px', fontWeight: '400' }],
+          'body-sm': ['12px', { lineHeight: '18px', fontWeight: '400' }],
+          'label-lg': ['14px', { lineHeight: '20px', fontWeight: '600' }],
+          'label-md': ['12px', { lineHeight: '16px', fontWeight: '600' }],
+          'label-sm': ['11px', { lineHeight: '14px', fontWeight: '500' }],
+        },
+      },
+    },
+  };
+  if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+  </script>
+
+  <!-- Typography & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+
+  <style>
+    .material-symbols-outlined, .material-symbols-rounded, .material-symbols-sharp, .material-icons {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      line-height: 1 !important;
+      box-sizing: content-box;
+      overflow: hidden;
+      white-space: nowrap;
+      direction: ltr;
+      vertical-align: middle;
+      font-size: 20px;
+    }
+    .pb-safe {
+      padding-bottom: env(safe-area-inset-bottom, 16px);
+    }
+    /* Calendar matrix custom scroll styling */
+    .calendar-scroll::-webkit-scrollbar {
+      height: 6px;
+    }
+    .calendar-scroll::-webkit-scrollbar-track {
+      background: #F1F5F9;
+    }
+    .calendar-scroll::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-light-surface-soft text-light-on-surface font-body antialiased min-h-screen flex flex-col lg:flex-row pb-safe">
+
+  <!-- Mobile Backdrop Overlay for Drawer -->
+  <div id="sidebar-overlay" onclick="toggleSidebar(false)" class="hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-xs transition-opacity lg:hidden"></div>
+
+  <!-- Desktop Fixed & Mobile Slide-Out Sidebar Navigation -->
+  <aside id="sidebar-nav" class="fixed inset-y-0 left-0 z-50 w-64 bg-light-surface border-r border-light-outline-variant flex flex-col justify-between shrink-0 transform -translate-x-full transition-transform duration-200 lg:translate-x-0 lg:static lg:h-screen lg:sticky lg:top-0">
+    <div class="flex flex-col flex-1 overflow-y-auto">
+      
+      <!-- Brand Header -->
+      <div class="h-16 lg:h-20 px-5 lg:px-6 flex items-center justify-between border-b border-light-outline-variant shrink-0">
+        <a href="dashboard.html" class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-light-primary flex items-center justify-center text-light-on-primary font-headline font-bold text-headline-sm shadow-xs">
+            A
+          </div>
+          <div class="flex flex-col">
+            <span class="font-headline font-bold text-title-md tracking-tight text-brand-indigo">ARCI Bimbel</span>
+            <span class="text-[11px] text-light-on-surface-variant font-label">Dashboard Operasional</span>
+          </div>
+        </a>
+
+        <!-- Mobile Drawer Close Button -->
+        <button type="button" onclick="toggleSidebar(false)" class="lg:hidden p-1.5 rounded-lg text-light-on-surface-variant hover:bg-light-surface-container" aria-label="Tutup Menu">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="p-3.5 lg:p-4 flex flex-col gap-1">
+        <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">dashboard</span>
+          <span>Ringkasan</span>
+        </a>
+
+        <a href="leads.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">person_search</span>
+            <span>Lead &amp; Pipeline</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">8</span>
+        </a>
+
+        <a href="verifikasi-pendaftaran.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">how_to_reg</span>
+            <span>Pendaftaran</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">3</span>
+        </a>
+
+        <a href="students.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">school</span>
+            <span>Siswa &amp; Wali</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">184</span>
+        </a>
+
+        <a href="classes.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">class</span>
+          <span>Program &amp; Kelas</span>
+        </a>
+
+        <!-- Active Menu: Jadwal Sesi -->
+        <a href="schedule.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-light-primary text-light-on-primary font-label text-body-md shadow-xs transition-colors">
+          <span class="material-symbols-outlined text-[20px] text-accent">calendar_month</span>
+          <span class="font-semibold">Jadwal Sesi</span>
+        </a>
+
+        <a href="attendance.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">fact_check</span>
+          <span>Presensi Siswa</span>
+        </a>
+
+        <a href="finance.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">payments</span>
+            <span>Tagihan &amp; Kas</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">5 Baru</span>
+        </a>
+
+        <a href="communications.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">campaign</span>
+          <span>Komunikasi &amp; Broadcast</span>
+        </a>
+
+        <a href="settings.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">manage_accounts</span>
+          <span>Pengaturan &amp; Role</span>
+        </a>
+
+        <a href="reports.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">analytics</span>
+          <span>Laporan KPI</span>
+        </a>
+        <a href="cms.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">article</span>
+          <span>Konten Website</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- User Profile Footer -->
+    <div class="p-3.5 lg:p-4 border-t border-light-outline-variant shrink-0 bg-light-surface">
+      <div class="flex items-center justify-between p-2 rounded-lg hover:bg-light-surface-container transition-colors">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-light-primary text-light-on-primary flex items-center justify-center font-bold font-headline text-body-md shadow-2xs">
+            KA
+          </div>
+          <div class="flex flex-col">
+            <span class="text-body-sm font-semibold text-light-on-surface">Dewi Lestari</span>
+            <span class="text-[11px] text-light-on-surface-variant">Koordinator Akademik</span>
+          </div>
+        </div>
+        <a href="login-admin.html" title="Keluar / Logout" class="p-1.5 rounded-md text-light-on-surface-variant hover:text-danger hover:bg-danger/10 transition-colors">
+          <span class="material-symbols-outlined text-[18px]">logout</span>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div class="flex-1 flex flex-col min-w-0">
+    
+    <!-- Top Utility Bar (App Shell) -->
+    <header class="h-16 lg:h-20 bg-light-surface border-b border-light-outline-variant px-4 sm:px-6 lg:px-8 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
+      <div class="flex items-center gap-3 sm:gap-4 flex-1 max-w-md">
+        <!-- Mobile Drawer Toggle -->
+        <button type="button" onclick="toggleSidebar(true)" class="lg:hidden w-10 h-10 rounded-lg border border-light-outline flex items-center justify-center text-light-on-surface hover:bg-light-surface-container shrink-0" aria-label="Buka Menu Navigasi">
+          <span class="material-symbols-outlined text-[22px]">menu</span>
+        </button>
+
+        <div class="relative w-full">
+          <span class="material-symbols-outlined absolute left-3 top-2.5 text-light-on-surface-variant text-[20px]">search</span>
+          <input 
+            type="search" 
+            id="schedule-search"
+            oninput="handleSearch(this.value)"
+            placeholder="Cari tutor, ruang kelas, kode sesi, atau mata pelajaran..." 
+            class="w-full pl-10 pr-4 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface text-light-on-surface placeholder:text-light-on-surface-variant">
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3 ml-2">
+        <button type="button" aria-label="Notifikasi" onclick="showToast('Semua sesi kelas hari ini berjalan sesuai jadwal tanpa bentrok.', 'info')" class="relative w-10 h-10 rounded-lg border border-light-outline flex items-center justify-center text-light-on-surface hover:bg-light-surface-container transition-colors shrink-0">
+          <span class="material-symbols-outlined text-[20px]">notifications</span>
+          <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-danger ring-2 ring-light-surface"></span>
+        </button>
+        <button type="button" onclick="exportSchedulePDF()" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container font-label text-body-sm sm:text-body-md font-semibold transition-colors shadow-2xs">
+          <span class="material-symbols-outlined text-[18px] text-light-on-surface-variant">file_download</span>
+          <span class="hidden md:inline">Ekspor PDF</span>
+          <span class="md:hidden">PDF</span>
+        </button>
+        <button type="button" onclick="openPlotSessionModal()" class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm sm:text-body-md font-semibold shadow-xs transition-colors whitespace-nowrap min-h-[40px]">
+          <span class="material-symbols-outlined text-[18px]">add_circle</span>
+          <span>Plot Sesi Baru</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Operational Calendar Content -->
+    <main class="p-4 sm:p-6 lg:p-8 flex-1 flex flex-col gap-6">
+      
+      <!-- Top Title and Calendar Filter Bar -->
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 bg-light-surface p-5 rounded-2xl border border-light-outline-variant shadow-xs">
+        <div>
+          <div class="flex items-center gap-2 text-label-sm text-light-on-surface-variant">
+            <span>Operasional Akademik</span>
+            <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+            <span class="font-semibold text-light-primary">Jadwal Kalender Sesi (D6)</span>
+          </div>
+          <h1 class="text-headline-sm sm:text-headline-md font-headline font-bold text-light-on-surface mt-1">
+            Kalender Jadwal Sesi Kelas
+          </h1>
+          <p class="text-body-sm text-light-on-surface-variant mt-0.5">
+            Pemetaan waktu tutor, ruang kelas offline &amp; link Google Meet tanpa konflik bentrok.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
+          <!-- Branch Filter -->
+          <div class="flex items-center gap-2 bg-light-surface-soft px-3 py-1.5 rounded-xl border border-light-outline-variant shadow-2xs">
+            <span class="material-symbols-outlined text-[18px] text-light-on-surface-variant">domain</span>
+            <select 
+              id="branch-select"
+              onchange="filterBranch(this.value)"
+              class="bg-transparent border-none text-body-sm font-label text-light-on-surface focus:ring-0 cursor-pointer py-1 pl-1 pr-6">
+              <option value="all">Semua Cabang (Sudirman &amp; Online)</option>
+              <option value="sudirman" selected>Cabang Sudirman (Offline)</option>
+              <option value="online">Kelas Online (Zoom / GMeet)</option>
+              <option value="bsd">Cabang BSD Serpong</option>
+            </select>
+          </div>
+
+          <!-- Tutor Filter -->
+          <div class="flex items-center gap-2 bg-light-surface-soft px-3 py-1.5 rounded-xl border border-light-outline-variant shadow-2xs">
+            <span class="material-symbols-outlined text-[18px] text-light-on-surface-variant">badge</span>
+            <select 
+              id="tutor-select"
+              onchange="filterTutor(this.value)"
+              class="bg-transparent border-none text-body-sm font-label text-light-on-surface focus:ring-0 cursor-pointer py-1 pl-1 pr-6">
+              <option value="all">Semua Tutor (8 Pengajar)</option>
+              <option value="budi">Budi Pratama, S.Si (Fisika)</option>
+              <option value="siti">Siti Nurhaliza, M.Pd (Matematika)</option>
+              <option value="dimas">Dimas Anggara, S.Si (Kimia)</option>
+              <option value="sarah">Sarah Priscillia, M.Pd (B. Inggris)</option>
+            </select>
+          </div>
+
+          <!-- View Switcher -->
+          <div class="inline-flex p-1 bg-light-surface-container rounded-xl shadow-2xs">
+            <button type="button" id="btn-view-week" onclick="switchView('week')" class="px-3 py-1 rounded-lg text-body-sm font-semibold bg-light-surface text-light-primary shadow-xs transition-all">Mingguan</button>
+            <button type="button" id="btn-view-day" onclick="switchView('day')" class="px-3 py-1 rounded-lg text-body-sm font-label text-light-on-surface-variant hover:text-light-on-surface transition-all">Harian</button>
+            <button type="button" id="btn-view-month" onclick="switchView('month')" class="px-3 py-1 rounded-lg text-body-sm font-label text-light-on-surface-variant hover:text-light-on-surface transition-all">Bulanan</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Date Navigator & Quick Stats Banner -->
+      <div class="grid grid-cols-1 xl:grid-cols-4 gap-4">
+        <!-- Week Navigator -->
+        <div class="xl:col-span-3 bg-light-surface p-4 rounded-xl border border-light-outline-variant shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <div class="flex items-center gap-1">
+              <button type="button" onclick="navigateWeek(-1)" aria-label="Minggu sebelumnya" class="w-8 h-8 rounded-lg border border-light-outline flex items-center justify-center text-light-on-surface hover:bg-light-surface-container transition-colors shadow-2xs">
+                <span class="material-symbols-outlined text-[18px]">chevron_left</span>
+              </button>
+              <button type="button" onclick="navigateWeek(1)" aria-label="Minggu selanjutnya" class="w-8 h-8 rounded-lg border border-light-outline flex items-center justify-center text-light-on-surface hover:bg-light-surface-container transition-colors shadow-2xs">
+                <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+              </button>
+            </div>
+            <button type="button" onclick="navigateToday()" class="px-3 py-1 rounded-lg text-label-md font-semibold border border-light-outline hover:bg-light-surface-container whitespace-nowrap shrink-0 shadow-2xs transition-colors">
+              Hari Ini
+            </button>
+            <span id="active-week-label" class="font-headline font-bold text-title-md text-light-on-surface ml-1">17 — 22 November 2026</span>
+            <span class="px-2.5 py-0.5 rounded-full text-label-sm bg-success/15 text-success font-semibold flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-success"></span>
+              Bebas Bentrok Jadwal
+            </span>
+          </div>
+
+          <div class="flex items-center gap-4 text-body-sm font-label">
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-blue-100 border border-blue-400"></span> UTBK Intensif</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-emerald-100 border border-emerald-400"></span> Reguler SMA</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-purple-100 border border-purple-400"></span> Privat 1-on-1</span>
+          </div>
+        </div>
+
+        <!-- Metric pill -->
+        <div class="bg-light-surface p-4 rounded-xl border border-light-outline-variant shadow-xs flex items-center justify-between">
+          <div>
+            <div class="text-label-sm text-light-on-surface-variant font-medium">Total Sesi Minggu Ini</div>
+            <div class="text-headline-sm font-bold text-brand-indigo mt-0.5">38 Sesi Aktif</div>
+          </div>
+          <div class="text-right">
+            <div class="text-label-sm text-light-on-surface-variant font-medium">Kapasitas Ruang</div>
+            <div class="text-title-md font-bold text-success mt-0.5">82% Optimal</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Weekly Schedule Grid with Right Details Panel -->
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+        
+        <!-- Weekly Calendar Matrix (8 Columns on XL) -->
+        <div class="xl:col-span-8 bg-light-surface rounded-2xl border border-light-outline-variant shadow-xs overflow-hidden flex flex-col">
+          
+          <!-- Calendar Matrix Responsive Scroll Container -->
+          <div class="overflow-x-auto calendar-scroll">
+            <div class="min-w-[760px]">
+              
+              <!-- Calendar Days Header -->
+              <div class="grid grid-cols-7 border-b border-light-outline-variant bg-light-surface-container text-center text-label-sm font-bold text-light-on-surface">
+                <div class="p-3 text-body-sm text-light-on-surface border-r border-light-outline-variant">WAKTU</div>
+                <div class="p-3 border-r border-light-outline-variant">
+                  <div>Senin</div>
+                  <div class="text-label-sm font-normal text-light-on-surface-variant">17 Nov</div>
+                </div>
+                <div class="p-3 border-r border-light-outline-variant bg-light-primary-container/40 text-light-primary">
+                  <div class="font-bold">Selasa</div>
+                  <div class="text-label-sm font-semibold">18 Nov (Hari Ini)</div>
+                </div>
+                <div class="p-3 border-r border-light-outline-variant">
+                  <div>Rabu</div>
+                  <div class="text-label-sm font-normal text-light-on-surface-variant">19 Nov</div>
+                </div>
+                <div class="p-3 border-r border-light-outline-variant">
+                  <div>Kamis</div>
+                  <div class="text-label-sm font-normal text-light-on-surface-variant">20 Nov</div>
+                </div>
+                <div class="p-3 border-r border-light-outline-variant">
+                  <div>Jumat</div>
+                  <div class="text-label-sm font-normal text-light-on-surface-variant">21 Nov</div>
+                </div>
+                <div class="p-3">
+                  <div>Sabtu</div>
+                  <div class="text-label-sm font-normal text-light-on-surface-variant">22 Nov</div>
+                </div>
+              </div>
+
+              <!-- Time Slot Row 1: 14:00 - 15:30 -->
+              <div class="grid grid-cols-7 border-b border-light-outline-variant min-h-[130px]">
+                <div class="p-3 border-r border-light-outline-variant text-body-sm font-semibold text-light-on-surface bg-light-surface-soft flex flex-col justify-start">
+                  <span>14:00</span>
+                  <span class="text-[11px] text-light-on-surface-variant font-normal">15:30 WIB</span>
+                  <span class="mt-3 px-1.5 py-0.5 rounded text-[10px] bg-light-surface border border-light-outline text-light-on-surface text-center font-bold">Sesi 1</span>
+                </div>
+
+                <!-- Senin -->
+                <div class="p-2 border-r border-light-outline-variant bg-light-surface flex flex-col gap-1.5">
+                  <div onclick="selectSlot('ses-101')" class="p-2 rounded-lg bg-blue-50 border border-blue-200 hover:border-blue-400 hover:shadow-sm transition-all cursor-pointer text-left">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-bold text-blue-700 uppercase">SMA 10</span>
+                      <span class="material-symbols-outlined text-[14px] text-blue-600">room</span>
+                    </div>
+                    <div class="font-semibold text-body-sm text-blue-900 leading-tight mt-0.5">Matematika Wajib</div>
+                    <div class="text-[11px] text-blue-700 mt-1">Siti N. • R. Einstein</div>
+                    <div class="text-[10px] text-blue-600 mt-0.5 font-medium">12 Siswa Hadir</div>
+                  </div>
+                </div>
+
+                <!-- Selasa (Today - Active Selection) -->
+                <div class="p-2 border-r border-light-outline-variant bg-light-primary-container/20 flex flex-col gap-1.5 ring-2 ring-light-primary ring-inset rounded-sm">
+                  <div onclick="selectSlot('ses-102')" class="p-2 rounded-lg bg-emerald-50 border-2 border-emerald-500 shadow-sm cursor-pointer text-left">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-bold text-emerald-800 uppercase">UTBK 12-IPA</span>
+                      <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    </div>
+                    <div class="font-bold text-body-sm text-emerald-950 leading-tight mt-0.5">Fisika: Gelombang &amp; Optik</div>
+                    <div class="text-[11px] text-emerald-800 mt-1 font-medium">Budi P. • Lab Newton</div>
+                    <div class="mt-1 flex items-center justify-between text-[10px] text-emerald-700 font-semibold">
+                      <span>14 / 15 Kursi</span>
+                      <span class="bg-emerald-200 px-1.5 py-0.2 rounded text-emerald-900 font-bold">Aktif</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Rabu -->
+                <div class="p-2 border-r border-light-outline-variant bg-light-surface flex flex-col gap-1.5">
+                  <div onclick="selectSlot('ses-103')" class="p-2 rounded-lg bg-purple-50 border border-purple-200 hover:border-purple-400 hover:shadow-sm transition-all cursor-pointer text-left">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-bold text-purple-700 uppercase">PRIVAT</span>
+                      <span class="material-symbols-outlined text-[14px] text-purple-600">videocam</span>
+                    </div>
+                    <div class="font-semibold text-body-sm text-purple-900 leading-tight mt-0.5">Kimia Organik (Aiko)</div>
+                    <div class="text-[11px] text-purple-700 mt-1">Dimas A. • GMeet</div>
+                    <div class="text-[10px] text-purple-600 mt-0.5">Online VIP</div>
+                  </div>
+                </div>
+
+                <!-- Kamis -->
+                <div class="p-2 border-r border-light-outline-variant bg-light-surface flex flex-col gap-1.5">
+                  <div onclick="selectSlot('ses-104')" class="p-2 rounded-lg bg-blue-50 border border-blue-200 hover:border-blue-400 hover:shadow-sm transition-all cursor-pointer text-left">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-bold text-blue-700 uppercase">SMP 9</span>
+                      <span class="material-symbols-outlined text-[14px] text-blue-600">room</span>
+                    </div>
+                    <div class="font-semibold text-body-sm text-blue-900 leading-tight mt-0.5">IPA Terpadu</div>
+                    <div class="text-[11px] text-blue-700 mt-1">Dewi L. • R. Galileo</div>
+                    <div class="text-[10px] text-blue-600 mt-0.5">10 Siswa</div>
+                  </div>
+                </div>
+
+                <!-- Jumat -->
+                <div class="p-2 border-r border-light-outline-variant bg-light-surface flex flex-col justify-center items-center text-center p-3">
+                  <span class="text-[11px] text-light-on-surface-variant italic">Istirahat / Sholat Jumat</span>
+                </div>
+
+                <!-- Sabtu -->
+                <div class="p-2 bg-light-surface flex flex-col gap-1.5">
+                  <div onclick="selectSlot('ses-105')" class="p-2 rounded-lg bg-amber-50 border border-amber-200 hover:border-amber-400 hover:shadow-sm transition-all cursor-pointer text-left">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-bold text-amber-800 uppercase">TRYOUT #4</span>
+                      <span class="material-symbols-outlined text-[14px] text-amber-700">timer</span>
+                    </div>
+                    <div class="font-semibold text-body-sm text-amber-950 leading-tight mt-0.5">Simulasi UTBK SNBT</div>
+                    <div class="text-[11px] text-amber-800 mt-1">Aula Sudirman Utama</div>
+                    <div class="text-[10px] text-amber-700 mt-0.5 font-bold">42 Siswa Terdaftar</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Time Slot Row 2: 16:00 - 17:30 -->
+              <div class="grid grid-cols-7 border-b border-light-outline-variant min-h-[130px]">
+                <div class="p-3 border-r border-light-outline-variant text-body-sm font-semibold text-light-on-surface bg-light-surface-soft flex flex-col justify-start">
+                  <span>16:00</span>
+                  <span class="text-[11px] text-light-on-surface-variant font-normal">17:30 WIB</span>
+                  <span class="mt-3 px-1.5 py-0.5 rounded text-[10px] bg-light-surface border border-light-outline text-light-on-surface text-center font-bold">Sesi 2</span>
+                </div>
+
+                <!-- Senin -->
+                <div class="p-2 border-r border-light-outline-variant bg-light-surface flex flex-col gap-1.5">
+                  <div onclick="selectSlot('ses-201')" class="p-2 rounded-lg bg-emerald-50 border border-emerald-200 hover:border-emerald-400 hover:shadow-sm transition-all cursor-pointer text-left">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-bold text-emerald-800 uppercase">SMA 11-IPA</span>
+                      <span class="material-symbols-outlined text-[14px] text-emerald-600">room</span>
+                    </div>
+                    <div class="font-semibold text-body-sm text-emerald-900 leading-tight mt-0.5">Biologi Seluler</div>
+                    <div class="text-[11px] text-emerald-800 mt-1">Rian H. • R. Pasteur</div>
+                    <div class="text-[10px] text-emerald-700 mt-0.5">14 Siswa</div>
+                  </div>
+                </div>
+
+                <!-- Selasa -->
+                <div class="p-2 border-r border-light-outline-variant bg-light-primary-container/20 flex flex-col gap-1.5">
+                  <div onclick="selectSlot('ses-202')" class="p-2 rounded-lg bg-blue-50 border border-blue-200 hover:border-blue-400 hover:shadow-sm transition-all cursor-pointer text-left">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-bold text-blue-700 uppercase">SMA 12-IPS</span>
+                      <span class="material-symbols-outlined text-[14px] text-blue-600">room</span>
+                    </div>
+                    <div class="font-semibold text-body-sm text-blue-900 leading-tight mt-0.5">Ekonomi Makro</div>
+                    <div class="text-[11px] text-blue-700 mt-1">Rina K. • R. Adam Smith</div>
+                    <div class="text-[10px] text-blue-600 mt-0.5 font-medium">11 Siswa</div>
+                  </div>
+                </div>
+
+                <!-- Rabu -->
+                <div class="p-2 border-r border-light-outline-variant bg-light-surface flex flex-col gap-1.5">
+                  <div onclick="selectSlot('ses-203')" class="p-2 rounded-lg bg-emerald-50 border border-emerald-200 hover:border-emerald-400 hover:shadow-sm transition-all cursor-pointer text-left">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-bold text-emerald-800 uppercase">UTBK 12-IPA</span>
+                      <span class="material-symbols-outlined text-[14px] text-emerald-600">room</span>
+                    </div>
+                    <div class="font-semibold text-body-sm text-emerald-900 leading-tight mt-0.5">TPS Penalaran Umum</div>
+                    <div class="text-[11px] text-emerald-800 mt-1">Budi P. • Lab Newton</div>
+                    <div class="text-[10px] text-emerald-700 mt-0.5 font-semibold text-danger">15 Siswa (Penuh)</div>
+                  </div>
+                </div>
+
+                <!-- Kamis -->
+                <div class="p-2 border-r border-light-outline-variant bg-light-surface flex flex-col gap-1.5">
+                  <div onclick="selectSlot('ses-204')" class="p-2 rounded-lg bg-purple-50 border border-purple-200 hover:border-purple-400 hover:shadow-sm transition-all cursor-pointer text-left">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-bold text-purple-700 uppercase">PRIVAT</span>
+                      <span class="material-symbols-outlined text-[14px] text-purple-600">room</span>
+                    </div>
+                    <div class="font-semibold text-body-sm text-purple-900 leading-tight mt-0.5">Matematika Lanjut</div>
+                    <div class="text-[11px] text-purple-700 mt-1">Siti N. • Studio VIP 1</div>
+                    <div class="text-[10px] text-purple-600 mt-0.5">Siswa: Farhan Rizky</div>
+                  </div>
+                </div>
+
+                <!-- Jumat -->
+                <div class="p-2 border-r border-light-outline-variant bg-light-surface flex flex-col gap-1.5">
+                  <div onclick="selectSlot('ses-205')" class="p-2 rounded-lg bg-blue-50 border border-blue-200 hover:border-blue-400 hover:shadow-sm transition-all cursor-pointer text-left">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-bold text-blue-700 uppercase">SMP 8</span>
+                      <span class="material-symbols-outlined text-[14px] text-blue-600">room</span>
+                    </div>
+                    <div class="font-semibold text-body-sm text-blue-900 leading-tight mt-0.5">Bahasa Inggris Grammar</div>
+                    <div class="text-[11px] text-blue-700 mt-1">Sarah P. • R. Shakespeare</div>
+                    <div class="text-[10px] text-blue-600 mt-0.5">12 Siswa</div>
+                  </div>
+                </div>
+
+                <!-- Sabtu -->
+                <div class="p-2 bg-light-surface flex flex-col gap-1.5">
+                  <div onclick="selectSlot('ses-206')" class="p-2 rounded-lg bg-emerald-50 border border-emerald-200 hover:border-emerald-400 hover:shadow-sm transition-all cursor-pointer text-left">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-bold text-emerald-800 uppercase">KONSULTASI</span>
+                      <span class="material-symbols-outlined text-[14px] text-emerald-600">diversity_3</span>
+                    </div>
+                    <div class="font-semibold text-body-sm text-emerald-900 leading-tight mt-0.5">Bedah Soal Mandiri</div>
+                    <div class="text-[11px] text-emerald-800 mt-1">Budi P. &amp; Siti N.</div>
+                    <div class="text-[10px] text-emerald-700 mt-0.5">Ruang Belajar Bersama</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Time Slot Row 3: 19:00 - 20:30 -->
+              <div class="grid grid-cols-7 border-b border-light-outline-variant min-h-[130px]">
+                <div class="p-3 border-r border-light-outline-variant text-body-sm font-semibold text-light-on-surface bg-light-surface-soft flex flex-col justify-start">
+                  <span>19:00</span>
+                  <span class="text-[11px] text-light-on-surface-variant font-normal">20:30 WIB</span>
+                  <span class="mt-3 px-1.5 py-0.5 rounded text-[10px] bg-light-surface border border-light-outline text-light-on-surface text-center font-bold">Sesi Malam</span>
+                </div>
+
+                <!-- Senin -->
+                <div class="p-2 border-r border-light-outline-variant bg-light-surface flex flex-col gap-1.5">
+                  <div onclick="selectSlot('ses-301')" class="p-2 rounded-lg bg-purple-50 border border-purple-200 hover:border-purple-400 hover:shadow-sm transition-all cursor-pointer text-left">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-bold text-purple-700 uppercase">ONLINE</span>
+                      <span class="material-symbols-outlined text-[14px] text-purple-600">videocam</span>
+                    </div>
+                    <div class="font-semibold text-body-sm text-purple-900 leading-tight mt-0.5">Drilling Kimia SNBT</div>
+                    <div class="text-[11px] text-purple-700 mt-1">Dimas A. • Zoom Cloud</div>
+                    <div class="text-[10px] text-purple-600 mt-0.5 font-medium">28 Peserta Live</div>
+                  </div>
+                </div>
+
+                <!-- Selasa -->
+                <div class="p-2 border-r border-light-outline-variant bg-light-primary-container/20 flex flex-col gap-1.5">
+                  <div onclick="selectSlot('ses-302')" class="p-2 rounded-lg bg-blue-50 border border-blue-200 hover:border-blue-400 hover:shadow-sm transition-all cursor-pointer text-left">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-bold text-blue-700 uppercase">ONLINE</span>
+                      <span class="material-symbols-outlined text-[14px] text-blue-600">videocam</span>
+                    </div>
+                    <div class="font-semibold text-body-sm text-blue-900 leading-tight mt-0.5">Literasi Bahasa Inggris</div>
+                    <div class="text-[11px] text-blue-700 mt-1">Sarah P. • Google Meet</div>
+                    <div class="text-[10px] text-blue-600 mt-0.5 font-medium">22 Peserta Live</div>
+                  </div>
+                </div>
+
+                <!-- Rabu -->
+                <div class="p-2 border-r border-light-outline-variant bg-light-surface flex flex-col gap-1.5">
+                  <div onclick="selectSlot('ses-303')" class="p-2 rounded-lg bg-emerald-50 border border-emerald-200 hover:border-emerald-400 hover:shadow-sm transition-all cursor-pointer text-left">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-bold text-emerald-800 uppercase">ONLINE</span>
+                      <span class="material-symbols-outlined text-[14px] text-emerald-600">videocam</span>
+                    </div>
+                    <div class="font-semibold text-body-sm text-emerald-900 leading-tight mt-0.5">TPS Kuantitatif Kilat</div>
+                    <div class="text-[11px] text-emerald-800 mt-1">Siti N. • Zoom Pro</div>
+                    <div class="text-[10px] text-emerald-700 mt-0.5 font-medium">34 Peserta Live</div>
+                  </div>
+                </div>
+
+                <!-- Kamis -->
+                <div class="p-2 border-r border-light-outline-variant bg-light-surface flex flex-col gap-1.5">
+                  <div onclick="selectSlot('ses-304')" class="p-2 rounded-lg bg-purple-50 border border-purple-200 hover:border-purple-400 hover:shadow-sm transition-all cursor-pointer text-left">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-bold text-purple-700 uppercase">ONLINE</span>
+                      <span class="material-symbols-outlined text-[14px] text-purple-600">videocam</span>
+                    </div>
+                    <div class="font-semibold text-body-sm text-purple-900 leading-tight mt-0.5">Fisika Modern UTBK</div>
+                    <div class="text-[11px] text-purple-700 mt-1">Budi P. • Zoom Cloud</div>
+                    <div class="text-[10px] text-purple-600 mt-0.5 font-medium">25 Peserta Live</div>
+                  </div>
+                </div>
+
+                <!-- Jumat -->
+                <div class="p-2 border-r border-light-outline-variant bg-light-surface flex flex-col justify-center items-center text-center p-3">
+                  <span class="text-[11px] text-light-on-surface-variant italic">Sesi Mandiri / Libur Malam</span>
+                </div>
+
+                <!-- Sabtu -->
+                <div class="p-2 bg-light-surface flex flex-col justify-center items-center text-center p-3">
+                  <span class="text-[11px] text-light-on-surface-variant italic">Jadwal Kosong</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Calendar Table Footer Note -->
+          <div class="p-3.5 bg-light-surface-container border-t border-light-outline-variant flex flex-col sm:flex-row items-center justify-between gap-2 text-body-sm text-light-on-surface-variant">
+            <span class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[16px] text-success">check_circle</span>
+              <span>Sistem otomatis memverifikasi bentrok tutor, alokasi ruang fisik, dan lisensi room meeting online.</span>
+            </span>
+            <span class="font-semibold text-light-on-surface text-[12px]">Zona Waktu: Asia/Jakarta (WIB)</span>
+          </div>
+        </div>
+
+        <!-- Right Side: Selected Session Inspector & Quick Actions (4 Columns on XL) -->
+        <div class="xl:col-span-4 flex flex-col gap-5">
+          
+          <!-- Selected Session Card -->
+          <div id="inspector-card" class="bg-light-surface rounded-2xl border border-light-outline-variant p-5 sm:p-6 shadow-xs flex flex-col gap-5 sticky top-24">
+            <div class="flex items-center justify-between border-b border-light-outline-variant pb-4">
+              <div>
+                <span id="inspector-tag" class="px-2.5 py-0.5 rounded-full text-label-sm font-bold bg-emerald-100 text-emerald-800">SESI HARI INI</span>
+                <h2 class="font-headline font-bold text-title-lg text-light-on-surface mt-1.5">Detail Sesi</h2>
+              </div>
+              <span id="inspector-status-badge" class="px-3 py-1 rounded-lg text-label-sm font-semibold bg-success/15 text-success">
+                Sedang Berlangsung
+              </span>
+            </div>
+
+            <!-- Session Meta -->
+            <div class="flex flex-col gap-3">
+              <div class="p-3.5 bg-light-surface-soft rounded-xl border border-light-outline-variant flex flex-col gap-1">
+                <span class="text-label-sm text-light-on-surface-variant font-medium">Mata Pelajaran &amp; Program</span>
+                <span id="inspector-title" class="font-headline font-bold text-title-md text-brand-indigo">Fisika: Gelombang &amp; Optik</span>
+                <span id="inspector-program" class="text-body-sm text-light-on-surface">Program: UTBK SNBT Intensif 2026 (Kelas 12-IPA)</span>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3">
+                <div class="p-3 bg-light-surface-container rounded-xl">
+                  <div class="text-label-sm text-light-on-surface-variant font-medium">Jadwal &amp; Durasi</div>
+                  <div id="inspector-time" class="text-body-sm font-bold text-light-on-surface mt-0.5">14:00 - 15:30 WIB</div>
+                  <div id="inspector-duration" class="text-[11px] text-light-on-surface-variant">90 Menit Tatap Muka</div>
+                </div>
+                <div class="p-3 bg-light-surface-container rounded-xl">
+                  <div class="text-label-sm text-light-on-surface-variant font-medium">Lokasi &amp; Ruangan</div>
+                  <div id="inspector-room" class="text-body-sm font-bold text-light-on-surface mt-0.5">Lab Newton (Lt. 2)</div>
+                  <div id="inspector-branch" class="text-[11px] text-light-on-surface-variant">Cabang Sudirman</div>
+                </div>
+              </div>
+
+              <!-- Tutor Info -->
+              <div class="flex items-center gap-3 p-3 bg-light-surface-container rounded-xl">
+                <div id="inspector-tutor-avatar" class="w-10 h-10 rounded-full bg-light-primary text-light-on-primary flex items-center justify-center font-bold font-headline text-body-md shrink-0 shadow-2xs">
+                  BP
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div id="inspector-tutor-name" class="text-body-sm font-bold text-light-on-surface truncate">Budi Pratama, S.Si</div>
+                  <div id="inspector-tutor-phone" class="text-[11px] text-light-on-surface-variant truncate">Tutor Utama Fisika • 0812-9900-1122</div>
+                </div>
+                <span id="inspector-tutor-status" class="px-2 py-0.5 rounded text-[10px] font-semibold bg-success/15 text-success whitespace-nowrap">Siap</span>
+              </div>
+
+              <!-- Attendance & Roster preview -->
+              <div class="p-3.5 rounded-xl border border-light-outline-variant flex flex-col gap-2">
+                <div class="flex items-center justify-between text-body-sm">
+                  <span class="font-semibold text-light-on-surface">Kapasitas Kursi Siswa</span>
+                  <span id="inspector-capacity-label" class="font-bold text-brand-indigo">14 / 15 Siswa</span>
+                </div>
+                <div class="w-full bg-light-surface-container rounded-full h-2 overflow-hidden">
+                  <div id="inspector-capacity-bar" class="bg-light-primary h-2 rounded-full transition-all duration-300" style="width: 93%;"></div>
+                </div>
+                <div class="flex items-center justify-between text-[11px] text-light-on-surface pt-1">
+                  <span id="inspector-attendance-summary" class="text-light-on-surface-variant">Presensi Sesi: 12 Hadir, 2 Menunggu</span>
+                  <a href="attendance-mobile.html" class="text-light-primary font-semibold hover:underline flex items-center gap-0.5">
+                    <span>Input Presensi</span>
+                    <span class="material-symbols-outlined text-[13px]">open_in_new</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Conflict Detector Check -->
+              <div class="p-3 rounded-xl bg-success/10 border border-success/30 flex items-start gap-2.5">
+                <span class="material-symbols-outlined text-success text-[18px] mt-0.5">verified</span>
+                <div>
+                  <div class="text-body-sm font-bold text-success">Status Bebas Konflik (Conflict-Free)</div>
+                  <div class="text-[11px] text-light-on-surface-variant">Tutor dan ruangan tidak memiliki jadwal tumpang tindih pada jam yang sama.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Buttons for Selected Session -->
+            <div class="flex flex-col gap-2 pt-2 border-t border-light-outline-variant">
+              <button type="button" onclick="openRescheduleModal()" class="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-md font-semibold shadow-xs transition-colors">
+                <span class="material-symbols-outlined text-[18px]">edit_calendar</span>
+                <span>Ubah Waktu &amp; Ruangan</span>
+              </button>
+              <div class="grid grid-cols-2 gap-2">
+                <button type="button" onclick="sendWANotification()" class="inline-flex items-center justify-center gap-1.5 py-2 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container font-label text-body-sm font-semibold transition-colors shadow-2xs">
+                  <span class="material-symbols-outlined text-[16px] text-success">notifications_active</span>
+                  <span>Notifikasi WA</span>
+                </button>
+                <button type="button" onclick="openCancelModal()" class="inline-flex items-center justify-center gap-1.5 py-2 rounded-lg border border-danger/40 text-danger hover:bg-danger/10 font-label text-body-sm font-semibold transition-colors shadow-2xs">
+                  <span class="material-symbols-outlined text-[16px]">cancel</span>
+                  <span>Batalkan Sesi</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Room Availability Widget -->
+          <div class="bg-light-surface rounded-2xl border border-light-outline-variant p-5 shadow-xs flex flex-col gap-3">
+            <h3 class="font-headline font-bold text-title-md text-light-on-surface flex items-center justify-between">
+              <span>Status Ketersediaan Ruang (Sudirman)</span>
+              <span class="text-label-sm text-light-primary font-normal">Real-time</span>
+            </h3>
+
+            <div class="flex flex-col gap-2 text-body-sm">
+              <div class="flex items-center justify-between p-2.5 rounded-lg bg-light-surface-soft border border-light-outline-variant">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-danger animate-pulse"></span>
+                  <span class="font-semibold text-light-on-surface">Lab Newton (Kapasitas 16)</span>
+                </div>
+                <span class="text-danger font-semibold text-[12px]">Dipakai (14:00 - 15:30)</span>
+              </div>
+
+              <div class="flex items-center justify-between p-2.5 rounded-lg bg-light-surface-soft border border-light-outline-variant">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-success"></span>
+                  <span class="font-semibold text-light-on-surface">R. Galileo (Kapasitas 12)</span>
+                </div>
+                <span class="text-success font-semibold text-[12px]">Tersedia Sekarang</span>
+              </div>
+
+              <div class="flex items-center justify-between p-2.5 rounded-lg bg-light-surface-soft border border-light-outline-variant">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-success"></span>
+                  <span class="font-semibold text-light-on-surface">Studio VIP 1 (Kapasitas 4)</span>
+                </div>
+                <span class="text-success font-semibold text-[12px]">Tersedia Sekarang</span>
+              </div>
+
+              <div class="flex items-center justify-between p-2.5 rounded-lg bg-light-surface-soft border border-light-outline-variant">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-success"></span>
+                  <span class="font-semibold text-light-on-surface">Akun Zoom Pro 1 &amp; 2</span>
+                </div>
+                <span class="text-success font-semibold text-[12px]">Siap Digunakan</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 1: PLOT SESI BARU (D6)                                  -->
+  <!-- ============================================================== -->
+  <div id="modal-plot-session" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+    <div class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-2xl max-w-lg w-full overflow-hidden flex flex-col max-h-[92vh]">
+      <div class="px-6 py-4 border-b border-light-outline-variant flex items-center justify-between bg-light-surface-soft">
+        <div class="flex items-center gap-2 text-brand-indigo">
+          <span class="material-symbols-outlined text-[22px]">add_circle</span>
+          <h3 class="font-headline font-bold text-title-md text-light-on-surface">Plot Sesi Kelas Baru</h3>
+        </div>
+        <button type="button" onclick="closePlotSessionModal()" class="text-light-on-surface-variant hover:text-light-on-surface p-1 rounded-lg hover:bg-light-surface-container">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <form id="form-plot-session" onsubmit="submitPlotSession(event)" class="p-6 overflow-y-auto space-y-4">
+        <div>
+          <label for="plot-program" class="block text-body-sm font-semibold text-light-on-surface mb-1">Program Belajar *</label>
+          <select id="plot-program" required class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">
+            <option value="UTBK SNBT Intensif 2026">UTBK SNBT Intensif 2026 (Kelas 12-IPA)</option>
+            <option value="Reguler SMA 12-IPS">Reguler SMA 12-IPS</option>
+            <option value="Reguler SMA 11-IPA">Reguler SMA 11-IPA</option>
+            <option value="Reguler SMP 9">Reguler SMP 9 (Persiapan Masuk SMA)</option>
+            <option value="Privat VIP 1-on-1">Privat VIP 1-on-1</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="plot-subject" class="block text-body-sm font-semibold text-light-on-surface mb-1">Mata Pelajaran &amp; Materi *</label>
+          <input type="text" id="plot-subject" required placeholder="Contoh: Fisika — Termodinamika & Gas Ideal" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="plot-tutor" class="block text-body-sm font-semibold text-light-on-surface mb-1">Tutor Pengampu *</label>
+            <select id="plot-tutor" required class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">
+              <option value="Budi Pratama, S.Si">Budi Pratama, S.Si (Fisika)</option>
+              <option value="Siti Nurhaliza, M.Pd">Siti Nurhaliza, M.Pd (Matematika)</option>
+              <option value="Dimas Anggara, S.Si">Dimas Anggara, S.Si (Kimia)</option>
+              <option value="Sarah Priscillia, M.Pd">Sarah Priscillia, M.Pd (B. Inggris)</option>
+              <option value="Rian Hidayat, M.Si">Rian Hidayat, M.Si (Biologi)</option>
+            </select>
+          </div>
+          <div>
+            <label for="plot-room" class="block text-body-sm font-semibold text-light-on-surface mb-1">Ruang / Platform *</label>
+            <select id="plot-room" required class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">
+              <option value="Lab Newton (Sudirman)">Lab Newton (Sudirman, Max 16)</option>
+              <option value="R. Galileo (Sudirman)">R. Galileo (Sudirman, Max 12)</option>
+              <option value="R. Einstein (Sudirman)">R. Einstein (Sudirman, Max 15)</option>
+              <option value="Studio VIP 1">Studio VIP 1 (Sudirman, Max 4)</option>
+              <option value="Zoom Pro Cloud">Zoom Pro Meeting (Online)</option>
+              <option value="Google Meet Room 2">Google Meet Room 2 (Online)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label for="plot-day" class="block text-body-sm font-semibold text-light-on-surface mb-1">Hari *</label>
+            <select id="plot-day" required class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">
+              <option value="Senin">Senin</option>
+              <option value="Selasa">Selasa</option>
+              <option value="Rabu">Rabu</option>
+              <option value="Kamis">Kamis</option>
+              <option value="Jumat">Jumat</option>
+              <option value="Sabtu">Sabtu</option>
+            </select>
+          </div>
+          <div>
+            <label for="plot-start-time" class="block text-body-sm font-semibold text-light-on-surface mb-1">Mulai *</label>
+            <input type="time" id="plot-start-time" required value="14:00" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">
+          </div>
+          <div>
+            <label for="plot-end-time" class="block text-body-sm font-semibold text-light-on-surface mb-1">Selesai *</label>
+            <input type="time" id="plot-end-time" required value="15:30" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">
+          </div>
+        </div>
+
+        <!-- Realtime Clash Detector Warning Card -->
+        <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center gap-2 text-emerald-800 text-[12px]">
+          <span class="material-symbols-outlined text-[18px] text-emerald-600 shrink-0">check_circle</span>
+          <span>Ruangan dan Tutor terkonfirmasi tersedia tanpa bentrok dengan 38 sesi yang sudah ada.</span>
+        </div>
+
+        <div class="pt-3 border-t border-light-outline-variant flex items-center justify-end gap-3">
+          <button type="button" onclick="closePlotSessionModal()" class="px-4 py-2 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container text-body-sm font-semibold">
+            Batal
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm font-bold shadow-xs">
+            Simpan Jadwal Sesi
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 2: UBAH WAKTU & RUANGAN (RESCHEDULE)                     -->
+  <!-- ============================================================== -->
+  <div id="modal-reschedule" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+    <div class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-2xl max-w-md w-full overflow-hidden flex flex-col">
+      <div class="px-6 py-4 border-b border-light-outline-variant flex items-center justify-between bg-light-surface-soft">
+        <div class="flex items-center gap-2 text-brand-indigo">
+          <span class="material-symbols-outlined text-[22px]">edit_calendar</span>
+          <h3 class="font-headline font-bold text-title-md text-light-on-surface">Ubah Waktu &amp; Ruangan</h3>
+        </div>
+        <button type="button" onclick="closeRescheduleModal()" class="text-light-on-surface-variant hover:text-light-on-surface p-1 rounded-lg hover:bg-light-surface-container">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <form id="form-reschedule" onsubmit="submitReschedule(event)" class="p-6 space-y-4">
+        <div>
+          <label class="block text-body-sm font-semibold text-light-on-surface mb-1">Sesi Aktif</label>
+          <input type="text" id="reschedule-session-name" readonly value="UTBK 12-IPA — Fisika: Gelombang & Optik" class="w-full px-3.5 py-2 rounded-lg border border-light-outline bg-light-surface-container text-body-sm font-bold text-light-on-surface">
+        </div>
+
+        <div>
+          <label for="reschedule-room" class="block text-body-sm font-semibold text-light-on-surface mb-1">Pilih Ruangan Pengganti</label>
+          <select id="reschedule-room" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">
+            <option value="Lab Newton (Lt. 2)">Lab Newton (Lt. 2) — Sudirman</option>
+            <option value="R. Einstein (Lt. 1)">R. Einstein (Lt. 1) — Sudirman</option>
+            <option value="Studio VIP 1">Studio VIP 1 — Sudirman</option>
+            <option value="Google Meet Room 1">Google Meet Room 1 (Online)</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="reschedule-start" class="block text-body-sm font-semibold text-light-on-surface mb-1">Jam Mulai</label>
+            <input type="time" id="reschedule-start" value="14:00" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md bg-light-surface text-light-on-surface">
+          </div>
+          <div>
+            <label for="reschedule-end" class="block text-body-sm font-semibold text-light-on-surface mb-1">Jam Selesai</label>
+            <input type="time" id="reschedule-end" value="15:30" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md bg-light-surface text-light-on-surface">
+          </div>
+        </div>
+
+        <div>
+          <label for="reschedule-reason" class="block text-body-sm font-semibold text-light-on-surface mb-1">Alasan Perubahan Jadwal *</label>
+          <textarea id="reschedule-reason" required rows="2" placeholder="Contoh: Pemeliharaan proyektor di Lab Newton..." class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md bg-light-surface text-light-on-surface"></textarea>
+        </div>
+
+        <div class="pt-3 border-t border-light-outline-variant flex items-center justify-end gap-3">
+          <button type="button" onclick="closeRescheduleModal()" class="px-4 py-2 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container text-body-sm font-semibold">
+            Batal
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm font-bold shadow-xs">
+            Konfirmasi Perubahan
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 3: BATALKAN SESI                                         -->
+  <!-- ============================================================== -->
+  <div id="modal-cancel-session" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+    <div class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-2xl max-w-sm w-full overflow-hidden p-6 text-center">
+      <div class="w-12 h-12 rounded-full bg-danger/10 text-danger flex items-center justify-center mx-auto mb-3">
+        <span class="material-symbols-outlined text-[28px]">warning</span>
+      </div>
+      <h3 class="font-headline font-bold text-title-lg text-light-on-surface">Batalkan Sesi Kelas?</h3>
+      <p class="text-body-sm text-light-on-surface-variant mt-1.5 leading-relaxed">
+        Sesi yang dibatalkan akan otomatis membebaskan alokasi ruangan dan mengirimkan notifikasi penundaan kepada 14 siswa &amp; orang tua melalui WhatsApp.
+      </p>
+
+      <div class="mt-6 flex items-center justify-center gap-3">
+        <button type="button" onclick="closeCancelModal()" class="flex-1 py-2 rounded-xl border border-light-outline text-light-on-surface hover:bg-light-surface-container text-body-sm font-semibold">
+          Kembali
+        </button>
+        <button type="button" onclick="confirmCancelSession()" class="flex-1 py-2 rounded-xl bg-danger text-on-danger hover:bg-red-700 font-label text-body-sm font-bold shadow-xs">
+          Ya, Batalkan
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-full"></div>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    // Database of sessions displayed in calendar
+    const sessionData = {
+      'ses-101': {
+        title: 'Matematika Wajib (Trigonometri)',
+        program: 'Reguler SMA Kelas 10',
+        tag: 'SENIN • SESI 1',
+        tagClass: 'bg-blue-100 text-blue-800',
+        status: 'Selesai',
+        statusClass: 'bg-light-surface-container text-light-on-surface',
+        time: '14:00 - 15:30 WIB',
+        duration: '90 Menit Tatap Muka',
+        room: 'R. Einstein (Lt. 1)',
+        branch: 'Cabang Sudirman',
+        tutorName: 'Siti Nurhaliza, M.Pd',
+        tutorPhone: 'Tutor Matematika • 0812-9900-3344',
+        tutorInitials: 'SN',
+        capacityCurrent: 12,
+        capacityMax: 16,
+        capacityPercent: 75,
+        attendanceSummary: 'Presensi Sesi: 12 Hadir Lengkap (100%)'
+      },
+      'ses-102': {
+        title: 'Fisika: Gelombang & Optik',
+        program: 'Program: UTBK SNBT Intensif 2026 (Kelas 12-IPA)',
+        tag: 'SESI HARI INI',
+        tagClass: 'bg-emerald-100 text-emerald-800',
+        status: 'Sedang Berlangsung',
+        statusClass: 'bg-success/15 text-success',
+        time: '14:00 - 15:30 WIB',
+        duration: '90 Menit Tatap Muka',
+        room: 'Lab Newton (Lt. 2)',
+        branch: 'Cabang Sudirman',
+        tutorName: 'Budi Pratama, S.Si',
+        tutorPhone: 'Tutor Utama Fisika • 0812-9900-1122',
+        tutorInitials: 'BP',
+        capacityCurrent: 14,
+        capacityMax: 15,
+        capacityPercent: 93,
+        attendanceSummary: 'Presensi Sesi: 12 Hadir, 2 Menunggu'
+      },
+      'ses-103': {
+        title: 'Kimia Organik (Aiko)',
+        program: 'Program: Privat 1-on-1 Intensif',
+        tag: 'RABU • VIP',
+        tagClass: 'bg-purple-100 text-purple-800',
+        status: 'Terjadwal',
+        statusClass: 'bg-purple-100 text-purple-800',
+        time: '14:00 - 15:30 WIB',
+        duration: '90 Menit Online Live',
+        room: 'Google Meet VIP Room',
+        branch: 'Kelas Online VIP',
+        tutorName: 'Dimas Anggara, S.Si',
+        tutorPhone: 'Tutor Kimia • 0812-9900-5566',
+        tutorInitials: 'DA',
+        capacityCurrent: 1,
+        capacityMax: 1,
+        capacityPercent: 100,
+        attendanceSummary: 'Presensi Sesi: 1 Siswa Terdaftar'
+      },
+      'ses-104': {
+        title: 'IPA Terpadu (Fisika Mekanika)',
+        program: 'Reguler SMP Kelas 9',
+        tag: 'KAMIS • SESI 1',
+        tagClass: 'bg-blue-100 text-blue-800',
+        status: 'Terjadwal',
+        statusClass: 'bg-blue-100 text-blue-800',
+        time: '14:00 - 15:30 WIB',
+        duration: '90 Menit Tatap Muka',
+        room: 'R. Galileo (Lt. 1)',
+        branch: 'Cabang Sudirman',
+        tutorName: 'Dewi Lestari, S.Pd',
+        tutorPhone: 'Tutor IPA • 0812-9900-7788',
+        tutorInitials: 'DL',
+        capacityCurrent: 10,
+        capacityMax: 12,
+        capacityPercent: 83,
+        attendanceSummary: 'Presensi Sesi: 10 Siswa Terdaftar'
+      },
+      'ses-105': {
+        title: 'Simulasi UTBK SNBT (Tryout #4)',
+        program: 'Tryout Akbar Seluruh Batch UTBK',
+        tag: 'SABTU • TRYOUT',
+        tagClass: 'bg-amber-100 text-amber-800',
+        status: 'Persiapan Aula',
+        statusClass: 'bg-amber-100 text-amber-800',
+        time: '14:00 - 15:30 WIB',
+        duration: '90 Menit CBT Online',
+        room: 'Aula Sudirman Utama',
+        branch: 'Cabang Sudirman',
+        tutorName: 'Tim Pengawas Akademik',
+        tutorPhone: 'Koordinator: Dewi Lestari',
+        tutorInitials: 'TP',
+        capacityCurrent: 42,
+        capacityMax: 50,
+        capacityPercent: 84,
+        attendanceSummary: 'Presensi Sesi: 42 Peserta Terdaftar'
+      },
+      'ses-201': {
+        title: 'Biologi Seluler & Genetika',
+        program: 'Reguler SMA 11-IPA',
+        tag: 'SENIN • SESI 2',
+        tagClass: 'bg-emerald-100 text-emerald-800',
+        status: 'Selesai',
+        statusClass: 'bg-light-surface-container text-light-on-surface',
+        time: '16:00 - 17:30 WIB',
+        duration: '90 Menit Tatap Muka',
+        room: 'R. Pasteur (Lt. 2)',
+        branch: 'Cabang Sudirman',
+        tutorName: 'Rian Hidayat, M.Si',
+        tutorPhone: 'Tutor Biologi • 0812-9900-4455',
+        tutorInitials: 'RH',
+        capacityCurrent: 14,
+        capacityMax: 15,
+        capacityPercent: 93,
+        attendanceSummary: 'Presensi Sesi: 14 Hadir Lengkap'
+      },
+      'ses-202': {
+        title: 'Ekonomi Makro & Kebijakan Fiskal',
+        program: 'Reguler SMA 12-IPS',
+        tag: 'SELASA • SESI 2',
+        tagClass: 'bg-blue-100 text-blue-800',
+        status: 'Menunggu Input Presensi',
+        statusClass: 'bg-warning/20 text-warning',
+        time: '16:00 - 17:30 WIB',
+        duration: '90 Menit Tatap Muka',
+        room: 'R. Adam Smith',
+        branch: 'Cabang Sudirman',
+        tutorName: 'Rina Kusuma, S.E',
+        tutorPhone: 'Tutor Ekonomi • 0812-9900-2211',
+        tutorInitials: 'RK',
+        capacityCurrent: 11,
+        capacityMax: 15,
+        capacityPercent: 73,
+        attendanceSummary: 'Presensi Sesi: 11 Siswa Terdaftar'
+      },
+      'ses-203': {
+        title: 'TPS Penalaran Umum & Logika Deduktif',
+        program: 'Program: UTBK SNBT Intensif 2026',
+        tag: 'RABU • PENUH',
+        tagClass: 'bg-emerald-100 text-emerald-800',
+        status: 'Kapasitas Penuh (100%)',
+        statusClass: 'bg-danger/15 text-danger',
+        time: '16:00 - 17:30 WIB',
+        duration: '90 Menit Tatap Muka',
+        room: 'Lab Newton (Lt. 2)',
+        branch: 'Cabang Sudirman',
+        tutorName: 'Budi Pratama, S.Si',
+        tutorPhone: 'Tutor Utama Fisika • 0812-9900-1122',
+        tutorInitials: 'BP',
+        capacityCurrent: 15,
+        capacityMax: 15,
+        capacityPercent: 100,
+        attendanceSummary: 'Presensi Sesi: 15 Siswa (Kapasitas Maksimal)'
+      },
+      'ses-302': {
+        title: 'Literasi Bahasa Inggris (TPS SNBT)',
+        program: 'Program: Kelas Online Malam UTBK',
+        tag: 'SELASA • MALAM',
+        tagClass: 'bg-blue-100 text-blue-800',
+        status: 'Mulai Pukul 19:00',
+        statusClass: 'bg-light-surface-container text-light-on-surface',
+        time: '19:00 - 20:30 WIB',
+        duration: '90 Menit Google Meet',
+        room: 'Google Meet Room 2',
+        branch: 'Kelas Online ARCI',
+        tutorName: 'Sarah Priscillia, M.Pd',
+        tutorPhone: 'Tutor Bahasa Inggris • 0812-9900-8899',
+        tutorInitials: 'SP',
+        capacityCurrent: 22,
+        capacityMax: 50,
+        capacityPercent: 44,
+        attendanceSummary: 'Presensi Sesi: 22 Peserta Siap Bergabung'
+      }
+    };
+
+    let activeSessionId = 'ses-102';
+
+    // Slot click handler to update inspector dynamically
+    function selectSlot(slotId) {
+      const data = sessionData[slotId];
+      if (!data) return;
+
+      activeSessionId = slotId;
+
+      document.getElementById('inspector-tag').textContent = data.tag;
+      document.getElementById('inspector-tag').className = `px-2.5 py-0.5 rounded-full text-label-sm font-bold ${data.tagClass}`;
+      
+      document.getElementById('inspector-status-badge').textContent = data.status;
+      document.getElementById('inspector-status-badge').className = `px-3 py-1 rounded-lg text-label-sm font-semibold ${data.statusClass}`;
+      
+      document.getElementById('inspector-title').textContent = data.title;
+      document.getElementById('inspector-program').textContent = data.program;
+      document.getElementById('inspector-time').textContent = data.time;
+      document.getElementById('inspector-duration').textContent = data.duration;
+      document.getElementById('inspector-room').textContent = data.room;
+      document.getElementById('inspector-branch').textContent = data.branch;
+      
+      document.getElementById('inspector-tutor-name').textContent = data.tutorName;
+      document.getElementById('inspector-tutor-phone').textContent = data.tutorPhone;
+      document.getElementById('inspector-tutor-avatar').textContent = data.tutorInitials;
+      
+      document.getElementById('inspector-capacity-label').textContent = `${data.capacityCurrent} / ${data.capacityMax} Siswa`;
+      document.getElementById('inspector-capacity-bar').style.width = `${data.capacityPercent}%`;
+      document.getElementById('inspector-attendance-summary').textContent = data.attendanceSummary;
+
+      // Reschedule modal input sync
+      document.getElementById('reschedule-session-name').value = `${data.program} — ${data.title}`;
+
+      showToast(`Memuat detail sesi: ${data.title}`, 'info');
+    }
+
+    // Sidebar Mobile Toggle
+    function toggleSidebar(open) {
+      const sidebar = document.getElementById('sidebar-nav');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (open) {
+        sidebar.classList.remove('-translate-x-full');
+        sidebar.classList.add('translate-x-0');
+        overlay.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+        sidebar.classList.remove('translate-x-0');
+        overlay.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }
+    }
+
+    // Modal Handlers
+    function openPlotSessionModal() {
+      document.getElementById('modal-plot-session').classList.remove('hidden');
+    }
+    function closePlotSessionModal() {
+      document.getElementById('modal-plot-session').classList.add('hidden');
+    }
+    function submitPlotSession(e) {
+      e.preventDefault();
+      const subject = document.getElementById('plot-subject').value;
+      const day = document.getElementById('plot-day').value;
+      const room = document.getElementById('plot-room').value;
+      closePlotSessionModal();
+      showToast(`Sesi baru "${subject}" berhasil di-plot pada hari ${day} di ${room}!`, 'success');
+    }
+
+    function openRescheduleModal() {
+      document.getElementById('modal-reschedule').classList.remove('hidden');
+    }
+    function closeRescheduleModal() {
+      document.getElementById('modal-reschedule').classList.add('hidden');
+    }
+    function submitReschedule(e) {
+      e.preventDefault();
+      const room = document.getElementById('reschedule-room').value;
+      const start = document.getElementById('reschedule-start').value;
+      const end = document.getElementById('reschedule-end').value;
+      closeRescheduleModal();
+      showToast(`Jadwal sesi berhasil dipindahkan ke ${room} (${start} - ${end} WIB). Notifikasi terkirim!`, 'success');
+    }
+
+    function openCancelModal() {
+      document.getElementById('modal-cancel-session').classList.remove('hidden');
+    }
+    function closeCancelModal() {
+      document.getElementById('modal-cancel-session').classList.add('hidden');
+    }
+    function confirmCancelSession() {
+      closeCancelModal();
+      showToast('Sesi telah dibatalkan. Notifikasi pembatalan telah dikirimkan ke 14 siswa & wali.', 'warning');
+    }
+
+    function sendWANotification() {
+      showToast('Pesan pengingat sesi & link materi telah dikirimkan via WhatsApp Blast ke seluruh siswa!', 'success');
+    }
+
+    function exportSchedulePDF() {
+      showToast('Menyiapkan dokumen PDF Kalender Sesi Mingguan...', 'info');
+      setTimeout(() => {
+        showToast('Kalender_Sesi_ARCI_Bimbel_Nov2026.pdf siap diunduh!', 'success');
+      }, 1000);
+    }
+
+    // Filter Handlers
+    function filterBranch(branch) {
+      showToast(`Menampilkan jadwal untuk cabang: ${branch.toUpperCase()}`, 'info');
+    }
+    function filterTutor(tutor) {
+      showToast(`Memfilter jadwal tutor: ${tutor.toUpperCase()}`, 'info');
+    }
+    function switchView(view) {
+      const btnWeek = document.getElementById('btn-view-week');
+      const btnDay = document.getElementById('btn-view-day');
+      const btnMonth = document.getElementById('btn-view-month');
+
+      [btnWeek, btnDay, btnMonth].forEach(btn => {
+        btn.className = "px-3 py-1 rounded-lg text-body-sm font-label text-light-on-surface-variant hover:text-light-on-surface transition-all";
+      });
+
+      if (view === 'week') {
+        btnWeek.className = "px-3 py-1 rounded-lg text-body-sm font-semibold bg-light-surface text-light-primary shadow-xs transition-all";
+      } else if (view === 'day') {
+        btnDay.className = "px-3 py-1 rounded-lg text-body-sm font-semibold bg-light-surface text-light-primary shadow-xs transition-all";
+      } else if (view === 'month') {
+        btnMonth.className = "px-3 py-1 rounded-lg text-body-sm font-semibold bg-light-surface text-light-primary shadow-xs transition-all";
+      }
+      showToast(`Tampilan kalender dialihkan ke mode: ${view.toUpperCase()}`, 'info');
+    }
+
+    function navigateWeek(direction) {
+      showToast(`Navigasi kalender: ${direction > 0 ? 'Minggu Depan' : 'Minggu Lalu'}`, 'info');
+    }
+    function navigateToday() {
+      showToast('Kembali ke jadwal minggu ini (17 — 22 Nov 2026)', 'info');
+    }
+    function handleSearch(query) {
+      if (query.length > 2) {
+        showToast(`Mencari sesi: "${query}"`, 'info');
+      }
+    }
+
+    // Toast Notification System
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      
+      let bg = 'bg-light-surface text-light-on-surface border-light-outline-variant';
+      let icon = 'info';
+      let iconColor = 'text-brand-indigo';
+
+      if (type === 'success') {
+        icon = 'check_circle';
+        iconColor = 'text-success';
+      } else if (type === 'warning') {
+        icon = 'warning';
+        iconColor = 'text-warning';
+      } else if (type === 'danger') {
+        icon = 'error';
+        iconColor = 'text-danger';
+      }
+
+      toast.className = `p-4 rounded-xl border ${bg} shadow-lg flex items-center gap-3 transition-all duration-300 transform translate-y-4 opacity-0 pointer-events-auto`;
+      toast.innerHTML = `
+        <span class="material-symbols-outlined ${iconColor} text-[22px] shrink-0">${icon}</span>
+        <span class="text-body-sm font-medium flex-1">${message}</span>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-4', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+  </script>
+</body>
+</html>

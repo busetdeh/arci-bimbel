@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Lead &amp; Pipeline Management — ARCI Bimbel</title>
+  
+  <!-- Tailwind CSS with Official Plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+  /** @type {import('tailwindcss').Config} */
+  globalThis.tailwind = globalThis.tailwind || {};
+  globalThis.tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          'accent': '#F6C453',
+          'on-accent': '#18212F',
+          'brand-indigo': '#243B7A',
+          'brand-indigo-dark': '#172653',
+          'success': '#1B7330',
+          'on-success': '#FFFFFF',
+          'warning': '#925B06',
+          'on-warning': '#FFFFFF',
+          'danger': '#B91C1C',
+          'on-danger': '#FFFFFF',
+          'light-primary': '#243B7A',
+          'light-on-primary': '#FFFFFF',
+          'light-primary-container': '#EBF0FA',
+          'light-on-primary-container': '#172653',
+          'light-surface': '#FFFFFF',
+          'light-on-surface': '#18212F',
+          'light-surface-soft': '#F8FAFC',
+          'light-surface-container-low': '#F1F5F9',
+          'light-surface-container': '#E2E8F0',
+          'light-on-surface-variant': '#475569',
+          'light-outline': '#94A3B8',
+          'light-outline-variant': '#CBD5E1',
+          'dark-primary': '#9BB3F0',
+          'dark-on-primary': '#0E1A3C',
+          'dark-primary-container': '#1E3166',
+          'dark-on-primary-container': '#D7E3FF',
+          'dark-surface': '#0F172A',
+          'dark-on-surface': '#F8FAFC',
+          'dark-surface-soft': '#1E293B',
+          'dark-surface-container-low': '#152033',
+          'dark-surface-container': '#1E293B',
+          'dark-on-surface-variant': '#CBD5E1',
+          'dark-outline': '#64748B',
+          'dark-outline-variant': '#475569',
+        },
+        borderRadius: {
+          'sm': '4px',
+          'DEFAULT': '8px',
+          'md': '10px',
+          'lg': '12px',
+          'xl': '16px',
+          '2xl': '20px',
+          'full': '9999px',
+        },
+        spacing: {
+          'gutter-xs': '4px',
+          'gutter-sm': '8px',
+          'gutter-md': '16px',
+          'gutter-lg': '24px',
+          'gutter-xl': '32px',
+          'section-sm': '40px',
+          'section': '64px',
+          'section-lg': '96px',
+          'page-margin': '24px',
+        },
+        fontFamily: {
+          'display': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'headline': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'title': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'body': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'label': ['"Plus Jakarta Sans"', 'sans-serif'],
+        },
+        fontSize: {
+          'display-lg': ['48px', { lineHeight: '56px', letterSpacing: '-0.02em', fontWeight: '700' }],
+          'display-lg-mobile': ['28px', { lineHeight: '36px', letterSpacing: '-0.01em', fontWeight: '700' }],
+          'headline-lg': ['36px', { lineHeight: '44px', letterSpacing: '-0.01em', fontWeight: '700' }],
+          'headline-lg-mobile': ['24px', { lineHeight: '32px', letterSpacing: '0em', fontWeight: '700' }],
+          'headline-md': ['24px', { lineHeight: '32px', fontWeight: '600' }],
+          'headline-sm': ['20px', { lineHeight: '28px', fontWeight: '600' }],
+          'title-lg': ['18px', { lineHeight: '26px', fontWeight: '600' }],
+          'title-md': ['16px', { lineHeight: '24px', fontWeight: '600' }],
+          'body-lg': ['16px', { lineHeight: '24px', fontWeight: '400' }],
+          'body-md': ['14px', { lineHeight: '20px', fontWeight: '400' }],
+          'body-sm': ['12px', { lineHeight: '18px', fontWeight: '400' }],
+          'label-lg': ['14px', { lineHeight: '20px', fontWeight: '600' }],
+          'label-md': ['12px', { lineHeight: '16px', fontWeight: '600' }],
+          'label-sm': ['11px', { lineHeight: '14px', fontWeight: '500' }],
+        },
+        transitionDuration: {
+          'state-change': '150ms',
+          'surface-enter': '250ms',
+          'surface-exit': '150ms',
+        },
+        transitionTimingFunction: {
+          'state-change': 'ease-out',
+          'surface-enter': 'cubic-bezier(0.16, 1, 0.3, 1)',
+          'surface-exit': 'cubic-bezier(0.7, 0, 0.84, 0)',
+        },
+      },
+    },
+  };
+  if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+  </script>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+  
+  <style>
+    .material-symbols-outlined, .material-symbols-rounded, .material-symbols-sharp, .material-icons {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      line-height: 1 !important;
+      box-sizing: content-box;
+      overflow: hidden;
+      white-space: nowrap;
+      direction: ltr;
+      vertical-align: middle;
+      font-size: 20px;
+    }
+    .pb-safe {
+      padding-bottom: env(safe-area-inset-bottom, 16px);
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-light-surface-soft text-light-on-surface font-body antialiased min-h-screen flex flex-col lg:flex-row pb-safe">
+
+  <!-- Mobile Backdrop Overlay for Drawer -->
+  <div id="sidebar-overlay" onclick="toggleSidebar(false)" class="hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-xs transition-opacity lg:hidden"></div>
+
+  <!-- Shared App Shell: Desktop Sidebar Navigation -->
+  <aside id="sidebar-nav" class="fixed inset-y-0 left-0 z-50 w-64 bg-light-surface border-r border-light-outline-variant flex flex-col justify-between shrink-0 transform -translate-x-full transition-transform duration-200 lg:translate-x-0 lg:static lg:h-screen lg:sticky lg:top-0">
+    <div class="flex flex-col flex-1 overflow-y-auto">
+      <!-- Brand Identity -->
+      <div class="h-16 lg:h-20 px-5 sm:px-6 flex items-center justify-between border-b border-light-outline-variant shrink-0">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="w-9 h-9 rounded-xl bg-light-primary flex items-center justify-center text-light-on-primary font-headline font-bold text-headline-sm shadow-sm group-hover:bg-brand-indigo-dark transition-colors">
+            A
+          </div>
+          <div class="flex flex-col">
+            <span class="font-headline font-bold text-title-md tracking-tight text-brand-indigo">ARCI Bimbel</span>
+            <span class="text-[11px] text-light-on-surface-variant font-label">Dashboard Operasional</span>
+          </div>
+        </a>
+
+        <!-- Mobile Drawer Close Button -->
+        <button type="button" onclick="toggleSidebar(false)" class="lg:hidden p-1.5 rounded-lg text-light-on-surface-variant hover:bg-light-surface-container" aria-label="Tutup Menu">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="p-3 sm:p-4 flex flex-col gap-1">
+        <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">dashboard</span>
+          <span>Ringkasan</span>
+        </a>
+        
+        <a href="leads.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg bg-light-primary text-light-on-primary font-label text-body-md shadow-xs font-semibold">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px]">person_search</span>
+            <span>Lead &amp; Pipeline</span>
+          </div>
+          <span id="sidebar-lead-badge" class="px-2 py-0.5 rounded-full text-[11px] font-label font-bold bg-accent text-on-accent shadow-2xs">8</span>
+        </a>
+
+        <a href="verifikasi-pendaftaran.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">how_to_reg</span>
+            <span>Pendaftaran</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label font-bold bg-accent text-on-accent">3</span>
+        </a>
+
+        <a href="students.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">school</span>
+          <span>Siswa &amp; Wali</span>
+        </a>
+
+        <a href="classes.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">class</span>
+          <span>Program &amp; Kelas</span>
+        </a>
+
+        <a href="schedule.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">calendar_month</span>
+          <span>Jadwal Sesi</span>
+        </a>
+
+        <a href="attendance.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">fact_check</span>
+          <span>Presensi Siswa</span>
+        </a>
+
+        <a href="finance.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">payments</span>
+            <span>Tagihan &amp; Kas</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">5 Baru</span>
+        </a>
+
+        <a href="communications.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">campaign</span>
+          <span>Komunikasi &amp; Broadcast</span>
+        </a>
+
+        <a href="settings.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">manage_accounts</span>
+          <span>Pengaturan &amp; Role</span>
+        </a>
+
+        <a href="reports.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">analytics</span>
+          <span>Laporan KPI</span>
+        </a>
+        <a href="cms.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">article</span>
+          <span>Konten Website</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- User / Admin Profile Block with Dropdown Menu -->
+    <div class="p-4 border-t border-light-outline-variant relative">
+      <div class="flex items-center justify-between p-2 rounded-xl hover:bg-light-surface-container transition-colors cursor-pointer group" onclick="toggleUserMenu()">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-light-primary text-light-on-primary flex items-center justify-center font-bold text-label-md shadow-xs">
+            AD
+          </div>
+          <div class="flex flex-col">
+            <span class="text-body-sm font-semibold text-light-on-surface leading-tight">Ahmad Dani</span>
+            <span class="text-[11px] text-light-on-surface-variant font-label leading-tight">Admin Operasional</span>
+          </div>
+        </div>
+        <span class="material-symbols-outlined text-[18px] text-light-outline group-hover:text-light-on-surface">more_vert</span>
+      </div>
+
+      <!-- Quick Profile Popup Menu -->
+      <div id="user-popup-menu" class="hidden absolute bottom-full left-4 right-4 mb-2 bg-light-surface rounded-xl border border-light-outline-variant shadow-lg py-1.5 z-50 text-body-sm">
+        <a href="index.html" class="flex items-center gap-2 px-3.5 py-2 hover:bg-light-surface-container text-light-on-surface">
+          <span class="material-symbols-outlined text-[17px] text-light-primary">open_in_new</span>
+          <span>Buka Website Publik</span>
+        </a>
+        <a href="login-admin.html" class="flex items-center gap-2 px-3.5 py-2 hover:bg-danger/10 text-danger border-t border-light-outline-variant/50">
+          <span class="material-symbols-outlined text-[17px]">logout</span>
+          <span>Keluar Sesi (Logout)</span>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Operational Canvas -->
+  <div class="flex-1 flex flex-col min-w-0">
+    
+    <!-- Top Utility Bar (Consistent App Shell) -->
+    <header class="h-16 lg:h-20 bg-light-surface border-b border-light-outline-variant px-4 sm:px-6 lg:px-8 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
+      
+      <!-- Mobile Hamburger Button & Search Bar -->
+      <div class="flex items-center gap-3 sm:gap-4 flex-1 max-w-md">
+        <button type="button" onclick="toggleSidebar(true)" class="lg:hidden w-10 h-10 rounded-lg border border-light-outline flex items-center justify-center text-light-on-surface hover:bg-light-surface-container shrink-0" aria-label="Buka Menu Navigasi">
+          <span class="material-symbols-outlined text-[22px]">menu</span>
+        </button>
+
+        <!-- Search Input -->
+        <div class="relative w-full">
+          <span class="material-symbols-outlined absolute left-3 top-2.5 text-light-on-surface-variant text-[20px]">search</span>
+          <input type="search" id="lead-search" oninput="handleLeadSearch(this.value)" placeholder="Cari nama wali, nomor WA, atau siswa..."
+            class="w-full pl-10 pr-4 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface text-light-on-surface placeholder:text-light-on-surface-variant text-body-sm sm:text-body-md transition-colors">
+        </div>
+      </div>
+
+      <!-- Right Action Utilities -->
+      <div class="flex items-center gap-2 sm:gap-4 shrink-0">
+        <!-- Notification Button -->
+        <button type="button" onclick="showNotification('Tidak ada pesan baru belum dibaca.', 'info')" aria-label="Notifikasi" class="relative w-10 h-10 rounded-lg border border-light-outline flex items-center justify-center text-light-on-surface hover:bg-light-surface-container transition-colors">
+          <span class="material-symbols-outlined text-[20px]">notifications</span>
+          <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-danger ring-2 ring-light-surface"></span>
+        </button>
+
+        <!-- Add Lead Manual Button -->
+        <button type="button" onclick="openAddLeadModal()" class="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm sm:text-body-md shadow-xs transition-all whitespace-nowrap active:scale-95 font-semibold">
+          <span class="material-symbols-outlined text-[18px]">person_add</span>
+          <span>Tambah Lead Manual</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Operational Viewport Content -->
+    <main class="p-4 sm:p-6 lg:p-8 flex flex-col gap-6 flex-1">
+      
+      <!-- Toast Alert Banner -->
+      <div id="lead-toast" class="hidden p-3.5 rounded-xl border text-body-sm items-center justify-between gap-3 shadow-xs transition-all animate-in fade-in duration-150">
+        <div class="flex items-center gap-2">
+          <span id="toast-icon" class="material-symbols-outlined text-[19px]">info</span>
+          <span id="toast-text" class="font-medium">Pemberitahuan</span>
+        </div>
+        <button type="button" onclick="closeToast()" class="p-1 rounded hover:bg-black/5 text-current">
+          <span class="material-symbols-outlined text-[16px]">close</span>
+        </button>
+      </div>
+
+      <!-- Title & Action Bar -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2.5">
+            <h1 class="font-headline font-bold text-headline-sm text-light-on-surface">Manajemen Lead &amp; Pipeline</h1>
+            <span id="total-lead-badge" class="px-2.5 py-0.5 rounded-full text-label-sm font-label bg-light-primary-container text-light-primary font-bold">24 Lead Aktif</span>
+          </div>
+          <p class="text-body-sm text-light-on-surface-variant mt-0.5">Kelola alur calon siswa dari formulir website, konsultasi, trial, hingga konversi pendaftaran resmi.</p>
+        </div>
+        
+        <div class="flex items-center gap-2.5 shrink-0">
+          <button type="button" onclick="exportLeadsCsv()" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-light-outline text-light-on-surface text-body-sm font-label font-medium hover:bg-light-surface-container transition-colors shadow-2xs">
+            <span class="material-symbols-outlined text-[18px]">file_download</span>
+            <span>Ekspor CSV</span>
+          </button>
+          <button type="button" onclick="showNotification('Filter lanjutan: Sumber Lead, Cabang Belajar, dan Rentang Tanggal.', 'info')" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-light-outline text-light-on-surface text-body-sm font-label font-medium hover:bg-light-surface-container transition-colors shadow-2xs">
+            <span class="material-symbols-outlined text-[18px]">filter_list</span>
+            <span>Filter Lanjutan</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Pipeline Stages Tab Bar (Touch Horizontal Scrollable) -->
+      <div class="flex items-center gap-1.5 sm:gap-2 border-b border-light-outline-variant overflow-x-auto no-scrollbar pb-px">
+        <button type="button" onclick="filterPipelineStage('all', this)" class="stage-tab px-4 py-2.5 border-b-2 border-light-primary text-light-primary font-label text-body-md font-bold whitespace-nowrap flex items-center gap-2 transition-all">
+          <span>Semua Tahapan</span>
+          <span class="px-2 py-0.5 rounded-full text-[11px] bg-light-primary-container text-light-primary">24</span>
+        </button>
+        <button type="button" onclick="filterPipelineStage('baru', this)" class="stage-tab px-4 py-2.5 border-b-2 border-transparent text-light-on-surface-variant hover:text-light-primary font-label text-body-md whitespace-nowrap flex items-center gap-2 transition-all">
+          <span>Lead Baru</span>
+          <span class="px-2 py-0.5 rounded-full text-[11px] bg-accent text-on-accent font-bold">8</span>
+        </button>
+        <button type="button" onclick="filterPipelineStage('dihubungi', this)" class="stage-tab px-4 py-2.5 border-b-2 border-transparent text-light-on-surface-variant hover:text-light-primary font-label text-body-md whitespace-nowrap flex items-center gap-2 transition-all">
+          <span>Telah Dihubungi</span>
+          <span class="px-2 py-0.5 rounded-full text-[11px] bg-light-surface-container text-light-on-surface font-semibold">6</span>
+        </button>
+        <button type="button" onclick="filterPipelineStage('trial', this)" class="stage-tab px-4 py-2.5 border-b-2 border-transparent text-light-on-surface-variant hover:text-light-primary font-label text-body-md whitespace-nowrap flex items-center gap-2 transition-all">
+          <span>Jadwal Trial / Konsultasi</span>
+          <span class="px-2 py-0.5 rounded-full text-[11px] bg-light-surface-container text-light-on-surface font-semibold">5</span>
+        </button>
+        <button type="button" onclick="filterPipelineStage('siap', this)" class="stage-tab px-4 py-2.5 border-b-2 border-transparent text-light-on-surface-variant hover:text-light-primary font-label text-body-md whitespace-nowrap flex items-center gap-2 transition-all">
+          <span>Siap Mendaftar</span>
+          <span class="px-2 py-0.5 rounded-full text-[11px] bg-success text-on-success font-bold">3</span>
+        </button>
+        <button type="button" onclick="filterPipelineStage('batal', this)" class="stage-tab px-4 py-2.5 border-b-2 border-transparent text-light-on-surface-variant hover:text-light-primary font-label text-body-md whitespace-nowrap flex items-center gap-2 transition-all">
+          <span>Tidak Berminat / Batal</span>
+          <span class="px-2 py-0.5 rounded-full text-[11px] bg-light-surface-container text-light-on-surface font-semibold">2</span>
+        </button>
+      </div>
+
+      <!-- Split Layout: Table Lead Roster (Left 7 cols) & Detail Inspector (Right 5 cols) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
+        
+        <!-- Lead Table Section (Col 7) -->
+        <section class="lg:col-span-7 bg-light-surface rounded-2xl border border-light-outline-variant shadow-xs overflow-hidden flex flex-col justify-between">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-body-sm">
+              <thead class="bg-light-surface-soft border-b border-light-outline-variant text-[11px] font-label text-light-on-surface-variant uppercase tracking-wider font-semibold">
+                <tr>
+                  <th class="py-3 px-4">Calon Siswa &amp; Wali</th>
+                  <th class="py-3 px-4">Program Minat</th>
+                  <th class="py-3 px-4">Sumber</th>
+                  <th class="py-3 px-4">Status Pipeline</th>
+                  <th class="py-3 px-4 text-right">Tindakan</th>
+                </tr>
+              </thead>
+              <tbody id="lead-table-body" class="divide-y divide-light-outline-variant font-body">
+                
+                <!-- Lead Row 1 (Active Selected) -->
+                <tr class="lead-row bg-light-primary-container/20 border-l-4 border-light-primary cursor-pointer transition-colors" data-id="LD-2026-1189" data-stage="baru" onclick="selectLeadRow(this, 'LD-2026-1189')">
+                  <td class="py-3.5 px-4">
+                    <p class="font-semibold text-light-on-surface">Farhan Pratama (Kls 8)</p>
+                    <p class="text-[12px] text-light-on-surface-variant">Wali: Ibu Dra. Nurhayati</p>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <span class="font-medium text-light-on-surface">Reguler SMP</span>
+                    <span class="text-[11px] text-light-on-surface-variant block">Cabang Sudirman</span>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <span class="inline-flex items-center gap-1 text-[11px] text-light-on-surface-variant font-label">
+                      <span class="material-symbols-outlined text-[14px] text-light-primary">language</span> Website Form
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">
+                      Lead Baru
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-4 text-right">
+                    <button type="button" class="btn-select px-2.5 py-1 rounded bg-light-primary text-light-on-primary text-[11px] font-label font-semibold shadow-2xs">
+                      Pilih
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Lead Row 2 -->
+                <tr class="lead-row hover:bg-light-surface-container cursor-pointer transition-colors" data-id="LD-2026-1185" data-stage="dihubungi" onclick="selectLeadRow(this, 'LD-2026-1185')">
+                  <td class="py-3.5 px-4">
+                    <p class="font-semibold text-light-on-surface">Raihan Syahputra (Kls 9)</p>
+                    <p class="text-[12px] text-light-on-surface-variant">Wali: Bunda Hesty</p>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <span class="font-medium text-light-on-surface">Reguler SMP</span>
+                    <span class="text-[11px] text-light-on-surface-variant block">Cabang Sudirman</span>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <span class="inline-flex items-center gap-1 text-[11px] text-light-on-surface-variant font-label">
+                      <span class="material-symbols-outlined text-[14px] text-success">chat</span> WhatsApp Chat
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-warning text-on-warning font-semibold">
+                      Follow-up 10:00
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-4 text-right">
+                    <button type="button" class="btn-select px-2.5 py-1 rounded border border-light-outline text-light-on-surface text-[11px] font-label font-medium hover:bg-light-surface">
+                      Lihat
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Lead Row 3 -->
+                <tr class="lead-row hover:bg-light-surface-container cursor-pointer transition-colors" data-id="LD-2026-1182" data-stage="siap" onclick="selectLeadRow(this, 'LD-2026-1182')">
+                  <td class="py-3.5 px-4">
+                    <p class="font-semibold text-light-on-surface">Nadia Amanda (Kls 12)</p>
+                    <p class="text-[12px] text-light-on-surface-variant">Wali: Pak Hermawan</p>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <span class="font-medium text-light-on-surface">Intensif UTBK</span>
+                    <span class="text-[11px] text-light-on-surface-variant block">Online Zoom #1</span>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <span class="inline-flex items-center gap-1 text-[11px] text-light-on-surface-variant font-label">
+                      <span class="material-symbols-outlined text-[14px] text-light-primary">language</span> Website Form
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-success text-on-success font-bold">
+                      Siap Daftar
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-4 text-right">
+                    <button type="button" class="btn-select px-2.5 py-1 rounded border border-light-outline text-light-on-surface text-[11px] font-label font-medium hover:bg-light-surface">
+                      Lihat
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Lead Row 4 -->
+                <tr class="lead-row hover:bg-light-surface-container cursor-pointer transition-colors" data-id="LD-2026-1178" data-stage="trial" onclick="selectLeadRow(this, 'LD-2026-1178')">
+                  <td class="py-3.5 px-4">
+                    <p class="font-semibold text-light-on-surface">Aqila Zahra (Kls 5)</p>
+                    <p class="text-[12px] text-light-on-surface-variant">Wali: Ibu Sarah</p>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <span class="font-medium text-light-on-surface">Reguler SD</span>
+                    <span class="text-[11px] text-light-on-surface-variant block">Cabang Sudirman</span>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <span class="inline-flex items-center gap-1 text-[11px] text-light-on-surface-variant font-label">
+                      <span class="material-symbols-outlined text-[14px] text-light-on-surface-variant">person</span> Walk-in Cabang
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-light-surface-container text-light-on-surface font-semibold">
+                      Jadwal Trial
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-4 text-right">
+                    <button type="button" class="btn-select px-2.5 py-1 rounded border border-light-outline text-light-on-surface text-[11px] font-label font-medium hover:bg-light-surface">
+                      Lihat
+                    </button>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Table Pagination Footer -->
+          <div class="p-4 border-t border-light-outline-variant flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-body-sm">
+            <span class="text-light-on-surface-variant">Menampilkan <strong class="text-light-on-surface">1–4</strong> dari <strong class="text-light-on-surface">24</strong> lead aktif</span>
+            <div class="flex items-center gap-1">
+              <button type="button" class="px-2.5 py-1 rounded border border-light-outline text-light-on-surface-variant bg-light-surface-container text-body-sm font-label cursor-not-allowed" disabled>←</button>
+              <button type="button" class="px-2.5 py-1 rounded bg-light-primary text-light-on-primary text-body-sm font-label font-semibold shadow-2xs">1</button>
+              <button type="button" onclick="showNotification('Membuka halaman 2...', 'info')" class="px-2.5 py-1 rounded border border-light-outline text-light-on-surface text-body-sm font-label hover:bg-light-surface-container">2</button>
+              <button type="button" onclick="showNotification('Membuka halaman 3...', 'info')" class="px-2.5 py-1 rounded border border-light-outline text-light-on-surface text-body-sm font-label hover:bg-light-surface-container">3</button>
+              <button type="button" onclick="showNotification('Membuka halaman berikutnya...', 'info')" class="px-2.5 py-1 rounded border border-light-outline text-light-on-surface text-body-sm font-label hover:bg-light-surface-container">→</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Lead Detail Inspector Panel (Col 5) -->
+        <section id="lead-inspector-panel" class="lg:col-span-5 bg-light-surface rounded-2xl border border-light-outline-variant shadow-xs p-5 sm:p-6 flex flex-col gap-6">
+          
+          <!-- Inspector Header -->
+          <div class="flex items-start justify-between pb-4 border-b border-light-outline-variant gap-3">
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 id="inspector-name" class="font-headline text-title-lg font-bold text-light-on-surface">Farhan Pratama</h2>
+                <span id="inspector-badge" class="px-2 py-0.5 rounded-full text-label-sm font-label bg-accent text-on-accent font-bold">Baru</span>
+              </div>
+              <p id="inspector-meta" class="text-body-sm text-light-on-surface-variant mt-0.5">ID Lead: #LD-2026-1189 • Masuk: 18 Nov 2026, 19:42 WIB</p>
+            </div>
+            
+            <!-- Quick WhatsApp Action -->
+            <a id="inspector-wa-btn" href="https://wa.me/6281234567890?text=Halo%20Ibu%20Nurhayati,%20saya%20Dani%20dari%20ARCI%20Bimbel" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-success text-on-success font-label text-body-sm font-semibold shadow-xs hover:bg-success/90 transition-colors shrink-0">
+              <span class="material-symbols-outlined text-[18px]">chat</span>
+              <span>Hubungi</span>
+            </a>
+          </div>
+
+          <!-- Contact & Lead Metadata Card -->
+          <div class="grid grid-cols-2 gap-3 text-body-sm bg-light-surface-soft p-4 rounded-xl border border-light-outline-variant">
+            <div>
+              <span class="text-[11px] font-label text-light-on-surface-variant uppercase font-semibold block">Orang Tua / Wali</span>
+              <span id="inspector-parent" class="font-semibold text-light-on-surface">Dra. Nurhayati</span>
+            </div>
+            <div>
+              <span class="text-[11px] font-label text-light-on-surface-variant uppercase font-semibold block">Nomor WhatsApp</span>
+              <span id="inspector-phone" class="font-semibold text-light-on-surface font-mono">0812-3456-7890</span>
+            </div>
+            <div>
+              <span class="text-[11px] font-label text-light-on-surface-variant uppercase font-semibold block">Jenjang Minat</span>
+              <span id="inspector-grade" class="font-semibold text-brand-indigo">SMP Kelas 8 (Reguler)</span>
+            </div>
+            <div>
+              <span class="text-[11px] font-label text-light-on-surface-variant uppercase font-semibold block">Preferensi Lokasi</span>
+              <span id="inspector-branch" class="font-semibold text-light-on-surface">Sudirman (Offline)</span>
+            </div>
+            <div class="col-span-2 pt-2 border-t border-light-outline-variant">
+              <span class="text-[11px] font-label text-light-on-surface-variant uppercase font-semibold block">Catatan Calon Siswa:</span>
+              <p id="inspector-note" class="text-body-sm text-light-on-surface mt-0.5 italic leading-relaxed">
+                “Ingin jadwal sore hari. Nilai matematika di sekolah kurang stabil, butuh pemantapan konsep dasar.”
+              </p>
+            </div>
+          </div>
+
+          <!-- Pipeline Stage Selector Dropdown -->
+          <div class="flex flex-col gap-1.5">
+            <label for="stage-selector" class="font-label text-label-md text-light-on-surface font-semibold">Ubah Tahapan Pipeline</label>
+            <select id="stage-selector" onchange="updateLeadStage(this.value)" class="w-full min-h-[46px] px-3.5 py-2.5 rounded-lg border border-light-outline text-light-on-surface text-body-md bg-light-surface focus:border-light-primary focus:ring-1 focus:ring-light-primary font-label transition-colors">
+              <option value="baru" selected>1. Lead Baru (Perlu Dihubungi)</option>
+              <option value="dihubungi">2. Telah Dihubungi (Menunggu Respon)</option>
+              <option value="trial">3. Konsultasi / Trial Terjadwal</option>
+              <option value="proposal">4. Proposal Biaya Terkirim</option>
+              <option value="siap">5. Dikonversi Menjadi Pendaftaran</option>
+              <option value="batal">6. Tidak Berminat / Batal</option>
+            </select>
+          </div>
+
+          <!-- Activity History Timeline -->
+          <div class="flex flex-col gap-3">
+            <div class="flex items-center justify-between">
+              <span class="font-label text-label-md text-light-on-surface font-semibold">Riwayat Kontak &amp; Aktivitas</span>
+              <span id="activity-count" class="text-[11px] text-light-on-surface-variant font-label font-medium">2 Catatan</span>
+            </div>
+            <div id="activity-timeline" class="flex flex-col gap-3 border-l-2 border-light-primary pl-4 ml-2">
+              <div class="flex flex-col">
+                <span class="text-[11px] text-light-on-surface-variant font-label">19 Nov 2026 • 08:30 WIB • Sistem Web</span>
+                <p class="text-body-sm text-light-on-surface font-medium">Formulir pendaftaran konsultasi diterima dari website publik.</p>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-[11px] text-light-on-surface-variant font-label">19 Nov 2026 • 09:15 WIB • Ahmad Dani</span>
+                <p class="text-body-sm text-light-on-surface font-medium">WhatsApp template pengenalan program dan penawaran jadwal trial terkirim.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Add Note Form -->
+          <div class="flex flex-col gap-2">
+            <label for="new-note-text" class="font-label text-label-sm text-light-on-surface font-semibold">Tambah Catatan Follow-up</label>
+            <textarea id="new-note-text" rows="2" placeholder="Tulis rangkuman pembicaraan dengan orang tua..." class="w-full px-3.5 py-2.5 rounded-lg border border-light-outline text-body-sm text-light-on-surface focus:border-light-primary focus:ring-1 focus:ring-light-primary"></textarea>
+            <div class="flex justify-end">
+              <button type="button" onclick="saveNewNote()" class="px-4 py-2 rounded-lg border border-light-outline text-light-on-surface text-body-sm font-label font-semibold hover:bg-light-surface-container transition-colors shadow-2xs">
+                Simpan Catatan
+              </button>
+            </div>
+          </div>
+
+          <!-- Conversion Primary Action CTA -->
+          <div class="pt-4 border-t border-light-outline-variant flex flex-col gap-2">
+            <a href="pendaftaran.html?lead=LD-2026-1189" class="w-full min-h-[48px] py-3 rounded-xl bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-label-lg shadow-sm text-center transition-all flex items-center justify-center gap-2 font-bold active:scale-[0.99]">
+              <span class="material-symbols-outlined text-[20px]">how_to_reg</span>
+              <span>Konversi ke Pendaftaran Resmi Siswa</span>
+            </a>
+            <p class="text-[11px] text-light-on-surface-variant text-center leading-tight">
+              Data wali dan anak akan otomatis disalin ke formulir pendaftaran tanpa perlu input ulang.
+            </p>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL: TAMBAH LEAD MANUAL                                      -->
+  <!-- ============================================================== -->
+  <div id="add-lead-modal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-150">
+    <div class="bg-light-surface rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-light-outline-variant flex flex-col gap-5">
+      <div class="flex items-center justify-between pb-3 border-b border-light-outline-variant">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-light-primary-container text-light-primary flex items-center justify-center font-bold">
+            <span class="material-symbols-outlined text-[18px]">person_add</span>
+          </div>
+          <h3 class="font-headline font-bold text-title-md text-light-on-surface">Tambah Data Lead Manual</h3>
+        </div>
+        <button type="button" onclick="closeAddLeadModal()" class="p-1 rounded-lg text-light-on-surface-variant hover:bg-light-surface-container">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <form onsubmit="handleCreateLeadManual(event)" class="flex flex-col gap-4">
+        <div>
+          <label class="font-label text-label-md text-light-on-surface font-semibold block mb-1">Nama Calon Siswa</label>
+          <input type="text" id="manual-student-name" placeholder="Contoh: Dimas Setiawan" required
+            class="w-full px-3.5 py-2.5 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="font-label text-label-md text-light-on-surface font-semibold block mb-1">Nama Orang Tua</label>
+            <input type="text" id="manual-parent-name" placeholder="Contoh: Ibu Rina" required
+              class="w-full px-3.5 py-2.5 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary">
+          </div>
+          <div>
+            <label class="font-label text-label-md text-light-on-surface font-semibold block mb-1">No. WhatsApp</label>
+            <input type="tel" id="manual-phone" placeholder="0812-xxxx-xxxx" required
+              class="w-full px-3.5 py-2.5 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="font-label text-label-md text-light-on-surface font-semibold block mb-1">Jenjang Minat</label>
+            <select id="manual-grade" class="w-full px-3.5 py-2.5 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface">
+              <option>SD Kelas 4-6</option>
+              <option selected>SMP Kelas 7-9</option>
+              <option>SMA Kelas 10-12</option>
+              <option>Persiapan UTBK SNBT</option>
+            </select>
+          </div>
+          <div>
+            <label class="font-label text-label-md text-light-on-surface font-semibold block mb-1">Sumber Lead</label>
+            <select id="manual-source" class="w-full px-3.5 py-2.5 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface">
+              <option selected>Chat WhatsApp</option>
+              <option>Walk-in Cabang</option>
+              <option>Referral Siswa</option>
+              <option>Pameran Pendidikan</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-3 border-t border-light-outline-variant mt-2">
+          <button type="button" onclick="closeAddLeadModal()" class="px-4 py-2 rounded-lg border border-light-outline text-body-sm font-label font-medium hover:bg-light-surface-container">
+            Batal
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm font-semibold shadow-xs">
+            Simpan Lead ke Pipeline
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    // Detailed Mock Lead Dataset
+    const leadsData = {
+      'LD-2026-1189': {
+        id: 'LD-2026-1189',
+        student: 'Farhan Pratama (Kls 8)',
+        parent: 'Dra. Nurhayati',
+        phone: '0812-3456-7890',
+        program: 'Reguler SMP',
+        branch: 'Sudirman (Offline)',
+        stageKey: 'baru',
+        stageLabel: 'Lead Baru',
+        badgeClass: 'bg-accent text-on-accent',
+        source: 'Website Form',
+        timestamp: '18 Nov 2026, 19:42 WIB',
+        note: '“Ingin jadwal sore hari. Nilai matematika di sekolah kurang stabil, butuh pemantapan konsep dasar.”'
+      },
+      'LD-2026-1185': {
+        id: 'LD-2026-1185',
+        student: 'Raihan Syahputra (Kls 9)',
+        parent: 'Bunda Hesty',
+        phone: '0813-8899-0011',
+        program: 'Reguler SMP',
+        branch: 'Sudirman (Offline)',
+        stageKey: 'dihubungi',
+        stageLabel: 'Follow-up 10:00',
+        badgeClass: 'bg-warning text-on-warning',
+        source: 'WhatsApp Chat',
+        timestamp: '18 Nov 2026, 14:20 WIB',
+        note: '“Ingin persiapan intensif masuk SMA Labschool / SMAN 8 Jakarta. Meminta jadwal uji coba gratis Sabtu ini.”'
+      },
+      'LD-2026-1182': {
+        id: 'LD-2026-1182',
+        student: 'Nadia Amanda (Kls 12)',
+        parent: 'Pak Hermawan',
+        phone: '0815-7766-5544',
+        program: 'Intensif UTBK',
+        branch: 'Online Zoom #1',
+        stageKey: 'siap',
+        stageLabel: 'Siap Daftar',
+        badgeClass: 'bg-success text-on-success',
+        source: 'Website Form',
+        timestamp: '17 Nov 2026, 21:05 WIB',
+        note: '“Target Jurusan Kedokteran UI/UGM. Sudah transfer biaya pendaftaran awal, menunggu verifikasi berkas administrasi.”'
+      },
+      'LD-2026-1178': {
+        id: 'LD-2026-1178',
+        student: 'Aqila Zahra (Kls 5)',
+        parent: 'Ibu Sarah',
+        phone: '0812-9988-7766',
+        program: 'Reguler SD',
+        branch: 'Sudirman (Offline)',
+        stageKey: 'trial',
+        stageLabel: 'Jadwal Trial',
+        badgeClass: 'bg-light-surface-container text-light-on-surface',
+        source: 'Walk-in Cabang',
+        timestamp: '17 Nov 2026, 16:30 WIB',
+        note: '“Ingin anak lebih antusias belajar Sains dan Bahasa Inggris. Jadwal trial dijadwalkan Jumat jam 14:00 WIB.”'
+      }
+    };
+
+    let selectedLeadId = 'LD-2026-1189';
+
+    // Sidebar Mobile Drawer Toggle
+    function toggleSidebar(open) {
+      const sidebar = document.getElementById('sidebar-nav');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (open) {
+        sidebar.classList.remove('-translate-x-full');
+        sidebar.classList.add('translate-x-0');
+        overlay.classList.remove('hidden');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+        sidebar.classList.remove('translate-x-0');
+        overlay.classList.add('hidden');
+      }
+    }
+
+    // User Popup Menu
+    function toggleUserMenu() {
+      const menu = document.getElementById('user-popup-menu');
+      menu.classList.toggle('hidden');
+    }
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('user-popup-menu');
+      if (!e.target.closest('#user-popup-menu') && !e.target.closest('[onclick="toggleUserMenu()"]')) {
+        menu.classList.add('hidden');
+      }
+    });
+
+    // Toast Notification System
+    function showNotification(text, type = 'success') {
+      const toast = document.getElementById('lead-toast');
+      const toastText = document.getElementById('toast-text');
+      const toastIcon = document.getElementById('toast-icon');
+
+      toast.className = 'p-3.5 rounded-xl border text-body-sm flex items-center justify-between gap-3 shadow-xs transition-all animate-in fade-in duration-150';
+
+      if (type === 'success') {
+        toast.classList.add('bg-success/10', 'text-success', 'border-success/30');
+        toastIcon.textContent = 'check_circle';
+      } else if (type === 'warning') {
+        toast.classList.add('bg-warning/10', 'text-warning', 'border-warning/30');
+        toastIcon.textContent = 'warning';
+      } else {
+        toast.classList.add('bg-light-primary-container', 'text-light-primary', 'border-light-primary/30');
+        toastIcon.textContent = 'info';
+      }
+
+      toastText.textContent = text;
+      toast.classList.remove('hidden');
+
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3500);
+    }
+    function closeToast() {
+      document.getElementById('lead-toast').classList.add('hidden');
+    }
+
+    // Select Lead Row & Populate Inspector Panel
+    function selectLeadRow(trElement, leadId) {
+      selectedLeadId = leadId;
+      const data = leadsData[leadId];
+      if (!data) return;
+
+      // Update active row visual
+      document.querySelectorAll('.lead-row').forEach(row => {
+        row.classList.remove('bg-light-primary-container/20', 'border-l-4', 'border-light-primary');
+        const btn = row.querySelector('.btn-select');
+        if (btn) {
+          btn.className = 'btn-select px-2.5 py-1 rounded border border-light-outline text-light-on-surface text-[11px] font-label font-medium hover:bg-light-surface';
+          btn.textContent = 'Lihat';
+        }
+      });
+
+      trElement.classList.add('bg-light-primary-container/20', 'border-l-4', 'border-light-primary');
+      const activeBtn = trElement.querySelector('.btn-select');
+      if (activeBtn) {
+        activeBtn.className = 'btn-select px-2.5 py-1 rounded bg-light-primary text-light-on-primary text-[11px] font-label font-semibold shadow-2xs';
+        activeBtn.textContent = 'Pilih';
+      }
+
+      // Populate Inspector
+      document.getElementById('inspector-name').textContent = data.student.split(' (')[0];
+      document.getElementById('inspector-badge').className = `px-2 py-0.5 rounded-full text-label-sm font-label font-bold ${data.badgeClass}`;
+      document.getElementById('inspector-badge').textContent = data.stageLabel;
+      document.getElementById('inspector-meta').textContent = `ID Lead: #${data.id} • Masuk: ${data.timestamp}`;
+      document.getElementById('inspector-parent').textContent = data.parent;
+      document.getElementById('inspector-phone').textContent = data.phone;
+      document.getElementById('inspector-grade').textContent = `${data.program} (${data.student.match(/\((.*?)\)/)?.[1] || ''})`;
+      document.getElementById('inspector-branch').textContent = data.branch;
+      document.getElementById('inspector-note').textContent = data.note;
+
+      // Update WhatsApp link
+      const cleanPhone = data.phone.replace(/[^0-9]/g, '').replace(/^0/, '62');
+      document.getElementById('inspector-wa-btn').href = `https://wa.me/${cleanPhone}?text=Halo%20${encodeURIComponent(data.parent)},%20saya%20Dani%20dari%20ARCI%20Bimbel`;
+
+      // Update stage dropdown value
+      document.getElementById('stage-selector').value = data.stageKey;
+    }
+
+    // Update Lead Stage via Dropdown
+    function updateLeadStage(newStage) {
+      const data = leadsData[selectedLeadId];
+      if (!data) return;
+
+      data.stageKey = newStage;
+      const stageLabels = {
+        'baru': 'Lead Baru',
+        'dihubungi': 'Telah Dihubungi',
+        'trial': 'Konsultasi / Trial',
+        'proposal': 'Proposal Terkirim',
+        'siap': 'Siap Daftar',
+        'batal': 'Batal'
+      };
+      data.stageLabel = stageLabels[newStage] || newStage;
+
+      // Add activity log
+      const timeline = document.getElementById('activity-timeline');
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' WIB';
+      const logItem = document.createElement('div');
+      logItem.className = 'flex flex-col animate-in fade-in duration-200';
+      logItem.innerHTML = `
+        <span class="text-[11px] text-light-on-surface-variant font-label">Hari ini • ${timeStr} • Ahmad Dani</span>
+        <p class="text-body-sm text-light-on-surface font-medium">Status pipeline diubah menjadi: <strong>${data.stageLabel}</strong>.</p>
+      `;
+      timeline.insertBefore(logItem, timeline.firstChild);
+
+      showNotification(`Tahapan lead #${data.id} berhasil diubah ke: "${data.stageLabel}".`, 'success');
+    }
+
+    // Save New Follow-up Note
+    function saveNewNote() {
+      const textarea = document.getElementById('new-note-text');
+      const val = textarea.value.trim();
+      if (!val) {
+        showNotification('Tuliskan catatan terlebih dahulu sebelum menyimpan.', 'warning');
+        textarea.focus();
+        return;
+      }
+
+      const timeline = document.getElementById('activity-timeline');
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' WIB';
+      const logItem = document.createElement('div');
+      logItem.className = 'flex flex-col animate-in fade-in duration-200';
+      logItem.innerHTML = `
+        <span class="text-[11px] text-light-on-surface-variant font-label">Hari ini • ${timeStr} • Ahmad Dani</span>
+        <p class="text-body-sm text-light-on-surface font-medium">${val}</p>
+      `;
+      timeline.insertBefore(logItem, timeline.firstChild);
+
+      textarea.value = '';
+      showNotification('Catatan follow-up berhasil ditambahkan ke riwayat kontak.', 'success');
+    }
+
+    // Filter by Pipeline Stage Tab
+    function filterPipelineStage(stage, tabBtn) {
+      document.querySelectorAll('.stage-tab').forEach(t => {
+        t.className = 'stage-tab px-4 py-2.5 border-b-2 border-transparent text-light-on-surface-variant hover:text-light-primary font-label text-body-md whitespace-nowrap flex items-center gap-2 transition-all';
+      });
+      tabBtn.className = 'stage-tab px-4 py-2.5 border-b-2 border-light-primary text-light-primary font-label text-body-md font-bold whitespace-nowrap flex items-center gap-2 transition-all';
+
+      document.querySelectorAll('.lead-row').forEach(row => {
+        const rowStage = row.getAttribute('data-stage');
+        if (stage === 'all' || rowStage === stage) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    }
+
+    // Live Lead Search
+    function handleLeadSearch(val) {
+      const query = val.toLowerCase();
+      document.querySelectorAll('.lead-row').forEach(row => {
+        if (row.textContent.toLowerCase().includes(query)) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    }
+
+    // Add Lead Manual Modal
+    function openAddLeadModal() {
+      document.getElementById('add-lead-modal').classList.remove('hidden');
+    }
+    function closeAddLeadModal() {
+      document.getElementById('add-lead-modal').classList.add('hidden');
+    }
+    function handleCreateLeadManual(e) {
+      e.preventDefault();
+      const sName = document.getElementById('manual-student-name').value;
+      const pName = document.getElementById('manual-parent-name').value;
+      const phone = document.getElementById('manual-phone').value;
+      const grade = document.getElementById('manual-grade').value;
+      const source = document.getElementById('manual-source').value;
+
+      closeAddLeadModal();
+
+      const newId = `LD-2026-${Math.floor(1200 + Math.random() * 800)}`;
+      leadsData[newId] = {
+        id: newId,
+        student: `${sName} (${grade.split(' ')[0]} ${grade.split(' ')[1] || ''})`,
+        parent: pName,
+        phone: phone,
+        program: grade,
+        branch: 'Sudirman (Offline)',
+        stageKey: 'baru',
+        stageLabel: 'Lead Baru',
+        badgeClass: 'bg-accent text-on-accent',
+        source: source,
+        timestamp: 'Baru saja',
+        note: 'Lead diinput secara manual oleh staf operasional.'
+      };
+
+      // Prepend to Table
+      const tbody = document.getElementById('lead-table-body');
+      const newTr = document.createElement('tr');
+      newTr.className = 'lead-row hover:bg-light-surface-container cursor-pointer transition-colors animate-in slide-in-from-top duration-200';
+      newTr.setAttribute('data-id', newId);
+      newTr.setAttribute('data-stage', 'baru');
+      newTr.onclick = () => selectLeadRow(newTr, newId);
+      newTr.innerHTML = `
+        <td class="py-3.5 px-4">
+          <p class="font-semibold text-light-on-surface">${sName} (${grade.split(' ')[0]})</p>
+          <p class="text-[12px] text-light-on-surface-variant">Wali: ${pName}</p>
+        </td>
+        <td class="py-3.5 px-4">
+          <span class="font-medium text-light-on-surface">${grade}</span>
+          <span class="text-[11px] text-light-on-surface-variant block">Sudirman</span>
+        </td>
+        <td class="py-3.5 px-4">
+          <span class="inline-flex items-center gap-1 text-[11px] text-light-on-surface-variant font-label">
+            <span class="material-symbols-outlined text-[14px] text-light-primary">person</span> ${source}
+          </span>
+        </td>
+        <td class="py-3.5 px-4">
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">
+            Lead Baru
+          </span>
+        </td>
+        <td class="py-3.5 px-4 text-right">
+          <button type="button" class="btn-select px-2.5 py-1 rounded border border-light-outline text-light-on-surface text-[11px] font-label font-medium hover:bg-light-surface">
+            Lihat
+          </button>
+        </td>
+      `;
+      tbody.insertBefore(newTr, tbody.firstChild);
+
+      // Select it immediately
+      selectLeadRow(newTr, newId);
+      showNotification(`Lead manual "${sName}" (#${newId}) berhasil ditambahkan ke pipeline.`, 'success');
+    }
+
+    // Export Leads to CSV
+    function exportLeadsCsv() {
+      showNotification('Menyiapkan file ekspor lead_pipeline_november_2026.csv...', 'info');
+      setTimeout(() => {
+        const csvContent = "data:text/csv;charset=utf-8,ID,Nama Siswa,Nama Wali,No WhatsApp,Program,Sumber,Status\n" +
+          Object.values(leadsData).map(d => `"${d.id}","${d.student}","${d.parent}","${d.phone}","${d.program}","${d.source}","${d.stageLabel}"`).join("\n");
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "lead_pipeline_arci_bimbel.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showNotification('File CSV lead pipeline berhasil diunduh.', 'success');
+      }, 600);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Konfirmasi Pendaftaran Berhasil — ARCI Bimbel</title>
+  
+  <!-- Tailwind CSS with Official Plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+  /** @type {import('tailwindcss').Config} */
+  globalThis.tailwind = globalThis.tailwind || {};
+  globalThis.tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          'accent': '#F6C453',
+          'on-accent': '#18212F',
+          'brand-indigo': '#243B7A',
+          'brand-indigo-dark': '#172653',
+          'success': '#1B7330',
+          'on-success': '#FFFFFF',
+          'warning': '#925B06',
+          'on-warning': '#FFFFFF',
+          'danger': '#B91C1C',
+          'on-danger': '#FFFFFF',
+          'light-primary': '#243B7A',
+          'light-on-primary': '#FFFFFF',
+          'light-primary-container': '#EBF0FA',
+          'light-on-primary-container': '#172653',
+          'light-surface': '#FFFFFF',
+          'light-on-surface': '#18212F',
+          'light-surface-soft': '#F8FAFC',
+          'light-surface-container-low': '#F1F5F9',
+          'light-surface-container': '#E2E8F0',
+          'light-on-surface-variant': '#475569',
+          'light-outline': '#94A3B8',
+          'light-outline-variant': '#CBD5E1',
+          'dark-primary': '#9BB3F0',
+          'dark-on-primary': '#0E1A3C',
+          'dark-primary-container': '#1E3166',
+          'dark-on-primary-container': '#D7E3FF',
+          'dark-surface': '#0F172A',
+          'dark-on-surface': '#F8FAFC',
+          'dark-surface-soft': '#1E293B',
+          'dark-surface-container-low': '#152033',
+          'dark-surface-container': '#1E293B',
+          'dark-on-surface-variant': '#CBD5E1',
+          'dark-outline': '#64748B',
+          'dark-outline-variant': '#475569',
+        },
+        borderRadius: {
+          'sm': '4px',
+          'DEFAULT': '8px',
+          'md': '10px',
+          'lg': '12px',
+          'xl': '16px',
+          '2xl': '20px',
+          'full': '9999px',
+        },
+        fontFamily: {
+          'display': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'headline': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'title': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'body': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'label': ['"Plus Jakarta Sans"', 'sans-serif'],
+        },
+      },
+    },
+  };
+  if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+  </script>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+  
+  <style>
+    .material-symbols-outlined, .material-symbols-rounded, .material-symbols-sharp, .material-icons {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      line-height: 1 !important;
+      box-sizing: content-box;
+      overflow: hidden;
+      white-space: nowrap;
+      direction: ltr;
+      vertical-align: middle;
+      font-size: 20px;
+    }
+    .pb-safe {
+      padding-bottom: env(safe-area-inset-bottom, 16px);
+    }
+  </style>
+</head>
+<body class="bg-light-surface-soft text-light-on-surface font-body antialiased min-h-screen flex flex-col pb-safe">
+
+  <!-- Header Ringkas -->
+  <header class="bg-light-surface border-b border-light-outline-variant px-4 sm:px-6 h-16 flex items-center justify-between sticky top-0 z-30 shadow-xs">
+    <div class="flex items-center gap-3">
+      <a href="index.html" class="flex items-center gap-1.5 sm:gap-2 text-light-on-surface hover:text-light-primary transition-colors py-1.5 px-2 rounded-lg hover:bg-light-surface-container-low group">
+        <span class="material-symbols-outlined text-[20px] group-hover:-translate-x-0.5 transition-transform">arrow_back</span>
+        <span class="text-body-sm font-label font-semibold">Ke Beranda</span>
+      </a>
+    </div>
+
+    <!-- Center Brand Badge -->
+    <a href="index.html" class="flex items-center gap-2 group">
+      <div class="w-8 h-8 rounded-lg bg-light-primary flex items-center justify-center text-light-on-primary font-headline font-bold text-label-md group-hover:bg-brand-indigo-dark transition-colors shadow-xs">
+        A
+      </div>
+      <div class="flex flex-col">
+        <span class="font-headline font-bold text-title-md text-brand-indigo leading-tight">ARCI Bimbel</span>
+        <span class="text-[10px] text-light-on-surface-variant font-label leading-tight">Status Pendaftaran</span>
+      </div>
+    </a>
+
+    <!-- Right Help Link -->
+    <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-body-sm text-success hover:underline font-label font-semibold">
+      <span class="material-symbols-outlined text-[18px]">chat</span>
+      <span class="hidden sm:inline">Bantuan Admin</span>
+    </a>
+  </header>
+
+  <!-- Main Success Container (Centered) -->
+  <main class="flex-1 max-w-xl w-full mx-auto px-4 py-8 sm:py-12 flex flex-col items-center justify-center my-auto">
+    
+    <!-- Success Card -->
+    <div class="w-full bg-light-surface rounded-2xl border border-light-outline-variant shadow-sm p-6 sm:p-10 flex flex-col items-center text-center gap-6">
+      
+      <!-- Animated Check Icon -->
+      <div class="w-20 h-20 rounded-full bg-success/10 text-success flex items-center justify-center text-title-lg shadow-inner ring-8 ring-success/5 animate-pulse mx-auto">
+        <span class="material-symbols-outlined text-[48px]">verified</span>
+      </div>
+
+      <div class="w-full flex flex-col items-center text-center">
+        <span class="inline-block px-3 py-1 rounded-full text-label-sm font-label bg-success text-on-success mb-2 font-semibold mx-auto">
+          Pendaftaran Berhasil Diajukan
+        </span>
+        <h1 class="font-headline text-headline-sm sm:text-headline-md font-bold text-light-on-surface text-center">
+          Terima Kasih! Formulir Pendaftaran Telah Kami Terima
+        </h1>
+        <p class="text-body-md text-light-on-surface-variant mt-2 max-w-md mx-auto text-center leading-relaxed">
+          Tim Administrasi &amp; Akademik ARCI Bimbel akan segera memverifikasi data dan menghubungi Anda melalui WhatsApp dalam waktu <strong>1x24 jam kerja</strong>.
+        </p>
+      </div>
+
+      <!-- Registration Meta Card -->
+      <div class="w-full max-w-md mx-auto bg-light-surface-container-low rounded-xl border border-light-outline-variant p-4 sm:p-5 text-left flex flex-col gap-3 shadow-xs">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-light-outline-variant/70 gap-1">
+          <div>
+            <span class="text-light-on-surface-variant text-[11px] block uppercase tracking-wider font-semibold">Nomor Registrasi Siswa</span>
+            <span class="font-headline font-bold text-title-lg text-brand-indigo">ARC-2026-0849</span>
+          </div>
+          <div class="sm:text-right">
+            <span class="text-light-on-surface-variant text-[11px] block uppercase tracking-wider font-semibold">Status Berkas</span>
+            <span class="inline-flex items-center gap-1 text-label-sm font-semibold text-warning bg-warning/10 px-2.5 py-0.5 rounded-full">
+              <span class="w-1.5 h-1.5 rounded-full bg-warning animate-ping"></span>
+              Menunggu Verifikasi Jadwal
+            </span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-body-sm pt-1">
+          <div>
+            <span class="text-light-on-surface-variant text-[12px] block">Nama Calon Siswa:</span>
+            <strong class="text-light-on-surface">Farhan Pratama</strong>
+          </div>
+          <div>
+            <span class="text-light-on-surface-variant text-[12px] block">Jenjang &amp; Kelas:</span>
+            <span class="font-medium text-light-on-surface">SMP Kelas 8</span>
+          </div>
+          <div>
+            <span class="text-light-on-surface-variant text-[12px] block">Program Terpilih:</span>
+            <span class="font-medium text-brand-indigo">Program Reguler SMP Kelas 8</span>
+          </div>
+          <div>
+            <span class="text-light-on-surface-variant text-[12px] block">Lokasi Belajar:</span>
+            <span class="font-medium text-light-on-surface">Cabang Sudirman (Tatap Muka)</span>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-light-outline-variant/70 flex items-center justify-between text-body-sm">
+          <span class="text-light-on-surface-variant font-medium">Estimasi Total Tagihan Awal:</span>
+          <span class="font-headline font-bold text-title-md text-brand-indigo">Rp1.100.000</span>
+        </div>
+      </div>
+
+      <!-- Alur Selanjutnya Info Box -->
+      <div class="w-full max-w-md mx-auto bg-light-primary-container/30 border border-light-primary/30 rounded-xl p-4 text-left shadow-xs">
+        <h3 class="font-headline font-semibold text-title-sm text-brand-indigo flex items-center gap-2 mb-2">
+          <span class="material-symbols-outlined text-[18px]">info</span>
+          Langkah Selanjutnya:
+        </h3>
+        <ul class="text-body-sm text-light-on-surface-variant space-y-1.5 list-disc list-inside">
+          <li>Admin ARCI akan mengirimkan jadwal sesi orientasi dan konfirmasi tutor via WhatsApp.</li>
+          <li>Invoice dan instruksi pembayaran resmi akan diterbitkan setelah jadwal disepakati.</li>
+          <li>Modul pembelajaran cetak dapat diambil langsung di cabang atau dikirim ke rumah.</li>
+        </ul>
+      </div>
+
+      <!-- Action CTA Buttons -->
+      <div class="flex flex-col sm:flex-row gap-3 w-full max-w-md mx-auto mt-2">
+        <a href="https://wa.me/6281234567890?text=Halo%20Admin%20ARCI%20Bimbel,%20saya%20sudah%20mendaftar%20dengan%20nomor%20ARC-2026-0849" target="_blank" rel="noopener noreferrer" class="flex-1 min-h-[48px] inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-success text-on-success font-label text-label-md font-semibold hover:bg-success/90 transition-all shadow-sm">
+          <span class="material-symbols-outlined text-[20px]">chat</span>
+          <span>Konfirmasi ke WhatsApp Admin</span>
+        </a>
+
+        <a href="index.html" class="flex-1 min-h-[48px] inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-light-outline text-light-on-surface hover:bg-light-surface-container font-label text-label-md font-medium transition-colors">
+          <span class="material-symbols-outlined text-[18px]">home</span>
+          <span>Kembali ke Beranda</span>
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-light-surface border-t border-light-outline-variant py-6 text-center text-body-sm text-light-on-surface-variant">
+    <div class="max-w-3xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <p>© 2026 ARCI Bimbel. Bimbingan Belajar Terpercaya &amp; Berprestasi.</p>
+      <div class="flex gap-4">
+        <a href="index.html#program" class="hover:underline">Program</a>
+        <a href="index.html#tutor" class="hover:underline">Tutor</a>
+        <a href="pendaftaran.html" class="hover:underline">Daftar Siswa Baru</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

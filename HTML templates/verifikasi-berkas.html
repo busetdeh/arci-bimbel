@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Data &amp; Verifikasi Pendaftaran — ARCI Bimbel</title>
+  
+  <!-- Tailwind CSS with Official Plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+  /** @type {import('tailwindcss').Config} */
+  globalThis.tailwind = globalThis.tailwind || {};
+  globalThis.tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          'accent': '#F6C453',
+          'on-accent': '#18212F',
+          'brand-indigo': '#243B7A',
+          'brand-indigo-dark': '#172653',
+          'success': '#1B7330',
+          'on-success': '#FFFFFF',
+          'warning': '#925B06',
+          'on-warning': '#FFFFFF',
+          'danger': '#B91C1C',
+          'on-danger': '#FFFFFF',
+          'light-primary': '#243B7A',
+          'light-on-primary': '#FFFFFF',
+          'light-primary-container': '#EBF0FA',
+          'light-on-primary-container': '#172653',
+          'light-surface': '#FFFFFF',
+          'light-on-surface': '#18212F',
+          'light-surface-soft': '#F8FAFC',
+          'light-surface-container-low': '#F1F5F9',
+          'light-surface-container': '#E2E8F0',
+          'light-on-surface-variant': '#475569',
+          'light-outline': '#94A3B8',
+          'light-outline-variant': '#CBD5E1',
+          'dark-primary': '#9BB3F0',
+          'dark-on-primary': '#0E1A3C',
+          'dark-primary-container': '#1E3166',
+          'dark-on-primary-container': '#D7E3FF',
+          'dark-surface': '#0F172A',
+          'dark-on-surface': '#F8FAFC',
+          'dark-surface-soft': '#1E293B',
+          'dark-surface-container-low': '#152033',
+          'dark-surface-container': '#1E293B',
+          'dark-on-surface-variant': '#CBD5E1',
+          'dark-outline': '#64748B',
+          'dark-outline-variant': '#475569',
+        },
+        borderRadius: {
+          'sm': '4px',
+          'DEFAULT': '8px',
+          'md': '10px',
+          'lg': '12px',
+          'xl': '16px',
+          '2xl': '20px',
+          'full': '9999px',
+        },
+        fontFamily: {
+          'display': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'headline': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'title': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'body': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'label': ['"Plus Jakarta Sans"', 'sans-serif'],
+        },
+        boxShadow: {
+          '2xs': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+          'xs': '0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px -1px rgba(0, 0, 0, 0.08)',
+        }
+      },
+    },
+  };
+  if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+  </script>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+  
+  <style>
+    .material-symbols-outlined, .material-symbols-rounded, .material-symbols-sharp, .material-icons {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      line-height: 1 !important;
+      box-sizing: content-box;
+      overflow: hidden;
+      white-space: nowrap;
+      direction: ltr;
+      vertical-align: middle;
+      font-size: 20px;
+    }
+    .pb-safe {
+      padding-bottom: env(safe-area-inset-bottom, 16px);
+    }
+  </style>
+</head>
+<body class="bg-light-surface-soft text-light-on-surface font-body antialiased min-h-screen flex flex-col lg:flex-row pb-safe">
+
+  <!-- Mobile Backdrop Overlay for Drawer -->
+  <div id="sidebar-overlay" onclick="toggleSidebar(false)" class="hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-xs transition-opacity lg:hidden"></div>
+
+  <!-- Desktop Fixed & Mobile Slide-Out Sidebar Navigation -->
+  <aside id="sidebar-nav" class="fixed inset-y-0 left-0 z-50 w-64 bg-light-surface border-r border-light-outline-variant flex flex-col justify-between shrink-0 transform -translate-x-full transition-transform duration-200 lg:translate-x-0 lg:static lg:h-screen lg:sticky lg:top-0">
+    <div class="flex flex-col flex-1 overflow-y-auto">
+      <!-- Brand Header -->
+      <div class="h-16 lg:h-20 px-5 lg:px-6 flex items-center justify-between border-b border-light-outline-variant shrink-0">
+        <a href="dashboard.html" class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-light-primary flex items-center justify-center text-light-on-primary font-headline font-bold text-headline-sm shadow-xs">
+            A
+          </div>
+          <div class="flex flex-col">
+            <span class="font-headline font-bold text-title-md tracking-tight text-brand-indigo">ARCI Bimbel</span>
+            <span class="text-[11px] text-light-on-surface-variant font-label">Dashboard Operasional</span>
+          </div>
+        </a>
+
+        <!-- Mobile Drawer Close Button -->
+        <button type="button" onclick="toggleSidebar(false)" class="lg:hidden p-1.5 rounded-lg text-light-on-surface-variant hover:bg-light-surface-container" aria-label="Tutup Menu">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="p-3.5 lg:p-4 flex flex-col gap-1">
+        <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">dashboard</span>
+          <span>Ringkasan</span>
+        </a>
+
+        <a href="leads.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">person_search</span>
+            <span>Lead &amp; Pipeline</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">8</span>
+        </a>
+
+        <!-- Active Menu: Pendaftaran (Admin Verification) -->
+        <a href="verifikasi-pendaftaran.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg bg-light-primary text-light-on-primary font-label text-body-md shadow-xs transition-colors">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-accent">how_to_reg</span>
+            <span class="font-semibold">Pendaftaran</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold" id="badge-nav-verify">3</span>
+        </a>
+
+        <a href="students.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">school</span>
+            <span>Siswa &amp; Wali</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">184</span>
+        </a>
+
+        <a href="classes.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">class</span>
+          <span>Program &amp; Kelas</span>
+        </a>
+
+        <a href="schedule.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">calendar_month</span>
+          <span>Jadwal Sesi</span>
+        </a>
+
+        <a href="attendance.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">fact_check</span>
+          <span>Presensi Siswa</span>
+        </a>
+
+        <a href="finance.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">payments</span>
+            <span>Tagihan &amp; Kas</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">5 Baru</span>
+        </a>
+
+        <a href="communications.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">campaign</span>
+          <span>Komunikasi &amp; Broadcast</span>
+        </a>
+
+        <a href="settings.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">manage_accounts</span>
+          <span>Pengaturan &amp; Role</span>
+        </a>
+
+        <a href="reports.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">analytics</span>
+          <span>Laporan KPI</span>
+        </a>
+        <a href="cms.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">article</span>
+          <span>Konten Website</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- User Profile Footer -->
+    <div class="p-3.5 lg:p-4 border-t border-light-outline-variant shrink-0 bg-light-surface">
+      <div class="flex items-center justify-between p-2 rounded-lg hover:bg-light-surface-container transition-colors">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-light-primary text-light-on-primary flex items-center justify-center font-bold font-headline text-body-md shadow-2xs">
+            AD
+          </div>
+          <div class="flex flex-col">
+            <span class="text-body-sm font-semibold text-light-on-surface">Ahmad Dani</span>
+            <span class="text-[11px] text-light-on-surface-variant">Admin Operasional</span>
+          </div>
+        </div>
+        <a href="login-admin.html" title="Keluar / Logout" class="p-1.5 rounded-md text-light-on-surface-variant hover:text-danger hover:bg-danger/10 transition-colors">
+          <span class="material-symbols-outlined text-[18px]">logout</span>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div class="flex-1 flex flex-col min-w-0">
+    
+    <!-- Top Utility Bar (App Shell) -->
+    <header class="h-16 lg:h-20 bg-light-surface border-b border-light-outline-variant px-4 sm:px-6 lg:px-8 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
+      
+      <!-- Mobile Hamburger Button & Search Bar -->
+      <div class="flex items-center gap-3 sm:gap-4 flex-1 max-w-lg">
+        <button type="button" onclick="toggleSidebar(true)" class="lg:hidden w-10 h-10 rounded-lg border border-light-outline flex items-center justify-center text-light-on-surface hover:bg-light-surface-container shrink-0" aria-label="Buka Menu Navigasi">
+          <span class="material-symbols-outlined text-[22px]">menu</span>
+        </button>
+
+        <!-- Search Input -->
+        <div class="relative w-full">
+          <span class="material-symbols-outlined absolute left-3 top-2.5 text-light-on-surface-variant text-[20px]">search</span>
+          <input 
+            type="search" 
+            id="reg-search" 
+            oninput="handleSearch(this.value)" 
+            placeholder="Cari no. pendaftaran, nama siswa, atau wali..." 
+            class="w-full pl-10 pr-4 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface text-light-on-surface placeholder:text-light-on-surface-variant">
+        </div>
+      </div>
+
+      <!-- Header Actions -->
+      <div class="flex items-center gap-2.5 sm:gap-4 ml-2">
+        <button type="button" aria-label="Notifikasi" onclick="showToast('Ada 3 berkas pendaftaran baru yang siap diverifikasi.', 'info')" class="relative w-10 h-10 rounded-lg border border-light-outline flex items-center justify-center text-light-on-surface hover:bg-light-surface-container transition-colors shrink-0">
+          <span class="material-symbols-outlined text-[20px]">notifications</span>
+          <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-danger ring-2 ring-light-surface"></span>
+        </button>
+
+        <a href="pendaftaran.html" class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm sm:text-body-md font-semibold shadow-xs transition-colors whitespace-nowrap min-h-[40px]">
+          <span class="material-symbols-outlined text-[18px]">add</span>
+          <span class="hidden sm:inline">Input Formulir Manual</span>
+          <span class="sm:hidden">Input</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Operational Viewport Content -->
+    <main class="p-4 sm:p-6 lg:p-8 flex flex-col gap-6 flex-1">
+      
+      <!-- Title & Action Bar -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="flex flex-wrap items-center gap-2.5">
+            <h1 class="font-headline font-bold text-headline-sm sm:text-headline-md text-light-on-surface">
+              Data &amp; Verifikasi Pendaftaran Masuk
+            </h1>
+            <span id="badge-top-verify" class="px-2.5 py-0.5 rounded-full text-label-sm font-label bg-accent text-on-accent font-bold shadow-2xs">
+              3 Menunggu Verifikasi
+            </span>
+          </div>
+          <p class="text-body-sm text-light-on-surface-variant mt-1">
+            Validasi berkas pendaftaran calon siswa, penempatan rombel kelas, dan checklist onboarding siswa aktif.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button type="button" onclick="exportRegistrationCSV()" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg border border-light-outline text-light-on-surface text-body-sm font-label font-semibold hover:bg-light-surface-container transition-colors shadow-2xs">
+            <span class="material-symbols-outlined text-[18px] text-light-on-surface-variant">download</span>
+            <span>Unduh Laporan CSV</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Registration Funnel Stage Filters -->
+      <div class="flex items-center gap-2 border-b border-light-outline-variant overflow-x-auto pb-px" id="stage-filter-group">
+        <button 
+          type="button" 
+          onclick="setStageFilter('all')" 
+          id="btn-stage-all" 
+          class="px-4 py-2 border-b-2 border-light-primary text-light-primary font-label text-body-md font-bold whitespace-nowrap flex items-center gap-2 transition-colors">
+          <span>Semua Berkas</span>
+          <span class="px-2 py-0.5 rounded-full text-[11px] bg-light-primary-container text-light-primary font-bold">18</span>
+        </button>
+
+        <button 
+          type="button" 
+          onclick="setStageFilter('verify')" 
+          id="btn-stage-verify" 
+          class="px-4 py-2 border-b-2 border-transparent text-light-on-surface hover:text-light-primary font-label text-body-md font-medium whitespace-nowrap flex items-center gap-2 transition-colors">
+          <span>Perlu Verifikasi</span>
+          <span id="badge-stage-verify" class="px-2 py-0.5 rounded-full text-[11px] bg-accent text-on-accent font-bold">3</span>
+        </button>
+
+        <button 
+          type="button" 
+          onclick="setStageFilter('payment')" 
+          id="btn-stage-payment" 
+          class="px-4 py-2 border-b-2 border-transparent text-light-on-surface hover:text-light-primary font-label text-body-md font-medium whitespace-nowrap flex items-center gap-2 transition-colors">
+          <span>Menunggu Pembayaran</span>
+          <span class="px-2 py-0.5 rounded-full text-[11px] bg-warning text-on-warning font-bold">4</span>
+        </button>
+
+        <button 
+          type="button" 
+          onclick="setStageFilter('active')" 
+          id="btn-stage-active" 
+          class="px-4 py-2 border-b-2 border-transparent text-light-on-surface hover:text-light-primary font-label text-body-md font-medium whitespace-nowrap flex items-center gap-2 transition-colors">
+          <span>Diterima &amp; Aktif</span>
+          <span class="px-2 py-0.5 rounded-full text-[11px] bg-success text-on-success font-bold">11</span>
+        </button>
+      </div>
+
+      <!-- Split Layout: Registration Table (Col 7) & Review Onboarding Inspector (Col 5) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+        
+        <!-- Registration Table (Col 7) -->
+        <section class="lg:col-span-7 bg-light-surface rounded-xl border border-light-outline-variant shadow-xs overflow-hidden flex flex-col justify-between">
+          
+          <div class="p-4 sm:p-5 border-b border-light-outline-variant flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <span class="font-headline font-bold text-title-md text-light-on-surface">Daftar Formulir Pendaftaran</span>
+            <span class="text-[12px] text-light-on-surface-variant font-label bg-light-surface-container-low px-2.5 py-1 rounded-md">Bulan: November 2026</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-body-sm">
+              <thead class="bg-light-surface-soft border-b border-light-outline-variant text-[11px] font-label text-light-on-surface-variant uppercase tracking-wider">
+                <tr>
+                  <th class="py-3 px-4">No. Reg &amp; Nama Calon Siswa</th>
+                  <th class="py-3 px-4">Program Pilihan</th>
+                  <th class="py-3 px-4">Tanggal Masuk</th>
+                  <th class="py-3 px-4">Status Berkas</th>
+                  <th class="py-3 px-4 text-right">Tindakan</th>
+                </tr>
+              </thead>
+              <tbody id="registrations-tbody" class="divide-y divide-light-outline-variant font-body">
+                <!-- Dynamically populated rows -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Table Footer -->
+          <div class="p-4 border-t border-light-outline-variant flex flex-col sm:flex-row items-center justify-between gap-3 text-body-sm">
+            <span id="reg-pagination-info" class="text-light-on-surface-variant text-[13px]">
+              Menampilkan 1–5 dari 18 pendaftaran
+            </span>
+            <div class="flex items-center gap-1.5">
+              <button type="button" class="px-2.5 py-1 rounded bg-light-primary text-light-on-primary text-body-sm font-label font-bold shadow-2xs">1</button>
+              <button type="button" onclick="showToast('Halaman 2 memuat arsip formulir pendaftaran sebelumnya.', 'info')" class="px-2.5 py-1 rounded border border-light-outline text-light-on-surface hover:bg-light-surface-container text-body-sm font-label transition-colors">2</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Registration Review & Onboarding Checklist Inspector (Col 5) -->
+        <section id="review-inspector" class="lg:col-span-5 bg-light-surface rounded-xl border border-light-outline-variant shadow-xs p-5 sm:p-6 flex flex-col gap-6 sticky top-24">
+          
+          <div class="flex items-start justify-between pb-4 border-b border-light-outline-variant">
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 id="inspector-title" class="font-headline text-title-lg font-bold text-light-on-surface">Review Berkas: Farhan Pratama</h2>
+                <span id="inspector-badge" class="px-2 py-0.5 rounded-full text-label-sm font-label bg-accent text-on-accent font-bold">Baru</span>
+              </div>
+              <p id="inspector-meta" class="text-body-sm text-light-on-surface-variant mt-0.5">No. Reg: REG-2026-1189 • Sumber: Formulir Web Funnel</p>
+            </div>
+          </div>
+
+          <!-- Applicant & Wali Snapshot Details Card -->
+          <div class="p-4 rounded-xl bg-light-surface-soft border border-light-outline-variant flex flex-col gap-2.5 text-body-sm">
+            <div class="flex items-center justify-between">
+              <span class="text-[12px] text-light-on-surface-variant font-label">Orang Tua / Wali</span>
+              <span id="detail-parent" class="font-semibold text-light-on-surface text-right">Dra. Nurhayati (0812-3456-7890)</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-[12px] text-light-on-surface-variant font-label">Sekolah Asal Siswa</span>
+              <span id="detail-school" class="font-semibold text-light-on-surface text-right">SMPN 115 Jakarta (Kelas 8)</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-[12px] text-light-on-surface-variant font-label">Program &amp; Cabang</span>
+              <span id="detail-program" class="font-semibold text-light-on-surface text-right">Reguler SMP • Cabang Sudirman</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-[12px] text-light-on-surface-variant font-label">Lampiran Berkas Rapor</span>
+              <button type="button" onclick="openDocPreview()" class="font-medium text-light-primary hover:underline flex items-center gap-1">
+                <span class="material-symbols-outlined text-[16px]">attach_file</span> 
+                <span id="detail-file">Rapor_Kls7_Farhan.pdf</span>
+              </button>
+            </div>
+            <div class="pt-2 border-t border-light-outline-variant flex items-center justify-between font-bold text-title-md">
+              <span class="text-light-on-surface text-body-md">Total Tagihan Awal</span>
+              <span id="detail-fee" class="text-brand-indigo font-headline text-headline-sm">Rp1.100.000</span>
+            </div>
+          </div>
+
+          <!-- Onboarding Checklist (D3 PRD Requirement) -->
+          <div class="flex flex-col gap-2.5">
+            <div class="flex items-center justify-between">
+              <span class="font-label text-label-sm text-light-on-surface-variant font-bold uppercase tracking-wider">Checklist Onboarding Siswa:</span>
+              <span id="checklist-progress-badge" class="text-[11px] font-bold text-brand-indigo bg-light-primary-container px-2 py-0.5 rounded-full">2 / 4 Selesai</span>
+            </div>
+            
+            <label class="p-2.5 rounded-lg border border-light-outline-variant bg-light-surface flex items-center gap-3 text-body-sm text-light-on-surface cursor-pointer hover:bg-light-surface-soft transition-colors select-none">
+              <input type="checkbox" id="check-step-1" checked onchange="updateChecklistProgress()" class="rounded text-light-primary focus:ring-light-primary">
+              <span class="font-medium">1. Data identitas siswa &amp; kontak wali lengkap</span>
+            </label>
+
+            <label class="p-2.5 rounded-lg border border-light-outline-variant bg-light-surface flex items-center gap-3 text-body-sm text-light-on-surface cursor-pointer hover:bg-light-surface-soft transition-colors select-none">
+              <input type="checkbox" id="check-step-2" checked onchange="updateChecklistProgress()" class="rounded text-light-primary focus:ring-light-primary">
+              <span class="font-medium" id="check-step-2-label">2. Penempatan kelas: SMP-8 Sudirman A (Sisa 1 kursi)</span>
+            </label>
+
+            <label class="p-2.5 rounded-lg border border-light-outline-variant bg-light-surface flex items-center gap-3 text-body-sm text-light-on-surface cursor-pointer hover:bg-light-surface-soft transition-colors select-none">
+              <input type="checkbox" id="check-step-3" onchange="updateChecklistProgress()" class="rounded text-light-primary focus:ring-light-primary">
+              <span>3. Pembayaran awal diverifikasi admin keuangan</span>
+            </label>
+
+            <label class="p-2.5 rounded-lg border border-light-outline-variant bg-light-surface flex items-center gap-3 text-body-sm text-light-on-surface cursor-pointer hover:bg-light-surface-soft transition-colors select-none">
+              <input type="checkbox" id="check-step-4" onchange="updateChecklistProgress()" class="rounded text-light-primary focus:ring-light-primary">
+              <span>4. Akun portal siswa/wali diterbitkan &amp; dikirim via WA</span>
+            </label>
+          </div>
+
+          <!-- Approval Actions -->
+          <div class="pt-3 border-t border-light-outline-variant flex flex-col gap-2.5" id="inspector-action-box">
+            <div class="flex items-center gap-3">
+              <button 
+                type="button" 
+                id="btn-approve-reg" 
+                onclick="approveRegistration()" 
+                class="flex-1 py-3 rounded-xl bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-label-md font-bold shadow-xs transition-colors flex items-center justify-center gap-2 min-h-[44px]">
+                <span class="material-symbols-outlined text-[18px]">verified</span>
+                <span>Setujui &amp; Tempatkan ke Kelas</span>
+              </button>
+              
+              <button 
+                type="button" 
+                id="btn-revision-reg" 
+                onclick="openRevisionModal()" 
+                class="px-3.5 py-3 rounded-xl border border-light-outline text-light-on-surface hover:bg-light-surface-container font-label text-label-md font-semibold transition-colors min-h-[44px]">
+                Minta Revisi
+              </button>
+            </div>
+            <p id="inspector-action-note" class="text-[11px] text-light-on-surface-variant text-center leading-relaxed">
+              Setelah disetujui, invoice diterbitkan dan notifikasi WhatsApp konfirmasi orientasi dikirim ke wali murid.
+            </p>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 1: MINTA REVISI BERKAS                                   -->
+  <!-- ============================================================== -->
+  <div id="modal-revision" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+    <div class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-2xl max-w-md w-full overflow-hidden flex flex-col">
+      <div class="px-6 py-4 border-b border-light-outline-variant flex items-center justify-between bg-warning/10">
+        <div class="flex items-center gap-2 text-warning">
+          <span class="material-symbols-outlined text-[22px]">pending_actions</span>
+          <h3 class="font-headline font-bold text-title-md text-light-on-surface">Minta Revisi Berkas Pendaftaran</h3>
+        </div>
+        <button type="button" onclick="closeRevisionModal()" class="text-light-on-surface-variant hover:text-light-on-surface p-1 rounded-lg hover:bg-light-surface-container">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-4">
+        <p class="text-body-sm text-light-on-surface">
+          Pilih bagian berkas yang perlu diperbaiki oleh <strong id="revision-student-name">Farhan Pratama</strong>:
+        </p>
+
+        <div class="space-y-2">
+          <label class="flex items-center gap-2.5 text-body-sm cursor-pointer p-2.5 rounded-lg border border-light-outline-variant hover:bg-light-surface-container">
+            <input type="radio" name="revision-reason" value="Lampiran foto rapor buram atau halaman terpotong." checked class="text-warning focus:ring-warning">
+            <span>Foto rapor buram / halaman terpotong</span>
+          </label>
+          <label class="flex items-center gap-2.5 text-body-sm cursor-pointer p-2.5 rounded-lg border border-light-outline-variant hover:bg-light-surface-container">
+            <input type="radio" name="revision-reason" value="Pilihan jadwal kelas bentrok/penuh, mohon pilih opsi hari alternatif." class="text-warning focus:ring-warning">
+            <span>Pilihan jadwal sesi kelas sudah penuh</span>
+          </label>
+          <label class="flex items-center gap-2.5 text-body-sm cursor-pointer p-2.5 rounded-lg border border-light-outline-variant hover:bg-light-surface-container">
+            <input type="radio" name="revision-reason" value="Nomor WhatsApp orang tua tidak aktif atau keliru." class="text-warning focus:ring-warning">
+            <span>Nomor WhatsApp orang tua tidak aktif</span>
+          </label>
+        </div>
+
+        <div class="p-3 bg-light-surface-container-low rounded-lg text-[12px] text-light-on-surface-variant">
+          Pesan permintaan revisi beserta tautan upload ulang akan otomatis dikirimkan via WhatsApp ke nomor wali murid.
+        </div>
+
+        <div class="pt-3 border-t border-light-outline-variant flex items-center justify-end gap-3">
+          <button type="button" onclick="closeRevisionModal()" class="px-4 py-2 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container text-body-sm font-semibold">
+            Batal
+          </button>
+          <button type="button" onclick="confirmRevision()" class="px-5 py-2 rounded-xl bg-warning text-on-warning hover:bg-warning/90 font-label text-body-sm font-bold shadow-xs">
+            Kirim Permintaan Revisi
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 2: PRATINJAU DOKUMEN RAPOR                               -->
+  <!-- ============================================================== -->
+  <div id="modal-doc-preview" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+    <div class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-2xl max-w-lg w-full overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="px-6 py-4 border-b border-light-outline-variant flex items-center justify-between bg-light-surface-soft">
+        <div class="flex items-center gap-2 text-brand-indigo">
+          <span class="material-symbols-outlined text-[20px]">picture_as_pdf</span>
+          <h3 class="font-headline font-bold text-title-md text-light-on-surface" id="doc-preview-title">Rapor_Kls7_Farhan.pdf</h3>
+        </div>
+        <button type="button" onclick="closeDocPreview()" class="text-light-on-surface-variant hover:text-light-on-surface p-1 rounded-lg hover:bg-light-surface-container">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-4">
+        <!-- Simulated Document Card -->
+        <div class="border-2 border-dashed border-light-outline rounded-xl p-6 bg-light-surface-container-low flex flex-col items-center justify-center text-center gap-3">
+          <span class="material-symbols-outlined text-brand-indigo text-[48px]">description</span>
+          <div>
+            <p class="font-bold text-body-md text-light-on-surface" id="doc-student-name">Farhan Pratama — SMPN 115 Jakarta</p>
+            <p class="text-[12px] text-light-on-surface-variant">Lembar Hasil Belajar Siswa Semester Genap • Nilai Rata-rata: 86.4</p>
+            <p class="text-[11px] text-success font-semibold mt-1">✓ Berkas telah divalidasi sistem dan terbaca jelas</p>
+          </div>
+        </div>
+
+        <div class="pt-2 flex justify-end gap-2">
+          <button type="button" onclick="closeDocPreview()" class="px-4 py-2 rounded-lg bg-light-primary text-light-on-primary text-body-sm font-semibold">
+            Tutup Pratinjau
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- TOAST NOTIFICATION CONTAINER                                   -->
+  <!-- ============================================================== -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none"></div>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    // State of Registrations
+    const registrationsData = [
+      {
+        id: 'REG-2026-1189',
+        student: 'Farhan Pratama',
+        parent: 'Dra. Nurhayati',
+        parentPhone: '0812-3456-7890',
+        school: 'SMPN 115 Jakarta (Kelas 8)',
+        program: 'Reguler SMP Kelas 8',
+        session: 'Sudirman • Sesi Siang',
+        assignedClass: 'SMP-8 Sudirman A (Sisa 1 kursi)',
+        date: '18 Nov 2026',
+        status: 'Menunggu Verifikasi',
+        stage: 'verify', // verify, payment, active
+        statusBadgeClass: 'bg-accent text-on-accent font-bold',
+        documentFile: 'Rapor_Kls7_Farhan.pdf',
+        fee: 1100000,
+        checklist: [true, true, false, false]
+      },
+      {
+        id: 'REG-2026-1172',
+        student: 'Nadia Amanda',
+        parent: 'Pak Hermawan',
+        parentPhone: '0811-9201-4432',
+        school: 'SMAN 70 Jakarta (Kelas 12)',
+        program: 'Intensif UTBK 2027',
+        session: 'Online Live Zoom #1',
+        assignedClass: 'UTBK-TPS Online #1',
+        date: '17 Nov 2026',
+        status: 'Verifikasi Kas',
+        stage: 'payment',
+        statusBadgeClass: 'bg-warning text-on-warning font-semibold',
+        documentFile: 'Surat_Keterangan_Siswa_Nadia.pdf',
+        fee: 1450000,
+        checklist: [true, true, true, false]
+      },
+      {
+        id: 'REG-2026-1150',
+        student: 'Aqila Zahra',
+        parent: 'Ibu Sarah',
+        parentPhone: '0812-8877-6655',
+        school: 'SDIT Nurul Fikri (Kelas 5)',
+        program: 'Reguler SD Kelas 5',
+        session: 'Sudirman • Sesi Sore',
+        assignedClass: 'SD-5 Calistung & MIPA',
+        date: '15 Nov 2026',
+        status: 'Diterima • Aktif',
+        stage: 'active',
+        statusBadgeClass: 'bg-success text-on-success font-bold',
+        documentFile: 'Rapor_SD_Aqila_Zahra.pdf',
+        fee: 750000,
+        checklist: [true, true, true, true]
+      },
+      {
+        id: 'REG-2026-1144',
+        student: 'Dimas Wicaksono',
+        parent: 'Ir. Hendra',
+        parentPhone: '0815-4433-2211',
+        school: 'SMAN 8 Jakarta (Kelas 11)',
+        program: 'Reguler SMA Saintek',
+        session: 'Kebayoran • Sesi Malam',
+        assignedClass: 'SMA-11 Saintek Juara',
+        date: '14 Nov 2026',
+        status: 'Diterima • Aktif',
+        stage: 'active',
+        statusBadgeClass: 'bg-success text-on-success font-bold',
+        documentFile: 'Rapor_SMA_Dimas.pdf',
+        fee: 1350000,
+        checklist: [true, true, true, true]
+      },
+      {
+        id: 'REG-2026-1135',
+        student: 'Raihan Syahputra',
+        parent: 'Bunda Hesty',
+        parentPhone: '0813-8822-1920',
+        school: 'SMP Labschool (Kelas 9)',
+        program: 'Reguler SMP Kelas 9',
+        session: 'Sudirman • Sesi Sore',
+        assignedClass: 'SMP-9 Target UN B',
+        date: '12 Nov 2026',
+        status: 'Menunggu Pembayaran',
+        stage: 'payment',
+        statusBadgeClass: 'bg-warning text-on-warning font-semibold',
+        documentFile: 'Rapor_Kls8_Raihan.pdf',
+        fee: 950000,
+        checklist: [true, true, false, false]
+      }
+    ];
+
+    let currentStageFilter = 'all'; // 'all', 'verify', 'payment', 'active'
+    let currentSearch = '';
+    let selectedRegId = 'REG-2026-1189';
+
+    // Format IDR
+    function formatRupiah(amount) {
+      return 'Rp' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    // Sidebar Mobile Drawer Toggle
+    function toggleSidebar(open) {
+      const sidebar = document.getElementById('sidebar-nav');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (open) {
+        sidebar.classList.remove('-translate-x-full');
+        sidebar.classList.add('translate-x-0');
+        overlay.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+        sidebar.classList.remove('translate-x-0');
+        overlay.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }
+    }
+
+    // Set Stage Filter
+    function setStageFilter(stage) {
+      currentStageFilter = stage;
+      
+      const btnAll = document.getElementById('btn-stage-all');
+      const btnVerify = document.getElementById('btn-stage-verify');
+      const btnPayment = document.getElementById('btn-stage-payment');
+      const btnActive = document.getElementById('btn-stage-active');
+
+      [btnAll, btnVerify, btnPayment, btnActive].forEach(b => {
+        b.className = "px-4 py-2 border-b-2 border-transparent text-light-on-surface hover:text-light-primary font-label text-body-md font-medium whitespace-nowrap flex items-center gap-2 transition-colors";
+      });
+
+      if (stage === 'all') {
+        btnAll.className = "px-4 py-2 border-b-2 border-light-primary text-light-primary font-label text-body-md font-bold whitespace-nowrap flex items-center gap-2 transition-colors";
+      } else if (stage === 'verify') {
+        btnVerify.className = "px-4 py-2 border-b-2 border-light-primary text-light-primary font-label text-body-md font-bold whitespace-nowrap flex items-center gap-2 transition-colors";
+      } else if (stage === 'payment') {
+        btnPayment.className = "px-4 py-2 border-b-2 border-light-primary text-light-primary font-label text-body-md font-bold whitespace-nowrap flex items-center gap-2 transition-colors";
+      } else if (stage === 'active') {
+        btnActive.className = "px-4 py-2 border-b-2 border-light-primary text-light-primary font-label text-body-md font-bold whitespace-nowrap flex items-center gap-2 transition-colors";
+      }
+
+      renderTable();
+    }
+
+    // Search Input
+    function handleSearch(val) {
+      currentSearch = val.toLowerCase().trim();
+      renderTable();
+    }
+
+    // Render Registration Table
+    function renderTable() {
+      const tbody = document.getElementById('registrations-tbody');
+      tbody.innerHTML = '';
+
+      const filtered = registrationsData.filter(r => {
+        const matchStage = (currentStageFilter === 'all') || (r.stage === currentStageFilter);
+        const matchSearch = !currentSearch 
+          || r.id.toLowerCase().includes(currentSearch)
+          || r.student.toLowerCase().includes(currentSearch)
+          || r.parent.toLowerCase().includes(currentSearch)
+          || r.program.toLowerCase().includes(currentSearch)
+          || r.school.toLowerCase().includes(currentSearch);
+
+        return matchStage && matchSearch;
+      });
+
+      document.getElementById('reg-pagination-info').textContent = `Menampilkan ${filtered.length} dari ${registrationsData.length} pendaftaran`;
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" class="py-8 text-center text-light-on-surface-variant text-body-md">
+              <span class="material-symbols-outlined text-[36px] text-light-outline block mb-1">search_off</span>
+              Tidak ada berkas pendaftaran yang cocok dengan kriteria pencarian.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      filtered.forEach(r => {
+        const isSelected = (r.id === selectedRegId);
+        const tr = document.createElement('tr');
+        
+        if (isSelected) {
+          tr.className = "bg-light-primary-container/20 border-l-4 border-light-primary cursor-pointer transition-colors";
+        } else {
+          tr.className = "hover:bg-light-surface-container cursor-pointer transition-colors";
+        }
+
+        tr.onclick = () => selectRegistration(r.id);
+
+        tr.innerHTML = `
+          <td class="py-3.5 px-4">
+            <p class="font-bold text-light-on-surface">${r.id}</p>
+            <p class="text-[12px] text-light-on-surface-variant">${r.student} (Wali: ${r.parent})</p>
+          </td>
+          <td class="py-3.5 px-4">
+            <span class="font-medium text-light-on-surface">${r.program}</span>
+            <span class="text-[11px] text-light-on-surface-variant block">${r.session}</span>
+          </td>
+          <td class="py-3.5 px-4 text-[12px] text-light-on-surface-variant">
+            ${r.date}
+          </td>
+          <td class="py-3.5 px-4">
+            <span class="px-2 py-0.5 rounded-full text-[11px] font-label ${r.statusBadgeClass}">
+              ${r.status}
+            </span>
+          </td>
+          <td class="py-3.5 px-4 text-right">
+            <button 
+              type="button" 
+              class="px-2.5 py-1 rounded ${isSelected ? 'bg-light-primary text-light-on-primary' : 'border border-light-outline text-light-on-surface hover:bg-light-surface'} text-[11px] font-label font-semibold transition-colors whitespace-nowrap">
+              ${r.stage === 'active' ? 'Detail' : 'Review'}
+            </button>
+          </td>
+        `;
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Select Registration & Populate Inspector
+    function selectRegistration(id) {
+      selectedRegId = id;
+      const r = registrationsData.find(item => item.id === id);
+      if (!r) return;
+
+      document.getElementById('inspector-title').textContent = `Review Berkas: ${r.student}`;
+      document.getElementById('inspector-meta').textContent = `No. Reg: ${r.id} • Sumber: Formulir Web Funnel`;
+
+      const badge = document.getElementById('inspector-badge');
+      badge.textContent = r.status;
+      badge.className = `px-2 py-0.5 rounded-full text-label-sm font-label ${r.statusBadgeClass}`;
+
+      document.getElementById('detail-parent').textContent = `${r.parent} (${r.parentPhone})`;
+      document.getElementById('detail-school').textContent = r.school;
+      document.getElementById('detail-program').textContent = `${r.program} • ${r.session}`;
+      document.getElementById('detail-file').textContent = r.documentFile;
+      document.getElementById('detail-fee').textContent = formatRupiah(r.fee);
+
+      document.getElementById('check-step-2-label').textContent = `2. Penempatan kelas: ${r.assignedClass}`;
+
+      // Set Checkbox states
+      document.getElementById('check-step-1').checked = !!r.checklist[0];
+      document.getElementById('check-step-2').checked = !!r.checklist[1];
+      document.getElementById('check-step-3').checked = !!r.checklist[2];
+      document.getElementById('check-step-4').checked = !!r.checklist[3];
+
+      updateChecklistProgress(false);
+
+      const btnApprove = document.getElementById('btn-approve-reg');
+      const btnRevision = document.getElementById('btn-revision-reg');
+      const actionNote = document.getElementById('inspector-action-note');
+
+      if (r.stage === 'active') {
+        btnApprove.innerHTML = `<span class="material-symbols-outlined text-[18px]">school</span><span>Lihat di Direktori Siswa</span>`;
+        btnApprove.onclick = () => window.location.href = 'students.html';
+        btnRevision.classList.add('hidden');
+        actionNote.textContent = 'Siswa telah resmi terdaftar aktif dan memiliki nomor induk siswa (NIS).';
+      } else {
+        btnApprove.innerHTML = `<span class="material-symbols-outlined text-[18px]">verified</span><span>Setujui &amp; Tempatkan ke Kelas</span>`;
+        btnApprove.onclick = () => approveRegistration();
+        btnRevision.classList.remove('hidden');
+        actionNote.textContent = 'Setelah disetujui, invoice diterbitkan dan notifikasi WhatsApp konfirmasi orientasi dikirim ke wali murid.';
+      }
+
+      renderTable();
+    }
+
+    // Update Checklist Progress
+    function updateChecklistProgress(notify = true) {
+      const c1 = document.getElementById('check-step-1').checked;
+      const c2 = document.getElementById('check-step-2').checked;
+      const c3 = document.getElementById('check-step-3').checked;
+      const c4 = document.getElementById('check-step-4').checked;
+
+      const r = registrationsData.find(item => item.id === selectedRegId);
+      if (r) {
+        r.checklist = [c1, c2, c3, c4];
+      }
+
+      const completed = [c1, c2, c3, c4].filter(Boolean).length;
+      document.getElementById('checklist-progress-badge').textContent = `${completed} / 4 Selesai`;
+
+      if (notify && completed === 4) {
+        showToast('Seluruh 4 checklist onboarding telah terpenuhi!', 'success');
+      }
+    }
+
+    // Approve Registration
+    function approveRegistration() {
+      const r = registrationsData.find(item => item.id === selectedRegId);
+      if (!r) return;
+
+      r.status = 'Diterima • Aktif';
+      r.stage = 'active';
+      r.statusBadgeClass = 'bg-success text-on-success font-bold';
+      r.checklist = [true, true, true, true];
+
+      // Update Top Badge Counts
+      const remainingVerify = registrationsData.filter(item => item.stage === 'verify').length;
+      document.getElementById('badge-top-verify').textContent = `${remainingVerify} Menunggu Verifikasi`;
+      document.getElementById('badge-stage-verify').textContent = remainingVerify;
+      document.getElementById('badge-nav-verify').textContent = remainingVerify;
+
+      selectRegistration(selectedRegId);
+      renderTable();
+
+      showToast(`Pendaftaran ${r.student} (${r.id}) resmi disetujui! Data tersimpan di direktori siswa.`, 'success');
+    }
+
+    // Revision Modal Logic
+    function openRevisionModal() {
+      const r = registrationsData.find(item => item.id === selectedRegId);
+      if (r) {
+        document.getElementById('revision-student-name').textContent = `${r.student} (${r.id})`;
+      }
+      document.getElementById('modal-revision').classList.remove('hidden');
+    }
+
+    function closeRevisionModal() {
+      document.getElementById('modal-revision').classList.add('hidden');
+    }
+
+    function confirmRevision() {
+      const reason = document.querySelector('input[name="revision-reason"]:checked')?.value || 'Perbaikan berkas.';
+      const r = registrationsData.find(item => item.id === selectedRegId);
+      if (r) {
+        r.status = 'Revisi Berkas';
+        r.statusBadgeClass = 'bg-danger text-on-danger font-semibold';
+      }
+      closeRevisionModal();
+      selectRegistration(selectedRegId);
+      renderTable();
+      showToast(`Permintaan revisi terkirim ke wali murid via WhatsApp.`, 'warning');
+    }
+
+    // Document Preview Modal
+    function openDocPreview() {
+      const r = registrationsData.find(item => item.id === selectedRegId);
+      if (r) {
+        document.getElementById('doc-preview-title').textContent = r.documentFile;
+        document.getElementById('doc-student-name').textContent = `${r.student} — ${r.school}`;
+      }
+      document.getElementById('modal-doc-preview').classList.remove('hidden');
+    }
+
+    function closeDocPreview() {
+      document.getElementById('modal-doc-preview').classList.add('hidden');
+    }
+
+    // Export CSV
+    function exportRegistrationCSV() {
+      let csv = 'No Registrasi,Nama Siswa,Nama Wali,No WhatsApp,Sekolah Asal,Program Pilihan,Sesi,Tanggal Daftar,Status,Biaya Awal\n';
+      registrationsData.forEach(r => {
+        csv += `"${r.id}","${r.student}","${r.parent}","${r.parentPhone}","${r.school}","${r.program}","${r.session}","${r.date}","${r.status}",${r.fee}\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Laporan_Pendaftaran_ARCI_Bimbel_${new Date().toISOString().slice(0,10)}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      showToast('Laporan pendaftaran berhasil diunduh.', 'success');
+    }
+
+    // Toast Notification System
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      
+      let bg = 'bg-light-surface text-light-on-surface border-light-outline-variant';
+      let icon = 'info';
+      let iconColor = 'text-brand-indigo';
+
+      if (type === 'success') {
+        icon = 'check_circle';
+        iconColor = 'text-success';
+      } else if (type === 'warning') {
+        icon = 'warning';
+        iconColor = 'text-warning';
+      } else if (type === 'danger') {
+        icon = 'error';
+        iconColor = 'text-danger';
+      }
+
+      toast.className = `p-4 rounded-xl border ${bg} shadow-lg flex items-center gap-3 transition-all duration-300 transform translate-y-4 opacity-0 pointer-events-auto`;
+      toast.innerHTML = `
+        <span class="material-symbols-outlined ${iconColor} text-[22px] shrink-0">${icon}</span>
+        <span class="text-body-sm font-medium flex-1">${message}</span>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-4', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    // Initialize on Load
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTable();
+      selectRegistration(selectedRegId);
+    });
+  </script>
+</body>
+</html>

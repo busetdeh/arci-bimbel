@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Dashboard Rekap Presensi Siswa — ARCI Bimbel</title>
+  
+  <!-- Tailwind CSS with Official Plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+  /** @type {import('tailwindcss').Config} */
+  globalThis.tailwind = globalThis.tailwind || {};
+  globalThis.tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          'accent': '#F6C453',
+          'on-accent': '#18212F',
+          'brand-indigo': '#243B7A',
+          'brand-indigo-dark': '#172653',
+          'success': '#1B7330',
+          'on-success': '#FFFFFF',
+          'warning': '#925B06',
+          'on-warning': '#FFFFFF',
+          'danger': '#B91C1C',
+          'on-danger': '#FFFFFF',
+          'light-primary': '#243B7A',
+          'light-on-primary': '#FFFFFF',
+          'light-primary-container': '#EBF0FA',
+          'light-on-primary-container': '#172653',
+          'light-surface': '#FFFFFF',
+          'light-on-surface': '#18212F',
+          'light-surface-soft': '#F8FAFC',
+          'light-surface-container-low': '#F1F5F9',
+          'light-surface-container': '#E2E8F0',
+          'light-on-surface-variant': '#475569',
+          'light-outline': '#94A3B8',
+          'light-outline-variant': '#CBD5E1',
+          'dark-primary': '#9BB3F0',
+          'dark-on-primary': '#0E1A3C',
+          'dark-primary-container': '#1E3166',
+          'dark-on-primary-container': '#D7E3FF',
+          'dark-surface': '#0F172A',
+          'dark-on-surface': '#F8FAFC',
+          'dark-surface-soft': '#1E293B',
+          'dark-surface-container-low': '#152033',
+          'dark-surface-container': '#1E293B',
+          'dark-on-surface-variant': '#CBD5E1',
+          'dark-outline': '#64748B',
+          'dark-outline-variant': '#475569',
+        },
+        borderRadius: {
+          'sm': '4px',
+          'DEFAULT': '8px',
+          'md': '10px',
+          'lg': '12px',
+          'xl': '16px',
+          '2xl': '20px',
+          'full': '9999px',
+        },
+        fontFamily: {
+          'display': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'headline': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'title': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'body': ['"Plus Jakarta Sans"', 'sans-serif'],
+          'label': ['"Plus Jakarta Sans"', 'sans-serif'],
+        },
+        boxShadow: {
+          '2xs': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+          'xs': '0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px -1px rgba(0, 0, 0, 0.08)',
+        }
+      },
+    },
+  };
+  if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+  </script>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+  
+  <style>
+    .material-symbols-outlined, .material-symbols-rounded, .material-symbols-sharp, .material-icons {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      line-height: 1 !important;
+      box-sizing: content-box;
+      overflow: hidden;
+      white-space: nowrap;
+      direction: ltr;
+      vertical-align: middle;
+      font-size: 20px;
+    }
+    .pb-safe {
+      padding-bottom: env(safe-area-inset-bottom, 16px);
+    }
+  </style>
+</head>
+<body class="bg-light-surface-soft text-light-on-surface font-body antialiased min-h-screen flex flex-col lg:flex-row pb-safe">
+
+  <!-- Mobile Backdrop Overlay for Drawer -->
+  <div id="sidebar-overlay" onclick="toggleSidebar(false)" class="hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-xs transition-opacity lg:hidden"></div>
+
+  <!-- Desktop Fixed & Mobile Slide-Out Sidebar Navigation -->
+  <aside id="sidebar-nav" class="fixed inset-y-0 left-0 z-50 w-64 bg-light-surface border-r border-light-outline-variant flex flex-col justify-between shrink-0 transform -translate-x-full transition-transform duration-200 lg:translate-x-0 lg:static lg:h-screen lg:sticky lg:top-0">
+    <div class="flex flex-col flex-1 overflow-y-auto">
+      <!-- Brand Header -->
+      <div class="h-16 lg:h-20 px-5 lg:px-6 flex items-center justify-between border-b border-light-outline-variant shrink-0">
+        <a href="dashboard.html" class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-light-primary flex items-center justify-center text-light-on-primary font-headline font-bold text-headline-sm shadow-xs">
+            A
+          </div>
+          <div class="flex flex-col">
+            <span class="font-headline font-bold text-title-md tracking-tight text-brand-indigo">ARCI Bimbel</span>
+            <span class="text-[11px] text-light-on-surface-variant font-label">Dashboard Operasional</span>
+          </div>
+        </a>
+
+        <!-- Mobile Drawer Close Button -->
+        <button type="button" onclick="toggleSidebar(false)" class="lg:hidden p-1.5 rounded-lg text-light-on-surface-variant hover:bg-light-surface-container" aria-label="Tutup Menu">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="p-3.5 lg:p-4 flex flex-col gap-1">
+        <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">dashboard</span>
+          <span>Ringkasan</span>
+        </a>
+
+        <a href="leads.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">person_search</span>
+            <span>Lead &amp; Pipeline</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">8</span>
+        </a>
+
+        <a href="verifikasi-pendaftaran.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">how_to_reg</span>
+            <span>Pendaftaran</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">3</span>
+        </a>
+
+        <a href="students.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">school</span>
+            <span>Siswa &amp; Wali</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">184</span>
+        </a>
+
+        <a href="classes.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">class</span>
+          <span>Program &amp; Kelas</span>
+        </a>
+
+        <a href="schedule.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">calendar_month</span>
+          <span>Jadwal Sesi</span>
+        </a>
+
+        <!-- Active Menu: Presensi Siswa -->
+        <a href="attendance.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-light-primary text-light-on-primary font-label text-body-md shadow-xs transition-colors">
+          <span class="material-symbols-outlined text-[20px] text-accent">fact_check</span>
+          <span class="font-semibold">Presensi Siswa</span>
+        </a>
+
+        <a href="finance.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">payments</span>
+            <span>Tagihan &amp; Kas</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-label bg-accent text-on-accent font-bold">5 Baru</span>
+        </a>
+
+        <a href="communications.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">campaign</span>
+          <span>Komunikasi &amp; Broadcast</span>
+        </a>
+
+        <a href="settings.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">manage_accounts</span>
+          <span>Pengaturan &amp; Role</span>
+        </a>
+
+        <a href="reports.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">analytics</span>
+          <span>Laporan KPI</span>
+        </a>
+        <a href="cms.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-light-on-surface hover:bg-light-surface-container font-label text-body-md transition-colors group">
+          <span class="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo">article</span>
+          <span>Konten Website</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- User Profile Footer -->
+    <div class="p-3.5 lg:p-4 border-t border-light-outline-variant shrink-0 bg-light-surface">
+      <div class="flex items-center justify-between p-2 rounded-lg hover:bg-light-surface-container transition-colors">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-light-primary text-light-on-primary flex items-center justify-center font-bold font-headline text-body-md shadow-2xs">
+            KA
+          </div>
+          <div class="flex flex-col">
+            <span class="text-body-sm font-semibold text-light-on-surface">Dewi Lestari</span>
+            <span class="text-[11px] text-light-on-surface-variant">Koordinator Akademik</span>
+          </div>
+        </div>
+        <a href="login-admin.html" title="Keluar / Logout" class="p-1.5 rounded-md text-light-on-surface-variant hover:text-danger hover:bg-danger/10 transition-colors">
+          <span class="material-symbols-outlined text-[18px]">logout</span>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div class="flex-1 flex flex-col min-w-0">
+    
+    <!-- Top Utility Bar (App Shell) -->
+    <header class="h-16 lg:h-20 bg-light-surface border-b border-light-outline-variant px-4 sm:px-6 lg:px-8 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
+      
+      <!-- Mobile Hamburger Button & Search Bar -->
+      <div class="flex items-center gap-3 sm:gap-4 flex-1 max-w-lg">
+        <button type="button" onclick="toggleSidebar(true)" class="lg:hidden w-10 h-10 rounded-lg border border-light-outline flex items-center justify-center text-light-on-surface hover:bg-light-surface-container shrink-0" aria-label="Buka Menu Navigasi">
+          <span class="material-symbols-outlined text-[22px]">menu</span>
+        </button>
+
+        <!-- Search Input -->
+        <div class="relative w-full">
+          <span class="material-symbols-outlined absolute left-3 top-2.5 text-light-on-surface-variant text-[20px]">search</span>
+          <input 
+            type="search" 
+            id="attendance-search" 
+            oninput="handleSearch(this.value)" 
+            placeholder="Cari nama siswa, NISN, nama kelas, atau sesi..." 
+            class="w-full pl-10 pr-4 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary focus:ring-1 focus:ring-light-primary bg-light-surface text-light-on-surface placeholder:text-light-on-surface-variant">
+        </div>
+      </div>
+
+      <!-- Header Actions -->
+      <div class="flex items-center gap-2 sm:gap-3 ml-2">
+        <button type="button" aria-label="Notifikasi" onclick="showToast('Ada 1 sesi menunggu input presensi sore ini.', 'info')" class="relative w-10 h-10 rounded-lg border border-light-outline flex items-center justify-center text-light-on-surface hover:bg-light-surface-container transition-colors shrink-0">
+          <span class="material-symbols-outlined text-[20px]">notifications</span>
+          <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-danger ring-2 ring-light-surface"></span>
+        </button>
+
+        <button type="button" onclick="exportAttendanceCSV()" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container font-label text-body-sm sm:text-body-md font-semibold transition-colors shadow-2xs">
+          <span class="material-symbols-outlined text-[18px] text-light-on-surface-variant">file_download</span>
+          <span class="hidden md:inline">Unduh Rekap Excel</span>
+          <span class="md:hidden">Excel</span>
+        </button>
+
+        <button type="button" onclick="openManualAttendanceModal()" class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm sm:text-body-md font-semibold shadow-xs transition-colors whitespace-nowrap min-h-[40px]">
+          <span class="material-symbols-outlined text-[18px]">checklist</span>
+          <span class="hidden sm:inline">Input Presensi Manual</span>
+          <span class="sm:hidden">Input</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Operational Attendance Content -->
+    <main class="p-4 sm:p-6 lg:p-8 flex-1 flex flex-col gap-6">
+      
+      <!-- Top Title and Filter Header Card -->
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 bg-light-surface p-5 rounded-2xl border border-light-outline-variant shadow-xs">
+        <div>
+          <div class="flex items-center gap-2 text-label-sm text-light-on-surface-variant">
+            <span>Operasional Akademik</span>
+            <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+            <span class="font-semibold text-light-primary">Rekap Presensi &amp; Kehadiran (D7)</span>
+          </div>
+          <h1 class="text-headline-sm sm:text-headline-md font-headline font-bold text-light-on-surface mt-1">
+            Dashboard Presensi &amp; Rekap Kehadiran Siswa
+          </h1>
+          <p class="text-body-sm text-light-on-surface-variant mt-0.5">
+            Monitoring absensi real-time, audit kehadiran tutor, dan rekap otomatis portal orang tua.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
+          <!-- Date Picker Pill -->
+          <div class="flex items-center gap-2 bg-light-surface-soft px-3 py-2 rounded-xl border border-light-outline-variant shadow-2xs">
+            <span class="material-symbols-outlined text-[18px] text-brand-indigo">calendar_today</span>
+            <span class="text-body-sm font-semibold text-light-on-surface" id="active-date-label">Selasa, 18 Nov 2026</span>
+          </div>
+
+          <!-- Status Program Filter Dropdown -->
+          <div class="flex items-center gap-2 bg-light-surface-soft px-3 py-1.5 rounded-xl border border-light-outline-variant shadow-2xs">
+            <span class="material-symbols-outlined text-[18px] text-light-on-surface-variant">filter_list</span>
+            <select 
+              id="program-filter-select" 
+              onchange="handleProgramFilter(this.value)"
+              class="bg-transparent border-none text-body-sm font-label font-medium text-light-on-surface focus:ring-0 cursor-pointer py-1 pl-1 pr-6">
+              <option value="all">Semua Program Kelas</option>
+              <option value="utbk" selected>Program Intensif UTBK</option>
+              <option value="reguler-sma">Reguler SMA (10-12)</option>
+              <option value="reguler-smp">Reguler SMP (7-9)</option>
+              <option value="privat">Privat 1-on-1</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPI Summary Cards Row (4 Grid) -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" aria-label="Ringkasan KPI Presensi">
+        
+        <!-- KPI 1 -->
+        <div class="bg-light-surface p-5 rounded-2xl border border-light-outline-variant shadow-xs flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-label-sm text-light-on-surface-variant font-medium">Tingkat Kehadiran Bulan Ini</span>
+            <span class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center shadow-2xs">
+              <span class="material-symbols-outlined text-[18px]">verified</span>
+            </span>
+          </div>
+          <div class="mt-3">
+            <div class="text-headline-md font-bold text-brand-indigo font-headline">96.4%</div>
+            <div class="text-body-sm text-success flex items-center gap-1 mt-1 font-semibold">
+              <span class="material-symbols-outlined text-[14px]">trending_up</span>
+              +1.2% dari target minimum 95%
+            </div>
+          </div>
+        </div>
+
+        <!-- KPI 2 -->
+        <div class="bg-light-surface p-5 rounded-2xl border border-light-outline-variant shadow-xs flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-label-sm text-light-on-surface-variant font-medium">Siswa Hadir Hari Ini</span>
+            <span class="w-8 h-8 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center shadow-2xs">
+              <span class="material-symbols-outlined text-[18px]">group</span>
+            </span>
+          </div>
+          <div class="mt-3">
+            <div class="text-headline-md font-bold text-light-on-surface font-headline">
+              128 <span class="text-body-md text-light-on-surface-variant font-normal">/ 134 Siswa</span>
+            </div>
+            <div class="text-body-sm text-light-on-surface-variant mt-1">4 Izin/Sakit, 2 Belum Konfirmasi</div>
+          </div>
+        </div>
+
+        <!-- KPI 3 -->
+        <div class="bg-light-surface p-5 rounded-2xl border border-light-outline-variant shadow-xs flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-label-sm text-light-on-surface-variant font-medium">Sesi Menunggu Input Presensi</span>
+            <span class="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center shadow-2xs">
+              <span class="material-symbols-outlined text-[18px]">pending_actions</span>
+            </span>
+          </div>
+          <div class="mt-3">
+            <div class="text-headline-md font-bold text-warning font-headline">1 Sesi</div>
+            <div class="text-body-sm text-warning flex items-center gap-1 mt-1 font-semibold">
+              <span class="material-symbols-outlined text-[14px]">schedule</span>
+              Ekonomi Makro (Selesai 17:30)
+            </div>
+          </div>
+        </div>
+
+        <!-- KPI 4 -->
+        <div class="bg-light-surface p-5 rounded-2xl border border-light-outline-variant shadow-xs flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-label-sm text-light-on-surface-variant font-medium">Peringatan Kehadiran &lt;80%</span>
+            <span class="w-8 h-8 rounded-lg bg-red-50 text-danger flex items-center justify-center shadow-2xs">
+              <span class="material-symbols-outlined text-[18px]">warning</span>
+            </span>
+          </div>
+          <div class="mt-3">
+            <div class="text-headline-md font-bold text-danger font-headline">2 Siswa</div>
+            <div class="text-body-sm text-danger flex items-center gap-1 mt-1 font-semibold">
+              <span class="material-symbols-outlined text-[14px]">flag</span>
+              Perlu follow-up konseling wali murid
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Main Operational Area: Session Grid & Detailed Roster Inspector -->
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+        
+        <!-- Left: Session Attendance Status List (7 Columns) -->
+        <div class="xl:col-span-7 bg-light-surface rounded-2xl border border-light-outline-variant shadow-xs flex flex-col overflow-hidden">
+          
+          <div class="p-4 sm:p-5 border-b border-light-outline-variant flex items-center justify-between">
+            <div>
+              <h2 class="font-headline font-bold text-title-md text-light-on-surface">Daftar Sesi Kelas Hari Ini</h2>
+              <p class="text-body-sm text-light-on-surface-variant mt-0.5">Status verifikasi presensi oleh tutor pengampu.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 rounded-full text-label-sm font-semibold bg-light-surface-container text-light-on-surface" id="session-count-pill">
+                Total: 4 Sesi
+              </span>
+            </div>
+          </div>
+
+          <!-- Sessions List Items Container -->
+          <div class="divide-y divide-light-outline-variant" id="sessions-container">
+            <!-- Session 1 (Selected Row) -->
+            <div onclick="selectSession('SES-001')" class="p-4 bg-light-primary-container/20 border-l-4 border-light-primary flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer hover:bg-light-primary-container/30 transition-colors">
+              <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-xl bg-light-primary text-light-on-primary flex items-center justify-center shrink-0">
+                  <span class="material-symbols-outlined text-[20px]">science</span>
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="font-headline font-bold text-body-md text-brand-indigo">UTBK 12-IPA — Fisika Gelombang</span>
+                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">SESI 1</span>
+                  </div>
+                  <div class="text-body-sm text-light-on-surface mt-0.5">
+                    14:00 - 15:30 WIB • Lab Newton • Tutor: Budi Pratama, S.Si
+                  </div>
+                  <div class="flex items-center gap-3 text-[11px] font-medium text-light-on-surface mt-2">
+                    <span class="text-success font-semibold flex items-center gap-1">
+                      <span class="w-1.5 h-1.5 rounded-full bg-success"></span> 12 Hadir
+                    </span>
+                    <span class="text-warning font-semibold flex items-center gap-1">
+                      <span class="w-1.5 h-1.5 rounded-full bg-warning"></span> 1 Izin (Sakit)
+                    </span>
+                    <span class="text-danger font-semibold flex items-center gap-1">
+                      <span class="w-1.5 h-1.5 rounded-full bg-danger"></span> 1 Alpa
+                    </span>
+                    <span class="text-light-on-surface font-semibold">Total: 14 Siswa</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex sm:flex-col items-center sm:items-end justify-between shrink-0 gap-1">
+                <span class="px-2.5 py-1 rounded-full text-label-sm font-semibold bg-success-container text-success flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[14px]">check</span>
+                  Sudah Terisi
+                </span>
+                <span class="text-[11px] text-light-on-surface">Input: 15:28 WIB</span>
+              </div>
+            </div>
+
+            <!-- Session 2 (Pending) -->
+            <div onclick="selectSession('SES-002')" class="p-4 bg-light-surface flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer hover:bg-light-surface-container transition-colors">
+              <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-xl bg-light-surface-container text-light-on-surface flex items-center justify-center shrink-0">
+                  <span class="material-symbols-outlined text-[20px]">trending_up</span>
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="font-headline font-bold text-body-md text-light-on-surface">SMA 12-IPS — Ekonomi Makro</span>
+                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800">SESI 2</span>
+                  </div>
+                  <div class="text-body-sm text-light-on-surface mt-0.5">
+                    16:00 - 17:30 WIB • R. Adam Smith • Tutor: Rina Kusuma, S.E
+                  </div>
+                  <div class="flex items-center gap-3 text-[11px] text-light-on-surface mt-2">
+                    <span>11 Siswa Terdaftar di Rombel</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex sm:flex-col items-center sm:items-end justify-between shrink-0 gap-1">
+                <span class="px-2.5 py-1 rounded-full text-label-sm font-semibold bg-warning-container text-warning flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[14px]">hourglass_empty</span>
+                  Menunggu Input
+                </span>
+                <button type="button" onclick="event.stopPropagation(); showToast('Pengingat dikirim ke Tutor Rina Kusuma', 'info')" class="text-body-sm text-light-primary font-semibold hover:underline">Ingatkan Tutor →</button>
+              </div>
+            </div>
+
+            <!-- Session 3 (Upcoming Tonight) -->
+            <div onclick="selectSession('SES-003')" class="p-4 bg-light-surface flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer hover:bg-light-surface-container transition-colors">
+              <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-xl bg-light-surface-container text-light-on-surface flex items-center justify-center shrink-0">
+                  <span class="material-symbols-outlined text-[20px]">videocam</span>
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="font-headline font-bold text-body-md text-light-on-surface">ONLINE — Literasi Bahasa Inggris</span>
+                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-800">MALAM</span>
+                  </div>
+                  <div class="text-body-sm text-light-on-surface mt-0.5">
+                    19:00 - 20:30 WIB • Google Meet Room 2 • Tutor: Sarah Priscillia
+                  </div>
+                  <div class="text-[11px] text-light-on-surface mt-2">
+                    22 Siswa Terdaftar • Presensi dibuka otomatis 18:50 WIB
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex sm:flex-col items-center sm:items-end justify-between shrink-0 gap-1">
+                <span class="px-2.5 py-1 rounded-full text-label-sm font-semibold bg-light-surface-container text-light-on-surface">
+                  Belum Dimulai
+                </span>
+                <span class="text-[11px] text-light-on-surface">Mulai dlm 1 jam</span>
+              </div>
+            </div>
+
+            <!-- Session 4 (Private) -->
+            <div onclick="selectSession('SES-004')" class="p-4 bg-light-surface flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer hover:bg-light-surface-container transition-colors">
+              <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-xl bg-light-surface-container text-light-on-surface flex items-center justify-center shrink-0">
+                  <span class="material-symbols-outlined text-[20px]">person</span>
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="font-headline font-bold text-body-md text-light-on-surface">PRIVAT — Matematika Diskrit (Farhan)</span>
+                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-purple-800">VIP</span>
+                  </div>
+                  <div class="text-body-sm text-light-on-surface mt-0.5">
+                    16:00 - 17:30 WIB • Studio VIP 1 • Tutor: Siti Nurhaliza
+                  </div>
+                  <div class="text-[11px] text-success font-semibold mt-2">
+                    Hadir Selesai • 1/1 Siswa
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex sm:flex-col items-center sm:items-end justify-between shrink-0 gap-1">
+                <span class="px-2.5 py-1 rounded-full text-label-sm font-semibold bg-success-container text-success flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[14px]">check</span>
+                  Sudah Terisi
+                </span>
+                <span class="text-[11px] text-light-on-surface">Input: 17:32 WIB</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section Footer -->
+          <div class="p-4 bg-light-surface-container-low border-t border-light-outline-variant flex flex-col sm:flex-row items-center justify-between gap-3 text-body-sm text-light-on-surface-variant">
+            <span>Menampilkan 4 dari 4 jadwal sesi hari ini</span>
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="changeDate('yesterday')" class="px-3 py-1.5 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface font-semibold text-body-sm shadow-2xs transition-colors">
+                ← Riwayat Kemarin
+              </button>
+              <button type="button" onclick="changeDate('tomorrow')" class="px-3 py-1.5 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface font-semibold text-body-sm shadow-2xs transition-colors">
+                Jadwal Besok →
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Detailed Student Attendance Roster & Override Modal Inspector (5 Columns) -->
+        <div id="roster-inspector" class="xl:col-span-5 bg-light-surface rounded-2xl border border-light-outline-variant shadow-xs flex flex-col p-5 sm:p-6 gap-5 sticky top-24">
+          
+          <div class="flex items-center justify-between border-b border-light-outline-variant pb-4">
+            <div>
+              <span class="text-label-sm text-light-primary font-bold uppercase tracking-wider">INSPEKTOR PRESENSI SESI</span>
+              <h3 id="inspector-session-title" class="font-headline font-bold text-title-md text-light-on-surface mt-0.5">Fisika: UTBK 12-IPA</h3>
+            </div>
+            <button 
+              type="button" 
+              onclick="openOverrideModal()" 
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-light-outline hover:bg-light-surface-container text-light-on-surface font-label text-body-sm font-semibold transition-colors shadow-2xs">
+              <span class="material-symbols-outlined text-[16px]">edit_note</span>
+              <span>Koreksi Admin</span>
+            </button>
+          </div>
+
+          <!-- Session Summary Banner -->
+          <div class="p-3.5 bg-light-surface-soft rounded-xl border border-light-outline-variant flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-body-sm">
+            <div>
+              <div id="inspector-tutor-name" class="font-semibold text-light-on-surface">Tutor: Budi Pratama, S.Si</div>
+              <div id="inspector-submit-time" class="text-[11px] text-light-on-surface-variant">Disubmit: Hari ini, 15:28 WIB via Tablet Tutor</div>
+            </div>
+            <span id="inspector-rate-badge" class="px-2.5 py-1 rounded-full text-label-sm font-bold bg-success/15 text-success whitespace-nowrap self-start sm:self-auto">
+              12 / 14 Hadir (85.7%)
+            </span>
+          </div>
+
+          <!-- Student Roster Quick Table -->
+          <div class="flex flex-col gap-2">
+            <div class="flex items-center justify-between">
+              <span class="text-label-sm font-semibold text-light-on-surface">Daftar Kehadiran Siswa:</span>
+              <span class="text-[11px] text-light-on-surface-variant">Klik siswa untuk koreksi</span>
+            </div>
+            
+            <div class="border border-light-outline-variant rounded-xl overflow-hidden divide-y divide-light-outline-variant" id="roster-list-container">
+              <!-- Student 1 -->
+              <div onclick="openOverrideModal('Ahmad Rizky Pratama', 'Hadir')" class="p-3 flex items-center justify-between bg-light-surface hover:bg-light-surface-container cursor-pointer transition-colors">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-full bg-light-primary-container text-light-primary flex items-center justify-center font-bold text-label-sm">
+                    AR
+                  </div>
+                  <div>
+                    <div class="text-body-sm font-semibold text-light-on-surface">Ahmad Rizky Pratama</div>
+                    <div class="text-[11px] text-light-on-surface-variant">NISN: 00891234 • SMA 8 Jkt</div>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-success/15 text-success">
+                  Hadir (14:02)
+                </span>
+              </div>
+
+              <!-- Student 2 -->
+              <div onclick="openOverrideModal('Nadia Amanda Putri', 'Hadir')" class="p-3 flex items-center justify-between bg-light-surface hover:bg-light-surface-container cursor-pointer transition-colors">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-full bg-light-primary-container text-light-primary flex items-center justify-center font-bold text-label-sm">
+                    NA
+                  </div>
+                  <div>
+                    <div class="text-body-sm font-semibold text-light-on-surface">Nadia Amanda Putri</div>
+                    <div class="text-[11px] text-light-on-surface-variant">NISN: 00892451 • SMAN 28</div>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-success/15 text-success">
+                  Hadir (14:00)
+                </span>
+              </div>
+
+              <!-- Student 3: Sakit / Izin -->
+              <div onclick="openOverrideModal('Bima Pangestu', 'Sakit (Izin)')" class="p-3 flex items-center justify-between bg-amber-50/50 hover:bg-amber-50 cursor-pointer transition-colors">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-label-sm">
+                    BP
+                  </div>
+                  <div>
+                    <div class="text-body-sm font-semibold text-light-on-surface">Bima Pangestu</div>
+                    <div class="text-[11px] text-amber-800 font-medium">Surat dokter terlampir di WA</div>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-warning/15 text-warning">
+                    Sakit (Izin)
+                  </span>
+                  <div class="text-[10px] text-light-on-surface-variant mt-0.5">Surat Terverifikasi</div>
+                </div>
+              </div>
+
+              <!-- Student 4: Alpa / Tidak Hadir -->
+              <div onclick="openOverrideModal('Dimas Kurniawan', 'Alpa')" class="p-3 flex items-center justify-between bg-red-50/50 hover:bg-red-50 cursor-pointer transition-colors">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-full bg-red-100 text-danger flex items-center justify-center font-bold text-label-sm">
+                    DK
+                  </div>
+                  <div>
+                    <div class="text-body-sm font-semibold text-danger">Dimas Kurniawan</div>
+                    <div class="text-[11px] text-danger font-medium">Tanpa keterangan hadir</div>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-danger/15 text-danger">
+                    Alpa (0%)
+                  </span>
+                  <div class="text-[10px] text-danger font-semibold mt-0.5">WA Otomatis Terkirim</div>
+                </div>
+              </div>
+
+              <!-- Student 5 -->
+              <div onclick="openOverrideModal('Syifa Yolanda', 'Hadir')" class="p-3 flex items-center justify-between bg-light-surface hover:bg-light-surface-container cursor-pointer transition-colors">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-full bg-light-primary-container text-light-primary flex items-center justify-center font-bold text-label-sm">
+                    SY
+                  </div>
+                  <div>
+                    <div class="text-body-sm font-semibold text-light-on-surface">Syifa Yolanda</div>
+                    <div class="text-[11px] text-light-on-surface-variant">NISN: 00897711 • SMAN 70</div>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-success/15 text-success">
+                  Hadir (14:05)
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tutor Teaching Note Box -->
+          <div class="p-3.5 bg-light-surface-container rounded-xl flex flex-col gap-1 text-body-sm">
+            <span class="font-bold text-light-on-surface flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[16px] text-light-primary">notes</span>
+              <span id="inspector-note-author">Catatan Pengajaran dari Tutor Budi:</span>
+            </span>
+            <p id="inspector-tutor-note" class="text-light-on-surface leading-relaxed text-[12px] italic">
+              &#34;Siswa sangat aktif membahas penurunan rumus Efek Doppler. Bima absen sakit demam, materi lembar latihan dan rekaman audio rangkuman sudah dibagikan ke portal orang tua.&#34;
+            </p>
+          </div>
+
+          <!-- Parent Notification Status -->
+          <div class="p-3.5 rounded-xl border border-light-outline-variant flex items-center justify-between text-body-sm">
+            <div class="flex items-center gap-2.5">
+              <span class="material-symbols-outlined text-success text-[22px] shrink-0">mark_chat_read</span>
+              <div>
+                <div class="font-semibold text-light-on-surface">Notifikasi Wali Murid</div>
+                <div id="inspector-notification-meta" class="text-[11px] text-light-on-surface-variant">14 Pesan WA terkirim otomatis pada 15:30 WIB</div>
+              </div>
+            </div>
+            <button 
+              type="button" 
+              onclick="resendParentNotifications()" 
+              class="text-light-primary font-semibold hover:underline text-[12px] whitespace-nowrap shrink-0">
+              Kirim Ulang
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 1: KOREKSI ADMIN PRESENSI                                -->
+  <!-- ============================================================== -->
+  <div id="modal-override-attendance" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+    <div class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-2xl max-w-md w-full overflow-hidden flex flex-col">
+      <div class="px-6 py-4 border-b border-light-outline-variant flex items-center justify-between bg-light-surface-soft">
+        <div class="flex items-center gap-2 text-brand-indigo">
+          <span class="material-symbols-outlined text-[22px]">edit_note</span>
+          <h3 class="font-headline font-bold text-title-md text-light-on-surface">Koreksi Kehadiran Siswa</h3>
+        </div>
+        <button type="button" onclick="closeOverrideModal()" class="text-light-on-surface-variant hover:text-light-on-surface p-1 rounded-lg hover:bg-light-surface-container">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <form id="form-override" onsubmit="saveAttendanceOverride(event)" class="p-6 space-y-4">
+        <div>
+          <label class="block text-body-sm font-semibold text-light-on-surface mb-1">Nama Siswa</label>
+          <input type="text" id="override-student-name" readonly value="Bima Pangestu (SMAN 28)" class="w-full px-3.5 py-2 rounded-lg border border-light-outline bg-light-surface-container text-body-md font-bold text-light-on-surface">
+        </div>
+
+        <div>
+          <label class="block text-body-sm font-semibold text-light-on-surface mb-1">Status Kehadiran *</label>
+          <div class="grid grid-cols-2 gap-2">
+            <label class="flex items-center gap-2 p-2.5 rounded-lg border border-light-outline-variant cursor-pointer hover:bg-light-surface-container">
+              <input type="radio" name="override-status" value="Hadir" class="text-success focus:ring-success">
+              <span class="text-body-sm font-semibold text-success">Hadir</span>
+            </label>
+            <label class="flex items-center gap-2 p-2.5 rounded-lg border border-light-outline-variant cursor-pointer hover:bg-light-surface-container">
+              <input type="radio" name="override-status" value="Sakit (Izin)" checked class="text-warning focus:ring-warning">
+              <span class="text-body-sm font-semibold text-warning">Sakit / Izin</span>
+            </label>
+            <label class="flex items-center gap-2 p-2.5 rounded-lg border border-light-outline-variant cursor-pointer hover:bg-light-surface-container">
+              <input type="radio" name="override-status" value="Alpa" class="text-danger focus:ring-danger">
+              <span class="text-body-sm font-semibold text-danger">Alpa (0%)</span>
+            </label>
+            <label class="flex items-center gap-2 p-2.5 rounded-lg border border-light-outline-variant cursor-pointer hover:bg-light-surface-container">
+              <input type="radio" name="override-status" value="Dispensasi" class="text-brand-indigo focus:ring-brand-indigo">
+              <span class="text-body-sm font-semibold text-brand-indigo">Dispensasi</span>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label for="override-reason" class="block text-body-sm font-semibold text-light-on-surface mb-1">Alasan Koreksi Admin *</label>
+          <textarea id="override-reason" required rows="2" placeholder="Contoh: Surat dokter telah diverifikasi via WhatsApp wali murid..." class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface"></textarea>
+        </div>
+
+        <div class="p-3 bg-light-surface-container-low rounded-lg text-[12px] text-light-on-surface-variant">
+          Perubahan status akan otomatis memperbarui rekapitulasi persentase kehadiran di Rapor Siswa dan portal wali murid.
+        </div>
+
+        <div class="pt-3 border-t border-light-outline-variant flex items-center justify-end gap-3">
+          <button type="button" onclick="closeOverrideModal()" class="px-4 py-2 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container text-body-sm font-semibold">
+            Batal
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm font-bold shadow-xs">
+            Simpan Koreksi
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 2: INPUT PRESENSI MANUAL                                 -->
+  <!-- ============================================================== -->
+  <div id="modal-manual-attendance" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+    <div class="bg-light-surface rounded-2xl border border-light-outline-variant shadow-2xl max-w-lg w-full overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="px-6 py-4 border-b border-light-outline-variant flex items-center justify-between bg-light-surface-soft">
+        <div class="flex items-center gap-2 text-brand-indigo">
+          <span class="material-symbols-outlined text-[22px]">checklist</span>
+          <h3 class="font-headline font-bold text-title-md text-light-on-surface">Input Presensi Manual Kelas</h3>
+        </div>
+        <button type="button" onclick="closeManualAttendanceModal()" class="text-light-on-surface-variant hover:text-light-on-surface p-1 rounded-lg hover:bg-light-surface-container">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <form id="form-manual-attendance" onsubmit="submitManualAttendance(event)" class="p-6 overflow-y-auto space-y-4">
+        <div>
+          <label for="manual-session-select" class="block text-body-sm font-semibold text-light-on-surface mb-1">Pilih Sesi Kelas *</label>
+          <select id="manual-session-select" class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface">
+            <option value="sesi-2">SMA 12-IPS — Ekonomi Makro (16:00 - 17:30 WIB)</option>
+            <option value="sesi-3">ONLINE — Literasi Bahasa Inggris (19:00 - 20:30 WIB)</option>
+            <option value="sesi-1">UTBK 12-IPA — Fisika Gelombang (14:00 - 15:30 WIB)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-body-sm font-semibold text-light-on-surface mb-1">Catatan Presensi Cepat</label>
+          <div class="space-y-2 p-3 bg-light-surface-container-low rounded-xl border border-light-outline-variant">
+            <label class="flex items-center gap-2 text-body-sm cursor-pointer">
+              <input type="checkbox" checked class="rounded text-light-primary">
+              <span>Tandai seluruh siswa hadir secara otomatis</span>
+            </label>
+            <label class="flex items-center gap-2 text-body-sm cursor-pointer">
+              <input type="checkbox" checked class="rounded text-light-primary">
+              <span>Kirimkan pesan notifikasi WhatsApp ke wali murid</span>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label for="manual-note" class="block text-body-sm font-semibold text-light-on-surface mb-1">Catatan Pembelajaran Guru</label>
+          <textarea id="manual-note" rows="2" placeholder="Catatan materi yang diajarkan pada sesi ini..." class="w-full px-3.5 py-2 rounded-lg border border-light-outline text-body-md focus:border-light-primary bg-light-surface text-light-on-surface"></textarea>
+        </div>
+
+        <div class="pt-3 border-t border-light-outline-variant flex items-center justify-end gap-3">
+          <button type="button" onclick="closeManualAttendanceModal()" class="px-4 py-2 rounded-lg border border-light-outline text-light-on-surface hover:bg-light-surface-container text-body-sm font-semibold">
+            Batal
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm font-bold shadow-xs">
+            Submit Presensi
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- TOAST NOTIFICATION CONTAINER                                   -->
+  <!-- ============================================================== -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none"></div>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    // State of Sessions & Rosters
+    const sessionsData = [
+      {
+        id: 'SES-001',
+        title: 'UTBK 12-IPA — Fisika Gelombang',
+        sessionTag: 'SESI 1',
+        tagClass: 'bg-emerald-100 text-emerald-800',
+        icon: 'science',
+        time: '14:00 - 15:30 WIB • Lab Newton',
+        tutor: 'Budi Pratama, S.Si',
+        totalStudents: 14,
+        present: 12,
+        sick: 1,
+        absent: 1,
+        status: 'Sudah Terisi',
+        statusClass: 'bg-success/15 text-success',
+        statusIcon: 'check',
+        inputTime: 'Input: 15:28 WIB',
+        note: '“Siswa sangat aktif membahas penurunan rumus Efek Doppler. Bima absen sakit demam, materi lembar latihan dan rekaman audio rangkuman sudah dibagikan ke portal orang tua.”',
+        waCount: 14,
+        roster: [
+          { name: 'Ahmad Rizky Pratama', nisn: '00891234', school: 'SMA 8 Jkt', status: 'Hadir', detail: 'Hadir (14:02)', badgeClass: 'bg-success/15 text-success', initials: 'AR' },
+          { name: 'Nadia Amanda Putri', nisn: '00892451', school: 'SMAN 28', status: 'Hadir', detail: 'Hadir (14:00)', badgeClass: 'bg-success/15 text-success', initials: 'NA' },
+          { name: 'Bima Pangestu', nisn: '00893310', school: 'SMAN 70', status: 'Sakit (Izin)', detail: 'Surat dokter terlampir di WA', badgeClass: 'bg-warning/20 text-warning', initials: 'BP' },
+          { name: 'Dimas Kurniawan', nisn: '00894522', school: 'SMAN 8 Jkt', status: 'Alpa', detail: 'Tanpa keterangan hadir', badgeClass: 'bg-danger/20 text-danger', initials: 'DK' },
+          { name: 'Syifa Yolanda', nisn: '00897711', school: 'SMAN 70', status: 'Hadir', detail: 'Hadir (14:05)', badgeClass: 'bg-success/15 text-success', initials: 'SY' }
+        ]
+      },
+      {
+        id: 'SES-002',
+        title: 'SMA 12-IPS — Ekonomi Makro',
+        sessionTag: 'SESI 2',
+        tagClass: 'bg-amber-100 text-amber-800',
+        icon: 'trending_up',
+        time: '16:00 - 17:30 WIB • R. Adam Smith',
+        tutor: 'Rina Kusuma, S.E',
+        totalStudents: 11,
+        present: 0,
+        sick: 0,
+        absent: 0,
+        status: 'Menunggu Input',
+        statusClass: 'bg-warning/20 text-warning',
+        statusIcon: 'hourglass_empty',
+        inputTime: 'Selesai 17:30',
+        note: 'Menunggu submit absensi oleh Tutor Rina Kusuma via aplikasi tutor tablet.',
+        waCount: 0,
+        roster: [
+          { name: 'Dian Permatasari', nisn: '00891102', school: 'SMAN 34', status: 'Belum Input', detail: 'Terdaftar', badgeClass: 'bg-light-surface-container text-light-on-surface', initials: 'DP' },
+          { name: 'Reza Mahardika', nisn: '00891543', school: 'SMA Labschool', status: 'Belum Input', detail: 'Terdaftar', badgeClass: 'bg-light-surface-container text-light-on-surface', initials: 'RM' },
+          { name: 'Fadhil Al-Ghifari', nisn: '00891899', school: 'SMAN 70', status: 'Belum Input', detail: 'Terdaftar', badgeClass: 'bg-light-surface-container text-light-on-surface', initials: 'FA' }
+        ]
+      },
+      {
+        id: 'SES-003',
+        title: 'ONLINE — Literasi Bahasa Inggris',
+        sessionTag: 'MALAM',
+        tagClass: 'bg-blue-100 text-blue-800',
+        icon: 'videocam',
+        time: '19:00 - 20:30 WIB • Google Meet Room 2',
+        tutor: 'Sarah Priscillia, M.Pd.',
+        totalStudents: 22,
+        present: 0,
+        sick: 0,
+        absent: 0,
+        status: 'Belum Dimulai',
+        statusClass: 'bg-light-surface-container text-light-on-surface',
+        statusIcon: 'schedule',
+        inputTime: 'Mulai dlm 1 jam',
+        note: 'Presensi dibuka otomatis 10 menit sebelum sesi pembelajaran dimulai.',
+        waCount: 0,
+        roster: [
+          { name: 'Farhan Pratama', nisn: '00892011', school: 'SMPN 115', status: 'Terdaftar', detail: 'Siap bergabung via Zoom', badgeClass: 'bg-light-surface-container text-light-on-surface', initials: 'FP' },
+          { name: 'Aqila Zahra', nisn: '00892233', school: 'SDIT Nurul Fikri', status: 'Terdaftar', detail: 'Siap bergabung via Zoom', badgeClass: 'bg-light-surface-container text-light-on-surface', initials: 'AZ' }
+        ]
+      },
+      {
+        id: 'SES-004',
+        title: 'PRIVAT — Matematika Diskrit (Farhan)',
+        sessionTag: 'VIP',
+        tagClass: 'bg-purple-100 text-purple-800',
+        icon: 'person',
+        time: '16:00 - 17:30 WIB • Studio VIP 1',
+        tutor: 'Siti Nurhaliza, M.Si.',
+        totalStudents: 1,
+        present: 1,
+        sick: 0,
+        absent: 0,
+        status: 'Sudah Terisi',
+        statusClass: 'bg-success/15 text-success',
+        statusIcon: 'check',
+        inputTime: 'Input: 17:32 WIB',
+        note: '“Sesi pendalaman logika proposisi dan pembuktian induksi selesai dengan pemahaman tuntas.”',
+        waCount: 1,
+        roster: [
+          { name: 'Farhan Pratama', nisn: '00892011', school: 'SMPN 115', status: 'Hadir', detail: 'Hadir Selesai (16:00)', badgeClass: 'bg-success/15 text-success', initials: 'FP' }
+        ]
+      }
+    ];
+
+    let selectedSessionId = 'SES-001';
+    let currentSearch = '';
+
+    // Sidebar Mobile Drawer Toggle
+    function toggleSidebar(open) {
+      const sidebar = document.getElementById('sidebar-nav');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (open) {
+        sidebar.classList.remove('-translate-x-full');
+        sidebar.classList.add('translate-x-0');
+        overlay.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+        sidebar.classList.remove('translate-x-0');
+        overlay.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }
+    }
+
+    // Live Search
+    function handleSearch(val) {
+      currentSearch = val.toLowerCase().trim();
+      renderSessions();
+    }
+
+    // Program Filter Handler
+    function handleProgramFilter(val) {
+      showToast(`Memfilter daftar sesi presensi: ${val.toUpperCase()}`, 'info');
+      renderSessions();
+    }
+
+    // Change Date Helper
+    function changeDate(dir) {
+      const label = document.getElementById('active-date-label');
+      if (dir === 'yesterday') {
+        label.textContent = 'Senin, 17 Nov 2026';
+        showToast('Memuat rekapitulasi presensi kemarin...', 'info');
+      } else {
+        label.textContent = 'Rabu, 19 Nov 2026';
+        showToast('Memuat jadwal sesi presensi besok...', 'info');
+      }
+    }
+
+    // Render Sessions in Col 7
+    function renderSessions() {
+      const container = document.getElementById('sessions-container');
+      container.innerHTML = '';
+
+      const filtered = sessionsData.filter(s => {
+        return !currentSearch 
+          || s.title.toLowerCase().includes(currentSearch)
+          || s.tutor.toLowerCase().includes(currentSearch)
+          || s.time.toLowerCase().includes(currentSearch);
+      });
+
+      document.getElementById('session-count-pill').textContent = `Total: ${filtered.length} Sesi`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="p-8 text-center text-light-on-surface-variant text-body-md">
+            <span class="material-symbols-outlined text-[36px] text-light-outline block mb-1">search_off</span>
+            Tidak ada sesi kelas yang cocok dengan pencarian Anda.
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(s => {
+        const isSelected = (s.id === selectedSessionId);
+        const div = document.createElement('div');
+        
+        div.className = `p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer transition-colors ${
+          isSelected 
+            ? 'bg-light-primary-container/20 border-l-4 border-light-primary' 
+            : 'bg-light-surface hover:bg-light-surface-container'
+        }`;
+
+        div.onclick = () => selectSession(s.id);
+
+        let countStats = '';
+        if (s.status === 'Sudah Terisi') {
+          countStats = `
+            <div class="flex items-center gap-3 text-[11px] font-medium text-light-on-surface-variant mt-2">
+              <span class="text-success font-semibold flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-success"></span> ${s.present} Hadir
+              </span>
+              ${s.sick > 0 ? `
+              <span class="text-warning font-semibold flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-warning"></span> ${s.sick} Izin
+              </span>` : ''}
+              ${s.absent > 0 ? `
+              <span class="text-danger font-semibold flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-danger"></span> ${s.absent} Alpa
+              </span>` : ''}
+              <span class="text-light-on-surface font-semibold">Total: ${s.totalStudents} Siswa</span>
+            </div>
+          `;
+        } else {
+          countStats = `
+            <div class="flex items-center gap-3 text-[11px] text-light-on-surface-variant mt-2">
+              <span>${s.totalStudents} Siswa Terdaftar di Rombel</span>
+            </div>
+          `;
+        }
+
+        let rightAction = '';
+        if (s.status === 'Menunggu Input') {
+          rightAction = `
+            <button type="button" onclick="remindTutor('${s.tutor}'); event.stopPropagation();" class="text-body-sm text-light-primary font-semibold hover:underline">
+              Ingatkan Tutor →
+            </button>
+          `;
+        }
+
+        div.innerHTML = `
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-xl ${isSelected ? 'bg-light-primary text-light-on-primary' : 'bg-light-surface-container text-light-on-surface'} flex items-center justify-center shrink-0 shadow-2xs">
+              <span class="material-symbols-outlined text-[20px]">${s.icon}</span>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="font-headline font-bold text-body-md ${isSelected ? 'text-brand-indigo' : 'text-light-on-surface'}">${s.title}</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold ${s.tagClass}">${s.sessionTag}</span>
+              </div>
+              <div class="text-body-sm text-light-on-surface-variant mt-0.5">
+                ${s.time} • Tutor: ${s.tutor}
+              </div>
+              ${countStats}
+            </div>
+          </div>
+
+          <div class="flex sm:flex-col items-center sm:items-end justify-between shrink-0 gap-1">
+            <span class="px-2.5 py-1 rounded-full text-label-sm font-semibold ${s.statusClass} flex items-center gap-1 shadow-2xs">
+              <span class="material-symbols-outlined text-[14px]">${s.statusIcon}</span>
+              ${s.status}
+            </span>
+            <span class="text-[11px] text-light-on-surface-variant">${s.inputTime}</span>
+            ${rightAction}
+          </div>
+        `;
+
+        container.appendChild(div);
+      });
+    }
+
+    // Select Session & Populate Col 5 Inspector
+    function selectSession(id) {
+      selectedSessionId = id;
+      const s = sessionsData.find(item => item.id === id);
+      if (!s) return;
+
+      document.getElementById('inspector-session-title').textContent = s.title;
+      document.getElementById('inspector-tutor-name').textContent = `Tutor: ${s.tutor}`;
+      document.getElementById('inspector-submit-time').textContent = `Status: ${s.status} • ${s.time}`;
+      
+      const ratePct = s.totalStudents > 0 ? Math.round((s.present / s.totalStudents) * 100) : 0;
+      document.getElementById('inspector-rate-badge').textContent = `${s.present} / ${s.totalStudents} Hadir (${ratePct}%)`;
+      document.getElementById('inspector-rate-badge').className = `px-2.5 py-1 rounded-full text-label-sm font-bold ${s.statusClass} whitespace-nowrap self-start sm:self-auto shadow-2xs`;
+
+      document.getElementById('inspector-note-author').textContent = `Catatan Pengajaran dari Tutor ${s.tutor.split(',')[0].replace('Tutor: ', '')}:`;
+      document.getElementById('inspector-tutor-note').textContent = s.note;
+
+      document.getElementById('inspector-notification-meta').textContent = `${s.waCount} Pesan WA terkirim otomatis pada ${s.inputTime.replace('Input: ', '')}`;
+
+      // Populate Roster Table
+      const rosterContainer = document.getElementById('roster-list-container');
+      rosterContainer.innerHTML = '';
+
+      s.roster.forEach(st => {
+        const row = document.createElement('div');
+        row.className = "p-3 flex items-center justify-between bg-light-surface hover:bg-light-surface-container transition-colors cursor-pointer";
+        row.onclick = () => openOverrideModal(st.name, st.status);
+
+        row.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-light-primary-container text-light-primary flex items-center justify-center font-bold text-label-sm shadow-2xs">
+              ${st.initials}
+            </div>
+            <div>
+              <div class="text-body-sm font-semibold text-light-on-surface">${st.name}</div>
+              <div class="text-[11px] text-light-on-surface-variant">NISN: ${st.nisn} • ${st.school}</div>
+            </div>
+          </div>
+          <div class="text-right">
+            <span class="px-2 py-0.5 rounded text-[11px] font-bold ${st.badgeClass}">
+              ${st.status}
+            </span>
+            <div class="text-[10px] text-light-on-surface-variant mt-0.5">${st.detail}</div>
+          </div>
+        `;
+        rosterContainer.appendChild(row);
+      });
+
+      renderSessions();
+    }
+
+    // Remind Tutor via Notification
+    function remindTutor(tutor) {
+      showToast(`Pesan pengingat submit presensi dikirimkan ke WhatsApp ${tutor}.`, 'warning');
+    }
+
+    // Resend Parent Notifications
+    function resendParentNotifications() {
+      const s = sessionsData.find(item => item.id === selectedSessionId);
+      showToast(`Mengirim ulang notifikasi kehadiran WhatsApp ke ${s.roster.length} wali murid...`, 'success');
+    }
+
+    // Override Modal Logic
+    function openOverrideModal(studentName = 'Bima Pangestu', currentStatus = 'Sakit (Izin)') {
+      document.getElementById('override-student-name').value = `${studentName} (Siswa Aktif)`;
+      document.getElementById('modal-override-attendance').classList.remove('hidden');
+    }
+
+    function closeOverrideModal() {
+      document.getElementById('modal-override-attendance').classList.add('hidden');
+    }
+
+    function saveAttendanceOverride(e) {
+      e.preventDefault();
+      const stName = document.getElementById('override-student-name').value;
+      const selectedStatus = document.querySelector('input[name="override-status"]:checked').value;
+      const reason = document.getElementById('override-reason').value;
+
+      closeOverrideModal();
+      showToast(`Koreksi presensi untuk ${stName} diubah menjadi "${selectedStatus}". Catatan tersimpan.`, 'success');
+    }
+
+    // Manual Attendance Modal
+    function openManualAttendanceModal() {
+      document.getElementById('modal-manual-attendance').classList.remove('hidden');
+    }
+
+    function closeManualAttendanceModal() {
+      document.getElementById('modal-manual-attendance').classList.add('hidden');
+    }
+
+    function submitManualAttendance(e) {
+      e.preventDefault();
+      const s = sessionsData.find(item => item.id === 'SES-002');
+      if (s) {
+        s.status = 'Sudah Terisi';
+        s.statusClass = 'bg-success/15 text-success';
+        s.statusIcon = 'check';
+        s.inputTime = 'Input: Manual Admin';
+        s.present = s.totalStudents;
+      }
+      closeManualAttendanceModal();
+      selectSession('SES-002');
+      renderSessions();
+      showToast('Presensi manual berhasil disimpan dan diverifikasi!', 'success');
+    }
+
+    // Export CSV
+    function exportAttendanceCSV() {
+      let csv = 'ID Sesi,Nama Sesi,Waktu,Tutor,Total Siswa,Hadir,Izin,Alpa,Status Presensi\n';
+      sessionsData.forEach(s => {
+        csv += `"${s.id}","${s.title}","${s.time}","${s.tutor}",${s.totalStudents},${s.present},${s.sick},${s.absent},"${s.status}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Rekap_Presensi_ARCI_Bimbel_${new Date().toISOString().slice(0,10)}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      showToast('Rekap presensi harian berhasil diunduh (CSV).', 'success');
+    }
+
+    // Toast Notification System
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      
+      let bg = 'bg-light-surface text-light-on-surface border-light-outline-variant';
+      let icon = 'info';
+      let iconColor = 'text-brand-indigo';
+
+      if (type === 'success') {
+        icon = 'check_circle';
+        iconColor = 'text-success';
+      } else if (type === 'warning') {
+        icon = 'warning';
+        iconColor = 'text-warning';
+      } else if (type === 'danger') {
+        icon = 'error';
+        iconColor = 'text-danger';
+      }
+
+      toast.className = `p-4 rounded-xl border ${bg} shadow-lg flex items-center gap-3 transition-all duration-300 transform translate-y-4 opacity-0 pointer-events-auto`;
+      toast.innerHTML = `
+        <span class="material-symbols-outlined ${iconColor} text-[22px] shrink-0">${icon}</span>
+        <span class="text-body-sm font-medium flex-1">${message}</span>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-4', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    // Initialize on Load
+    document.addEventListener('DOMContentLoaded', () => {
+      renderSessions();
+      selectSession(selectedSessionId);
+    });
+  </script>
+</body>
+</html>
