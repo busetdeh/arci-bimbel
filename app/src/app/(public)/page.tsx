@@ -202,8 +202,9 @@ export default function HomePage() {
       <span className="font-medium text-brand-indigo-dark text-[11.5px] sm:text-body-sm">
         Gelombang 1 dibuka! Dapatkan gratis tes diagnostik gaya belajar &amp; voucher modul pembelajaran.
       </span>
-      <a href="pendaftaran.html" className="underline hover:text-brand-indigo font-label font-bold text-brand-indigo ml-1 inline-flex items-center gap-0.5 text-label-sm whitespace-nowrap">
-        Daftar Sekarang <span className="material-symbols-outlined text-[15px]">arrow_forward</span>
+      <a href="pendaftaran.html" className="hover:text-brand-indigo-dark font-label font-bold text-brand-indigo ml-1 inline-flex items-center gap-1 text-label-sm whitespace-nowrap group">
+        <span className="underline">Daftar Sekarang</span>
+        <span className="material-symbols-outlined text-[16px] leading-none transition-transform group-hover:translate-x-0.5 select-none no-underline">arrow_forward</span>
       </a>
     </div>
   </aside>
@@ -271,8 +272,8 @@ export default function HomePage() {
 
       {/* Action Buttons */}
       <div className="flex items-center gap-2 sm:gap-3 xl:gap-4 shrink-0">
-        <a href="login.html" className="text-body-sm sm:text-body-md font-label text-light-on-surface-variant hover:text-brand-indigo px-2.5 py-1.5 rounded-lg hover:bg-light-surface-container-low transition-colors whitespace-nowrap font-medium">
-          <span className="material-symbols-outlined text-[17px] hidden sm:inline-block mr-1">account_circle</span>
+        <a href="login.html" className="inline-flex items-center gap-1.5 sm:gap-2 text-body-sm sm:text-body-md font-label text-light-on-surface-variant hover:text-brand-indigo px-2.5 py-1.5 rounded-lg hover:bg-light-surface-container-low transition-colors whitespace-nowrap font-medium group">
+          <span className="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo leading-none shrink-0">account_circle</span>
           <span>Masuk</span>
         </a>
         <a href="#konsultasi" className="hidden sm:inline-flex items-center justify-center gap-2 px-4 py-2 lg:px-5 lg:py-2.5 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-label-md lg:text-label-lg shadow-sm hover:shadow transition-all whitespace-nowrap active:scale-[0.98] font-semibold">
