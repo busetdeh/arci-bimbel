@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import React, { useState, useEffect, useTransition } from "react";
 import Link from "next/link";
 import {
   BranchOption,
@@ -44,6 +44,26 @@ export function RegistrationFunnel({
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [result, setResult] = useState<RegistrationResult | null>(null);
+
+  // Simple Math Captcha (contoh: 1 + 7 = 8)
+  const [captcha, setCaptcha] = useState<{ num1: number; num2: number }>({ num1: 1, num2: 7 });
+  const [captchaAnswer, setCaptchaAnswer] = useState<string>("");
+
+  const refreshCaptcha = () => {
+    const n1 = Math.floor(Math.random() * 9) + 1;
+    const n2 = Math.floor(Math.random() * 9) + 1;
+    setCaptcha({ num1: n1, num2: n2 });
+    setCaptchaAnswer("");
+    setFieldErrors((prev) => {
+      const updated = { ...prev };
+      delete updated.captcha;
+      return updated;
+    });
+  };
+
+  useEffect(() => {
+    refreshCaptcha();
+  }, []);
 
   // Form State: Semua text field dimulai dalam keadaan kosong agar wajib diisi oleh pengguna
   const [formData, setFormData] = useState({
@@ -219,6 +239,19 @@ export function RegistrationFunnel({
       return;
     }
 
+    // Validasi Math Captcha
+    const expectedAnswer = captcha.num1 + captcha.num2;
+    const userAnswer = parseInt(captchaAnswer.trim(), 10);
+    if (isNaN(userAnswer) || userAnswer !== expectedAnswer) {
+      setFieldErrors((prev) => ({
+        ...prev,
+        captcha: `Jawaban verifikasi keamanan belum tepat (${captcha.num1} + ${captcha.num2} = ?). Silakan hitung kembali.`,
+      }));
+      setErrorMessage("Jawaban verifikasi keamanan (captcha) belum tepat. Silakan hitung kembali.");
+      refreshCaptcha();
+      return;
+    }
+
     setErrorMessage(null);
     startTransition(async () => {
       const payload: RegistrationPayload = {
@@ -240,6 +273,8 @@ export function RegistrationFunnel({
         scheduleTime: formData.scheduleTime,
 
         agreeTerms: formData.agreeTerms,
+        captchaAnswer: userAnswer,
+        captchaExpected: expectedAnswer,
       };
 
       const res = await submitRegistrationAction(payload);
@@ -249,6 +284,7 @@ export function RegistrationFunnel({
         window.scrollTo({ top: 40, behavior: "smooth" });
       } else {
         setErrorMessage(res.message || "Gagal mengirim pendaftaran.");
+        refreshCaptcha();
       }
     });
   };
@@ -1192,6 +1228,73 @@ export function RegistrationFunnel({
                   <p className="text-[11px] text-danger font-medium flex items-center gap-1 mt-1 pl-7">
                     <span className="material-symbols-outlined text-[14px]">error</span>
                     {fieldErrors.agreeTerms}
+                  </p>
+                )}
+              </div>
+
+              {/* Math Captcha Verification */}
+              <div
+                className={`p-4 rounded-xl border transition-colors ${
+                  fieldErrors.captcha
+                    ? "bg-danger/5 border-danger"
+                    : "bg-light-surface-container-low border-light-outline-variant"
+                }`}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-label text-label-md font-bold text-light-on-surface flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-[18px] text-light-primary">
+                      verified_user
+                    </span>
+                    Verifikasi Keamanan (Captcha) <span className="text-danger">*</span>
+                  </span>
+                  <button
+                    type="button"
+                    onClick={refreshCaptcha}
+                    className="text-[12px] font-label text-light-primary hover:underline flex items-center gap-1 font-semibold cursor-pointer"
+                    title="Ganti Soal Captcha"
+                  >
+                    <span className="material-symbols-outlined text-[15px]">refresh</span>
+                    Ganti Soal
+                  </button>
+                </div>
+                <p className="text-body-sm text-light-on-surface-variant mb-3">
+                  Selesaikan perhitungan matematika sederhana di bawah untuk memverifikasi pendaftaran Anda:
+                </p>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <div className="flex items-center gap-2 bg-light-surface px-4 py-2.5 rounded-lg border border-light-outline font-headline font-bold text-title-md text-light-primary select-none tracking-wider shrink-0 shadow-2xs">
+                    <span>{captcha.num1}</span>
+                    <span>+</span>
+                    <span>{captcha.num2}</span>
+                    <span>=</span>
+                  </div>
+                  <div className="flex-1">
+                    <input
+                      type="number"
+                      value={captchaAnswer}
+                      onChange={(e) => {
+                        setCaptchaAnswer(e.target.value);
+                        if (fieldErrors.captcha) {
+                          setFieldErrors((prev) => {
+                            const updated = { ...prev };
+                            delete updated.captcha;
+                            return updated;
+                          });
+                          setErrorMessage(null);
+                        }
+                      }}
+                      placeholder="Tuliskan hasil penjumlahan..."
+                      className={`w-full px-4 py-2.5 sm:py-3 rounded-lg border text-light-on-surface placeholder:text-light-on-surface-variant focus:ring-1 text-body-md bg-light-surface ${
+                        fieldErrors.captcha
+                          ? "border-danger focus:border-danger focus:ring-danger"
+                          : "border-light-outline focus:border-light-primary focus:ring-light-primary"
+                      }`}
+                    />
+                  </div>
+                </div>
+                {fieldErrors.captcha && (
+                  <p className="text-[11px] text-danger font-medium flex items-center gap-1 mt-2">
+                    <span className="material-symbols-outlined text-[14px]">error</span>
+                    {fieldErrors.captcha}
                   </p>
                 )}
               </div>

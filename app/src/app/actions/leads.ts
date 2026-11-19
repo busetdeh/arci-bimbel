@@ -11,6 +11,8 @@ export interface ConsultationPayload {
   learningMode: string;
   targetSubject?: string;
   notes?: string;
+  captchaAnswer?: number;
+  captchaExpected?: number;
 }
 
 export interface ConsultationResult {
@@ -67,6 +69,16 @@ export async function submitConsultationAction(
         success: false,
         message: "Nama orang tua, nama siswa, dan nomor WhatsApp wajib diisi.",
       };
+    }
+
+    // Validasi Math Captcha jika disertakan
+    if (payload.captchaExpected !== undefined && payload.captchaAnswer !== undefined) {
+      if (Number(payload.captchaAnswer) !== Number(payload.captchaExpected)) {
+        return {
+          success: false,
+          message: "Verifikasi keamanan (captcha) tidak sesuai. Silakan hitung kembali.",
+        };
+      }
     }
 
     const supabase = createAdminClient();

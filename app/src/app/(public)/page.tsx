@@ -121,7 +121,44 @@ export default function HomePage() {
       });
     });
 
-    // 4. Consultation Form Handling with Supabase CRM Integration
+    // 4. Consultation Form Handling with Supabase CRM Integration & Simple Math Captcha
+    let consultN1 = Math.floor(Math.random() * 9) + 1;
+    let consultN2 = Math.floor(Math.random() * 9) + 1;
+
+    const num1El = document.getElementById("consult-num1");
+    const num2El = document.getElementById("consult-num2");
+    const captchaInput = document.getElementById("consult-captcha-input") as HTMLInputElement;
+    const captchaErr = document.getElementById("consult-captcha-error");
+    const refreshBtn = document.getElementById("refresh-consult-captcha");
+
+    const refreshConsultCaptcha = () => {
+      consultN1 = Math.floor(Math.random() * 9) + 1;
+      consultN2 = Math.floor(Math.random() * 9) + 1;
+      if (num1El) num1El.textContent = String(consultN1);
+      if (num2El) num2El.textContent = String(consultN2);
+      if (captchaInput) {
+        captchaInput.value = "";
+        captchaInput.classList.remove("border-danger");
+      }
+      if (captchaErr) captchaErr.classList.add("hidden");
+    };
+
+    // Generate random values on client mount
+    refreshConsultCaptcha();
+
+    if (refreshBtn) {
+      refreshBtn.addEventListener("click", () => {
+        refreshConsultCaptcha();
+      });
+    }
+
+    if (captchaInput) {
+      captchaInput.addEventListener("input", () => {
+        if (captchaErr) captchaErr.classList.add("hidden");
+        captchaInput.classList.remove("border-danger");
+      });
+    }
+
     const consultForm = document.getElementById("consultation-form") as HTMLFormElement;
     const successBox = document.getElementById("form-success");
     const successTitle = document.getElementById("form-success-title");
@@ -130,6 +167,26 @@ export default function HomePage() {
     if (consultForm && successBox) {
       consultForm.addEventListener("submit", async (e) => {
         e.preventDefault();
+
+        // 1. Validasi Math Captcha
+        const expected = consultN1 + consultN2;
+        const userVal = parseInt(captchaInput?.value || "", 10);
+        if (isNaN(userVal) || userVal !== expected) {
+          if (captchaErr) {
+            captchaErr.classList.remove("hidden");
+            captchaErr.innerHTML = `
+              <span class="material-symbols-outlined text-[15px]">error</span>
+              Jawaban verifikasi keamanan salah (${consultN1} + ${consultN2} = ?). Silakan coba lagi.
+            `;
+          }
+          if (captchaInput) {
+            captchaInput.classList.add("border-danger");
+            captchaInput.focus();
+          }
+          refreshConsultCaptcha();
+          return;
+        }
+
         const submitBtn = document.getElementById("submit-btn") as HTMLButtonElement;
 
         const parentName = (document.getElementById("parent-name") as HTMLInputElement)?.value;
@@ -157,10 +214,13 @@ export default function HomePage() {
             learningMode,
             targetSubject,
             notes,
+            captchaAnswer: userVal,
+            captchaExpected: expected,
           });
 
           if (res.success) {
             consultForm.reset();
+            refreshConsultCaptcha();
             if (successTitle) {
               successTitle.textContent = `Terima Kasih! No. Referensi: ${res.leadNumber}`;
             }
@@ -173,9 +233,11 @@ export default function HomePage() {
             successBox.scrollIntoView({ behavior: "smooth", block: "center" });
           } else {
             alert(res.message || "Gagal mengirim permintaan konsultasi.");
+            refreshConsultCaptcha();
           }
         } catch {
           alert("Terjadi kendala saat menghubungkan ke database. Silakan coba kembali.");
+          refreshConsultCaptcha();
         } finally {
           if (submitBtn) {
             submitBtn.disabled = false;
@@ -1383,6 +1445,49 @@ export default function HomePage() {
             <div className="md:col-span-2 flex flex-col gap-1.5">
               <span className="font-label text-label-md text-light-on-surface font-semibold">Catatan Tambahan atau Target Khusus (Opsional)</span>
               <textarea id="notes" rows={3} placeholder="Contoh: Ingin persiapan ujian kenaikan kelas dan pemantapan materi aljabar." className="w-full px-4 py-2.5 sm:py-3 rounded-lg border border-light-outline text-light-on-surface placeholder:text-light-on-surface-variant focus:border-light-primary focus:ring-1 focus:ring-light-primary text-body-md"></textarea>
+            </div>
+
+            {/* Simple Math Captcha */}
+            <div className="md:col-span-2 flex flex-col gap-2 p-4 rounded-xl border border-light-outline-variant bg-light-surface-container-low/70">
+              <div className="flex items-center justify-between">
+                <span className="font-label text-label-md text-light-on-surface font-semibold flex items-center gap-1.5">
+                  <span className="material-symbols-outlined text-[18px] text-light-primary">verified_user</span>
+                  Verifikasi Keamanan (Captcha) <span className="text-danger">*</span>
+                </span>
+                <button
+                  type="button"
+                  id="refresh-consult-captcha"
+                  className="text-[12px] font-label text-light-primary hover:underline flex items-center gap-1 font-semibold cursor-pointer"
+                  title="Ganti Soal Captcha"
+                >
+                  <span className="material-symbols-outlined text-[15px]">refresh</span>
+                  Ganti Soal
+                </button>
+              </div>
+              <p className="text-[12px] text-light-on-surface-variant">
+                Berapa hasil penjumlahan berikut untuk memastikan Anda bukan robot:
+              </p>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                <div className="flex items-center gap-2 bg-light-surface px-4 py-2.5 rounded-lg border border-light-outline font-headline font-bold text-title-md text-light-primary select-none tracking-wider shrink-0 shadow-2xs">
+                  <span id="consult-num1">1</span>
+                  <span>+</span>
+                  <span id="consult-num2">7</span>
+                  <span>=</span>
+                </div>
+                <div className="flex-1">
+                  <input
+                    type="number"
+                    id="consult-captcha-input"
+                    placeholder="Ketikkan jawaban angka..."
+                    className="w-full px-4 py-2.5 sm:py-3 rounded-lg border border-light-outline text-light-on-surface placeholder:text-light-on-surface-variant focus:border-light-primary focus:ring-1 focus:ring-light-primary text-body-md bg-light-surface"
+                    required
+                  />
+                </div>
+              </div>
+              <p id="consult-captcha-error" className="hidden text-[12px] text-danger font-medium flex items-center gap-1 mt-0.5">
+                <span className="material-symbols-outlined text-[15px]">error</span>
+                Jawaban verifikasi keamanan belum tepat. Silakan hitung kembali.
+              </p>
             </div>
 
             {/* Submit Section */}

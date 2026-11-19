@@ -47,6 +47,8 @@ export interface RegistrationPayload {
 
   // Step 4: Confirmation
   agreeTerms: boolean;
+  captchaAnswer?: number;
+  captchaExpected?: number;
 }
 
 export interface RegistrationResult {
@@ -143,6 +145,16 @@ export async function submitRegistrationAction(
         success: false,
         message: "Silakan setujui syarat dan ketentuan pendaftaran terlebih dahulu.",
       };
+    }
+
+    // Validasi Math Captcha jika dikirimkan
+    if (payload.captchaExpected !== undefined && payload.captchaAnswer !== undefined) {
+      if (Number(payload.captchaAnswer) !== Number(payload.captchaExpected)) {
+        return {
+          success: false,
+          message: "Verifikasi keamanan (captcha) tidak valid. Silakan hitung kembali.",
+        };
+      }
     }
 
     const supabase = createAdminClient();
