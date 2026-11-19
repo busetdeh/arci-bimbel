@@ -147,9 +147,44 @@ export default function HomePage() {
       });
     }
 
+    // 5. Smooth Anchor Scroll Navigation with Exact Header Offset Compensation
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement).closest('a[href^="#"]');
+      if (!target) return;
+      const href = target.getAttribute("href");
+      if (!href || href === "#" || href === "#!") return;
+
+      const targetEl = document.querySelector(href);
+      if (targetEl) {
+        e.preventDefault();
+        // Close mobile drawer if open
+        if (mobileMenu) {
+          mobileMenu.classList.add("hidden");
+        }
+        
+        // Compensate for sticky header (80px on desktop, 64px on mobile)
+        const isDesktop = window.innerWidth >= 1024;
+        const headerOffset = isDesktop ? 80 : 64;
+        const elementPosition = targetEl.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: Math.max(0, offsetPosition),
+          behavior: "smooth",
+        });
+
+        if (window.history.pushState) {
+          window.history.pushState(null, "", href);
+        }
+      }
+    };
+
+    document.addEventListener("click", handleAnchorClick);
+
     return () => {
       if (mobileBtn) mobileBtn.removeEventListener("click", toggleMenu);
       document.removeEventListener("click", closeOnClickOutside);
+      document.removeEventListener("click", handleAnchorClick);
     };
   }, []);
 

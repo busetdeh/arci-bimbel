@@ -21,7 +21,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" className={`${plusJakartaSans.variable} h-full antialiased`}>
+    <html
+      lang="id"
+      className={`${plusJakartaSans.variable} h-full antialiased scroll-smooth`}
+    >
       <head>
         <link
           rel="stylesheet"
