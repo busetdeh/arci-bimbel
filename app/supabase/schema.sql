@@ -303,6 +303,47 @@ ALTER TABLE materials ENABLE ROW LEVEL SECURITY;
 ALTER TABLE announcements ENABLE ROW LEVEL SECURITY;
 ALTER TABLE audit_logs ENABLE ROW LEVEL SECURITY;
 
+-- API privileges. RLS tetap menjadi lapisan pembatas data per baris.
+GRANT USAGE ON SCHEMA public TO anon, authenticated, service_role;
+GRANT SELECT ON branches, programs TO anon, authenticated;
+GRANT INSERT ON leads TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON
+  profiles,
+  branches,
+  programs,
+  leads,
+  classes,
+  students,
+  parents,
+  student_parents,
+  enrollments,
+  attendance_sessions,
+  attendance_records,
+  invoices,
+  payments,
+  materials,
+  announcements,
+  audit_logs
+TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON
+  profiles,
+  branches,
+  programs,
+  leads,
+  classes,
+  students,
+  parents,
+  student_parents,
+  enrollments,
+  attendance_sessions,
+  attendance_records,
+  invoices,
+  payments,
+  materials,
+  announcements,
+  audit_logs
+TO service_role;
+
 -- Helper Function: Cek Role User
 CREATE OR REPLACE FUNCTION public.current_user_role()
 RETURNS user_role AS $$

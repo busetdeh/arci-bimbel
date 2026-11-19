@@ -87,12 +87,13 @@ export function ProgramDetailContent() {
 
       {/* Action Buttons */}
       <div className="flex items-center gap-3">
-        <a href="/login" className="hidden sm:inline-flex text-body-md font-label text-light-on-surface-variant hover:text-light-on-surface px-3 py-2 rounded-lg hover:bg-light-surface-container-low transition-colors">
-          Portal Siswa / Masuk
+        <a href="/login" className="inline-flex items-center gap-1.5 sm:gap-2 text-body-sm sm:text-body-md font-label text-light-on-surface-variant hover:text-brand-indigo px-2.5 py-1.5 rounded-lg hover:bg-light-surface-container-low transition-colors whitespace-nowrap font-medium group">
+          <span className="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo leading-none shrink-0">account_circle</span>
+          <span>Masuk</span>
         </a>
-        <a href="/pendaftaran" className="inline-flex items-center justify-center gap-1.5 px-4 sm:px-5 py-2.5 rounded-xl bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-label-md sm:text-label-lg shadow-sm hover:shadow transition-all whitespace-nowrap min-h-[44px]">
+        <a href="/pendaftaran" className="inline-flex items-center justify-center gap-1.5 px-4 sm:px-5 py-2.5 rounded-xl bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-label-md sm:text-label-lg shadow-sm hover:shadow transition-all whitespace-nowrap min-h-[44px] group">
           <span>Daftar Sekarang</span>
-          <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+          <span className="material-symbols-outlined text-[16px] leading-none transition-transform group-hover:translate-x-0.5 select-none no-underline">arrow_forward</span>
         </a>
 
         {/* Mobile Hamburger Button */}

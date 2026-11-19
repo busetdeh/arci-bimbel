@@ -73,59 +73,26 @@ export function PublicNavbar() {
               <span>Konsultasi WA</span>
             </a>
 
-            {/* Login Menu with Dropdown */}
-            <div className="relative">
-              <button
-                type="button"
-                onClick={() => setLoginDropdownOpen(!loginDropdownOpen)}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-light-on-surface hover:bg-light-surface-soft border border-light-outline transition-colors"
-              >
-                <LogIn className="w-4 h-4 text-brand-indigo" />
-                <span>Masuk Portal</span>
-                <ChevronDown className="w-3.5 h-3.5 text-light-muted" />
-              </button>
+            {/* Login Link with account_circle icon matching template index.html */}
+            <Link
+              href="/login"
+              className="inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-light-on-surface-variant hover:text-brand-indigo px-2.5 py-1.5 rounded-lg hover:bg-light-surface-container-low transition-colors whitespace-nowrap font-medium group"
+            >
+              <span className="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo leading-none shrink-0">
+                account_circle
+              </span>
+              <span>Masuk</span>
+            </Link>
 
-              {loginDropdownOpen && (
-                <>
-                  <div 
-                    className="fixed inset-0 z-40" 
-                    onClick={() => setLoginDropdownOpen(false)} 
-                  />
-                  <div className="absolute right-0 mt-2 w-56 rounded-xl bg-white border border-light-outline shadow-xl py-2 z-50">
-                    <Link
-                      href="/portal"
-                      onClick={() => setLoginDropdownOpen(false)}
-                      className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-medium text-light-on-surface hover:bg-light-primary-container hover:text-brand-indigo transition-colors"
-                    >
-                      <UserCheck className="w-4 h-4 text-brand-indigo" />
-                      <div>
-                        <div className="font-semibold">Portal Siswa & Ortu</div>
-                        <div className="text-[10px] text-light-muted">Pantau rapor & jadwal</div>
-                      </div>
-                    </Link>
-                    <div className="border-t border-light-outline my-1" />
-                    <Link
-                      href="/dashboard"
-                      onClick={() => setLoginDropdownOpen(false)}
-                      className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-medium text-light-on-surface hover:bg-light-primary-container hover:text-brand-indigo transition-colors"
-                    >
-                      <BriefcaseBusiness className="w-4 h-4 text-brand-indigo" />
-                      <div>
-                        <div className="font-semibold">Portal Staf & Tutor</div>
-                        <div className="text-[10px] text-light-muted">Presensi & administrasi</div>
-                      </div>
-                    </Link>
-                  </div>
-                </>
-              )}
-            </div>
-
-            {/* Main Primary CTA */}
+            {/* Main Primary CTA matching template */}
             <Link
               href="/pendaftaran"
-              className="inline-flex items-center justify-center px-4.5 py-2.5 rounded-xl bg-brand-indigo text-white hover:bg-brand-indigo-dark font-semibold text-xs shadow-sm transition-all active:scale-[0.98]"
+              className="inline-flex items-center justify-center gap-1.5 px-4 sm:px-4.5 py-2.5 rounded-xl bg-brand-indigo text-white hover:bg-brand-indigo-dark font-semibold text-xs shadow-sm transition-all active:scale-[0.98] group"
             >
-              Daftar Sekarang
+              <span>Daftar Sekarang</span>
+              <span className="material-symbols-outlined text-[16px] leading-none transition-transform group-hover:translate-x-0.5 select-none no-underline">
+                arrow_forward
+              </span>
             </Link>
           </div>
 

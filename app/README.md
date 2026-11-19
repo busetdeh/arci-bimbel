@@ -1,5 +1,19 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## ARCI Bimbel — Supabase
+
+Supabase setup dan checklist keamanan tersedia di [`supabase/SETUP.md`](./supabase/SETUP.md). Schema database utama tersedia di [`supabase/schema.sql`](./supabase/schema.sql).
+
+Untuk menjalankan secara lokal:
+
+```bash
+cp .env.example .env.local
+pnpm lint
+pnpm dev
+```
+
+Isi nilai Supabase di `.env.local` sebelum membuka fitur yang membutuhkan autentikasi atau database.
+
 ## Getting Started
 
 First, run the development server:

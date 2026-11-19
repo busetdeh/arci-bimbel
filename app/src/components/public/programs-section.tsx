@@ -234,10 +234,10 @@ export function ProgramsSection() {
               <div className="p-5 sm:p-6 pt-0 space-y-2">
                 <Link
                   href={`/pendaftaran?program=${prog.id}`}
-                  className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-brand-indigo text-white hover:bg-brand-indigo-dark font-semibold text-xs sm:text-sm shadow-xs transition-all active:scale-[0.98]"
+                  className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-brand-indigo text-white hover:bg-brand-indigo-dark font-semibold text-xs sm:text-sm shadow-xs transition-all active:scale-[0.98] group"
                 >
                   <span>Daftar Sekarang</span>
-                  <ArrowRight className="w-4 h-4 text-accent" />
+                  <span className="material-symbols-outlined text-[16px] leading-none transition-transform group-hover:translate-x-0.5 select-none no-underline text-accent">arrow_forward</span>
                 </Link>
                 <a
                   href="#konsultasi"
