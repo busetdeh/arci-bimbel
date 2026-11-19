@@ -68,22 +68,24 @@ export default function AdmissionsPage() {
     }
   }, [selectedId]);
 
-  // Filter registrations based on stage tab & search text
-  const filteredRegistrations = registrations.filter((r) => {
-    if (filterStage !== "all" && r.stage !== filterStage) {
-      return false;
-    }
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase();
-      const matchName = r.studentName.toLowerCase().includes(q);
-      const matchReg = r.registrationNumber.toLowerCase().includes(q);
-      const matchSchool = r.schoolOrigin.toLowerCase().includes(q);
-      const matchParent = r.parentName.toLowerCase().includes(q);
-      const matchProg = r.programName.toLowerCase().includes(q);
-      return matchName || matchReg || matchSchool || matchParent || matchProg;
-    }
-    return true;
-  });
+  // Filter registrations based on stage tab & search text, strictly sorted DESC by created_at (date and time)
+  const filteredRegistrations = registrations
+    .filter((r) => {
+      if (filterStage !== "all" && r.stage !== filterStage) {
+        return false;
+      }
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase();
+        const matchName = r.studentName.toLowerCase().includes(q);
+        const matchReg = r.registrationNumber.toLowerCase().includes(q);
+        const matchSchool = r.schoolOrigin.toLowerCase().includes(q);
+        const matchParent = r.parentName.toLowerCase().includes(q);
+        const matchProg = r.programName.toLowerCase().includes(q);
+        return matchName || matchReg || matchSchool || matchParent || matchProg;
+      }
+      return true;
+    })
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
   // Checklist toggle with Supabase persistence
   const handleToggleChecklist = (index: number) => {
@@ -195,6 +197,7 @@ export default function AdmissionsPage() {
       "Status Tagihan",
       "Status Pendaftaran",
       "Tanggal Daftar",
+      "Waktu Daftar",
     ];
 
     const rows = filteredRegistrations.map((r) => [
@@ -212,6 +215,7 @@ export default function AdmissionsPage() {
       `"${r.invoiceStatus}"`,
       `"${r.stageLabel}"`,
       `"${r.enrolledAt}"`,
+      `"${r.enrolledTime}"`,
     ]);
 
     const csvContent =
@@ -438,7 +442,14 @@ export default function AdmissionsPage() {
                 <tr>
                   <th className="py-3 px-4">No. Reg &amp; Nama Calon Siswa</th>
                   <th className="py-3 px-4">Program Pilihan</th>
-                  <th className="py-3 px-4">Tanggal Masuk</th>
+                  <th className="py-3 px-4">
+                    <div className="flex items-center gap-1">
+                      <span>Tanggal &amp; Waktu</span>
+                      <span className="material-symbols-outlined text-[13px] text-brand-indigo font-bold" title="Urutan DESC (Terbaru)">
+                        south
+                      </span>
+                    </div>
+                  </th>
                   <th className="py-3 px-4">Status Berkas</th>
                   <th className="py-3 px-4 text-right">Tindakan</th>
                 </tr>
@@ -491,7 +502,13 @@ export default function AdmissionsPage() {
                           </span>
                         </td>
                         <td className="py-3.5 px-4 text-light-on-surface-variant whitespace-nowrap text-[12px]">
-                          {reg.enrolledAt}
+                          <span className="font-semibold text-light-on-surface block">
+                            {reg.enrolledAt}
+                          </span>
+                          <span className="text-[11px] text-light-on-surface-variant flex items-center gap-1 mt-0.5 font-mono">
+                            <span className="material-symbols-outlined text-[12px]">schedule</span>
+                            <span>{reg.enrolledTime}</span>
+                          </span>
                         </td>
                         <td className="py-3.5 px-4 whitespace-nowrap">
                           <span
@@ -596,6 +613,14 @@ export default function AdmissionsPage() {
                 </span>
                 <span className="font-semibold text-light-on-surface text-right">
                   {selectedReg.programName} • {selectedReg.branchName}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-[12px] text-light-on-surface-variant font-label">
+                  Waktu Pendaftaran Masuk
+                </span>
+                <span className="font-semibold text-light-on-surface text-right font-mono text-[12px]">
+                  {selectedReg.enrolledAt} • {selectedReg.enrolledTime}
                 </span>
               </div>
               <div className="flex items-center justify-between">

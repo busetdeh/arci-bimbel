@@ -27,7 +27,9 @@ export interface AdmissionItem {
   invoiceNumber: string;
   totalFee: number;
   invoiceStatus: "unpaid" | "paid" | "cancelled";
+  createdAt: string;
   enrolledAt: string;
+  enrolledTime: string;
   status: "pending" | "active" | "completed" | "dropped";
   stage: "verify" | "payment" | "active";
   stageLabel: string;
@@ -217,14 +219,17 @@ export async function getAdmissionsDataAction(): Promise<AdmissionsDataResult> {
         stageBadge = "bg-accent text-on-accent";
       }
 
-      // Format enrolled date
-      const dateStr = e.created_at
-        ? new Date(e.created_at).toLocaleDateString("id-ID", {
-            day: "numeric",
-            month: "short",
-            year: "numeric",
-          })
-        : "19 Nov 2026";
+      // Format enrolled date and time (WIB / Local Indonesia)
+      const createdDate = e.created_at ? new Date(e.created_at) : new Date();
+      const dateStr = createdDate.toLocaleDateString("id-ID", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      });
+      const timeStr = createdDate.toLocaleTimeString("id-ID", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }).replace(".", ":") + " WIB";
 
       // File name display
       const cleanStudentName = student?.full_name?.split(" ")[0] || "Siswa";
@@ -254,7 +259,9 @@ export async function getAdmissionsDataAction(): Promise<AdmissionsDataResult> {
         invoiceNumber: invNumber,
         totalFee: totalAmount,
         invoiceStatus: invStatus,
+        createdAt: e.created_at || new Date().toISOString(),
         enrolledAt: dateStr,
+        enrolledTime: timeStr,
         status: e.status,
         stage,
         stageLabel,
@@ -263,6 +270,11 @@ export async function getAdmissionsDataAction(): Promise<AdmissionsDataResult> {
         fileName,
       };
     });
+
+    // Explicitly guarantee sorting DESC by created_at (most recent first)
+    registrations.sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
 
     const stats = {
       total: registrations.length,
