@@ -3,22 +3,17 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { getStaffSession, logoutStaffAction } from "@/app/actions/auth";
-
-const navItems = [
-  { href: "/dashboard", label: "Ringkasan", icon: "dashboard" },
-  { href: "/dashboard/leads", label: "Lead & Pipeline", icon: "person_search", badge: "8" },
-  { href: "/dashboard/admissions", label: "Pendaftaran", icon: "how_to_reg", badge: "3" },
-  { href: "/dashboard/students", label: "Siswa & Wali", icon: "school" },
-  { href: "/dashboard/classes", label: "Program & Kelas", icon: "class" },
-  { href: "/dashboard/schedule", label: "Jadwal Sesi", icon: "calendar_month" },
-  { href: "/dashboard/attendance", label: "Presensi Siswa", icon: "fact_check" },
-  { href: "/dashboard/finance", label: "Tagihan & Kas", icon: "payments", badge: "5 Baru" },
-  { href: "/dashboard/communications", label: "Komunikasi & Broadcast", icon: "campaign" },
-  { href: "/dashboard/settings", label: "Pengaturan & Role", icon: "manage_accounts" },
-  { href: "/dashboard/reports", label: "Laporan KPI", icon: "analytics" },
-  { href: "/dashboard/cms", label: "Konten Website", icon: "article" },
-];
+import {
+  getStaffSession,
+  logoutStaffAction,
+  switchStaffAccountAction,
+} from "@/app/actions/auth";
+import {
+  getFilteredNavItems,
+  isRouteAllowed,
+  ROLE_CONFIGS,
+  StaffRole,
+} from "@/lib/rbac";
 
 export default function DashboardLayout({
   children,
@@ -31,15 +26,21 @@ export default function DashboardLayout({
   const [notifOpen, setNotifOpen] = useState(false);
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
   const [currentStaff, setCurrentStaff] = useState<{
+    role: StaffRole;
     name: string;
     roleLabel: string;
     initials: string;
   }>({
+    role: "super_admin",
     name: "Ahmad Dani, M.Pd.",
     roleLabel: "Super Admin Operasional",
     initials: "AD",
   });
-  const [toast, setToast] = useState<{ show: boolean; msg: string; type: "success" | "warning" | "info" }>({
+  const [toast, setToast] = useState<{
+    show: boolean;
+    msg: string;
+    type: "success" | "warning" | "info";
+  }>({
     show: false,
     msg: "",
     type: "info",
@@ -50,21 +51,24 @@ export default function DashboardLayout({
       const session = await getStaffSession();
       if (session?.profile) {
         const p = session.profile;
-        const roleMap: Record<string, string> = {
-          super_admin: "Super Admin Operasional",
-          admin_akademik: "Koordinator Akademik & Roster",
-          admin_keuangan: "Staf Keuangan & Pembayaran",
-          tutor: "Tutor & Pengajar",
-        };
+        const validRole = (
+          ["super_admin", "admin_akademik", "admin_keuangan", "tutor"].includes(p.role)
+            ? p.role
+            : "super_admin"
+        ) as StaffRole;
+
+        const roleConfig = ROLE_CONFIGS[validRole];
         const initials = p.full_name
           .split(" ")
           .map((w: string) => w[0])
           .slice(0, 2)
           .join("")
           .toUpperCase();
+
         setCurrentStaff({
+          role: validRole,
           name: p.full_name,
-          roleLabel: roleMap[p.role] || "Staf ARCI Bimbel",
+          roleLabel: roleConfig?.label || "Staf ARCI Bimbel",
           initials: initials || "ST",
         });
       }
@@ -72,7 +76,10 @@ export default function DashboardLayout({
     loadStaff();
   }, []);
 
-  const showToast = (msg: string, type: "success" | "warning" | "info" = "info") => {
+  const showToast = (
+    msg: string,
+    type: "success" | "warning" | "info" = "info"
+  ) => {
     setToast({ show: true, msg, type });
     setTimeout(() => {
       setToast({ show: false, msg: "", type: "info" });
@@ -84,6 +91,11 @@ export default function DashboardLayout({
     setIsLeadModalOpen(false);
     showToast("Data calon siswa berhasil disimpan ke sistem CRM!", "success");
   };
+
+  // Dynamically filter navigation items based on current staff role
+  const visibleNavItems = getFilteredNavItems(currentStaff.role);
+  const isAllowed = isRouteAllowed(currentStaff.role, pathname);
+  const currentRoleCfg = ROLE_CONFIGS[currentStaff.role] || ROLE_CONFIGS.super_admin;
 
   return (
     <div className="bg-light-surface-soft text-light-on-surface font-body antialiased min-h-screen flex flex-col lg:flex-row pb-safe">
@@ -129,9 +141,24 @@ export default function DashboardLayout({
             </button>
           </div>
 
-          {/* Navigation Links */}
+          {/* Active Role Indicator in Sidebar */}
+          <div className="px-4 pt-3 pb-1">
+            <div className={`p-2.5 rounded-xl flex items-center justify-between ${currentRoleCfg.badgeClass}`}>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-current animate-pulse shrink-0" />
+                <span className="text-[11px] font-label font-bold tracking-wide uppercase truncate">
+                  {currentRoleCfg.shortLabel}
+                </span>
+              </div>
+              <span className="text-[10px] font-medium opacity-80">
+                {visibleNavItems.length} Menu
+              </span>
+            </div>
+          </div>
+
+          {/* Role-Filtered Navigation Links */}
           <nav className="p-3 sm:p-4 flex flex-col gap-1">
-            {navItems.map((item) => {
+            {visibleNavItems.map((item) => {
               const isActive =
                 item.href === "/dashboard"
                   ? pathname === "/dashboard"
@@ -147,6 +174,7 @@ export default function DashboardLayout({
                       ? "bg-light-primary text-light-on-primary shadow-xs font-semibold"
                       : "text-light-on-surface hover:bg-light-surface-container"
                   }`}
+                  title={item.description}
                 >
                   <div className="flex items-center gap-3">
                     <span
@@ -197,13 +225,70 @@ export default function DashboardLayout({
               </div>
             </div>
             <span className="material-symbols-outlined text-[18px] text-light-outline group-hover:text-light-on-surface">
-              more_vert
+              unfold_more
             </span>
           </div>
 
-          {/* Quick Profile Popup Menu */}
+          {/* Quick Profile & Role Switcher Popup Menu */}
           {userMenuOpen && (
-            <div className="absolute bottom-full left-4 right-4 mb-2 bg-light-surface rounded-xl border border-light-outline-variant shadow-lg py-1.5 z-50 text-body-sm">
+            <div className="absolute bottom-full left-4 right-4 mb-2 bg-light-surface rounded-xl border border-light-outline-variant shadow-xl py-1.5 z-50 text-body-sm animate-in fade-in zoom-in-95 duration-150">
+              <div className="px-3.5 py-2 border-b border-light-outline-variant/60">
+                <span className="font-semibold text-light-on-surface block text-xs truncate">
+                  {currentStaff.name}
+                </span>
+                <span className="text-[11px] text-light-on-surface-variant font-medium">
+                  {currentRoleCfg.label}
+                </span>
+              </div>
+
+              {/* Quick Role Switcher for Pairing & Testing */}
+              <div className="py-2 border-b border-light-outline-variant/60">
+                <span className="px-3.5 text-[10px] font-bold text-light-on-surface-variant uppercase tracking-wider block mb-1.5">
+                  Simulasi Ganti Role Staf:
+                </span>
+                <div className="px-2 space-y-1">
+                  {(
+                    [
+                      "super_admin",
+                      "admin_akademik",
+                      "admin_keuangan",
+                      "tutor",
+                    ] as StaffRole[]
+                  ).map((r) => {
+                    const cfg = ROLE_CONFIGS[r];
+                    const isCurrent = currentStaff.role === r;
+                    return (
+                      <button
+                        key={r}
+                        type="button"
+                        onClick={async () => {
+                          setUserMenuOpen(false);
+                          showToast(`Beralih ke akun ${cfg.label}...`, "info");
+                          const res = await switchStaffAccountAction(r);
+                          if (res.success && res.redirectTo) {
+                            window.location.href = res.redirectTo;
+                          } else {
+                            showToast(res.message || "Gagal beralih role.", "warning");
+                          }
+                        }}
+                        className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
+                          isCurrent
+                            ? "bg-light-primary text-light-on-primary font-bold shadow-2xs"
+                            : "hover:bg-light-surface-container text-light-on-surface"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <span className={`w-2 h-2 rounded-full ${isCurrent ? "bg-accent" : "bg-light-outline"}`} />
+                          <span>{cfg.shortLabel}</span>
+                        </div>
+                        {isCurrent && <span className="text-[10px]">Aktif ✓</span>}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* General Links */}
               <Link
                 href="/"
                 className="flex items-center gap-2 px-3.5 py-2 hover:bg-light-surface-container text-light-on-surface"
@@ -213,6 +298,19 @@ export default function DashboardLayout({
                 </span>
                 <span>Buka Website Publik</span>
               </Link>
+
+              {currentStaff.role === "tutor" && (
+                <Link
+                  href="/tutor"
+                  className="flex items-center gap-2 px-3.5 py-2 hover:bg-amber-50 text-amber-900 font-semibold"
+                >
+                  <span className="material-symbols-outlined text-[17px] text-amber-700">
+                    school
+                  </span>
+                  <span>Portal Tutor Mengajar</span>
+                </Link>
+              )}
+
               <button
                 type="button"
                 onClick={async () => {
@@ -256,7 +354,26 @@ export default function DashboardLayout({
           </div>
 
           {/* Right Action Utilities */}
-          <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            {/* Live Role Badge in Topbar */}
+            <span
+              className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${currentRoleCfg.badgeClass}`}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
+              <span>{currentRoleCfg.label}</span>
+            </span>
+
+            {/* Tutor Direct Portal Shortcut */}
+            {currentStaff.role === "tutor" && (
+              <Link
+                href="/tutor"
+                className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-100 text-amber-900 border border-amber-300 font-semibold text-xs hover:bg-amber-200 transition-colors"
+              >
+                <span className="material-symbols-outlined text-[16px]">school</span>
+                <span>Portal Tutor</span>
+              </Link>
+            )}
+
             {/* Notification Button */}
             <div className="relative">
               <button
@@ -304,15 +421,17 @@ export default function DashboardLayout({
               )}
             </div>
 
-            {/* Add Lead Button */}
-            <button
-              type="button"
-              onClick={() => setIsLeadModalOpen(true)}
-              className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm sm:text-body-md shadow-xs transition-all whitespace-nowrap active:scale-95 font-semibold"
-            >
-              <span className="material-symbols-outlined text-[18px]">add</span>
-              <span>Tambah Lead</span>
-            </button>
+            {/* Add Lead Button (Restricted to Super Admin & Akademik) */}
+            {(currentStaff.role === "super_admin" || currentStaff.role === "admin_akademik") && (
+              <button
+                type="button"
+                onClick={() => setIsLeadModalOpen(true)}
+                className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-body-sm sm:text-body-md shadow-xs transition-all whitespace-nowrap active:scale-95 font-semibold"
+              >
+                <span className="material-symbols-outlined text-[18px]">add</span>
+                <span>Tambah Lead</span>
+              </button>
+            )}
           </div>
         </header>
 
@@ -347,9 +466,44 @@ export default function DashboardLayout({
           </div>
         )}
 
-        {/* Page Main Content */}
+        {/* Page Main Content with RBAC Protection */}
         <main className="p-4 sm:p-6 lg:p-8 flex flex-col gap-6 sm:gap-8 flex-1">
-          {children}
+          {isAllowed ? (
+            children
+          ) : (
+            <div className="my-auto mx-auto max-w-lg w-full bg-light-surface rounded-2xl border border-light-outline-variant p-6 sm:p-8 shadow-sm text-center flex flex-col items-center gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center">
+                <span className="material-symbols-outlined text-[32px]">shield_lock</span>
+              </div>
+              <div>
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-900 font-label">
+                  Hak Akses Terbatas (RBAC)
+                </span>
+                <h2 className="font-headline font-bold text-title-lg text-light-on-surface mt-2">
+                  Akses Menu Dibatasi untuk Peran Ini
+                </h2>
+                <p className="text-body-sm text-light-on-surface-variant mt-2 leading-relaxed">
+                  Halaman ini tidak masuk dalam cakupan wewenang akun Anda sebagai{" "}
+                  <strong>{currentStaff.roleLabel}</strong>.
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full pt-2">
+                <Link
+                  href={currentRoleCfg.defaultPath}
+                  className="w-full sm:flex-1 py-2.5 px-4 rounded-xl bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-semibold text-body-sm text-center shadow-xs transition-colors"
+                >
+                  Buka Menu Utama ({currentRoleCfg.shortLabel})
+                </Link>
+                <Link
+                  href="/login-admin"
+                  className="w-full sm:w-auto py-2.5 px-4 rounded-xl border border-light-outline text-light-on-surface hover:bg-light-surface-container font-semibold text-body-sm text-center transition-colors"
+                >
+                  Ganti Akun
+                </Link>
+              </div>
+            </div>
+          )}
         </main>
       </div>
 

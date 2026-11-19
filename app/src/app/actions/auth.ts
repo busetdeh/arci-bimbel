@@ -128,3 +128,25 @@ export async function getStaffSession() {
     return null;
   }
 }
+
+/**
+ * Switch staff account directly (e.g. for testing role-based views)
+ */
+export async function switchStaffAccountAction(targetRole: string): Promise<LoginResult> {
+  const STAFF_ACCOUNTS: Record<string, { email: string; name: string }> = {
+    super_admin: { email: "ahmad.dani@arcibimbel.id", name: "Ahmad Dani, M.Pd." },
+    admin_akademik: { email: "siti.rahma@arcibimbel.id", name: "Siti Rahma, S.Si." },
+    admin_keuangan: { email: "budi.keuangan@arcibimbel.id", name: "Budi Santoso, S.E." },
+    tutor: { email: "tutor.dimas@arcibimbel.id", name: "Dimas Arya, S.Si." },
+  };
+
+  const account = STAFF_ACCOUNTS[targetRole];
+  if (!account) {
+    return { success: false, message: "Peran staf tidak valid." };
+  }
+
+  const formData = new FormData();
+  formData.append("email", account.email);
+  formData.append("password", "admin12345");
+  return await loginStaffAction(formData);
+}
