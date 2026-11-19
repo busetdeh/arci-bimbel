@@ -58,7 +58,7 @@ export default function TutorDashboardPage() {
           Aktif Mengajar
         </span>
         <a 
-          href="dashboard.html" 
+          href="/dashboard" 
           className="w-8 h-8 rounded-lg border border-light-outline-variant flex items-center justify-center text-light-on-surface-variant hover:text-brand-indigo hover:bg-light-surface-container transition-colors" 
           title="Buka Dashboard Web Lengkap">
           <span className="material-symbols-outlined text-[18px]">desktop_windows</span>
@@ -250,7 +250,7 @@ export default function TutorDashboardPage() {
               </div>
             </div>
             <a 
-              href="portal-jadwal-materi.html#view-materi" 
+              href="/portal/jadwal" 
               className="text-[10px] text-light-primary font-bold bg-light-primary-container px-2 py-0.5 rounded-md shrink-0 hover:underline">
               12/14 Mengumpulkan
             </a>
@@ -273,7 +273,10 @@ export default function TutorDashboardPage() {
         </p>
         <button 
           type="button" 
-          onclick="openNoteModal()" 
+          onClick={() => {
+            const modal = document.getElementById('note-modal');
+            if (modal) modal.classList.remove('hidden');
+          }} 
           className="w-full py-2.5 rounded-xl border border-light-outline text-light-on-surface hover:bg-light-surface-container font-label text-body-sm font-semibold transition-colors flex items-center justify-center gap-1.5 min-h-[44px]">
           <span className="material-symbols-outlined text-[18px]">add_comment</span>
           <span>Tulis Catatan Konsultasi Baru</span>
@@ -298,7 +301,7 @@ export default function TutorDashboardPage() {
 
         {/* Tab 2: Jadwal */}
         <a 
-          href="schedule.html" 
+          href="/dashboard/schedule" 
           className="flex flex-col items-center gap-0.5 text-light-on-surface-variant hover:text-light-primary font-label text-[11px] font-medium transition-colors min-h-[44px] min-w-[56px] justify-center">
           <span className="material-symbols-outlined text-[20px]">calendar_month</span>
           <span>Jadwal</span>
@@ -314,7 +317,7 @@ export default function TutorDashboardPage() {
 
         {/* Tab 4: Materi */}
         <a 
-          href="portal-jadwal-materi.html#view-materi" 
+          href="/portal/jadwal" 
           className="flex flex-col items-center gap-0.5 text-light-on-surface-variant hover:text-light-primary font-label text-[11px] font-medium transition-colors min-h-[44px] min-w-[56px] justify-center">
           <span className="material-symbols-outlined text-[20px]">menu_book</span>
           <span>Materi</span>

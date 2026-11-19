@@ -525,7 +525,7 @@ export default function StudentPortalPage() {
         </button>
 
         <a 
-          href="portal-jadwal-materi.html" 
+          href="/portal/jadwal" 
           className="p-3 rounded-xl bg-light-surface border border-light-outline-variant hover:border-light-primary shadow-2xs flex items-center gap-2.5 text-left transition-colors min-h-[44px]">
           <span className="material-symbols-outlined text-brand-indigo text-[22px]">menu_book</span>
           <div>
@@ -623,7 +623,7 @@ export default function StudentPortalPage() {
           <h2 className="font-headline font-bold text-title-lg text-brand-indigo">Materi &amp; Rapor Akademik</h2>
           <p className="text-[12px] text-light-on-surface-variant">Modul ajar, rekaman video &amp; perkembangan tryout</p>
         </div>
-        <a href="portal-rapor.html" className="px-3 py-1.5 rounded-lg bg-light-primary text-light-on-primary text-label-sm font-bold shadow-2xs hover:bg-brand-indigo-dark transition-colors flex items-center gap-1">
+        <a href="/portal/rapor" className="px-3 py-1.5 rounded-lg bg-light-primary text-light-on-primary text-label-sm font-bold shadow-2xs hover:bg-brand-indigo-dark transition-colors flex items-center gap-1">
           <span className="material-symbols-outlined text-[16px]">analytics</span>
           <span>Buka Rapor</span>
         </a>

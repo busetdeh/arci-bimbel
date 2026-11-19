@@ -878,8 +878,8 @@ export default function PendaftaranPage() {
     <div className="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
       <p>© 2026 ARCI Bimbel. Bantuan pendaftaran WhatsApp: +62 812-3456-7890</p>
       <div className="flex gap-4">
-        <a href="index.html#program" className="hover:underline">Daftar Program</a>
-        <a href="index.html#faq" className="hover:underline">Tanya Jawab (FAQ)</a>
+        <a href="/#program" className="hover:underline">Daftar Program</a>
+        <a href="/#faq" className="hover:underline">Tanya Jawab (FAQ)</a>
         <a href="#privacy" className="hover:underline">Kebijakan Privasi</a>
       </div>
     </div>

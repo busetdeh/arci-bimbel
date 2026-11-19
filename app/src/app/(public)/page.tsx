@@ -202,7 +202,7 @@ export default function HomePage() {
       <span className="font-medium text-brand-indigo-dark text-[11.5px] sm:text-body-sm">
         Gelombang 1 dibuka! Dapatkan gratis tes diagnostik gaya belajar &amp; voucher modul pembelajaran.
       </span>
-      <a href="pendaftaran.html" className="hover:text-brand-indigo-dark font-label font-bold text-brand-indigo ml-1 inline-flex items-center gap-1 text-label-sm whitespace-nowrap group">
+      <a href="/pendaftaran" className="hover:text-brand-indigo-dark font-label font-bold text-brand-indigo ml-1 inline-flex items-center gap-1 text-label-sm whitespace-nowrap group">
         <span className="underline">Daftar Sekarang</span>
         <span className="material-symbols-outlined text-[16px] leading-none transition-transform group-hover:translate-x-0.5 select-none no-underline">arrow_forward</span>
       </a>
@@ -261,7 +261,7 @@ export default function HomePage() {
                 <span className="material-symbols-outlined text-[18px] text-light-primary">help</span>
                 <span>Tanya Jawab (FAQ)</span>
               </a>
-              <a href="pendaftaran.html" className="flex items-center gap-2.5 px-4 py-2.5 text-body-sm text-brand-indigo bg-light-primary-container/30 hover:bg-light-primary-container hover:text-brand-indigo-dark transition-colors font-semibold border-t border-light-outline-variant/60">
+              <a href="/pendaftaran" className="flex items-center gap-2.5 px-4 py-2.5 text-body-sm text-brand-indigo bg-light-primary-container/30 hover:bg-light-primary-container hover:text-brand-indigo-dark transition-colors font-semibold border-t border-light-outline-variant/60">
                 <span className="material-symbols-outlined text-[18px] text-brand-indigo">how_to_reg</span>
                 <span>Pendaftaran Siswa Baru</span>
               </a>
@@ -272,7 +272,7 @@ export default function HomePage() {
 
       {/* Action Buttons */}
       <div className="flex items-center gap-2 sm:gap-3 xl:gap-4 shrink-0">
-        <a href="login.html" className="inline-flex items-center gap-1.5 sm:gap-2 text-body-sm sm:text-body-md font-label text-light-on-surface-variant hover:text-brand-indigo px-2.5 py-1.5 rounded-lg hover:bg-light-surface-container-low transition-colors whitespace-nowrap font-medium group">
+        <a href="/login" className="inline-flex items-center gap-1.5 sm:gap-2 text-body-sm sm:text-body-md font-label text-light-on-surface-variant hover:text-brand-indigo px-2.5 py-1.5 rounded-lg hover:bg-light-surface-container-low transition-colors whitespace-nowrap font-medium group">
           <span className="material-symbols-outlined text-[20px] text-light-on-surface-variant group-hover:text-brand-indigo leading-none shrink-0">account_circle</span>
           <span>Masuk</span>
         </a>
@@ -290,14 +290,14 @@ export default function HomePage() {
 
     {/* Mobile Navigation Drawer (Smooth Slide-Down) */}
     <div id="mobile-menu" className="hidden lg:hidden border-t border-light-outline-variant bg-light-surface px-5 py-4 space-y-2 shadow-lg animate-in slide-in-from-top duration-200">
-      <a href="pendaftaran.html" className="flex items-center justify-between text-body-md font-semibold text-brand-indigo py-2.5 border-b border-light-outline-variant/60 bg-light-primary-container/20 px-2 rounded-lg">
+      <a href="/pendaftaran" className="flex items-center justify-between text-body-md font-semibold text-brand-indigo py-2.5 border-b border-light-outline-variant/60 bg-light-primary-container/20 px-2 rounded-lg">
         <span className="flex items-center gap-2">
           <span className="material-symbols-outlined text-[18px] text-light-primary">how_to_reg</span>
           <span>Pendaftaran Siswa Baru</span>
         </span>
         <span className="material-symbols-outlined text-[18px] text-light-primary">chevron_right</span>
       </a>
-      <a href="program-detail.html" className="flex items-center justify-between text-body-md font-semibold text-brand-indigo py-2.5 border-b border-light-outline-variant/60 bg-accent/15 px-2 rounded-lg">
+      <a href="/program/intensif-utbk-2026" className="flex items-center justify-between text-body-md font-semibold text-brand-indigo py-2.5 border-b border-light-outline-variant/60 bg-accent/15 px-2 rounded-lg">
         <span className="flex items-center gap-2">
           <span className="material-symbols-outlined text-[18px] text-brand-indigo">school</span>
           <span>Program Intensif UTBK 2026</span>
@@ -667,7 +667,7 @@ export default function HomePage() {
 
           {/* Card 3: SMA / UTBK */}
           <article data-category="sma" className="group program-card bg-light-surface border-2 border-light-primary/40 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
-            <a href="program-detail.html" className="block relative h-40 sm:h-44 bg-light-surface-container overflow-hidden">
+            <a href="/program/intensif-utbk-2026" className="block relative h-40 sm:h-44 bg-light-surface-container overflow-hidden">
               <img src="assets/images/program-sma.jpg" 
                    data-ai-title="Intensif UTBK-SNBT 2026" data-ai-subtitle="Drill Soal TPS &amp; IRT Nasional"
                    alt="Program Intensif UTBK-SNBT ARCI Bimbel" 
@@ -686,7 +686,7 @@ export default function HomePage() {
                     <span className="w-2 h-2 rounded-full bg-warning"></span> Hampir Penuh (Sisa 4 Kursi)
                   </span>
                 </div>
-                <a href="program-detail.html" className="hover:text-brand-indigo transition-colors block">
+                <a href="/program/intensif-utbk-2026" className="hover:text-brand-indigo transition-colors block">
                   <h3 className="font-headline text-headline-sm text-light-on-surface hover:text-brand-indigo font-bold">Intensif UTBK-SNBT 2026</h3>
                 </a>
                 <p className="text-body-sm text-light-on-surface-variant mt-1.5 leading-relaxed">
@@ -719,7 +719,7 @@ export default function HomePage() {
                     Rp1.450.000<span className="text-body-sm font-normal text-light-on-surface-variant">/bln</span>
                   </span>
                 </div>
-                <a href="program-detail.html" className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark text-label-md font-label transition-colors font-medium">
+                <a href="/program/intensif-utbk-2026" className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark text-label-md font-label transition-colors font-medium">
                   Detail Program
                 </a>
               </div>
@@ -1405,7 +1405,7 @@ export default function HomePage() {
       <div>
         <p className="font-label font-bold text-light-on-surface mb-3 md:mb-4 text-label-lg">Program Belajar</p>
         <ul className="flex flex-col gap-2.5 text-body-sm text-light-on-surface-variant">
-          <li><a href="program-detail.html" className="hover:text-light-primary text-brand-indigo font-bold flex items-center gap-1 transition-colors">Intensif UTBK-SNBT 2026 <span className="material-symbols-outlined text-[14px]">arrow_forward</span></a></li>
+          <li><a href="/program/intensif-utbk-2026" className="hover:text-light-primary text-brand-indigo font-bold flex items-center gap-1 transition-colors">Intensif UTBK-SNBT 2026 <span className="material-symbols-outlined text-[14px]">arrow_forward</span></a></li>
           <li><a href="#program" className="hover:text-light-primary transition-colors">Bimbel Reguler SD (Kelas 4–6)</a></li>
           <li><a href="#program" className="hover:text-light-primary transition-colors">Bimbel Reguler SMP (Kelas 7–9)</a></li>
           <li><a href="#program" className="hover:text-light-primary transition-colors">Bimbel Reguler SMA (Kelas 10–12)</a></li>
@@ -1418,11 +1418,11 @@ export default function HomePage() {
         <p className="font-label font-bold text-light-on-surface mb-3 md:mb-4 text-label-lg">Akses &amp; Layanan</p>
         <ul className="flex flex-col gap-2.5 text-body-sm text-light-on-surface-variant">
           <li><a href="#konsultasi" className="hover:text-light-primary transition-colors">Daftar Free Trial &amp; Diagnostik</a></li>
-          <li><a href="program-detail.html" className="hover:text-light-primary transition-colors">Cek Biaya &amp; Jadwal Sesi</a></li>
+          <li><a href="/program/intensif-utbk-2026" className="hover:text-light-primary transition-colors">Cek Biaya &amp; Jadwal Sesi</a></li>
           <li><a href="#lokasi" className="hover:text-light-primary transition-colors">Katalog Fasilitas Cabang</a></li>
-          <li><a href="login.html" className="hover:text-light-primary transition-colors font-medium text-brand-indigo">Login Portal Siswa &amp; Orang Tua</a></li>
-          <li><a href="student-portal.html" className="hover:text-light-primary transition-colors">Portal Akademik Siswa Aktif</a></li>
-          <li><a href="login-admin.html" className="hover:text-light-primary transition-colors">Dashboard Internal Staf &amp; Tutor</a></li>
+          <li><a href="/login" className="hover:text-light-primary transition-colors font-medium text-brand-indigo">Login Portal Siswa &amp; Orang Tua</a></li>
+          <li><a href="/portal" className="hover:text-light-primary transition-colors">Portal Akademik Siswa Aktif</a></li>
+          <li><a href="/login-admin" className="hover:text-light-primary transition-colors">Dashboard Internal Staf &amp; Tutor</a></li>
         </ul>
       </div>
 

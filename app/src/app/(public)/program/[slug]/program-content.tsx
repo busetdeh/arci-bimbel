@@ -74,20 +74,20 @@ export function ProgramDetailContent() {
         {/* Desktop Navigation Links */}
         <nav className="hidden lg:flex items-center gap-7">
           <a href="/" className="text-body-md font-label text-light-on-surface-variant hover:text-light-primary transition-colors">Beranda</a>
-          <a href="index.html#program" className="text-body-md font-label text-light-primary font-bold flex items-center gap-1">
+          <a href="/#program" className="text-body-md font-label text-light-primary font-bold flex items-center gap-1">
             Program Belajar
             <span className="w-1.5 h-1.5 rounded-full bg-accent"></span>
           </a>
-          <a href="index.html#keunggulan" className="text-body-md font-label text-light-on-surface-variant hover:text-light-primary transition-colors">Keunggulan</a>
-          <a href="index.html#tutor" className="text-body-md font-label text-light-on-surface-variant hover:text-light-primary transition-colors">Tutor Pilihan</a>
-          <a href="index.html#testimoni" className="text-body-md font-label text-light-on-surface-variant hover:text-light-primary transition-colors">Hasil &amp; Testimoni</a>
-          <a href="index.html#lokasi" className="text-body-md font-label text-light-on-surface-variant hover:text-light-primary transition-colors">Lokasi &amp; Kontak</a>
+          <a href="/#keunggulan" className="text-body-md font-label text-light-on-surface-variant hover:text-light-primary transition-colors">Keunggulan</a>
+          <a href="/#tutor" className="text-body-md font-label text-light-on-surface-variant hover:text-light-primary transition-colors">Tutor Pilihan</a>
+          <a href="/#testimoni" className="text-body-md font-label text-light-on-surface-variant hover:text-light-primary transition-colors">Hasil &amp; Testimoni</a>
+          <a href="/#lokasi" className="text-body-md font-label text-light-on-surface-variant hover:text-light-primary transition-colors">Lokasi &amp; Kontak</a>
         </nav>
       </div>
 
       {/* Action Buttons */}
       <div className="flex items-center gap-3">
-        <a href="login.html" className="hidden sm:inline-flex text-body-md font-label text-light-on-surface-variant hover:text-light-on-surface px-3 py-2 rounded-lg hover:bg-light-surface-container-low transition-colors">
+        <a href="/login" className="hidden sm:inline-flex text-body-md font-label text-light-on-surface-variant hover:text-light-on-surface px-3 py-2 rounded-lg hover:bg-light-surface-container-low transition-colors">
           Portal Siswa / Masuk
         </a>
         <a href="/pendaftaran" className="inline-flex items-center justify-center gap-1.5 px-4 sm:px-5 py-2.5 rounded-xl bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark font-label text-label-md sm:text-label-lg shadow-sm hover:shadow transition-all whitespace-nowrap min-h-[44px]">
@@ -113,32 +113,32 @@ export function ProgramDetailContent() {
         <span className="material-symbols-outlined text-[20px] text-light-primary">home</span>
         Beranda
       </a>
-      <a href="index.html#program" className="flex items-center justify-between px-3 py-2.5 rounded-lg text-body-md bg-light-primary-container/40 text-brand-indigo font-bold">
+      <a href="/#program" className="flex items-center justify-between px-3 py-2.5 rounded-lg text-body-md bg-light-primary-container/40 text-brand-indigo font-bold">
         <span className="flex items-center gap-3">
           <span className="material-symbols-outlined text-[20px] text-light-primary">school</span>
           Program Belajar UTBK 2026
         </span>
         <span className="text-xs bg-accent text-on-accent font-bold px-2 py-0.5 rounded-full">Aktif</span>
       </a>
-      <a href="index.html#keunggulan" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-body-md text-light-on-surface hover:bg-light-surface-container font-medium">
+      <a href="/#keunggulan" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-body-md text-light-on-surface hover:bg-light-surface-container font-medium">
         <span className="material-symbols-outlined text-[20px] text-light-primary">verified</span>
         Keunggulan Bimbel
       </a>
-      <a href="index.html#tutor" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-body-md text-light-on-surface hover:bg-light-surface-container font-medium">
+      <a href="/#tutor" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-body-md text-light-on-surface hover:bg-light-surface-container font-medium">
         <span className="material-symbols-outlined text-[20px] text-light-primary">badge</span>
         Tutor Pilihan
       </a>
-      <a href="index.html#testimoni" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-body-md text-light-on-surface hover:bg-light-surface-container font-medium">
+      <a href="/#testimoni" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-body-md text-light-on-surface hover:bg-light-surface-container font-medium">
         <span className="material-symbols-outlined text-[20px] text-light-primary">reviews</span>
         Hasil &amp; Testimoni Lolos PTN
       </a>
-      <a href="index.html#lokasi" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-body-md text-light-on-surface hover:bg-light-surface-container font-medium">
+      <a href="/#lokasi" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-body-md text-light-on-surface hover:bg-light-surface-container font-medium">
         <span className="material-symbols-outlined text-[20px] text-light-primary">location_on</span>
         Lokasi &amp; Kontak Cabang
       </a>
       
       <div className="pt-3 border-t border-light-outline-variant flex flex-col gap-2">
-        <a href="login.html" className="flex items-center justify-center gap-2 py-2.5 rounded-xl border border-light-outline text-body-md font-semibold text-light-on-surface hover:bg-light-surface-container">
+        <a href="/login" className="flex items-center justify-center gap-2 py-2.5 rounded-xl border border-light-outline text-body-md font-semibold text-light-on-surface hover:bg-light-surface-container">
           <span className="material-symbols-outlined text-[18px]">login</span>
           Portal Siswa / Masuk
         </a>
@@ -160,7 +160,7 @@ export function ProgramDetailContent() {
         Beranda
       </a>
       <span className="material-symbols-outlined text-[14px]">chevron_right</span>
-      <a href="index.html#program" className="hover:text-light-primary transition-colors">Program Belajar</a>
+      <a href="/#program" className="hover:text-light-primary transition-colors">Program Belajar</a>
       <span className="material-symbols-outlined text-[14px]">chevron_right</span>
       <span className="text-brand-indigo font-bold">Intensif UTBK SNBT 2026</span>
     </div>
@@ -988,9 +988,9 @@ export function ProgramDetailContent() {
         <h4 className="font-headline font-bold text-white text-title-md">Program Belajar</h4>
         <ul className="space-y-2 text-white/80 text-body-sm">
           <li><a href="/program/intensif-utbk-2026" className="hover:text-accent text-accent font-semibold flex items-center gap-1.5 transition-colors"><span>Intensif UTBK SNBT</span> &bull;</a></li>
-          <li><a href="index.html#program" className="hover:text-accent transition-colors">Reguler SD (Kelas 4–6)</a></li>
-          <li><a href="index.html#program" className="hover:text-accent transition-colors">Reguler SMP (Kelas 7–9)</a></li>
-          <li><a href="index.html#program" className="hover:text-accent transition-colors">Reguler SMA (Kelas 10–12)</a></li>
+          <li><a href="/#program" className="hover:text-accent transition-colors">Reguler SD (Kelas 4–6)</a></li>
+          <li><a href="/#program" className="hover:text-accent transition-colors">Reguler SMP (Kelas 7–9)</a></li>
+          <li><a href="/#program" className="hover:text-accent transition-colors">Reguler SMA (Kelas 10–12)</a></li>
           <li><a href="/program/intensif-utbk-2026" className="hover:text-accent transition-colors">Super Camp Gap Year</a></li>
         </ul>
       </div>
@@ -999,11 +999,11 @@ export function ProgramDetailContent() {
       <div className="flex flex-col gap-3">
         <h4 className="font-headline font-bold text-white text-title-md">Portal &amp; Akses</h4>
         <ul className="space-y-2 text-white/80 text-body-sm">
-          <li><a href="login.html" className="hover:text-accent transition-colors">Portal Siswa &amp; Orang Tua</a></li>
-          <li><a href="login-admin.html" className="hover:text-accent transition-colors">Portal Admin &amp; Guru</a></li>
+          <li><a href="/login" className="hover:text-accent transition-colors">Portal Siswa &amp; Orang Tua</a></li>
+          <li><a href="/login-admin" className="hover:text-accent transition-colors">Portal Admin &amp; Guru</a></li>
           <li><a href="/pendaftaran" className="hover:text-accent transition-colors">Pendaftaran Online</a></li>
-          <li><a href="index.html#tutor" className="hover:text-accent transition-colors">Daftar Tutor Pengampu</a></li>
-          <li><a href="index.html#testimoni" className="hover:text-accent transition-colors">Hasil Tryout Nasional</a></li>
+          <li><a href="/#tutor" className="hover:text-accent transition-colors">Daftar Tutor Pengampu</a></li>
+          <li><a href="/#testimoni" className="hover:text-accent transition-colors">Hasil Tryout Nasional</a></li>
         </ul>
       </div>
 
