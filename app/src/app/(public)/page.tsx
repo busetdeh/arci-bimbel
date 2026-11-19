@@ -549,12 +549,12 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {/* Card 1: SD */}
-          <article data-category="sd" className="program-card bg-light-surface border border-light-outline-variant rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <article data-category="sd" className="group program-card bg-light-surface border border-light-outline-variant rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
             <div className="relative h-40 sm:h-44 bg-light-surface-container overflow-hidden">
               <img src="assets/images/program-sd.jpg" 
                    data-ai-title="Program Reguler SD Juara" data-ai-subtitle="Matematika, IPA &amp; B. Indonesia"
                    alt="Program Reguler SD Juara ARCI Bimbel" 
-                   className="w-full h-full object-cover" />
+                   className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" />
               <span className="absolute top-3 left-3 px-3 py-1 rounded-full text-label-sm font-label bg-light-surface/95 backdrop-blur-xs text-brand-indigo font-bold shadow-xs">
                 SD Kelas 4–6
               </span>
@@ -605,7 +605,7 @@ export default function HomePage() {
           </article>
 
           {/* Card 2: SMP (Featured) */}
-          <article data-category="smp" className="program-card bg-light-surface border-2 border-light-primary rounded-2xl overflow-hidden shadow-md relative flex flex-col justify-between">
+          <article data-category="smp" className="group program-card bg-light-surface border-2 border-light-primary rounded-2xl overflow-hidden shadow-md relative flex flex-col justify-between">
             <div className="absolute top-3 right-3 z-10 bg-accent text-on-accent text-label-sm font-label px-3 py-0.5 rounded-full shadow-sm font-semibold flex items-center gap-1">
               <span className="material-symbols-outlined text-[16px]">local_fire_department</span>
               <span>Paling Diminati</span>
@@ -614,7 +614,7 @@ export default function HomePage() {
               <img src="assets/images/program-smp.jpg" 
                    data-ai-title="Target Sukses Ujian SMP" data-ai-subtitle="Persiapan Ujian &amp; Asesmen Nasional"
                    alt="Program Target Sukses Ujian SMP ARCI Bimbel" 
-                   className="w-full h-full object-cover" />
+                   className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" />
               <span className="absolute top-3 left-3 px-3 py-1 rounded-full text-label-sm font-label bg-light-surface/95 backdrop-blur-xs text-brand-indigo font-bold shadow-xs">
                 SMP Kelas 7–9
               </span>
@@ -665,12 +665,12 @@ export default function HomePage() {
           </article>
 
           {/* Card 3: SMA / UTBK */}
-          <article data-category="sma" className="program-card bg-light-surface border-2 border-light-primary/40 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
-            <a href="program-detail.html" className="block relative h-40 sm:h-44 bg-light-surface-container overflow-hidden group">
+          <article data-category="sma" className="group program-card bg-light-surface border-2 border-light-primary/40 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+            <a href="program-detail.html" className="block relative h-40 sm:h-44 bg-light-surface-container overflow-hidden">
               <img src="assets/images/program-sma.jpg" 
                    data-ai-title="Intensif UTBK-SNBT 2026" data-ai-subtitle="Drill Soal TPS &amp; IRT Nasional"
                    alt="Program Intensif UTBK-SNBT ARCI Bimbel" 
-                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                   className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" />
               <span className="absolute top-3 left-3 px-3 py-1 rounded-full text-label-sm font-label bg-light-surface/95 backdrop-blur-xs text-brand-indigo font-bold shadow-xs">
                 SMA / Alumni
               </span>
