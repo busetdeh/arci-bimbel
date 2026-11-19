@@ -262,7 +262,7 @@ export default function LoginAdminPage() {
                     className="rounded text-light-primary focus:ring-light-primary"
                   />
                   <span className="text-[13px] text-light-on-surface-variant">
-                    Ingat saya di perangkat dinas ini
+                    Ingat saya di perangkat ini
                   </span>
                 </label>
                 <span className="text-[11px] text-light-on-surface-variant/70 hidden sm:inline">
