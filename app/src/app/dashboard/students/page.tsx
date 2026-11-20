@@ -5,10 +5,12 @@ import Link from "next/link";
 import {
   getStudentsListAction,
   updateStudentStatusAction,
+} from "@/app/actions/students";
+import {
   StudentItem,
   StudentStatus,
   STUDENT_STATUS_CONFIG,
-} from "@/app/actions/students";
+} from "@/lib/student-constants";
 
 export default function StudentsDirectoryPage() {
   const [levelFilter, setLevelFilter] = useState<string>("all");

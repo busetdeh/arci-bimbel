@@ -6,10 +6,12 @@ import {
   getStudentDetailAction,
   updateStudentStatusAction,
   updateStudentProfileAction,
+} from "@/app/actions/students";
+import {
   StudentItem,
   StudentStatus,
   STUDENT_STATUS_CONFIG,
-} from "@/app/actions/students";
+} from "@/lib/student-constants";
 
 interface TryoutScore {
   subject: string;
