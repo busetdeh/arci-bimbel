@@ -1,17 +1,34 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { PortalStudentProfile, PortalDataResult } from "@/lib/portal-constants";
+import { getPortalDataAction } from "@/app/actions/portal";
 
 export default function PortalJadwalPage() {
   const [viewTab, setViewTab] = useState<"jadwal" | "materi">("jadwal");
   const [selectedDay, setSelectedDay] = useState("19");
   const [toastMsg, setToastMsg] = useState<string | null>(null);
+  const [student, setStudent] = useState<PortalStudentProfile | null>(null);
+
+  useEffect(() => {
+    async function load() {
+      const res: PortalDataResult = await getPortalDataAction();
+      if (res.success && res.students.length > 0) {
+        setStudent(res.students[0]);
+      }
+    }
+    load();
+  }, []);
 
   const showToast = (msg: string) => {
     setToastMsg(msg);
     setTimeout(() => setToastMsg(null), 3000);
   };
+
+  const studentName = student?.fullName || "Farhan Pratama";
+  const gradeText = student?.grade || "SMP Kelas 8 • Reguler";
+  const classText = student?.classCode || "Reguler 8-A";
 
   return (
     <div className="bg-light-surface-soft min-h-screen text-light-on-surface font-body max-w-xl mx-auto flex flex-col pb-safe">
@@ -49,14 +66,14 @@ export default function PortalJadwalPage() {
               Jadwal &amp; Modul Belajar
             </h1>
             <p className="text-[11px] text-light-on-surface-variant font-medium">
-              Farhan Pratama &bull; SMP Kelas 8
+              {studentName} &bull; {gradeText.split("•")[0]?.trim()}
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-light-surface-container border border-light-outline text-[11px] font-label text-light-on-surface font-semibold shadow-2xs">
           <span className="material-symbols-outlined text-[14px] text-light-primary">class</span>
-          <span>Reguler 8-A</span>
+          <span>{classText}</span>
         </div>
       </header>
 
@@ -85,7 +102,7 @@ export default function PortalJadwalPage() {
           }`}
         >
           <span className="material-symbols-outlined text-[18px]">menu_book</span>
-          <span>Materi &amp; Tugas (4)</span>
+          <span>Materi &amp; Tugas ({student?.materials.length || 3})</span>
         </button>
       </div>
 
@@ -128,15 +145,17 @@ export default function PortalJadwalPage() {
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-indigo animate-pulse"></span>
                 Sesi Hari Ini
               </span>
-              <span className="text-label-sm text-light-primary font-bold">16:00 - 17:30 WIB</span>
+              <span className="text-label-sm text-light-primary font-bold">
+                {student?.upcomingClass.timeSlot || "16:00 - 17:30 WIB"}
+              </span>
             </div>
 
             <div>
               <h2 className="font-headline font-bold text-headline-sm text-light-on-surface">
-                Matematika SMP: Teorema Pythagoras &amp; SPLDV
+                {student?.upcomingClass.title || "Matematika SMP: Teorema Pythagoras & SPLDV"}
               </h2>
               <p className="text-body-sm text-light-on-surface-variant mt-1">
-                Tutor: Kak Budi Pratama, S.Si. • Ruang Galileo (Sudirman)
+                Tutor: {student?.upcomingClass.tutor || "Kak Budi Pratama, S.Si."} • {student?.upcomingClass.room || "Ruang Galileo (Sudirman)"}
               </p>
             </div>
 
@@ -148,6 +167,29 @@ export default function PortalJadwalPage() {
               </span>
             </div>
           </section>
+
+          {/* Schedule List */}
+          <div className="space-y-3">
+            {student?.schedules.map((sch) => (
+              <div
+                key={sch.id}
+                className="p-3.5 bg-light-surface rounded-xl border border-light-outline-variant flex flex-col gap-1.5 shadow-2xs"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-light-surface-container text-light-on-surface">
+                    {sch.dayLabel}
+                  </span>
+                  <span className="text-[12px] font-mono font-semibold text-brand-indigo">{sch.timeSlot}</span>
+                </div>
+                <h3 className="font-bold text-body-sm text-light-on-surface">{sch.title}</h3>
+                <p className="text-[12px] text-light-on-surface-variant">Topik: {sch.topic}</p>
+                <div className="flex items-center justify-between pt-1 border-t border-light-outline-variant/60 text-[11px] text-light-on-surface-variant">
+                  <span>{sch.tutor}</span>
+                  <span>{sch.room}</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </main>
       )}
 
@@ -158,11 +200,11 @@ export default function PortalJadwalPage() {
             <h2 className="font-headline font-bold text-title-md text-light-on-surface">
               Modul Pembelajaran Aktif
             </h2>
-            {[
-              { title: "Modul 04: Aljabar & Teorema Pythagoras.pdf", size: "3.2 MB", date: "16 Nov 2026" },
-              { title: "Drill Soal Persiapan ASPD Matematika.pdf", size: "1.8 MB", date: "14 Nov 2026" },
-              { title: "Rangkuman IPA Terpadu Kelas 8.pdf", size: "4.5 MB", date: "10 Nov 2026" },
-            ].map((m, i) => (
+            {(student?.materials || [
+              { title: "Modul 04: Aljabar & Teorema Pythagoras.pdf", fileSize: "3.2 MB", createdAt: "16 Nov 2026" },
+              { title: "Drill Soal Persiapan ASPD Matematika.pdf", fileSize: "1.8 MB", createdAt: "14 Nov 2026" },
+              { title: "Rangkuman IPA Terpadu Kelas 8.pdf", fileSize: "4.5 MB", createdAt: "10 Nov 2026" },
+            ]).map((m, i) => (
               <div key={i} className="p-3 rounded-xl border border-light-outline-variant bg-light-surface-soft flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <span className="material-symbols-outlined text-[24px] text-light-primary">
@@ -173,7 +215,7 @@ export default function PortalJadwalPage() {
                       {m.title}
                     </span>
                     <span className="text-[11px] text-light-on-surface-variant">
-                      {m.size} • Diunggah {m.date}
+                      {m.fileSize} • Diunggah {m.createdAt}
                     </span>
                   </div>
                 </div>

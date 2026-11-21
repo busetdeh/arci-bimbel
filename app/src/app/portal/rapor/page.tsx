@@ -1,16 +1,32 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { PortalStudentProfile, PortalDataResult } from "@/lib/portal-constants";
+import { getPortalDataAction } from "@/app/actions/portal";
 
 export default function PortalRaporPage() {
   const [period, setPeriod] = useState("ganjil");
   const [toastMsg, setToastMsg] = useState<string | null>(null);
+  const [student, setStudent] = useState<PortalStudentProfile | null>(null);
+
+  useEffect(() => {
+    async function load() {
+      const res: PortalDataResult = await getPortalDataAction();
+      if (res.success && res.students.length > 0) {
+        setStudent(res.students[0]);
+      }
+    }
+    load();
+  }, []);
 
   const showToast = (msg: string) => {
     setToastMsg(msg);
     setTimeout(() => setToastMsg(null), 3000);
   };
+
+  const studentName = student?.fullName || "Farhan Pratama";
+  const gradeText = student?.grade || "Kelas 8 SMP Reguler";
 
   return (
     <div className="bg-light-surface-soft min-h-screen text-light-on-surface font-body max-w-xl mx-auto flex flex-col pb-safe">
@@ -48,7 +64,7 @@ export default function PortalRaporPage() {
               Rapor Perkembangan
             </h1>
             <p className="text-[11px] text-light-on-surface-variant font-medium">
-              Farhan Pratama &bull; Kelas 8 SMP Reguler
+              {studentName} &bull; {gradeText}
             </p>
           </div>
         </div>
@@ -93,7 +109,7 @@ export default function PortalRaporPage() {
               EVALUASI PERIODE BERJALAN
             </span>
             <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-success/15 text-success border border-success/30 shadow-2xs">
-              Predikat: Sangat Baik
+              Predikat: {student?.evaluation.predicate || "Sangat Baik"}
             </span>
           </div>
 
@@ -103,11 +119,11 @@ export default function PortalRaporPage() {
                 Rata-rata Skor Kuis
               </span>
               <div className="text-headline-sm font-headline font-bold text-brand-indigo mt-1">
-                86.4 <span className="text-body-sm font-normal text-light-on-surface-variant">/ 100</span>
+                {student?.evaluation.scoreStr || "86.4 / 100"}
               </div>
               <span className="text-[11px] text-success font-semibold flex items-center gap-0.5 mt-1">
                 <span className="material-symbols-outlined text-[14px]">trending_up</span>
-                +4.2 poin dari bulan lalu
+                {student?.evaluation.trendStr || "+4.2 poin dari bulan lalu"}
               </span>
             </div>
 
@@ -116,10 +132,10 @@ export default function PortalRaporPage() {
                 Tingkat Kehadiran
               </span>
               <div className="text-headline-sm font-headline font-bold text-success mt-1">
-                100%
+                {student?.attendance.rateStr || "100%"}
               </div>
               <span className="text-[11px] text-light-on-surface-variant mt-1 font-mono">
-                12 / 12 Sesi Hadir
+                {student?.attendance.detailStr || "12 / 12 Sesi Hadir"}
               </span>
             </div>
           </div>
@@ -139,20 +155,19 @@ export default function PortalRaporPage() {
           </div>
 
           <div className="flex flex-col gap-4">
-            {[
-              { subject: "Matematika", score: "88%", label: "Aljabar & Pythagoras", color: "bg-light-primary" },
-              { subject: "IPA Terpadu", score: "85%", label: "Listrik Dinamis & Ekosistem", color: "bg-emerald-600" },
-              { subject: "Bahasa Inggris", score: "86%", label: "Reading & Grammar Structure", color: "bg-purple-600" },
-            ].map((sub, i) => (
+            {(student?.evaluation.subjectScores || [
+              { subject: "Matematika", score: 88 },
+              { subject: "IPA Terpadu", score: 85 },
+              { subject: "Bahasa Inggris", score: 86 },
+            ]).map((sub, i) => (
               <div key={i} className="flex flex-col gap-1.5">
                 <div className="flex items-center justify-between text-body-sm">
                   <span className="font-bold text-light-on-surface">{sub.subject}</span>
-                  <span className="font-bold text-brand-indigo">{sub.score}</span>
+                  <span className="font-bold text-brand-indigo">{sub.score}%</span>
                 </div>
                 <div className="w-full bg-light-surface-container rounded-full h-2">
-                  <div className={`${sub.color} h-2 rounded-full`} style={{ width: sub.score }} />
+                  <div className="bg-light-primary h-2 rounded-full transition-all duration-300" style={{ width: `${sub.score}%` }} />
                 </div>
-                <span className="text-[11px] text-light-on-surface-variant">{sub.label}</span>
               </div>
             ))}
           </div>
@@ -164,11 +179,11 @@ export default function PortalRaporPage() {
             Catatan Evaluasi Konselor &amp; Tutor
           </h3>
           <p className="text-body-sm text-light-on-surface-variant leading-relaxed italic bg-light-surface-soft p-3 rounded-xl border border-light-outline-variant">
-            “Farhan menunjukkan kemajuan pesat dalam pemahaman konsep aljabar dan rumus ruang. Ananda sangat aktif bertanya saat sesi klinik PR. Pertahankan ketelitian dalam menghitung soal cerita bertingkat.”
+            {student?.evaluation.noteBody || "Farhan menunjukkan kemajuan pesat dalam pemahaman konsep aljabar dan rumus ruang. Ananda sangat aktif bertanya saat sesi klinik PR. Pertahankan ketelitian dalam menghitung soal cerita bertingkat."}
           </p>
           <div className="flex items-center justify-between text-[11px] text-light-on-surface-variant mt-1">
-            <span>Tutor: Kak Budi Pratama, S.Si.</span>
-            <span>18 Nov 2026</span>
+            <span>Tutor: {student?.evaluation.noteAuthor || "Kak Budi Pratama, S.Si."}</span>
+            <span>{student?.evaluation.noteDate || "18 Nov 2026"}</span>
           </div>
         </section>
 
