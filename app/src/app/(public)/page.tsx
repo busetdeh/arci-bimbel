@@ -3,6 +3,13 @@
 import React, { useEffect, useState } from "react";
 import { submitConsultationAction } from "@/app/actions/leads";
 import { getRegistrationOptions, ProgramOption } from "@/app/actions/registration";
+import { getPublicTutorsAndTestimonialsAction } from "@/app/actions/cms";
+import {
+  PublicTutorItem,
+  PublicTestimonialItem,
+  INITIAL_PUBLIC_TUTORS,
+  INITIAL_PUBLIC_TESTIMONIALS,
+} from "@/lib/cms-constants";
 
 declare global {
   interface Window {
@@ -50,11 +57,20 @@ export default function HomePage() {
     },
   ]);
   const [activeCategory, setActiveCategory] = useState<"all" | "sd" | "smp" | "sma">("all");
+  const [tutors, setTutors] = useState<PublicTutorItem[]>(INITIAL_PUBLIC_TUTORS);
+  const [testimonials, setTestimonials] = useState<PublicTestimonialItem[]>(INITIAL_PUBLIC_TESTIMONIALS);
 
   useEffect(() => {
     getRegistrationOptions().then((res) => {
       if (res.programs && res.programs.length > 0) {
         setDbPrograms(res.programs);
+      }
+    });
+
+    getPublicTutorsAndTestimonialsAction().then((res) => {
+      if (res.success) {
+        if (res.tutors && res.tutors.length > 0) setTutors(res.tutors);
+        if (res.testimonials && res.testimonials.length > 0) setTestimonials(res.testimonials);
       }
     });
   }, []);
@@ -933,109 +949,33 @@ export default function HomePage() {
 
         {/* Snap-Scroll on Mobile, Grid on Desktop */}
         <div className="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory lg:grid lg:grid-cols-4 pb-2 lg:pb-0">
-          {/* Tutor 1: Budi Pratama (AI Photo) */}
-          <div className="w-64 sm:w-72 lg:w-auto shrink-0 snap-start bg-light-surface border border-light-outline-variant rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
-            <div>
-              <div className="relative rounded-xl overflow-hidden mb-4 bg-light-surface-container aspect-square">
-                <img src="assets/images/tutor-budi.jpg" 
-                     data-ai-title="Budi Pratama, S.Si." data-ai-subtitle="Tutor Senior Matematika • UI"
-                     alt="Foto Budi Pratama, S.Si." 
-                     className="w-full h-full object-cover" />
-                <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded-md bg-light-surface/90 backdrop-blur-xs text-[11px] font-semibold text-brand-indigo">
-                  7 Th Pengalaman
-                </span>
+          {tutors.map((tutor) => (
+            <div key={tutor.id} className="w-64 sm:w-72 lg:w-auto shrink-0 snap-start bg-light-surface border border-light-outline-variant rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+              <div>
+                <div className="relative rounded-xl overflow-hidden mb-4 bg-light-surface-container aspect-square">
+                  <img
+                    src={tutor.photoUrl}
+                    data-ai-title={tutor.name}
+                    data-ai-subtitle={`${tutor.subject} • ${tutor.university}`}
+                    alt={`Foto ${tutor.name}`}
+                    className="w-full h-full object-cover"
+                  />
+                  <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded-md bg-light-surface/90 backdrop-blur-xs text-[11px] font-semibold text-brand-indigo">
+                    {tutor.experienceYears} Th Pengalaman
+                  </span>
+                </div>
+                <h3 className="font-headline text-title-md sm:text-title-lg text-light-on-surface font-semibold">{tutor.name}</h3>
+                <p className="text-[12px] sm:text-label-sm text-light-primary font-label font-medium mt-0.5">{tutor.subject} • {tutor.university}</p>
+                <p className="text-body-sm text-light-on-surface-variant mt-2 leading-relaxed">{tutor.description}</p>
               </div>
-              <h3 className="font-headline text-title-md sm:text-title-lg text-light-on-surface font-semibold">Budi Pratama, S.Si.</h3>
-              <p className="text-[12px] sm:text-label-sm text-light-primary font-label font-medium mt-0.5">Tutor Matematika • UI</p>
-              <p className="text-body-sm text-light-on-surface-variant mt-2 leading-relaxed">
-                Pakar trik penalaran analitis dan aljabar tanpa rumus yang rumit.
-              </p>
-            </div>
-            <div className="pt-3 mt-3 border-t border-light-outline-variant/60 flex items-center justify-between text-body-sm text-light-on-surface-variant">
-              <span className="flex items-center gap-1 text-[12px] sm:text-label-sm">
-                <span className="material-symbols-outlined text-accent text-[16px]">star</span> 4.95 / 5.0
-              </span>
-              <span className="text-[11px] sm:text-label-sm text-brand-indigo font-medium">SMA/UTBK</span>
-            </div>
-          </div>
-
-          {/* Tutor 2: Siti Rahma (AI Photo) */}
-          <div className="w-64 sm:w-72 lg:w-auto shrink-0 snap-start bg-light-surface border border-light-outline-variant rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
-            <div>
-              <div className="relative rounded-xl overflow-hidden mb-4 bg-light-surface-container aspect-square">
-                <img src="assets/images/tutor-siti.jpg" 
-                     data-ai-title="Siti Rahma, M.Pd." data-ai-subtitle="Tutor Sains &amp; Kimia • ITB"
-                     alt="Foto Siti Rahma, M.Pd." 
-                     className="w-full h-full object-cover" />
-                <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded-md bg-light-surface/90 backdrop-blur-xs text-[11px] font-semibold text-brand-indigo">
-                  6 Th Pengalaman
+              <div className="pt-3 mt-3 border-t border-light-outline-variant/60 flex items-center justify-between text-body-sm text-light-on-surface-variant">
+                <span className="flex items-center gap-1 text-[12px] sm:text-label-sm">
+                  <span className="material-symbols-outlined text-accent text-[16px]">star</span> {tutor.rating.toFixed(2)} / 5.0
                 </span>
+                <span className="text-[11px] sm:text-label-sm text-brand-indigo font-medium">{tutor.levelBadge}</span>
               </div>
-              <h3 className="font-headline text-title-md sm:text-title-lg text-light-on-surface font-semibold">Siti Rahma, M.Pd.</h3>
-              <p className="text-[12px] sm:text-label-sm text-light-primary font-label font-medium mt-0.5">Tutor Sains &amp; Kimia • ITB</p>
-              <p className="text-body-sm text-light-on-surface-variant mt-2 leading-relaxed">
-                Menyederhanakan konsep reaksi sains ke analogi dunia nyata yang seru.
-              </p>
             </div>
-            <div className="pt-3 mt-3 border-t border-light-outline-variant/60 flex items-center justify-between text-body-sm text-light-on-surface-variant">
-              <span className="flex items-center gap-1 text-[12px] sm:text-label-sm">
-                <span className="material-symbols-outlined text-accent text-[16px]">star</span> 4.92 / 5.0
-              </span>
-              <span className="text-[11px] sm:text-label-sm text-brand-indigo font-medium">SMP &amp; SMA</span>
-            </div>
-          </div>
-
-          {/* Tutor 3: Amanda Putri (AI Photo) */}
-          <div className="w-64 sm:w-72 lg:w-auto shrink-0 snap-start bg-light-surface border border-light-outline-variant rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
-            <div>
-              <div className="relative rounded-xl overflow-hidden mb-4 bg-light-surface-container aspect-square">
-                <img src="assets/images/tutor-amanda.jpg" 
-                     data-ai-title="Amanda Putri, S.Si." data-ai-subtitle="Tutor Fisika &amp; Skolastik • UGM"
-                     alt="Foto Amanda Putri, S.Si." 
-                     className="w-full h-full object-cover" />
-                <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded-md bg-light-surface/90 backdrop-blur-xs text-[11px] font-semibold text-brand-indigo">
-                  5 Th Pengalaman
-                </span>
-              </div>
-              <h3 className="font-headline text-title-md sm:text-title-lg text-light-on-surface font-semibold">Amanda Putri, S.Si.</h3>
-              <p className="text-[12px] sm:text-label-sm text-light-primary font-label font-medium mt-0.5">Fisika &amp; Skolastik • UGM</p>
-              <p className="text-body-sm text-light-on-surface-variant mt-2 leading-relaxed">
-                Pendekatan interaktif dengan visualisasi grafis untuk pemecahan masalah.
-              </p>
-            </div>
-            <div className="pt-3 mt-3 border-t border-light-outline-variant/60 flex items-center justify-between text-body-sm text-light-on-surface-variant">
-              <span className="flex items-center gap-1 text-[12px] sm:text-label-sm">
-                <span className="material-symbols-outlined text-accent text-[16px]">star</span> 4.97 / 5.0
-              </span>
-              <span className="text-[11px] sm:text-label-sm text-brand-indigo font-medium">UTBK &amp; OSN</span>
-            </div>
-          </div>
-
-          {/* Tutor 4: Dimas Arya (AI Photo) */}
-          <div className="w-64 sm:w-72 lg:w-auto shrink-0 snap-start bg-light-surface border border-light-outline-variant rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
-            <div>
-              <div className="relative rounded-xl overflow-hidden mb-4 bg-light-surface-container aspect-square">
-                <img src="assets/images/tutor-dimas.jpg" 
-                     data-ai-title="Dimas Arya, S.Pd." data-ai-subtitle="Tutor Literasi &amp; B. Inggris • UNJ"
-                     alt="Foto Dimas Arya, S.Pd." 
-                     className="w-full h-full object-cover" />
-                <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded-md bg-light-surface/90 backdrop-blur-xs text-[11px] font-semibold text-brand-indigo">
-                  6 Th Pengalaman
-                </span>
-              </div>
-              <h3 className="font-headline text-title-md sm:text-title-lg text-light-on-surface font-semibold">Dimas Arya, S.Pd.</h3>
-              <p className="text-[12px] sm:text-label-sm text-light-primary font-label font-medium mt-0.5">Literasi &amp; B. Inggris • UNJ</p>
-              <p className="text-body-sm text-light-on-surface-variant mt-2 leading-relaxed">
-                Metode membaca kritis cepat dan bedah struktur teks ujian literasi.
-              </p>
-            </div>
-            <div className="pt-3 mt-3 border-t border-light-outline-variant/60 flex items-center justify-between text-body-sm text-light-on-surface-variant">
-              <span className="flex items-center gap-1 text-[12px] sm:text-label-sm">
-                <span className="material-symbols-outlined text-accent text-[16px]">star</span> 4.90 / 5.0
-              </span>
-              <span className="text-[11px] sm:text-label-sm text-brand-indigo font-medium">SD &amp; SMP</span>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
@@ -1053,95 +993,60 @@ export default function HomePage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8">
-        {/* Testimoni 1: Ibu Ratna */}
-        <div className="bg-light-surface border border-light-outline-variant rounded-2xl p-5 sm:p-7 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between">
-          <div>
-            <div className="flex items-center gap-1 text-accent mb-3 sm:mb-4">
-              <span className="material-symbols-outlined text-[18px]">star</span>
-              <span className="material-symbols-outlined text-[18px]">star</span>
-              <span className="material-symbols-outlined text-[18px]">star</span>
-              <span className="material-symbols-outlined text-[18px]">star</span>
-              <span className="material-symbols-outlined text-[18px]">star</span>
+        {testimonials.slice(0, 3).map((testi, idx) => {
+          const isFeatured = !!testi.achievementBadge || idx === 1;
+          return (
+            <div
+              key={testi.id}
+              className={`bg-light-surface rounded-2xl p-5 sm:p-7 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between relative ${
+                isFeatured
+                  ? "border-2 border-brand-indigo/30 bg-gradient-to-b from-white to-light-surface-soft shadow-sm"
+                  : "border border-light-outline-variant"
+              }`}
+            >
+              {testi.achievementBadge && (
+                <div className="absolute -top-3.5 right-4 sm:right-6 bg-brand-indigo text-white text-[10.5px] font-label px-3 py-1 rounded-full font-semibold shadow-xs flex items-center gap-1">
+                  <span className="material-symbols-outlined text-[14px]">school</span>
+                  <span>{testi.achievementBadge}</span>
+                </div>
+              )}
+              <div>
+                <div className="flex items-center gap-1 text-accent mb-3 sm:mb-4">
+                  {[...Array(testi.rating || 5)].map((_, i) => (
+                    <span key={i} className="material-symbols-outlined text-[18px]">star</span>
+                  ))}
+                </div>
+                <p className="text-body-sm sm:text-body-md text-light-on-surface leading-relaxed italic">
+                  "{testi.quote}"
+                </p>
+              </div>
+              <div className="pt-4 mt-5 border-t border-light-outline-variant flex items-center gap-3">
+                <div className={`w-11 h-11 rounded-full overflow-hidden shrink-0 border shadow-xs ${isFeatured ? "border-brand-indigo/30" : "border-light-outline-variant"}`}>
+                  <img
+                    src={testi.photoUrl}
+                    data-ai-title={testi.name}
+                    data-ai-subtitle={testi.role}
+                    alt={`Foto ${testi.name}`}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div>
+                  <p className="font-headline font-semibold text-title-md text-light-on-surface">{testi.name}</p>
+                  <p className="text-[12px] text-light-on-surface-variant flex items-center gap-1">
+                    {testi.achievementBadge ? (
+                      <span className="text-success font-semibold flex items-center gap-1">
+                        <span className="material-symbols-outlined text-[15px]">verified</span>
+                        {testi.achievementBadge}
+                      </span>
+                    ) : (
+                      testi.role
+                    )}
+                  </p>
+                </div>
+              </div>
             </div>
-            <p className="text-body-sm sm:text-body-md text-light-on-surface leading-relaxed italic">
-              "Sebelumnya anak saya sering stres kalau ada PR matematika. Sejak ikut kelas reguler ARCI, nilainya melonjak dari 65 ke 92. Tutornya sangat sabar dan laporannya transparan sekali."
-            </p>
-          </div>
-          <div className="pt-4 mt-5 border-t border-light-outline-variant flex items-center gap-3">
-            <div className="w-11 h-11 rounded-full overflow-hidden shrink-0 border border-light-outline-variant shadow-xs">
-              <img src="assets/images/parent-ratna.jpg" 
-                   data-ai-title="Ibu Ratna Dewi" data-ai-subtitle="Orang Tua Siswa SMP"
-                   alt="Foto Ibu Ratna Dewi" 
-                   className="w-full h-full object-cover" />
-            </div>
-            <div>
-              <p className="font-headline font-semibold text-title-md text-light-on-surface">Ibu Ratna Dewi</p>
-              <p className="text-[12px] text-light-on-surface-variant">Orang Tua Siswa Kelas 8 — SMP Labschool</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Testimoni 2: Ahmad Fauzan (AI Photo of High Achiever Student) */}
-        <div className="bg-light-surface border-2 border-brand-indigo/30 rounded-2xl p-5 sm:p-7 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between relative bg-gradient-to-b from-white to-light-surface-soft">
-          <div className="absolute -top-3.5 right-4 sm:right-6 bg-brand-indigo text-white text-[10.5px] font-label px-3 py-1 rounded-full font-semibold shadow-xs flex items-center gap-1">
-            <span className="material-symbols-outlined text-[14px]">school</span>
-            <span>Lolos PTN 2026</span>
-          </div>
-          <div>
-            <div className="flex items-center gap-1 text-accent mb-3 sm:mb-4">
-              <span className="material-symbols-outlined text-[18px]">star</span>
-              <span className="material-symbols-outlined text-[18px]">star</span>
-              <span className="material-symbols-outlined text-[18px]">star</span>
-              <span className="material-symbols-outlined text-[18px]">star</span>
-              <span className="material-symbols-outlined text-[18px]">star</span>
-            </div>
-            <p className="text-body-sm sm:text-body-md text-light-on-surface leading-relaxed italic">
-              "Drilling soal TPS dan pembahasan IRT di program UTBK ARCI bener-bener mirip dengan tipe soal aslinya. Konseling pemetaan jurusannya juga akurat banget sampai saya lolos ke FTTM ITB!"
-            </p>
-          </div>
-          <div className="pt-4 mt-5 border-t border-light-outline-variant flex items-center gap-3">
-            <div className="w-11 h-11 rounded-full overflow-hidden shrink-0 border border-brand-indigo/30 shadow-xs">
-              <img src="assets/images/student-success.jpg" 
-                   data-ai-title="Ahmad Fauzan" data-ai-subtitle="Lolos FTTM ITB"
-                   alt="Foto Ahmad Fauzan" 
-                   className="w-full h-full object-cover" />
-            </div>
-            <div>
-              <p className="font-headline font-semibold text-title-md text-light-on-surface">Ahmad Fauzan</p>
-              <p className="text-[12px] text-success font-semibold flex items-center gap-1">
-                <span className="material-symbols-outlined text-[15px]">verified</span> Lolos SNBT FTTM ITB 2026
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Testimoni 3: drg. Haryanto */}
-        <div className="bg-light-surface border border-light-outline-variant rounded-2xl p-5 sm:p-7 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between">
-          <div>
-            <div className="flex items-center gap-1 text-accent mb-3 sm:mb-4">
-              <span className="material-symbols-outlined text-[18px]">star</span>
-              <span className="material-symbols-outlined text-[18px]">star</span>
-              <span className="material-symbols-outlined text-[18px]">star</span>
-              <span className="material-symbols-outlined text-[18px]">star</span>
-              <span className="material-symbols-outlined text-[18px]">star</span>
-            </div>
-            <p className="text-body-sm sm:text-body-md text-light-on-surface leading-relaxed italic">
-              "Format kelas maksimal 8 orang sangat efektif. Anak saya yang biasanya pendiam di sekolah jadi aktif bertanya. Ruang belajarnya juga nyaman, bersih, dan ber-AC dingin."
-            </p>
-          </div>
-          <div className="pt-4 mt-5 border-t border-light-outline-variant flex items-center gap-3">
-            <div className="w-11 h-11 rounded-full overflow-hidden shrink-0 border border-light-outline-variant shadow-xs">
-              <img src="assets/images/parent-haryanto.jpg" 
-                   data-ai-title="drg. Haryanto W." data-ai-subtitle="Orang Tua Siswa SD"
-                   alt="Foto drg. Haryanto W." 
-                   className="w-full h-full object-cover" />
-            </div>
-            <div>
-              <p className="font-headline font-semibold text-title-md text-light-on-surface">drg. Haryanto W.</p>
-              <p className="text-[12px] text-light-on-surface-variant">Orang Tua Siswa Kelas 5 SD Mentari</p>
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
 
       {/* Highlight Banner */}

@@ -192,6 +192,122 @@ export const INITIAL_CMS_BANNERS: CmsBannerItem[] = [
   },
 ];
 
+export interface PublicTutorItem {
+  id: string;
+  name: string;
+  subject: string;
+  university: string;
+  experienceYears: number;
+  rating: number;
+  description: string;
+  photoUrl: string;
+  levelBadge: string;
+}
+
+export interface PublicTestimonialItem {
+  id: string;
+  name: string;
+  role: string;
+  program: string;
+  quote: string;
+  rating: number;
+  avatarText: string;
+  photoUrl: string;
+  achievementBadge?: string;
+}
+
+export const INITIAL_PUBLIC_TUTORS: PublicTutorItem[] = [
+  {
+    id: "tut-budi",
+    name: "Budi Pratama, S.Si.",
+    subject: "Tutor Matematika",
+    university: "Universitas Indonesia",
+    experienceYears: 7,
+    rating: 4.95,
+    description: "Pakar trik penalaran analitis dan aljabar tanpa rumus yang rumit.",
+    photoUrl: "assets/images/tutor-budi.jpg",
+    levelBadge: "SMA/UTBK",
+  },
+  {
+    id: "tut-siti",
+    name: "Siti Rahma, S.Si.",
+    subject: "Tutor Sains & Kimia",
+    university: "Institut Teknologi Bandung",
+    experienceYears: 6,
+    rating: 4.92,
+    description: "Menyederhanakan konsep reaksi sains ke analogi dunia nyata yang seru.",
+    photoUrl: "assets/images/tutor-siti.jpg",
+    levelBadge: "SMP & SMA",
+  },
+  {
+    id: "tut-amanda",
+    name: "Amanda Putri, S.Si.",
+    subject: "Fisika & Skolastik",
+    university: "Universitas Gadjah Mada",
+    experienceYears: 5,
+    rating: 4.97,
+    description: "Pendekatan interaktif dengan visualisasi grafis untuk pemecahan masalah.",
+    photoUrl: "assets/images/tutor-amanda.jpg",
+    levelBadge: "UTBK & OSN",
+  },
+  {
+    id: "tut-dimas",
+    name: "Dimas Arya, S.Si.",
+    subject: "Literasi & Fisika",
+    university: "Universitas Negeri Jakarta",
+    experienceYears: 6,
+    rating: 4.90,
+    description: "Metode membaca kritis cepat dan bedah struktur teks ujian literasi.",
+    photoUrl: "assets/images/tutor-dimas.jpg",
+    levelBadge: "SD & SMP",
+  },
+];
+
+export const INITIAL_PUBLIC_TESTIMONIALS: PublicTestimonialItem[] = [
+  {
+    id: "testi-1",
+    name: "Ibu Ratna Dewi",
+    role: "Orang Tua Siswa Kelas 8 — SMP Labschool",
+    program: "Bimbel Reguler SMP",
+    quote: "Sebelumnya anak saya sering stres kalau ada PR matematika. Sejak ikut kelas reguler ARCI, nilainya melonjak dari 65 ke 92. Tutornya sangat sabar dan laporannya transparan sekali.",
+    rating: 5,
+    avatarText: "RD",
+    photoUrl: "assets/images/parent-ratna.jpg",
+  },
+  {
+    id: "testi-2",
+    name: "Ahmad Fauzan",
+    role: "Alumni SMA Labschool Kebayoran",
+    program: "Intensif UTBK-SNBT",
+    quote: "Drilling soal TPS dan pembahasan IRT di program UTBK ARCI bener-bener mirip dengan tipe soal aslinya. Konseling pemetaan jurusannya juga akurat banget sampai saya lolos ke FTTM ITB!",
+    rating: 5,
+    avatarText: "AF",
+    photoUrl: "assets/images/student-success.jpg",
+    achievementBadge: "Lolos SNBT FTTM ITB 2026",
+  },
+  {
+    id: "testi-3",
+    name: "drg. Haryanto W.",
+    role: "Orang Tua Siswa Kelas 5 SD Mentari",
+    program: "Bimbel Reguler SD",
+    quote: "Format kelas maksimal 8 orang sangat efektif. Anak saya yang biasanya pendiam di sekolah jadi aktif bertanya. Ruang belajarnya juga nyaman, bersih, dan ber-AC dingin.",
+    rating: 5,
+    avatarText: "HW",
+    photoUrl: "assets/images/parent-haryanto.jpg",
+  },
+  {
+    id: "testi-4",
+    name: "Ratna Kusuma Dewi",
+    role: "Alumni SMAN 28 Jakarta",
+    program: "Intensif Supercamp UTBK",
+    quote: "Sistem drill IRT dan klinik konsultasi PR di ARCI benar-benar menyelamatkan skor TPS saya dari 580 ke 745. Tutor sangat sabar dan menguasai konsep sampai ke akarnya!",
+    rating: 5,
+    avatarText: "RK",
+    photoUrl: "assets/images/student-success.jpg",
+    achievementBadge: "Lolos Kedokteran UI 2025",
+  },
+];
+
 export const INITIAL_CMS_FAQS: CmsFaqItem[] = [
   {
     id: "FAQ-01",
@@ -222,3 +338,4 @@ export const INITIAL_CMS_FAQS: CmsFaqItem[] = [
     order: 4,
   },
 ];
+
