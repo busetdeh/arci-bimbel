@@ -110,6 +110,13 @@ export const DASHBOARD_NAV_ITEMS: DashboardNavItem[] = [
     description: "Pencatatan absensi & rekap kehadiran",
   },
   {
+    href: "/dashboard/materials",
+    label: "Materi & Tugas",
+    icon: "folder_open",
+    allowedRoles: ["super_admin", "admin_akademik", "tutor"],
+    description: "Modul digital, bank soal, dan tugas siswa",
+  },
+  {
     href: "/dashboard/finance",
     label: "Tagihan & Kas",
     icon: "payments",
