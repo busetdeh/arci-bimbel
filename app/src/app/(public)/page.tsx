@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { submitConsultationAction } from "@/app/actions/leads";
+import { getRegistrationOptions, ProgramOption } from "@/app/actions/registration";
 
 declare global {
   interface Window {
@@ -10,6 +11,54 @@ declare global {
 }
 
 export default function HomePage() {
+  const [dbPrograms, setDbPrograms] = useState<ProgramOption[]>([
+    {
+      id: "7ee12822-e466-422f-9ae7-cc59db1c8faf",
+      code: "UTBK-2026",
+      name: "Intensif UTBK-SNBT 2026",
+      level: "UTBK",
+      description: "Spesialisasi Tes Potensi Skolastik (TPS), Literasi Bahasa, dan Penalaran Matematika dengan sistem IRT nasional.",
+      price_monthly: 1450000,
+      is_featured: true,
+    },
+    {
+      id: "2b4377bf-7aae-44e8-8b6d-a5c1541764cd",
+      code: "SMP-REG",
+      name: "Bimbel Reguler SMP (Kelas 7–9)",
+      level: "SMP",
+      description: "Persiapan matang ulangan harian, Asesmen Nasional (ANBK), dan seleksi masuk SMA unggulan favorit.",
+      price_monthly: 750000,
+      is_featured: false,
+    },
+    {
+      id: "bc103b7e-1865-46c1-9b5b-2614e377899b",
+      code: "SMA-REG",
+      name: "Bimbel Reguler SMA (Kelas 10–12)",
+      level: "SMA",
+      description: "Pemantapan konsep dasar IPA/IPS, persiapan ujian semester, dan portofolio rapor SNBP.",
+      price_monthly: 950000,
+      is_featured: false,
+    },
+    {
+      id: "c6e0ac0d-1785-461f-a28b-43c2cc7db3f4",
+      code: "SD-REG",
+      name: "Bimbel Reguler SD (Kelas 4–6)",
+      level: "SD",
+      description: "Fondasi Matematika, IPA, dan Bahasa Indonesia yang kuat dengan pendekatan visual aplikatif dan menyenangkan.",
+      price_monthly: 550000,
+      is_featured: false,
+    },
+  ]);
+  const [activeCategory, setActiveCategory] = useState<"all" | "sd" | "smp" | "sma">("all");
+
+  useEffect(() => {
+    getRegistrationOptions().then((res) => {
+      if (res.programs && res.programs.length > 0) {
+        setDbPrograms(res.programs);
+      }
+    });
+  }, []);
+
   useEffect(() => {
     // 0. AI Image Rework Fallback Generator
     window.reworkMissingImageAI = function(img: HTMLImageElement, options: { title?: string; subtitle?: string; width?: number; height?: number } = {}) {
@@ -77,29 +126,7 @@ export default function HomePage() {
       document.addEventListener("click", closeOnClickOutside);
     }
 
-    // 2. Program Belajar Category Filtering
-    const tabs = document.querySelectorAll(".program-tab");
-    const cards = document.querySelectorAll(".program-card");
-    tabs.forEach((tab) => {
-      tab.addEventListener("click", () => {
-        tabs.forEach((t) => {
-          t.classList.remove("bg-light-primary", "text-light-on-primary", "active");
-          t.classList.add("text-light-on-surface-variant");
-        });
-        tab.classList.add("bg-light-primary", "text-light-on-primary", "active");
-        tab.classList.remove("text-light-on-surface-variant");
-
-        const filter = tab.getAttribute("data-filter");
-        cards.forEach((card) => {
-          const c = card as HTMLElement;
-          if (filter === "all" || card.getAttribute("data-category") === filter) {
-            c.style.display = "flex";
-          } else {
-            c.style.display = "none";
-          }
-        });
-      });
-    });
+    // 2. Program Belajar Category Filtering handled via React state (activeCategory)
 
     // 3. FAQ Accordion Interaction
     const faqButtons = document.querySelectorAll(".faq-btn");
@@ -633,198 +660,195 @@ export default function HomePage() {
 
           {/* Filter Tab Buttons (Horizontal Scrollable on Mobile) */}
           <div className="flex items-center gap-1 p-1 rounded-xl bg-light-surface border border-light-outline-variant shadow-xs overflow-x-auto no-scrollbar max-w-full">
-            <button type="button" data-filter="all" className="program-tab active px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-lg bg-light-primary text-light-on-primary text-[12px] sm:text-body-sm font-label whitespace-nowrap transition-colors font-medium">
+            <button
+              type="button"
+              onClick={() => setActiveCategory("all")}
+              className={`px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-lg text-[12px] sm:text-body-sm font-label whitespace-nowrap transition-colors font-medium ${
+                activeCategory === "all"
+                  ? "bg-light-primary text-light-on-primary"
+                  : "text-light-on-surface-variant hover:text-light-on-surface"
+              }`}
+            >
               Semua Jenjang
             </button>
-            <button type="button" data-filter="sd" className="program-tab px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-light-on-surface-variant hover:text-light-on-surface text-[12px] sm:text-body-sm font-label whitespace-nowrap transition-colors font-medium">
+            <button
+              type="button"
+              onClick={() => setActiveCategory("sd")}
+              className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-[12px] sm:text-body-sm font-label whitespace-nowrap transition-colors font-medium ${
+                activeCategory === "sd"
+                  ? "bg-light-primary text-light-on-primary"
+                  : "text-light-on-surface-variant hover:text-light-on-surface"
+              }`}
+            >
               SD
             </button>
-            <button type="button" data-filter="smp" className="program-tab px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-light-on-surface-variant hover:text-light-on-surface text-[12px] sm:text-body-sm font-label whitespace-nowrap transition-colors font-medium">
+            <button
+              type="button"
+              onClick={() => setActiveCategory("smp")}
+              className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-[12px] sm:text-body-sm font-label whitespace-nowrap transition-colors font-medium ${
+                activeCategory === "smp"
+                  ? "bg-light-primary text-light-on-primary"
+                  : "text-light-on-surface-variant hover:text-light-on-surface"
+              }`}
+            >
               SMP
             </button>
-            <button type="button" data-filter="sma" className="program-tab px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-light-on-surface-variant hover:text-light-on-surface text-[12px] sm:text-body-sm font-label whitespace-nowrap transition-colors font-medium">
+            <button
+              type="button"
+              onClick={() => setActiveCategory("sma")}
+              className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-[12px] sm:text-body-sm font-label whitespace-nowrap transition-colors font-medium ${
+                activeCategory === "sma"
+                  ? "bg-light-primary text-light-on-primary"
+                  : "text-light-on-surface-variant hover:text-light-on-surface"
+              }`}
+            >
               SMA &amp; UTBK
             </button>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {/* Card 1: SD */}
-          <article data-category="sd" className="group program-card bg-light-surface border border-light-outline-variant rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
-            <div className="relative h-40 sm:h-44 bg-light-surface-container overflow-hidden">
-              <img src="assets/images/program-sd.jpg" 
-                   data-ai-title="Program Reguler SD Juara" data-ai-subtitle="Matematika, IPA &amp; B. Indonesia"
-                   alt="Program Reguler SD Juara ARCI Bimbel" 
-                   className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" />
-              <span className="absolute top-3 left-3 px-3 py-1 rounded-full text-label-sm font-label bg-light-surface/95 backdrop-blur-xs text-brand-indigo font-bold shadow-xs">
-                SD Kelas 4–6
-              </span>
-            </div>
-            <div className="p-5 sm:p-7 flex flex-col gap-4 flex-1 justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-label-sm font-label text-success flex items-center gap-1.5 font-medium">
-                    <span className="w-2 h-2 rounded-full bg-success"></span> Tersedia 4 Kursi
-                  </span>
-                </div>
-                <h3 className="font-headline text-headline-sm text-light-on-surface font-semibold">Reguler SD Juara</h3>
-                <p className="text-body-sm text-light-on-surface-variant mt-1.5 leading-relaxed">
-                  Fondasi Matematika, IPA, dan Bahasa Indonesia yang kuat dengan pendekatan visual aplikatif dan menyenangkan.
-                </p>
-                <ul className="text-body-sm text-light-on-surface flex flex-col gap-2.5 pt-4 mt-4 border-t border-light-outline-variant">
-                  <li className="flex items-center gap-2.5">
-                    <span className="material-symbols-outlined text-[18px] text-light-primary">check_circle</span>
-                    <span>2 sesi per minggu (90 menit/sesi)</span>
-                  </li>
-                  <li className="flex items-center gap-2.5">
-                    <span className="material-symbols-outlined text-[18px] text-light-primary">check_circle</span>
-                    <span>Modul ringkas bergambar &amp; latihan berkala</span>
-                  </li>
-                  <li className="flex items-center gap-2.5">
-                    <span className="material-symbols-outlined text-[18px] text-light-primary">check_circle</span>
-                    <span>Bantuan PR harian &amp; persiapan ujian semester</span>
-                  </li>
-                  <li className="flex items-center gap-2.5">
-                    <span className="material-symbols-outlined text-[18px] text-light-primary">check_circle</span>
-                    <span>Laporan perkembangan bulanan ke orang tua</span>
-                  </li>
-                </ul>
-              </div>
+          {dbPrograms
+            .filter((prog) => {
+              if (activeCategory === "all") return true;
+              if (activeCategory === "sd") return prog.level === "SD";
+              if (activeCategory === "smp") return prog.level === "SMP";
+              if (activeCategory === "sma") return prog.level === "SMA" || prog.level === "UTBK";
+              return true;
+            })
+            .map((prog) => {
+              const isUtbk = prog.level === "UTBK" || prog.code.includes("UTBK");
+              const isSmp = prog.level === "SMP";
+              const isSd = prog.level === "SD";
 
-              <div className="pt-5 mt-5 border-t border-light-outline-variant flex items-center justify-between">
-                <div>
-                  <span className="text-[11px] sm:text-label-sm text-light-on-surface-variant block leading-tight">Mulai dari</span>
-                  <span className="font-headline font-bold text-title-md sm:text-title-lg text-brand-indigo">
-                    Rp750.000<span className="text-body-sm font-normal text-light-on-surface-variant">/bln</span>
-                  </span>
-                </div>
-                <a href="#konsultasi" className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark text-label-md font-label transition-colors font-medium">
-                  Pilih Program
-                </a>
-              </div>
-            </div>
-          </article>
+              const imgSrc = isSd
+                ? "assets/images/program-sd.jpg"
+                : isSmp
+                ? "assets/images/program-smp.jpg"
+                : "assets/images/program-sma.jpg";
 
-          {/* Card 2: SMP (Featured) */}
-          <article data-category="smp" className="group program-card bg-light-surface border-2 border-light-primary rounded-2xl overflow-hidden shadow-md relative flex flex-col justify-between">
-            <div className="absolute top-3 right-3 z-10 bg-accent text-on-accent text-label-sm font-label px-3 py-0.5 rounded-full shadow-sm font-semibold flex items-center gap-1">
-              <span className="material-symbols-outlined text-[16px]">local_fire_department</span>
-              <span>Paling Diminati</span>
-            </div>
-            <div className="relative h-40 sm:h-44 bg-light-surface-container overflow-hidden">
-              <img src="assets/images/program-smp.jpg" 
-                   data-ai-title="Target Sukses Ujian SMP" data-ai-subtitle="Persiapan Ujian &amp; Asesmen Nasional"
-                   alt="Program Target Sukses Ujian SMP ARCI Bimbel" 
-                   className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" />
-              <span className="absolute top-3 left-3 px-3 py-1 rounded-full text-label-sm font-label bg-light-surface/95 backdrop-blur-xs text-brand-indigo font-bold shadow-xs">
-                SMP Kelas 7–9
-              </span>
-            </div>
-            <div className="p-5 sm:p-7 flex flex-col gap-4 flex-1 justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-label-sm font-label text-success flex items-center gap-1.5 font-medium">
-                    <span className="w-2 h-2 rounded-full bg-success"></span> Sisa 2 Kursi
-                  </span>
-                </div>
-                <h3 className="font-headline text-headline-sm text-light-on-surface font-semibold">Target Sukses Ujian SMP</h3>
-                <p className="text-body-sm text-light-on-surface-variant mt-1.5 leading-relaxed">
-                  Persiapan matang ulangan harian, Asesmen Nasional (ANBK), dan seleksi masuk SMA unggulan favorit.
-                </p>
-                <ul className="text-body-sm text-light-on-surface flex flex-col gap-2.5 pt-4 mt-4 border-t border-light-outline-variant">
-                  <li className="flex items-center gap-2.5">
-                    <span className="material-symbols-outlined text-[18px] text-light-primary">check_circle</span>
-                    <span>3 sesi per minggu (Matematika, IPA, B. Inggris)</span>
-                  </li>
-                  <li className="flex items-center gap-2.5">
-                    <span className="material-symbols-outlined text-[18px] text-light-primary">check_circle</span>
-                    <span>Bank soal variatif HOTS &amp; bedah rumus konsep</span>
-                  </li>
-                  <li className="flex items-center gap-2.5">
-                    <span className="material-symbols-outlined text-[18px] text-light-primary">check_circle</span>
-                    <span>Bimbingan klinik PR &amp; tugas sekolah intensif</span>
-                  </li>
-                  <li className="flex items-center gap-2.5">
-                    <span className="material-symbols-outlined text-[18px] text-light-primary">check_circle</span>
-                    <span>Simulasi tryout berkala berbasis komputer</span>
-                  </li>
-                </ul>
-              </div>
+              const badgeLabel = isSd
+                ? "SD Kelas 4–6"
+                : isSmp
+                ? "SMP Kelas 7–9"
+                : isUtbk
+                ? "SMA / Alumni • UTBK"
+                : "SMA Kelas 10–12";
 
-              <div className="pt-5 mt-5 border-t border-light-outline-variant flex items-center justify-between">
-                <div>
-                  <span className="text-[11px] sm:text-label-sm text-light-on-surface-variant block leading-tight">Mulai dari</span>
-                  <span className="font-headline font-bold text-title-md sm:text-title-lg text-brand-indigo">
-                    Rp950.000<span className="text-body-sm font-normal text-light-on-surface-variant">/bln</span>
-                  </span>
-                </div>
-                <a href="#konsultasi" className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark text-label-md font-label transition-colors font-semibold shadow-xs">
-                  Pilih Program
-                </a>
-              </div>
-            </div>
-          </article>
+              const priceFormatted = `Rp${(Number(prog.price_monthly) || 0).toLocaleString("id-ID")}`;
 
-          {/* Card 3: SMA / UTBK */}
-          <article data-category="sma" className="group program-card bg-light-surface border-2 border-light-primary/40 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
-            <a href="/program/intensif-utbk-2026" className="block relative h-40 sm:h-44 bg-light-surface-container overflow-hidden">
-              <img src="assets/images/program-sma.jpg" 
-                   data-ai-title="Intensif UTBK-SNBT 2026" data-ai-subtitle="Drill Soal TPS &amp; IRT Nasional"
-                   alt="Program Intensif UTBK-SNBT ARCI Bimbel" 
-                   className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" />
-              <span className="absolute top-3 left-3 px-3 py-1 rounded-full text-label-sm font-label bg-light-surface/95 backdrop-blur-xs text-brand-indigo font-bold shadow-xs">
-                SMA / Alumni
-              </span>
-              <span className="absolute top-3 right-3 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-accent text-on-accent shadow-xs">
-                Unggulan
-              </span>
-            </a>
-            <div className="p-5 sm:p-7 flex flex-col gap-4 flex-1 justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-label-sm font-label text-warning flex items-center gap-1.5 font-medium">
-                    <span className="w-2 h-2 rounded-full bg-warning"></span> Hampir Penuh (Sisa 4 Kursi)
-                  </span>
-                </div>
-                <a href="/program/intensif-utbk-2026" className="hover:text-brand-indigo transition-colors block">
-                  <h3 className="font-headline text-headline-sm text-light-on-surface hover:text-brand-indigo font-bold">Intensif UTBK-SNBT 2026</h3>
-                </a>
-                <p className="text-body-sm text-light-on-surface-variant mt-1.5 leading-relaxed">
-                  Spesialisasi Tes Potensi Skolastik (TPS), Literasi Bahasa, dan Penalaran Matematika dengan sistem IRT nasional.
-                </p>
-                <ul className="text-body-sm text-light-on-surface flex flex-col gap-2.5 pt-4 mt-4 border-t border-light-outline-variant">
-                  <li className="flex items-center gap-2.5">
-                    <span className="material-symbols-outlined text-[18px] text-light-primary">check_circle</span>
-                    <span>4 sesi per minggu + Tryout IRT Mingguan</span>
-                  </li>
-                  <li className="flex items-center gap-2.5">
-                    <span className="material-symbols-outlined text-[18px] text-light-primary">check_circle</span>
-                    <span>Konseling pemetaan peluang jurusan &amp; PTN</span>
-                  </li>
-                  <li className="flex items-center gap-2.5">
-                    <span className="material-symbols-outlined text-[18px] text-light-primary">check_circle</span>
-                    <span>Akses rekaman kelas &amp; drill soal digital 24/7</span>
-                  </li>
-                  <li className="flex items-center gap-2.5">
-                    <span className="material-symbols-outlined text-[18px] text-light-primary">check_circle</span>
-                    <span>Mentor pribadi untuk strategi pemilihan kampus</span>
-                  </li>
-                </ul>
-              </div>
+              const features = isUtbk
+                ? [
+                    "4 sesi per minggu + Tryout IRT Mingguan",
+                    "Konseling pemetaan peluang jurusan & PTN",
+                    "Akses rekaman kelas & drill soal digital 24/7",
+                    "Mentor pribadi untuk strategi pemilihan kampus",
+                  ]
+                : isSmp
+                ? [
+                    "3 sesi per minggu (Matematika, IPA, B. Inggris)",
+                    "Bank soal variatif HOTS & bedah rumus konsep",
+                    "Bimbingan klinik PR & tugas sekolah intensif",
+                    "Simulasi tryout berkala berbasis komputer",
+                  ]
+                : isSd
+                ? [
+                    "2 sesi per minggu (90 menit/sesi)",
+                    "Modul ringkas bergambar & latihan berkala",
+                    "Bantuan PR harian & persiapan ujian semester",
+                    "Laporan perkembangan bulanan ke orang tua",
+                  ]
+                : [
+                    "3 sesi per minggu materi kurikulum merdeka",
+                    "Pemantapan konsep dasar saintek & soshum",
+                    "Pendampingan nilai rapor untuk jalur SNBP",
+                    "Konsultasi PR & klinik belajar tatap muka",
+                  ];
 
-              <div className="pt-5 mt-5 border-t border-light-outline-variant flex items-center justify-between">
-                <div>
-                  <span className="text-[11px] sm:text-label-sm text-light-on-surface-variant block leading-tight">Mulai dari</span>
-                  <span className="font-headline font-bold text-title-md sm:text-title-lg text-brand-indigo">
-                    Rp1.450.000<span className="text-body-sm font-normal text-light-on-surface-variant">/bln</span>
-                  </span>
-                </div>
-                <a href="/program/intensif-utbk-2026" className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark text-label-md font-label transition-colors font-medium">
-                  Detail Program
-                </a>
-              </div>
-            </div>
-          </article>
+              return (
+                <article
+                  key={prog.id}
+                  className={`group bg-light-surface rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between ${
+                    isUtbk || prog.is_featured
+                      ? "border-2 border-light-primary shadow-md"
+                      : "border border-light-outline-variant"
+                  }`}
+                >
+                  <div className="relative h-40 sm:h-44 bg-light-surface-container overflow-hidden">
+                    <img
+                      src={imgSrc}
+                      data-ai-title={prog.name}
+                      data-ai-subtitle={`${prog.level} • ARCI Bimbel`}
+                      alt={prog.name}
+                      className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+                    />
+                    <span className="absolute top-3 left-3 px-3 py-1 rounded-full text-label-sm font-label bg-light-surface/95 backdrop-blur-xs text-brand-indigo font-bold shadow-xs">
+                      {badgeLabel}
+                    </span>
+                    {(prog.is_featured || isUtbk) && (
+                      <span className="absolute top-3 right-3 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-accent text-on-accent shadow-xs flex items-center gap-1">
+                        <span className="material-symbols-outlined text-[14px]">local_fire_department</span>
+                        <span>Unggulan</span>
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="p-5 sm:p-7 flex flex-col gap-4 flex-1 justify-between">
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-label-sm font-label text-success flex items-center gap-1.5 font-medium">
+                          <span className="w-2 h-2 rounded-full bg-success"></span> Tersedia Kuota Kelas
+                        </span>
+                      </div>
+                      <h3 className="font-headline text-headline-sm text-light-on-surface font-semibold">
+                        {prog.name}
+                      </h3>
+                      <p className="text-body-sm text-light-on-surface-variant mt-1.5 leading-relaxed">
+                        {prog.description || "Program bimbingan intensif dengan kurikulum terstruktur dan tutor berpengalaman."}
+                      </p>
+                      <ul className="text-body-sm text-light-on-surface flex flex-col gap-2.5 pt-4 mt-4 border-t border-light-outline-variant">
+                        {features.map((feat, idx) => (
+                          <li key={idx} className="flex items-center gap-2.5">
+                            <span className="material-symbols-outlined text-[18px] text-light-primary">
+                              check_circle
+                            </span>
+                            <span>{feat}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="pt-5 mt-5 border-t border-light-outline-variant flex items-center justify-between gap-2">
+                      <div>
+                        <span className="text-[11px] sm:text-label-sm text-light-on-surface-variant block leading-tight">
+                          Mulai dari
+                        </span>
+                        <span className="font-headline font-bold text-title-md sm:text-title-lg text-brand-indigo">
+                          {priceFormatted}
+                          <span className="text-body-sm font-normal text-light-on-surface-variant">/bln</span>
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {isUtbk && (
+                          <a
+                            href="/program/intensif-utbk-2026"
+                            className="px-3 py-2 rounded-lg border border-light-outline text-brand-indigo hover:bg-light-surface-container text-label-sm font-label transition-colors font-semibold"
+                          >
+                            Detail
+                          </a>
+                        )}
+                        <a
+                          href={`/pendaftaran?program=${encodeURIComponent(prog.code)}`}
+                          className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg bg-light-primary text-light-on-primary hover:bg-brand-indigo-dark text-label-md font-label transition-colors font-semibold shadow-xs"
+                        >
+                          Pilih Program
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
         </div>
       </div>
     </section>
