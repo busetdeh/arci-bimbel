@@ -3,12 +3,19 @@
 import React, { useEffect, useState } from "react";
 import { submitConsultationAction } from "@/app/actions/leads";
 import { getRegistrationOptions, ProgramOption } from "@/app/actions/registration";
-import { getPublicTutorsAndTestimonialsAction } from "@/app/actions/cms";
+import {
+  getPublicTutorsAndTestimonialsAction,
+  getPublicBranchesAndFacilitiesAction,
+} from "@/app/actions/cms";
 import {
   PublicTutorItem,
   PublicTestimonialItem,
   INITIAL_PUBLIC_TUTORS,
   INITIAL_PUBLIC_TESTIMONIALS,
+  PublicBranchItem,
+  PublicFacilityItem,
+  INITIAL_PUBLIC_BRANCHES,
+  INITIAL_PUBLIC_FACILITIES,
 } from "@/lib/cms-constants";
 
 declare global {
@@ -59,6 +66,8 @@ export default function HomePage() {
   const [activeCategory, setActiveCategory] = useState<"all" | "sd" | "smp" | "sma">("all");
   const [tutors, setTutors] = useState<PublicTutorItem[]>(INITIAL_PUBLIC_TUTORS);
   const [testimonials, setTestimonials] = useState<PublicTestimonialItem[]>(INITIAL_PUBLIC_TESTIMONIALS);
+  const [branches, setBranches] = useState<PublicBranchItem[]>(INITIAL_PUBLIC_BRANCHES);
+  const [facilities, setFacilities] = useState<PublicFacilityItem[]>(INITIAL_PUBLIC_FACILITIES);
 
   useEffect(() => {
     getRegistrationOptions().then((res) => {
@@ -71,6 +80,13 @@ export default function HomePage() {
       if (res.success) {
         if (res.tutors && res.tutors.length > 0) setTutors(res.tutors);
         if (res.testimonials && res.testimonials.length > 0) setTestimonials(res.testimonials);
+      }
+    });
+
+    getPublicBranchesAndFacilitiesAction().then((res) => {
+      if (res.success) {
+        if (res.branches && res.branches.length > 0) setBranches(res.branches);
+        if (res.facilities && res.facilities.length > 0) setFacilities(res.facilities);
       }
     });
   }, []);
@@ -1081,155 +1097,76 @@ export default function HomePage() {
           </p>
         </div>
 
-        {/* 3 Location Cards */}
+        {/* Dynamic Branch Location Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-14">
-          {/* Cabang 1: Kebayoran Baru (With AI Interior Image) */}
-          <div className="bg-light-surface border border-light-outline-variant rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between">
-            <div className="relative h-40 sm:h-44 bg-light-surface-container overflow-hidden">
-              <img src="assets/images/branch-kebayoran.jpg" 
-                   data-ai-title="Cabang Kebayoran Baru" data-ai-subtitle="Ruang Belajar Modern Ber-AC"
-                   alt="Interior Kelas Cabang Kebayoran Baru ARCI Bimbel" 
-                   className="w-full h-full object-cover" />
-              <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-light-surface/90 backdrop-blur-xs text-[11px] font-bold text-brand-indigo uppercase tracking-wider">
-                Cabang Pusat
-              </span>
-            </div>
-            <div className="p-5 sm:p-6">
-              <h3 className="font-headline text-title-md sm:text-title-lg text-light-on-surface font-semibold mb-2">Kebayoran Baru, Jakarta Selatan</h3>
-              <p className="text-body-sm text-light-on-surface-variant leading-relaxed mb-4">
-                Jl. Pendidikan No. 42, Kebayoran Baru, Jakarta Selatan 12130 (Dekat Stasiun MRT Blok M).
-              </p>
-              <div className="space-y-1.5 text-body-sm text-light-on-surface">
-                <p className="flex items-center gap-2 text-light-on-surface-variant">
-                  <span className="material-symbols-outlined text-[18px] text-light-primary">schedule</span> Senin – Sabtu: 08.00 – 19.30 WIB
+          {branches.map((branch) => (
+            <div
+              key={branch.id}
+              className="bg-light-surface border border-light-outline-variant rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
+            >
+              <div className="relative h-40 sm:h-44 bg-light-surface-container overflow-hidden">
+                <img
+                  src={branch.photoUrl}
+                  data-ai-title={branch.name}
+                  data-ai-subtitle={branch.city}
+                  alt={`Interior ${branch.name}`}
+                  className="w-full h-full object-cover"
+                />
+                <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-light-surface/90 backdrop-blur-xs text-[11px] font-bold text-brand-indigo uppercase tracking-wider">
+                  {branch.badgeText}
+                </span>
+              </div>
+              <div className="p-5 sm:p-6">
+                <h3 className="font-headline text-title-md sm:text-title-lg text-light-on-surface font-semibold mb-2">
+                  {branch.name}
+                </h3>
+                <p className="text-body-sm text-light-on-surface-variant leading-relaxed mb-4">
+                  {branch.address}
                 </p>
-                <p className="flex items-center gap-2 text-light-on-surface-variant">
-                  <span className="material-symbols-outlined text-[18px] text-light-primary">call</span> (021) 720-4567 / 0812-3456-7890
-                </p>
+                <div className="space-y-1.5 text-body-sm text-light-on-surface">
+                  <p className="flex items-center gap-2 text-light-on-surface-variant">
+                    <span className="material-symbols-outlined text-[18px] text-light-primary">schedule</span>
+                    {branch.scheduleText}
+                  </p>
+                  <p className="flex items-center gap-2 text-light-on-surface-variant">
+                    <span className="material-symbols-outlined text-[18px] text-light-primary">
+                      {branch.isOnline ? "public" : "call"}
+                    </span>
+                    {branch.phone}
+                  </p>
+                </div>
+              </div>
+              <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-2 border-t border-light-outline-variant/60 flex items-center justify-between">
+                <span className="text-[12px] sm:text-label-sm text-success font-semibold flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-success"></span>
+                  {branch.isOnline ? "Pendaftaran Aktif" : "Kelas Offline Buka"}
+                </span>
+                <a href="#konsultasi" className="text-body-sm font-label text-light-primary hover:underline font-semibold">
+                  Lihat Jadwal →
+                </a>
               </div>
             </div>
-            <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-2 border-t border-light-outline-variant/60 flex items-center justify-between">
-              <span className="text-[12px] sm:text-label-sm text-success font-semibold flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-success"></span> Kelas Offline Buka
-              </span>
-              <a href="#konsultasi" className="text-body-sm font-label text-light-primary hover:underline font-semibold">
-                Lihat Jadwal →
-              </a>
-            </div>
-          </div>
-
-          {/* Cabang 2: Rawamangun (With AI Image) */}
-          <div className="bg-light-surface border border-light-outline-variant rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between">
-            <div className="relative h-40 sm:h-44 bg-light-surface-container overflow-hidden">
-              <img src="assets/images/branch-rawamangun.jpg" 
-                   data-ai-title="Cabang Rawamangun" data-ai-subtitle="Smartboard &amp; Ruang Belajar Nyaman"
-                   alt="Interior Kelas Cabang Rawamangun ARCI Bimbel" 
-                   className="w-full h-full object-cover" />
-              <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-light-surface/90 backdrop-blur-xs text-[11px] font-bold text-brand-indigo uppercase tracking-wider">
-                Cabang Timur
-              </span>
-            </div>
-            <div className="p-5 sm:p-6">
-              <h3 className="font-headline text-title-md sm:text-title-lg text-light-on-surface font-semibold mb-2">Rawamangun, Jakarta Timur</h3>
-              <p className="text-body-sm text-light-on-surface-variant leading-relaxed mb-4">
-                Jl. Paus No. 18, Rawamangun, Pulo Gadung, Jakarta Timur 13220 (Dekat Halte TransJakarta UNJ).
-              </p>
-              <div className="space-y-1.5 text-body-sm text-light-on-surface">
-                <p className="flex items-center gap-2 text-light-on-surface-variant">
-                  <span className="material-symbols-outlined text-[18px] text-light-primary">schedule</span> Senin – Sabtu: 08.00 – 19.30 WIB
-                </p>
-                <p className="flex items-center gap-2 text-light-on-surface-variant">
-                  <span className="material-symbols-outlined text-[18px] text-light-primary">call</span> (021) 478-8901 / 0812-9876-5432
-                </p>
-              </div>
-            </div>
-            <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-2 border-t border-light-outline-variant/60 flex items-center justify-between">
-              <span className="text-[12px] sm:text-label-sm text-success font-semibold flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-success"></span> Kelas Offline Buka
-              </span>
-              <a href="#konsultasi" className="text-body-sm font-label text-light-primary hover:underline font-semibold">
-                Lihat Jadwal →
-              </a>
-            </div>
-          </div>
-
-          {/* Cabang 3: Online Interaktif (With AI Image) */}
-          <div className="bg-light-surface border border-light-outline-variant rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between">
-            <div className="relative h-40 sm:h-44 bg-light-surface-container overflow-hidden">
-              <img src="assets/images/class-online.jpg" 
-                   data-ai-title="Live Interactive Virtual Class" data-ai-subtitle="Jangkauan Seluruh Indonesia"
-                   alt="Kelas Online Interaktif ARCI Bimbel" 
-                   className="w-full h-full object-cover" />
-              <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-light-surface/90 backdrop-blur-xs text-[11px] font-bold text-brand-indigo uppercase tracking-wider">
-                Kelas Online Nasional
-              </span>
-            </div>
-            <div className="p-5 sm:p-6">
-              <h3 className="font-headline text-title-md sm:text-title-lg text-light-on-surface font-semibold mb-2">Live Interactive Virtual Class</h3>
-              <p className="text-body-sm text-light-on-surface-variant leading-relaxed mb-4">
-                Kelas Zoom/Google Meet premium dengan fitur interaktif, rekaman per sesi HD, dan pengiriman modul fisik langsung ke rumah.
-              </p>
-              <div className="space-y-1.5 text-body-sm text-light-on-surface">
-                <p className="flex items-center gap-2 text-light-on-surface-variant">
-                  <span className="material-symbols-outlined text-[18px] text-light-primary">schedule</span> Jadwal Fleksibel (Sore &amp; Malam)
-                </p>
-                <p className="flex items-center gap-2 text-light-on-surface-variant">
-                  <span className="material-symbols-outlined text-[18px] text-light-primary">public</span> Menjangkau Seluruh Wilayah Indonesia
-                </p>
-              </div>
-            </div>
-            <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-2 border-t border-light-outline-variant/60 flex items-center justify-between">
-              <span className="text-[12px] sm:text-label-sm text-success font-semibold flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-success"></span> Pendaftaran Aktif
-              </span>
-              <a href="#konsultasi" className="text-body-sm font-label text-light-primary hover:underline font-semibold">
-                Lihat Jadwal →
-              </a>
-            </div>
-          </div>
+          ))}
         </div>
 
-        {/* 5 Key Facilities Feature Bar */}
+        {/* Dynamic Key Facilities Feature Bar */}
         <div className="bg-light-surface rounded-2xl p-5 sm:p-8 border border-light-outline-variant shadow-xs">
           <h4 className="font-headline font-semibold text-title-md sm:text-title-lg text-light-on-surface mb-5 text-center">
             Fasilitas Standar di Setiap Cabang ARCI
           </h4>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-6 text-center">
-            <div className="flex flex-col items-center">
-              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-light-primary-container text-light-primary flex items-center justify-center mb-2">
-                <span className="material-symbols-outlined text-[24px]">ac_unit</span>
+            {facilities.map((fac, idx) => (
+              <div
+                key={fac.id}
+                className={`flex flex-col items-center ${idx === 4 ? "col-span-2 sm:col-span-1" : ""}`}
+              >
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-light-primary-container text-light-primary flex items-center justify-center mb-2">
+                  <span className="material-symbols-outlined text-[24px]">{fac.icon}</span>
+                </div>
+                <p className="text-body-sm font-semibold text-light-on-surface">{fac.name}</p>
+                <p className="text-[11px] text-light-on-surface-variant">{fac.description}</p>
               </div>
-              <p className="text-body-sm font-semibold text-light-on-surface">Ruang Ber-AC Sejuk</p>
-              <p className="text-[11px] text-light-on-surface-variant">Kondusif &amp; higienis</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-light-primary-container text-light-primary flex items-center justify-center mb-2">
-                <span className="material-symbols-outlined text-[24px]">tv</span>
-              </div>
-              <p className="text-body-sm font-semibold text-light-on-surface">Smart TV &amp; Proyektor</p>
-              <p className="text-[11px] text-light-on-surface-variant">Visual materi interaktif</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-light-primary-container text-light-primary flex items-center justify-center mb-2">
-                <span className="material-symbols-outlined text-[24px]">wifi</span>
-              </div>
-              <p className="text-body-sm font-semibold text-light-on-surface">Wi-Fi Cepat 100 Mbps</p>
-              <p className="text-[11px] text-light-on-surface-variant">Drill soal digital lancar</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-light-primary-container text-light-primary flex items-center justify-center mb-2">
-                <span className="material-symbols-outlined text-[24px]">menu_book</span>
-              </div>
-              <p className="text-body-sm font-semibold text-light-on-surface">Mini Perpustakaan</p>
-              <p className="text-[11px] text-light-on-surface-variant">Bank soal &amp; referensi</p>
-            </div>
-            <div className="flex flex-col items-center col-span-2 sm:col-span-1">
-              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-light-primary-container text-light-primary flex items-center justify-center mb-2">
-                <span className="material-symbols-outlined text-[24px]">local_cafe</span>
-              </div>
-              <p className="text-body-sm font-semibold text-light-on-surface">Lounge &amp; Free Water</p>
-              <p className="text-[11px] text-light-on-surface-variant">Ruang tunggu orang tua</p>
-            </div>
+            ))}
           </div>
         </div>
       </div>
@@ -1358,9 +1295,11 @@ export default function HomePage() {
             <label className="flex flex-col gap-1.5">
               <span className="font-label text-label-md text-light-on-surface font-semibold">Pilihan Metode Belajar</span>
               <select id="learning-mode" className="w-full px-4 py-2.5 sm:py-3 rounded-lg border border-light-outline text-light-on-surface focus:border-light-primary focus:ring-1 focus:ring-light-primary text-body-md bg-light-surface">
-                <option value="offline-kebayoran">Offline — Cabang Kebayoran Baru (Jaksel)</option>
-                <option value="offline-rawamangun">Offline — Cabang Rawamangun (Jaktim)</option>
-                <option value="online">Online Live Interaktif (Zoom / Meet)</option>
+                {branches.map((b) => (
+                  <option key={b.id} value={b.id}>
+                    {b.isOnline ? "Online — " : "Offline — "}{b.name} ({b.city})
+                  </option>
+                ))}
               </select>
             </label>
 

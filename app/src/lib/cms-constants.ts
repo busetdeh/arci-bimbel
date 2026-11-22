@@ -339,3 +339,99 @@ export const INITIAL_CMS_FAQS: CmsFaqItem[] = [
   },
 ];
 
+export interface PublicFacilityItem {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+}
+
+export const INITIAL_PUBLIC_FACILITIES: PublicFacilityItem[] = [
+  {
+    id: "fac-1",
+    name: "Ruang Ber-AC Sejuk",
+    description: "Kondusif & higienis",
+    icon: "ac_unit",
+  },
+  {
+    id: "fac-2",
+    name: "Smart TV & Proyektor",
+    description: "Visual materi interaktif",
+    icon: "tv",
+  },
+  {
+    id: "fac-3",
+    name: "Wi-Fi Cepat 100 Mbps",
+    description: "Drill soal digital lancar",
+    icon: "wifi",
+  },
+  {
+    id: "fac-4",
+    name: "Mini Perpustakaan",
+    description: "Bank soal & referensi",
+    icon: "menu_book",
+  },
+  {
+    id: "fac-5",
+    name: "Lounge & Free Water",
+    description: "Ruang tunggu orang tua",
+    icon: "local_cafe",
+  },
+];
+
+export interface PublicBranchItem {
+  id: string;
+  name: string;
+  code: string;
+  city: string;
+  address: string;
+  phone: string;
+  scheduleText: string;
+  badgeText: string;
+  isOpen: boolean;
+  photoUrl: string;
+  isOnline: boolean;
+}
+
+export const INITIAL_PUBLIC_BRANCHES: PublicBranchItem[] = [
+  {
+    id: "411a4f54-0257-464a-bbd7-6fc6b21867a1",
+    name: "Cabang Sudirman Utama",
+    code: "SDR",
+    city: "Jakarta Selatan",
+    address: "Jl. Jend. Sudirman Kav. 24, Jakarta Selatan (Dekat Stasiun MRT Setiabudi Astra)",
+    phone: "(021) 520-1122 / 0812-3456-7890",
+    scheduleText: "Senin – Sabtu: 08.00 – 19.30 WIB",
+    badgeText: "Cabang Pusat",
+    isOpen: true,
+    photoUrl: "assets/images/branch-kebayoran.jpg",
+    isOnline: false,
+  },
+  {
+    id: "be8e37eb-541f-4f35-98af-3a5207a785b5",
+    name: "Cabang Kebayoran Baru",
+    code: "KBY",
+    city: "Jakarta Selatan",
+    address: "Jl. Pendidikan No. 42, Kebayoran Baru, Jakarta Selatan 12130 (Dekat Stasiun MRT Blok M)",
+    phone: "(021) 720-4567 / 0813-8899-2211",
+    scheduleText: "Senin – Sabtu: 08.00 – 19.30 WIB",
+    badgeText: "Cabang Selatan",
+    isOpen: true,
+    photoUrl: "assets/images/branch-rawamangun.jpg",
+    isOnline: false,
+  },
+  {
+    id: "acb1d263-7779-4432-ba2a-515b2362deb7",
+    name: "Kelas Online Nasional",
+    code: "ONL",
+    city: "Seluruh Indonesia",
+    address: "Live Interaktif via Zoom Pro & Google Meet (Pengiriman modul cetak langsung ke rumah)",
+    phone: "0821-1234-5678 (WhatsApp Support)",
+    scheduleText: "Jadwal Fleksibel (Sore & Malam)",
+    badgeText: "Kelas Online Nasional",
+    isOpen: true,
+    photoUrl: "assets/images/class-online.jpg",
+    isOnline: true,
+  },
+];
+

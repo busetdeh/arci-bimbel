@@ -95,23 +95,34 @@ export async function submitConsultationAction(
     const randomSuffix = Math.floor(1000 + Math.random() * 9000);
     const leadNumber = `LD-2026-${randomSuffix}`;
 
-    // Resolve branch ID based on learningMode
+    // Resolve branch ID based on learningMode (supports branch ID, code, or keyword)
     const { data: branches } = await supabase.from("branches").select("id, code, name");
     let targetBranchId: string | null = null;
+    let branchLabel = payload.learningMode || "Offline / Online";
 
     if (branches && branches.length > 0) {
-      if (payload.learningMode?.includes("kebayoran")) {
-        targetBranchId = branches.find((b) => b.code === "KBY")?.id || branches[0].id;
-      } else if (payload.learningMode?.includes("online")) {
-        targetBranchId = branches.find((b) => b.code === "ONL")?.id || branches[0].id;
+      const matchById = branches.find((b) => b.id === payload.learningMode);
+      if (matchById) {
+        targetBranchId = matchById.id;
+        branchLabel = `${matchById.name} (${matchById.code})`;
+      } else if (payload.learningMode?.toLowerCase().includes("kebayoran") || payload.learningMode?.includes("KBY")) {
+        const found = branches.find((b) => b.code === "KBY") || branches[0];
+        targetBranchId = found.id;
+        branchLabel = found.name;
+      } else if (payload.learningMode?.toLowerCase().includes("online") || payload.learningMode?.includes("ONL")) {
+        const found = branches.find((b) => b.code === "ONL") || branches[0];
+        targetBranchId = found.id;
+        branchLabel = found.name;
       } else {
-        targetBranchId = branches.find((b) => b.code === "SDR")?.id || branches[0].id;
+        const found = branches.find((b) => b.code === "SDR") || branches[0];
+        targetBranchId = found.id;
+        branchLabel = found.name;
       }
     }
 
     // Format initial consultation note
     const notesContent = `Permintaan Konsultasi Belajar Gratis:
-Metode: ${payload.learningMode || "Offline / Online"}
+Cabang / Metode: ${branchLabel}
 Fokus Pelajaran: ${payload.targetSubject || "Semua Pelajaran"}
 Catatan Wali: ${payload.notes || "Belum ada catatan tambahan"}`;
 

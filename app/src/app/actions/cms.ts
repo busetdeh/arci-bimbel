@@ -17,6 +17,10 @@ import {
   PublicTestimonialItem,
   INITIAL_PUBLIC_TUTORS,
   INITIAL_PUBLIC_TESTIMONIALS,
+  PublicBranchItem,
+  PublicFacilityItem,
+  INITIAL_PUBLIC_BRANCHES,
+  INITIAL_PUBLIC_FACILITIES,
 } from "@/lib/cms-constants";
 
 // In-memory persistent cache for server lifecycle
@@ -494,6 +498,84 @@ export async function getPublicTutorsAndTestimonialsAction(): Promise<{
       success: false,
       tutors: INITIAL_PUBLIC_TUTORS,
       testimonials: INITIAL_PUBLIC_TESTIMONIALS,
+    };
+  }
+}
+
+/**
+ * Fetch dynamic public branches and facilities from Supabase branches & CMS
+ */
+export async function getPublicBranchesAndFacilitiesAction(): Promise<{
+  success: boolean;
+  branches: PublicBranchItem[];
+  facilities: PublicFacilityItem[];
+}> {
+  try {
+    const supabase = createAdminClient();
+
+    const { data: dbBranches, error: branchErr } = await supabase
+      .from("branches")
+      .select("id, name, code, city, address, phone, is_active")
+      .eq("is_active", true)
+      .order("code", { ascending: true });
+
+    let branches: PublicBranchItem[] = [...INITIAL_PUBLIC_BRANCHES];
+
+    if (dbBranches && dbBranches.length > 0) {
+      branches = dbBranches.map((b: any) => {
+        const isOnline = b.code === "ONL" || b.name.toLowerCase().includes("online");
+        let badgeText = isOnline ? "Kelas Online Nasional" : "Cabang Belajar";
+        let photoUrl = isOnline ? "assets/images/class-online.jpg" : "assets/images/branch-kebayoran.jpg";
+        let scheduleText = isOnline ? "Jadwal Fleksibel (Sore & Malam)" : "Senin – Sabtu: 08.00 – 19.30 WIB";
+        let address = b.address || "Jl. Pendidikan No. 42, Kebayoran Baru, Jakarta Selatan";
+        let phone = b.phone || "0812-3456-7890";
+        let city = b.city || (isOnline ? "Seluruh Indonesia" : "Jakarta");
+
+        if (b.code === "SDR") {
+          badgeText = "Cabang Pusat";
+          photoUrl = "assets/images/branch-kebayoran.jpg";
+          address = b.address || "Jl. Jend. Sudirman Kav. 24, Jakarta Selatan (Dekat Stasiun MRT Setiabudi Astra)";
+        } else if (b.code === "KBY") {
+          badgeText = "Cabang Selatan";
+          photoUrl = "assets/images/branch-rawamangun.jpg";
+          address = b.address || "Jl. Pendidikan No. 42, Kebayoran Baru, Jakarta Selatan 12130 (Dekat Stasiun MRT Blok M)";
+        } else if (isOnline) {
+          badgeText = "Kelas Online Nasional";
+          photoUrl = "assets/images/class-online.jpg";
+          address = b.address || "Live Interaktif via Zoom Pro & Google Meet (Pengiriman modul cetak ke rumah)";
+          phone = b.phone || "0821-1234-5678 (WhatsApp Support)";
+          city = "Seluruh Indonesia";
+        }
+
+        return {
+          id: b.id,
+          name: b.name,
+          code: b.code,
+          city,
+          address,
+          phone,
+          scheduleText,
+          badgeText,
+          isOpen: true,
+          photoUrl,
+          isOnline,
+        };
+      });
+    }
+
+    const facilities: PublicFacilityItem[] = [...INITIAL_PUBLIC_FACILITIES];
+
+    return {
+      success: true,
+      branches,
+      facilities,
+    };
+  } catch (err: any) {
+    console.error("Error in getPublicBranchesAndFacilitiesAction:", err);
+    return {
+      success: false,
+      branches: INITIAL_PUBLIC_BRANCHES,
+      facilities: INITIAL_PUBLIC_FACILITIES,
     };
   }
 }
