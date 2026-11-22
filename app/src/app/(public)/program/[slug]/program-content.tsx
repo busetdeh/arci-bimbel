@@ -82,6 +82,7 @@ export function ProgramDetailContent() {
           <a href="/#tutor" className="text-body-md font-label text-light-on-surface-variant hover:text-light-primary transition-colors">Tutor Pilihan</a>
           <a href="/#testimoni" className="text-body-md font-label text-light-on-surface-variant hover:text-light-primary transition-colors">Hasil &amp; Testimoni</a>
           <a href="/#lokasi" className="text-body-md font-label text-light-on-surface-variant hover:text-light-primary transition-colors">Lokasi &amp; Kontak</a>
+          <a href="/blog" className="text-body-md font-label text-light-on-surface-variant hover:text-light-primary transition-colors">Blog</a>
         </nav>
       </div>
 
@@ -136,6 +137,10 @@ export function ProgramDetailContent() {
       <a href="/#lokasi" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-body-md text-light-on-surface hover:bg-light-surface-container font-medium">
         <span className="material-symbols-outlined text-[20px] text-light-primary">location_on</span>
         Lokasi &amp; Kontak Cabang
+      </a>
+      <a href="/blog" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-body-md text-light-on-surface hover:bg-light-surface-container font-medium">
+        <span className="material-symbols-outlined text-[20px] text-light-primary">article</span>
+        Blog &amp; Edukasi
       </a>
       
       <div className="pt-3 border-t border-light-outline-variant flex flex-col gap-2">
@@ -1000,6 +1005,7 @@ export function ProgramDetailContent() {
       <div className="flex flex-col gap-3">
         <h4 className="font-headline font-bold text-white text-title-md">Portal &amp; Akses</h4>
         <ul className="space-y-2 text-white/80 text-body-sm">
+          <li><a href="/blog" className="hover:text-accent font-semibold text-accent transition-colors">Blog Edukasi &amp; Panduan</a></li>
           <li><a href="/login" className="hover:text-accent transition-colors">Portal Siswa &amp; Orang Tua</a></li>
           <li><a href="/login-admin" className="hover:text-accent transition-colors">Portal Admin &amp; Guru</a></li>
           <li><a href="/pendaftaran" className="hover:text-accent transition-colors">Pendaftaran Online</a></li>

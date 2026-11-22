@@ -579,3 +579,75 @@ export async function getPublicBranchesAndFacilitiesAction(): Promise<{
     };
   }
 }
+
+/**
+ * Fetch published articles for the public blog
+ */
+export async function getPublicArticlesAction(): Promise<{
+  success: boolean;
+  articles: CmsArticleItem[];
+}> {
+  try {
+    const res = await getCmsDataAction();
+    const published = res.articles.filter((a) => a.status === "Terbit (Live)");
+    return {
+      success: true,
+      articles: published.length > 0 ? published : res.articles,
+    };
+  } catch (err: any) {
+    console.error("Error in getPublicArticlesAction:", err);
+    return {
+      success: false,
+      articles: INITIAL_CMS_ARTICLES.filter((a) => a.status === "Terbit (Live)"),
+    };
+  }
+}
+
+/**
+ * Fetch single article by slug along with related articles
+ */
+export async function getPublicArticleBySlugAction(slug: string): Promise<{
+  success: boolean;
+  article?: CmsArticleItem;
+  relatedArticles: CmsArticleItem[];
+}> {
+  try {
+    const res = await getCmsDataAction();
+    const article = res.articles.find(
+      (a) =>
+        a.slug.toLowerCase() === slug.toLowerCase() ||
+        a.id.toLowerCase() === slug.toLowerCase()
+    );
+
+    if (!article) {
+      return {
+        success: false,
+        relatedArticles: res.articles.filter((a) => a.status === "Terbit (Live)").slice(0, 3),
+      };
+    }
+
+    const related = res.articles
+      .filter((a) => a.id !== article.id && a.status === "Terbit (Live)")
+      .slice(0, 3);
+
+    return {
+      success: true,
+      article,
+      relatedArticles: related,
+    };
+  } catch (err: any) {
+    console.error("Error in getPublicArticleBySlugAction:", err);
+    const fallback = INITIAL_CMS_ARTICLES.find(
+      (a) =>
+        a.slug.toLowerCase() === slug.toLowerCase() ||
+        a.id.toLowerCase() === slug.toLowerCase()
+    );
+    return {
+      success: !!fallback,
+      article: fallback,
+      relatedArticles: INITIAL_CMS_ARTICLES.filter(
+        (a) => (!fallback || a.id !== fallback.id) && a.status === "Terbit (Live)"
+      ).slice(0, 3),
+    };
+  }
+}

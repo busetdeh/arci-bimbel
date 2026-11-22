@@ -404,6 +404,9 @@ export default function HomePage() {
           <a href="#lokasi" className="text-body-md font-label text-light-on-surface-variant hover:text-brand-indigo font-medium hover:font-semibold transition-colors whitespace-nowrap px-1 py-1">
             Cabang &amp; Fasilitas
           </a>
+          <a href="/blog" className="text-body-md font-label text-light-on-surface-variant hover:text-brand-indigo font-medium hover:font-semibold transition-colors whitespace-nowrap px-1 py-1">
+            Blog
+          </a>
 
           {/* Dropdown Menu for Secondary Info: Alur & FAQ */}
           <div className="relative group/dropdown py-2">
@@ -419,6 +422,10 @@ export default function HomePage() {
               <a href="#faq" className="flex items-center gap-2.5 px-4 py-2.5 text-body-sm text-light-on-surface hover:bg-light-surface-container-low hover:text-brand-indigo transition-colors font-medium">
                 <span className="material-symbols-outlined text-[18px] text-light-primary">help</span>
                 <span>Tanya Jawab (FAQ)</span>
+              </a>
+              <a href="/blog" className="flex items-center gap-2.5 px-4 py-2.5 text-body-sm text-light-on-surface hover:bg-light-surface-container-low hover:text-brand-indigo transition-colors font-medium">
+                <span className="material-symbols-outlined text-[18px] text-light-primary">article</span>
+                <span>Blog &amp; Wawasan Edukasi</span>
               </a>
               <a href="/pendaftaran" className="flex items-center gap-2.5 px-4 py-2.5 text-body-sm text-brand-indigo bg-light-primary-container/30 hover:bg-light-primary-container hover:text-brand-indigo-dark transition-colors font-semibold border-t border-light-outline-variant/60">
                 <span className="material-symbols-outlined text-[18px] text-brand-indigo">how_to_reg</span>
@@ -485,6 +492,13 @@ export default function HomePage() {
       </a>
       <a href="#lokasi" className="flex items-center justify-between text-body-md font-medium text-light-on-surface py-2.5 border-b border-light-outline-variant/60">
         <span>Cabang &amp; Fasilitas</span>
+        <span className="material-symbols-outlined text-[18px] text-light-outline">chevron_right</span>
+      </a>
+      <a href="/blog" className="flex items-center justify-between text-body-md font-medium text-light-on-surface py-2.5 border-b border-light-outline-variant/60">
+        <span className="flex items-center gap-2">
+          <span className="material-symbols-outlined text-[18px] text-light-primary">article</span>
+          <span>Blog &amp; Edukasi</span>
+        </span>
         <span className="material-symbols-outlined text-[18px] text-light-outline">chevron_right</span>
       </a>
       <a href="#faq" className="flex items-center justify-between text-body-md font-medium text-light-on-surface py-2.5 border-b border-light-outline-variant/60">
@@ -1430,6 +1444,7 @@ export default function HomePage() {
       <div>
         <p className="font-label font-bold text-light-on-surface mb-3 md:mb-4 text-label-lg">Akses &amp; Layanan</p>
         <ul className="flex flex-col gap-2.5 text-body-sm text-light-on-surface-variant">
+          <li><a href="/blog" className="hover:text-light-primary transition-colors font-medium text-brand-indigo">Blog &amp; Wawasan Edukasi</a></li>
           <li><a href="#konsultasi" className="hover:text-light-primary transition-colors">Daftar Free Trial &amp; Diagnostik</a></li>
           <li><a href="/program/intensif-utbk-2026" className="hover:text-light-primary transition-colors">Cek Biaya &amp; Jadwal Sesi</a></li>
           <li><a href="#lokasi" className="hover:text-light-primary transition-colors">Katalog Fasilitas Cabang</a></li>

@@ -80,8 +80,19 @@ export const INITIAL_CMS_ARTICLES: CmsArticleItem[] = [
     author: "Budi Pratama, M.Si.",
     summary:
       "Panduan komprehensif membedah tipe soal penalaran matematika berstandar IRT nasional dengan rumus praktis ARCI.",
-    content:
-      "Penalaran matematika pada SNBT menuntut kecepatan analitik tinggi. Kuncinya bukan menghafal ratusan rumus, melainkan memahami logika translasi kalimat cerita ke bentuk aljabar sederhana serta eliminasi pilihan jawaban distractor.",
+    content: `Penalaran matematika pada seleksi SNBT UTBK 2026 menuntut kecepatan analitik tinggi dan pemahaman konsep yang kokoh. Kuncinya bukan menghafal ratusan rumus rumit di luar kepala, melainkan memahami logika translasi kalimat cerita ke dalam bentuk pemodelan aljabar sederhana serta kemampuan mengeliminasi opsi pengecoh (*distractor*).
+
+### 1. Kenali Pola Soal Berbasis Item Response Theory (IRT)
+Sistem pembobotan skor UTBK menggunakan IRT, di mana soal yang berhasil dijawab benar oleh sedikit peserta akan bernilai lebih tinggi. Soal analitis grafik dan pola bilangan kompleks masuk ke dalam kategori berbobot tinggi.
+
+- **Pola Geometri & Bangun Ruang:** Biasakan menggambar sketsa cepat dalam 15 detik.
+- **Statistika & Peluang Terapan:** Fokus pada rata-rata gabungan, median tabel berfrekuensi, dan kombinatorika bersyarat.
+
+### 2. Terapkan Metode Eliminasi Terbalik
+Sebelum menghitung panjang lebar, periksa rentang angka pada pilihan jawaban (A sampai E). Seringkali 2 pilihan jawaban memiliki orde magnitudo yang tidak masuk akal sehingga bisa langsung dicoret dalam hitungan detik.
+
+### 3. Rutin Evaluasi Tryout Mingguan
+Di ARCI Bimbel, kami membiasakan siswa berlatih dengan simulasi sistem IRT digital real-time. Setiap pembahasan soal dilengkapi dengan video penjelasan interaktif dari Master Tutor agar siswa tahu letak kekeliruan bernalarnya.`,
   },
   {
     id: "ART-02",
@@ -96,8 +107,15 @@ export const INITIAL_CMS_ARTICLES: CmsArticleItem[] = [
     author: "Tim Konseling ARCI",
     summary:
       "Langkah-langkah analitik pemetaan peluang jurusan di PTN favorit dengan rasio keketatan dan passing grade terkini.",
-    content:
-      "Gunakan matriks perbandingan daya tampung historis 3 tahun terakhir dan passing score tryout berkala untuk menentukan kombinasi Pilihan 1 (impian) dan Pilihan 2 (aman).",
+    content: `Menentukan jurusan kuliah dan PTN tujuan merupakan keputusan strategis yang menentukan arah masa depan. Jangan hanya mengandalkan gengsi atau ikut-ikutan teman tanpa melihat data rasio keketatan dan daya tampung historis.
+
+### 1. Matriks Portofolio Minat dan Realitas
+Gunakan matriks perbandingan daya tampung historis 3 tahun terakhir dan passing score tryout berkala untuk menentukan kombinasi:
+- **Pilihan 1 (Jurusan Impian):** Target ideal dengan keketatan tinggi yang menuntut skor maksimal.
+- **Pilihan 2 (Jurusan Aman):** Jurusan dengan peluang lolos di atas 75% berdasarkan hasil simulasi tryout berkala.
+
+### 2. Konseling Pemetaan Bersama Psikolog Pendidikan
+Di ARCI Bimbel, setiap siswa intensif UTBK mendapatkan sesi konsultasi privat bersama tim konselor untuk menganalisis tes gaya belajar dan peta kecenderungan bakat alamiah.`,
   },
   {
     id: "ART-03",
@@ -112,8 +130,11 @@ export const INITIAL_CMS_ARTICLES: CmsArticleItem[] = [
     author: "Siti Rahma, S.Si.",
     summary:
       "Cara mengatur jadwal belajar mandiri, teknik active recall, dan pemanfaatan modul ringkas untuk persiapan ujian sekolah.",
-    content:
-      "Teknik belajar 25 menit fokus (Pomodoro) dikombinasikan dengan latihan soal harian terbukti menaikkan pemahaman konsep IPA hingga 40% lebih cepat daripada sistem kebut semalam.",
+    content: `Masa transisi dari SD ke SMP seringkali mengejutkan siswa karena lonjakan jumlah mata pelajaran dan kedalaman materi sains. Siswa berprestasi tidak belajar 8 jam sehari tanpa henti, melainkan belajar secara cerdas dengan teknik:
+
+1. **Active Recall & Spaced Repetition:** Menutup buku dan menuliskan kembali poin inti konsep dalam bentuk peta pikiran.
+2. **Klinik PR Tepat Waktu:** Menyelesaikan kesulitan tugas hari itu juga tanpa menunda bersama tutor pendamping.
+3. **Fokus Blok Waktu (Metode Pomodoro):** Belajar intensif 25 menit diselingi rehat 5 menit terbukti meningkatkan retensi otak hingga 40%.`,
   },
   {
     id: "ART-04",
@@ -128,8 +149,12 @@ export const INITIAL_CMS_ARTICLES: CmsArticleItem[] = [
     author: "Ahmad Dani, M.Pd.",
     summary:
       "Analisis mendalam karakteristik soal literasi membaca, sains numerasi, dan bahasa Inggris pada instrumen ASPD standar daerah.",
-    content:
-      "Literasi numerasi ASPD menguji kemampuan aplikasi konsep pada konteks nyata seperti infografis, diskon belanja, dan data lingkungan. Biasakan membaca grafik dengan cepat.",
+    content: `Asesmen Standarisasi Pendidikan Daerah (ASPD) menguji kemampuan penalaran literasi kontekstual. Karakteristik utamanya adalah narasi soal yang panjang, grafik data, serta teks berita nyata.
+
+### Trik Membaca Cepat Teks Stimulus:
+- Baca pertanyaan dan pilihan jawaban terlebih dahulu sebelum membaca seluruh teks.
+- Tandai kata kunci pada grafik, tabel angka, atau diagram alur.
+- Kuasai kosakata teknis sains dan istilah inferensial Bahasa Indonesia.`,
   },
 ];
 
